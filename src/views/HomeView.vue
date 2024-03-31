@@ -1,9 +1,12 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { useCalendar } from '@/stores/calendar'
+import { useCalendarEvents } from '@/stores/events'
 
 const { config, incrementMonth, decrementMonth, setMonth, incrementYear, decrementYear } =
   useCalendar()
+
+const { characterBirthEvents, characterDeathEvents } = useCalendarEvents()
 
 const monthTarget = ref(0)
 </script>
@@ -45,5 +48,9 @@ const monthTarget = ref(0)
         </button>
       </div>
     </div>
+
+    <pre>
+      {{ characterDeathEvents }}
+    </pre>
   </main>
 </template>

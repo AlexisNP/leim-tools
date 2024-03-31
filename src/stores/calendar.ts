@@ -1,8 +1,7 @@
-import { computed, ref, type Ref, type ComputedRef } from 'vue'
+import { computed, type Ref, type ComputedRef } from 'vue'
 import { defineStore } from 'pinia'
 import { useUrlSearchParams } from '@vueuse/core'
-
-type CalendarPeriod = 'ante' | 'nante'
+import type { LeimPeriod } from '@/models/Date'
 
 type CalendarStaticConfig = {
   months: string[]
@@ -13,7 +12,7 @@ type CalendarStaticConfig = {
 }
 
 type CalendarCurrentConfig = {
-  currentPeriod: Ref<CalendarPeriod>
+  currentPeriod: Ref<LeimPeriod>
   currentYear: ComputedRef<string | string[]>
   currentMonth: ComputedRef<string | string[]>
   currentDay: ComputedRef<string | string[]>
@@ -80,7 +79,7 @@ export const useCalendar = defineStore('calendar', () => {
   const currentYear = computed(() => params.year)
 
   // Get period from currentYear
-  const currentPeriod: ComputedRef<CalendarPeriod> = computed(() => {
+  const currentPeriod: ComputedRef<LeimPeriod> = computed(() => {
     const year = Number(currentYear.value)
     return year >= 0 ? 'nante' : 'ante'
   })
