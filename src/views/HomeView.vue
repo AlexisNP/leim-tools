@@ -2,11 +2,12 @@
 import { ref } from 'vue'
 import { useCalendar } from '@/stores/calendar'
 import { useCalendarEvents } from '@/stores/events'
+import { storeToRefs } from 'pinia'
 
-const { config, incrementMonth, decrementMonth, setMonth, incrementYear, decrementYear } =
+const { currentDate, incrementMonth, decrementMonth, setMonth, incrementYear, decrementYear } =
   useCalendar()
 
-const { characterBirthEvents, characterDeathEvents } = useCalendarEvents()
+const { currentEvents } = storeToRefs(useCalendarEvents())
 
 const monthTarget = ref(0)
 </script>
@@ -14,7 +15,7 @@ const monthTarget = ref(0)
 <template>
   <main class="container">
     <pre>
-      {{ config }}
+      {{ currentDate }}
     </pre>
     <div class="grid gap-2">
       <div class="flex gap-2">
@@ -50,7 +51,8 @@ const monthTarget = ref(0)
     </div>
 
     <pre>
-      {{ characterDeathEvents }}
+      Current events:
+      {{ currentEvents }}
     </pre>
   </main>
 </template>

@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import type { LeimDate } from '@/models/Date'
 
-type Character = {
+export type Character = {
   name: string
   birth?: LeimDate
   death?: LeimDate

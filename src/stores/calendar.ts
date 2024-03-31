@@ -1,7 +1,9 @@
-import { computed, type Ref, type ComputedRef } from 'vue'
+import { computed, type Ref, type ComputedRef, ref } from 'vue'
 import { defineStore } from 'pinia'
 import { useUrlSearchParams } from '@vueuse/core'
 import type { LeimPeriod } from '@/models/Date'
+
+type CalendarViewType = 'month' | 'year' | 'decade' | 'century'
 
 type CalendarStaticConfig = {
   months: string[]
@@ -12,6 +14,10 @@ type CalendarStaticConfig = {
 }
 
 type CalendarCurrentConfig = {
+  viewType: CalendarViewType
+}
+
+type CalendarCurrentDate = {
   currentPeriod: Ref<LeimPeriod>
   currentYear: ComputedRef<string | string[]>
   currentMonth: ComputedRef<string | string[]>
@@ -20,7 +26,13 @@ type CalendarCurrentConfig = {
 }
 
 export const useCalendar = defineStore('calendar', () => {
-  // Static calendar config
+  /**
+   * Static calendar config
+   * This shouldn't change
+   */
+  /**
+   * Month list
+   */
   const months = [
     'Jalen',
     'Malsen',
@@ -38,6 +50,7 @@ export const useCalendar = defineStore('calendar', () => {
   const daysPerMonth = computed(() => daysPerYear / monthsPerYear.value)
   const daysPerWeek = 6
 
+  // Assign the static config
   const staticConfig: CalendarStaticConfig = {
     months,
     monthsPerYear: monthsPerYear.value,
@@ -46,6 +59,10 @@ export const useCalendar = defineStore('calendar', () => {
     daysPerWeek
   }
 
+  const currentConfig: Ref<CalendarCurrentConfig> = ref({
+    viewType: 'century'
+  })
+
   // Get date from URL params
   const params = useUrlSearchParams('history', {
     removeNullishValues: true
@@ -53,7 +70,7 @@ export const useCalendar = defineStore('calendar', () => {
 
   // Default date settings (current day)
   const defaultDay = String(12)
-  const defaultMonth = String(8)
+  const defaultMonth = String(7)
   const defaultYear = String(3209)
 
   // Assign default values if no params exist in URL
@@ -85,7 +102,7 @@ export const useCalendar = defineStore('calendar', () => {
   })
 
   // Create base config
-  const config: CalendarCurrentConfig = {
+  const currentDate: CalendarCurrentDate = {
     currentDay,
     currentMonth,
     currentYear,
@@ -159,7 +176,8 @@ export const useCalendar = defineStore('calendar', () => {
 
   return {
     staticConfig,
-    config,
+    currentConfig,
+    currentDate,
     params,
     incrementMonth,
     decrementMonth,
