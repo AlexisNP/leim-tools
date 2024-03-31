@@ -1,5 +1,6 @@
-import { computed, ref, type Ref } from 'vue'
+import { computed, ref, type Ref, type ComputedRef } from 'vue'
 import { defineStore } from 'pinia'
+import { useUrlSearchParams } from '@vueuse/core'
 
 type CalendarPeriod = 'ante' | 'nante'
 
@@ -13,12 +14,14 @@ type CalendarStaticConfig = {
 
 type CalendarCurrentConfig = {
   currentPeriod: Ref<CalendarPeriod>
-  currentYear: Ref<number>
-  currentMonth: Ref<number>
-  currentDay: Ref<number>
+  currentYear: ComputedRef<string | string[]>
+  currentMonth: ComputedRef<string | string[]>
+  currentDay: ComputedRef<string | string[]>
+  currentMonthName: ComputedRef<string>
 }
 
 export const useCalendar = defineStore('calendar', () => {
+  // Static calendar config
   const months = [
     'Jalen',
     'Malsen',
@@ -44,17 +47,125 @@ export const useCalendar = defineStore('calendar', () => {
     daysPerWeek
   }
 
-  const currentPeriod: Ref<'nante' | 'ante'> = ref('nante')
-  const currentYear = ref(3209)
-  const currentMonth = ref(8)
-  const currentDay = ref(12)
+  // Get date from URL params
+  const params = useUrlSearchParams('history', {
+    removeNullishValues: true
+  })
 
-  const config: CalendarCurrentConfig = {
-    currentPeriod,
-    currentYear,
-    currentMonth,
-    currentDay
+  // Default date settings (current day)
+  const defaultDay = String(12)
+  const defaultMonth = String(8)
+  const defaultYear = String(3209)
+
+  // Assign default values if no params exist in URL
+  if (!params.day) {
+    params.day = defaultDay
+  }
+  if (!params.month) {
+    params.month = defaultMonth
+  }
+  if (!params.year) {
+    params.year = defaultYear
   }
 
-  return { staticConfig, config }
+  const currentDay = computed(() => params.day)
+
+  const currentMonth = computed(() => params.month)
+  // Gets the label from currentMonth index
+  const currentMonthName = computed(() => {
+    const index = Number(currentMonth.value)
+    return staticConfig.months[index]
+  })
+
+  const currentYear = computed(() => params.year)
+
+  // Get period from currentYear
+  const currentPeriod: ComputedRef<CalendarPeriod> = computed(() => {
+    const year = Number(currentYear.value)
+    return year >= 0 ? 'nante' : 'ante'
+  })
+
+  // Create base config
+  const config: CalendarCurrentConfig = {
+    currentDay,
+    currentMonth,
+    currentYear,
+    currentPeriod,
+    currentMonthName
+  }
+
+  /**
+   * Moves the current date forward one month
+   */
+  function incrementMonth() {
+    // const oldValue = params.month
+    let newValue = Number(params.month) + 1
+
+    // If the new value would exceed the max number of month per year
+    if (newValue >= staticConfig.monthsPerYear) {
+      newValue = 0
+      // Increment the year
+      incrementYear()
+    }
+
+    params.month = newValue.toString()
+  }
+
+  /**
+   * Moves the current date backward one month
+   */
+  function decrementMonth() {
+    // const oldValue = params.month
+    let newValue = Number(params.month) - 1
+
+    // If the new value would go below 0
+    if (newValue < 0) {
+      newValue = staticConfig.monthsPerYear - 1
+      // Decrement the year
+      decrementYear()
+    }
+
+    params.month = newValue.toString()
+  }
+
+  /**
+   * Moves the current date to a particular month
+   */
+  function setMonth(target: number) {
+    // If the target is outside the month bounds
+    if (target < 0 || target >= staticConfig.monthsPerYear) {
+      return
+    }
+
+    params.month = target.toString()
+  }
+
+  /**
+   * Moves the current date forward one year
+   */
+  function incrementYear(inc: number = 1) {
+    const newValue = Number(params.year) + inc
+
+    params.year = newValue.toString()
+  }
+
+  /**
+   * Moves the current date backward one year
+   */
+  function decrementYear(inc: number = 1) {
+    const newValue = Number(params.year) - inc
+
+    params.year = newValue.toString()
+  }
+
+  return {
+    staticConfig,
+    config,
+    params,
+    incrementMonth,
+    decrementMonth,
+    setMonth,
+    incrementYear,
+    decrementYear
+  }
 })
