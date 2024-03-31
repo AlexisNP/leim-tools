@@ -1,5 +1,5 @@
-import { defineStore, storeToRefs } from 'pinia'
-import { computed, watch, type ComputedRef, toRefs, type Ref, ref } from 'vue'
+import { defineStore } from 'pinia'
+import { computed, watch, type ComputedRef, type Ref, ref } from 'vue'
 import { useCharacters, type Character } from './characters'
 
 import type { LeimDate } from '@/models/Date'
@@ -12,8 +12,9 @@ type CalendarEvent = {
 
 export const useCalendarEvents = defineStore('calendar-events', () => {
   const { characters } = useCharacters()
-  const calendarStore = useCalendar()
+  const { currentDate, currentConfig } = useCalendar()
 
+  // Get all birth events
   const charactersWithBirthData: ComputedRef<Character[]> = computed(() =>
     characters.filter((character) => character.birth)
   )
@@ -22,6 +23,8 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
       return { title: `Naissance de ${character.name}`, date: character.birth } as CalendarEvent
     })
   })
+
+  // Get all death events
   const charactersWithDeathData: ComputedRef<Character[]> = computed(() =>
     characters.filter((character) => character.death)
   )
@@ -31,30 +34,40 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
     })
   })
 
+  // Gets all current event in its default state
   const currentEvents: Ref<CalendarEvent[]> = ref(computeCurrentEvents())
 
-  watch(calendarStore.currentDate, () => {
+  // Watch for currentDate changes
+  watch(currentDate, () => {
     currentEvents.value = computeCurrentEvents()
   })
 
+  /**
+   * Determines if the event can appear in the front end
+   *
+   * This function takes into consideration the viewType of the calendar config
+   *
+   * @param event The event to analyze
+   * @returns Whether the event should appear in the current view
+   */
   function shouldEventBeDisplayed(event: CalendarEvent): boolean {
-    switch (calendarStore.currentConfig.viewType) {
+    switch (currentConfig.viewType) {
       case 'month':
-        return event.date.month === Number(calendarStore.currentDate.currentMonth)
+        return event.date.month === Number(currentDate.currentMonth)
 
       case 'year':
-        return event.date.year === Number(calendarStore.currentDate.currentYear)
+        return event.date.year === Number(currentDate.currentYear)
 
       case 'decade':
         return (
-          event.date.year >= Number(calendarStore.currentDate.currentYear) - 10 &&
-          event.date.year <= Number(calendarStore.currentDate.currentYear) + 10
+          event.date.year >= Number(currentDate.currentYear) - 10 &&
+          event.date.year <= Number(currentDate.currentYear) + 10
         )
 
       case 'century':
         return (
-          event.date.year >= Number(calendarStore.currentDate.currentYear) - 100 &&
-          event.date.year <= Number(calendarStore.currentDate.currentYear) + 100
+          event.date.year >= Number(currentDate.currentYear) - 100 &&
+          event.date.year <= Number(currentDate.currentYear) + 100
         )
 
       default:
@@ -62,6 +75,11 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
     }
   }
 
+  /**
+   * Fetches all the current events for the current view
+   *
+   * @returns A list of events that can appear in the current view
+   */
   function computeCurrentEvents(): CalendarEvent[] {
     const allEvents = [...characterBirthEvents.value, ...characterDeathEvents.value]
 
