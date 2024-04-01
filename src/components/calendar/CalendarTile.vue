@@ -1,5 +1,8 @@
 <script lang="ts" setup>
+import type { LeimDate } from '@/models/Date'
+
 const props = defineProps<{
+  date: LeimDate
   faded?: boolean
 }>()
 </script>
