@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
-import { computed, watch, type ComputedRef, type Ref, ref } from 'vue'
-import { useCharacters, type Character } from './characters'
+import { computed, watch, type Ref, ref, toRaw } from 'vue'
+import { useCharacters } from './characters'
 
 import type { LeimDate } from '@/models/Date'
 import { useCalendar } from './calendar'
@@ -8,19 +8,37 @@ import { useCalendar } from './calendar'
 export type CalendarEvent = {
   title: string
   date: LeimDate
-  category: 'birth' | 'death'
+  description?: string
+  category?: 'birth' | 'death' | 'catastrophe' | 'natural-disaster' | 'player'
 }
 
 export const useCalendarEvents = defineStore('calendar-events', () => {
-  const { characters } = useCharacters()
   const { currentDate, currentConfig } = useCalendar()
+  const { charactersWithBirthData, charactersWithDeathData } = useCharacters()
 
-  // Get all birth events
-  const charactersWithBirthData: ComputedRef<Character[]> = computed(() =>
-    characters.filter((character) => character.birth)
-  )
+  const baseEvents = ref<CalendarEvent[]>([
+    {
+      title: "Arrivée d'aventuriers à Borélis",
+      date: { day: 12, month: 7, year: 3209, period: 'nante' },
+      description:
+        'Tara Belyus, Vascylly et Adol Sulvan livrent 3 condamnés à Handany. Ils partent pour la mer durant la journée.',
+      category: 'player'
+    },
+    {
+      title: "Naufrage de l'Éclipse",
+      description:
+        "L'Éclipse, le navire de la garde contenant des condamnés à destination des Cages Handaniennes, s'échoue au large des côtes montagneuses de la Lance d'Aldys.",
+      date: { day: 14, month: 7, year: 3209, period: 'nante' }
+    },
+    {
+      title: 'Sulvan et Anastael atteignent Bamast',
+      date: { day: 19, month: 2, year: 3210, period: 'nante' },
+      category: 'player'
+    }
+  ])
+
   const characterBirthEvents = computed(() => {
-    return charactersWithBirthData.value.map((character) => {
+    return charactersWithBirthData.map((character) => {
       return {
         title: `${character.name}`,
         date: character.birth,
@@ -29,12 +47,8 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
     })
   })
 
-  // Get all death events
-  const charactersWithDeathData: ComputedRef<Character[]> = computed(() =>
-    characters.filter((character) => character.death)
-  )
   const characterDeathEvents = computed(() => {
-    return charactersWithDeathData.value.map((character) => {
+    return charactersWithDeathData.map((character) => {
       return {
         title: `${character.name}`,
         date: character.death,
@@ -90,7 +104,11 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
    * @returns A list of events that can appear in the current view
    */
   function computeCurrentEvents(): CalendarEvent[] {
-    const allEvents = [...characterBirthEvents.value, ...characterDeathEvents.value]
+    const allEvents = [
+      ...characterBirthEvents.value,
+      ...characterDeathEvents.value,
+      ...baseEvents.value
+    ]
 
     return allEvents.filter((event) => shouldEventBeDisplayed(event))
   }

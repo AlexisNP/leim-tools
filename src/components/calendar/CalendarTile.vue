@@ -4,6 +4,7 @@ import { useCalendar } from '@/stores/calendar'
 import { useCalendarEvents } from '@/stores/events'
 import { computed } from 'vue'
 import CalendarEvent from './CalendarEvent.vue'
+import { storeToRefs } from 'pinia'
 
 const props = defineProps<{
   date: LeimDate
@@ -11,10 +12,10 @@ const props = defineProps<{
 }>()
 
 const { compareTwoDates, defaultDate } = useCalendar()
-const { currentEvents } = useCalendarEvents()
+const { currentEvents } = storeToRefs(useCalendarEvents())
 
 const eventsForTheDay = computed(() => {
-  return currentEvents.filter((currentEvent) => {
+  return currentEvents.value.filter((currentEvent) => {
     return compareTwoDates(currentEvent.date, props.date)
   })
 })
