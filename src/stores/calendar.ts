@@ -1,7 +1,7 @@
 import { computed, type Ref, type ComputedRef, ref } from 'vue'
 import { defineStore } from 'pinia'
 import { useUrlSearchParams } from '@vueuse/core'
-import type { LeimPeriod } from '@/models/Date'
+import type { LeimPeriod, LeimPeriodShort } from '@/models/Date'
 
 type CalendarViewType = 'month' | 'year' | 'decade' | 'century'
 
@@ -18,11 +18,12 @@ type CalendarCurrentConfig = {
 }
 
 type CalendarCurrentDate = {
-  currentPeriod: Ref<LeimPeriod>
-  currentYear: ComputedRef<string | string[]>
-  currentMonth: ComputedRef<string | string[]>
   currentDay: ComputedRef<string | string[]>
+  currentMonth: ComputedRef<string | string[]>
   currentMonthName: ComputedRef<string>
+  currentYear: ComputedRef<string | string[]>
+  currentPeriod: Ref<LeimPeriod>
+  currentPeriodAbbr: Ref<LeimPeriodShort>
 }
 
 export const useCalendar = defineStore('calendar', () => {
@@ -60,7 +61,7 @@ export const useCalendar = defineStore('calendar', () => {
   }
 
   const currentConfig: Ref<CalendarCurrentConfig> = ref({
-    viewType: 'century'
+    viewType: 'month'
   })
 
   // Get date from URL params
@@ -100,14 +101,18 @@ export const useCalendar = defineStore('calendar', () => {
     const year = Number(currentYear.value)
     return year >= 0 ? 'nante' : 'ante'
   })
+  const currentPeriodAbbr: ComputedRef<LeimPeriodShort> = computed(() => {
+    return currentPeriod.value === 'ante' ? 'A.R' : 'N.R'
+  })
 
   // Create base config
   const currentDate: CalendarCurrentDate = {
     currentDay,
     currentMonth,
+    currentMonthName,
     currentYear,
     currentPeriod,
-    currentMonthName
+    currentPeriodAbbr
   }
 
   /**
@@ -174,11 +179,29 @@ export const useCalendar = defineStore('calendar', () => {
     params.year = newValue.toString()
   }
 
+  /**
+   * From a given year, returns a set of LeimPeriod identifier
+   *
+   * This is used in range use-cases
+   *
+   * @param year The year to display
+   * @returns An object containing both short and long LeimPeriod
+   */
+  function getPeriodOfYear(year: string | number): { long: LeimPeriod; short: LeimPeriodShort } {
+    const numYear = year as number
+
+    return {
+      long: numYear >= 0 ? 'nante' : 'ante',
+      short: numYear >= 0 ? 'N.R' : 'A.R'
+    }
+  }
+
   return {
     staticConfig,
     currentConfig,
     currentDate,
     params,
+    getPeriodOfYear,
     incrementMonth,
     decrementMonth,
     setMonth,

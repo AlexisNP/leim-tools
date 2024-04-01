@@ -6,3 +6,4 @@ export type LeimDate = {
 }
 
 export type LeimPeriod = 'ante' | 'nante'
+export type LeimPeriodShort = 'A.R' | 'N.R'

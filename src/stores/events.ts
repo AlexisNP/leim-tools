@@ -60,13 +60,13 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
 
       case 'decade':
         return (
-          event.date.year >= Number(currentDate.currentYear) - 10 &&
+          event.date.year >= Number(currentDate.currentYear) &&
           event.date.year <= Number(currentDate.currentYear) + 10
         )
 
       case 'century':
         return (
-          event.date.year >= Number(currentDate.currentYear) - 100 &&
+          event.date.year >= Number(currentDate.currentYear) &&
           event.date.year <= Number(currentDate.currentYear) + 100
         )
 

@@ -1,20 +1,11 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
-import { useCalendar } from '@/stores/calendar'
-import { useCalendarEvents } from '@/stores/events'
-import { storeToRefs } from 'pinia'
-
-const { currentDate, incrementMonth, decrementMonth, setMonth, incrementYear, decrementYear } =
-  useCalendar()
-
-const { currentEvents } = storeToRefs(useCalendarEvents())
-
-const monthTarget = ref(0)
+import Calendar from '@/components/Calendar.vue'
 </script>
 
 <template>
-  <main class="container">
-    <pre>
+  <main class="container h-full grid items-center">
+    <Calendar />
+    <!-- <pre>
       {{ currentDate }}
     </pre>
     <div class="grid gap-2">
@@ -53,6 +44,6 @@ const monthTarget = ref(0)
     <pre>
       Current events:
       {{ currentEvents }}
-    </pre>
+    </pre> -->
   </main>
 </template>
