@@ -1,7 +1,7 @@
 import { computed, type Ref, type ComputedRef, ref } from 'vue'
 import { defineStore } from 'pinia'
 import { useUrlSearchParams } from '@vueuse/core'
-import type { LeimPeriod, LeimPeriodShort } from '@/models/Date'
+import type { LeimDate, LeimPeriod, LeimPeriodShort } from '@/models/Date'
 
 type CalendarViewType = 'month' | 'year' | 'decade' | 'century'
 
@@ -80,6 +80,14 @@ export const useCalendar = defineStore('calendar', () => {
   const defaultDay = String(12)
   const defaultMonth = String(7)
   const defaultYear = String(3209)
+  const defaultDate: ComputedRef<LeimDate> = computed(() => {
+    return {
+      day: Number(defaultDay),
+      month: Number(defaultMonth),
+      year: Number(defaultYear),
+      period: 'nante'
+    }
+  })
 
   // Assign default values if no params exist in URL
   if (!params.day) {
@@ -140,6 +148,13 @@ export const useCalendar = defineStore('calendar', () => {
     currentPeriod,
     currentPeriodAbbr,
     currentDateTitle
+  }
+
+  const currentLeimDate: LeimDate = {
+    day: Number(currentDay.value),
+    month: Number(currentMonth.value),
+    year: Number(currentYear.value),
+    period: currentPeriod.value
   }
 
   /**
@@ -223,17 +238,33 @@ export const useCalendar = defineStore('calendar', () => {
     }
   }
 
+  function compareTwoDates(date1: LeimDate, date2: LeimDate) {
+    // To refacto to be more precise
+    return JSON.stringify({ ...date1 }) === JSON.stringify({ ...date2 })
+  }
+
+  function jumpToDefaultDate() {
+    params.day = defaultDay
+    params.month = defaultMonth
+    params.year = defaultYear
+    currentConfig.value.viewType = 'month'
+  }
+
   return {
     staticConfig,
     viewTypeOptions,
     currentConfig,
     currentDate,
+    defaultDate,
+    currentLeimDate,
     params,
     getPeriodOfYear,
     incrementMonth,
     decrementMonth,
     setMonth,
     incrementYear,
-    decrementYear
+    decrementYear,
+    jumpToDefaultDate,
+    compareTwoDates
   }
 })

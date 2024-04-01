@@ -10,6 +10,7 @@ export type Character = {
 export const useCharacters = defineStore('characters', () => {
   const characters: Character[] = [
     { name: 'Quacille Lévios', birth: { day: 3, month: 6, year: 3162, period: 'nante' } },
+    { name: 'Quacille Lévios', birth: { day: 3, month: 6, year: 3162, period: 'nante' } },
     { name: 'Lazarus Tymos', birth: { day: 29, month: 9, year: 3145, period: 'nante' } },
     { name: 'Ernestin Pomel', birth: { day: 11, month: 2, year: 3179, period: 'nante' } }
   ]

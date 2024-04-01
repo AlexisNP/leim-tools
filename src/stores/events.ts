@@ -5,9 +5,10 @@ import { useCharacters, type Character } from './characters'
 import type { LeimDate } from '@/models/Date'
 import { useCalendar } from './calendar'
 
-type CalendarEvent = {
+export type CalendarEvent = {
   title: string
   date: LeimDate
+  category: 'birth' | 'death'
 }
 
 export const useCalendarEvents = defineStore('calendar-events', () => {
@@ -20,7 +21,11 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
   )
   const characterBirthEvents = computed(() => {
     return charactersWithBirthData.value.map((character) => {
-      return { title: `Naissance de ${character.name}`, date: character.birth } as CalendarEvent
+      return {
+        title: `${character.name}`,
+        date: character.birth,
+        category: 'birth'
+      } as CalendarEvent
     })
   })
 
@@ -30,7 +35,11 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
   )
   const characterDeathEvents = computed(() => {
     return charactersWithDeathData.value.map((character) => {
-      return { title: `Décès de ${character.name}`, date: character.death } as CalendarEvent
+      return {
+        title: `${character.name}`,
+        date: character.death,
+        category: 'death'
+      } as CalendarEvent
     })
   })
 

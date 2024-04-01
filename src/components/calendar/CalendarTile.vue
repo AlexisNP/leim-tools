@@ -1,21 +1,49 @@
 <script lang="ts" setup>
 import type { LeimDate } from '@/models/Date'
+import { useCalendar } from '@/stores/calendar'
+import { useCalendarEvents } from '@/stores/events'
+import { computed } from 'vue'
+import CalendarEvent from './CalendarEvent.vue'
 
 const props = defineProps<{
   date: LeimDate
   faded?: boolean
 }>()
+
+const { compareTwoDates, defaultDate } = useCalendar()
+const { currentEvents } = useCalendarEvents()
+
+const eventsForTheDay = computed(() => {
+  return currentEvents.filter((currentEvent) => {
+    return compareTwoDates(currentEvent.date, props.date)
+  })
+})
+
+const isDefaultDate = computed(() => {
+  return compareTwoDates(props.date, defaultDate)
+})
 </script>
 
 <template>
   <div
-    class="tile relative text-xs text-center p-4 border-slate-700"
+    class="tile relative text-xs p-2 border-slate-700"
     :class="{
       'text-slate-500': props.faded,
       'text-slate-300': !props.faded
     }"
   >
-    <slot />
+    <div class="text-center">
+      <span
+        class="inline-flex w-8 h-8 aspect-square items-center justify-center rounded-full font-bold"
+        :class="{ 'bg-slate-800': isDefaultDate }"
+        >{{ date.day }}</span
+      >
+    </div>
+    <ul v-if="eventsForTheDay.length > 0" class="grid gap-1">
+      <li v-for="event in eventsForTheDay" :key="event.title">
+        <CalendarEvent :event />
+      </li>
+    </ul>
   </div>
 </template>
 

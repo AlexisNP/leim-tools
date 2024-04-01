@@ -45,17 +45,12 @@ function getNextMonthDate(day: number): LeimDate {
         year: Number(currentDate.currentYear),
         period: currentDate.currentPeriod
       }"
-    >
-      <span class="font-bold">{{ day }}</span>
-    </CalendarTile>
-
+    />
     <CalendarTile
       v-for="nextMonthDay in 8"
       :key="nextMonthDay"
       faded
       :date="getNextMonthDate(nextMonthDay)"
-    >
-      <span>{{ nextMonthDay }}</span>
-    </CalendarTile>
+    />
   </div>
 </template>
