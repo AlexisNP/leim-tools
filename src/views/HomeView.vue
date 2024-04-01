@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import Calendar from '@/components/Calendar.vue'
+import Calendar from '@/components/calendar/Calendar.vue'
 </script>
 
 <template>
-  <main class="container h-full grid items-center">
+  <main class="h-full">
     <Calendar />
     <!-- <pre>
       {{ currentDate }}

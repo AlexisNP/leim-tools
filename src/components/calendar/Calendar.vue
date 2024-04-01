@@ -5,35 +5,30 @@ import Century from './state/Century.vue'
 import Decade from './state/Decade.vue'
 import Monthly from './state/Monthly.vue'
 import Year from './state/Year.vue'
+import { computed } from 'vue'
 
 const { currentConfig } = useCalendar()
 
-let currentViewComponent: any
+const currentViewComponent = computed(() => {
+  switch (currentConfig.viewType) {
+    case 'month':
+      return Monthly
 
-switch (currentConfig.viewType) {
-  case 'month':
-    currentViewComponent = Monthly
-    break
+    case 'year':
+      return Year
 
-  case 'year':
-    currentViewComponent = Year
-    break
+    case 'decade':
+      return Decade
 
-  case 'decade':
-    currentViewComponent = Decade
-    break
-
-  case 'century':
-    currentViewComponent = Century
-    break
-
-  default:
-    break
-}
+    case 'century':
+    default:
+      return Century
+  }
+})
 </script>
 
 <template>
-  <div>
+  <div class="h-full grid grid-rows-[auto,1fr]">
     <CalendarMenu />
     <component :is="currentViewComponent" />
   </div>

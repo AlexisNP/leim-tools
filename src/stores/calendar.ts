@@ -24,6 +24,7 @@ type CalendarCurrentDate = {
   currentYear: ComputedRef<string | string[]>
   currentPeriod: Ref<LeimPeriod>
   currentPeriodAbbr: Ref<LeimPeriodShort>
+  currentDateTitle: ComputedRef<string>
 }
 
 export const useCalendar = defineStore('calendar', () => {
@@ -63,6 +64,12 @@ export const useCalendar = defineStore('calendar', () => {
   const currentConfig: Ref<CalendarCurrentConfig> = ref({
     viewType: 'month'
   })
+  const viewTypeOptions: Set<CalendarViewType> = new Set<CalendarViewType>([
+    'month',
+    'year',
+    'decade',
+    'century'
+  ])
 
   // Get date from URL params
   const params = useUrlSearchParams('history', {
@@ -105,6 +112,25 @@ export const useCalendar = defineStore('calendar', () => {
     return currentPeriod.value === 'ante' ? 'A.R' : 'N.R'
   })
 
+  const currentDateTitle = computed(() => {
+    switch (currentConfig.value.viewType) {
+      case 'month':
+        return `${currentMonthName.value} ${currentYear.value} ${currentPeriodAbbr.value}`
+
+      case 'year':
+        return `Année ${currentYear.value} ${currentPeriodAbbr.value}`
+
+      case 'decade':
+        return `Années ${Number(currentYear.value)} ${getPeriodOfYear(Number(currentYear.value)).short} - ${Number(currentYear.value) + 10} ${getPeriodOfYear(Number(currentYear.value) + 10).short}`
+
+      case 'century':
+        return `Années ${Number(currentYear.value)} ${getPeriodOfYear(Number(currentYear.value)).short} - ${Number(currentYear.value) + 100} ${getPeriodOfYear(Number(currentYear.value) + 100).short}`
+
+      default:
+        return 'Date inconnue'
+    }
+  })
+
   // Create base config
   const currentDate: CalendarCurrentDate = {
     currentDay,
@@ -112,7 +138,8 @@ export const useCalendar = defineStore('calendar', () => {
     currentMonthName,
     currentYear,
     currentPeriod,
-    currentPeriodAbbr
+    currentPeriodAbbr,
+    currentDateTitle
   }
 
   /**
@@ -198,6 +225,7 @@ export const useCalendar = defineStore('calendar', () => {
 
   return {
     staticConfig,
+    viewTypeOptions,
     currentConfig,
     currentDate,
     params,
