@@ -40,7 +40,7 @@ const isDefaultDate = computed(() => {
         >{{ date.day }}</span
       >
     </div>
-    <ul v-if="eventsForTheDay.length > 0" class="grid gap-1">
+    <ul v-if="eventsForTheDay.length > 0" class="absolute top-12 bottom-0 inset-x-2 grid gap-1">
       <li v-for="event in eventsForTheDay" :key="event.title">
         <CalendarEvent :event />
       </li>

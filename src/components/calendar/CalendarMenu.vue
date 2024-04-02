@@ -28,7 +28,7 @@ const {
           <div class="flex items-center gap-6">
             <menu class="flex items-center gap-2">
               <li>
-                <Button @click="jumpToDefaultDate"> Today </Button>
+                <Button @click="jumpToDefaultDate" size="sm"> Today </Button>
               </li>
               <li>
                 <!-- Implement decrementDate to account for other mods -->

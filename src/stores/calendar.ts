@@ -104,26 +104,27 @@ export const useCalendar = defineStore('calendar', () => {
 
   const currentMonth = computed(() => params.month)
   // Gets the label from currentMonth index
-  const currentMonthName = computed(() => {
-    const index = Number(currentMonth.value)
-    return staticConfig.months[index]
-  })
+  const currentMonthName = computed(() => getMonthName(Number(currentMonth.value)))
 
   const currentYear = computed(() => params.year)
 
   // Get period from currentYear
-  const currentPeriod: ComputedRef<LeimPeriod> = computed(() => {
-    const year = Number(currentYear.value)
-    return year >= 0 ? 'nante' : 'ante'
-  })
-  const currentPeriodAbbr: ComputedRef<LeimPeriodShort> = computed(() => {
-    return currentPeriod.value === 'ante' ? 'A.R' : 'N.R'
-  })
+  const currentPeriod: ComputedRef<LeimPeriod> = computed(
+    () => getPeriodOfYear(Number(currentYear.value)).long
+  )
+  const currentPeriodAbbr: ComputedRef<LeimPeriodShort> = computed(
+    () => getPeriodOfYear(Number(currentYear.value)).short
+  )
 
   const currentDateTitle = computed(() => {
     switch (currentConfig.value.viewType) {
       case 'month':
-        return `${currentMonthName.value} ${currentYear.value} ${currentPeriodAbbr.value}`
+        return getFormattedDateTitle({
+          day: Number(currentDate.currentDay.value),
+          month: Number(currentDate.currentMonth.value),
+          year: Number(currentDate.currentYear.value),
+          period: currentDate.currentPeriod.value
+        })
 
       case 'year':
         return `Année ${currentYear.value} ${currentPeriodAbbr.value}`
@@ -238,6 +239,19 @@ export const useCalendar = defineStore('calendar', () => {
     }
   }
 
+  function getMonthName(monthNumber: number) {
+    const index = Number(monthNumber)
+    return staticConfig.months[index]
+  }
+
+  function getFormattedDateTitle(date: LeimDate, showNumber?: boolean): string {
+    if (showNumber) {
+      return `${date.day} ${getMonthName(date.month)} ${date.year} ${getPeriodOfYear(date.year).short}`
+    }
+
+    return `${getMonthName(date.month)} ${date.year} ${getPeriodOfYear(date.year).short}`
+  }
+
   function compareTwoDates(date1: LeimDate, date2: LeimDate) {
     // To refacto to be more precise
     return JSON.stringify({ ...date1 }) === JSON.stringify({ ...date2 })
@@ -265,6 +279,7 @@ export const useCalendar = defineStore('calendar', () => {
     incrementYear,
     decrementYear,
     jumpToDefaultDate,
-    compareTwoDates
+    compareTwoDates,
+    getFormattedDateTitle
   }
 })
