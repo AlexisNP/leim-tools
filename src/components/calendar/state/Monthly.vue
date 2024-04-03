@@ -11,8 +11,8 @@ const daysPerMonth = computed(() => staticConfig.daysPerMonth)
 
 function getNextMonthDate(day: number): LeimDate {
   let nextDay = day
-  let nextMonth = Number(currentDate.currentMonth) + 1
-  let nextYear = Number(currentDate.currentYear)
+  let nextMonth = currentDate.currentMonth + 1
+  let nextYear = currentDate.currentYear
   let nextPeriod = currentDate.currentPeriod
 
   // If the new value would exceed the max number of month per year
@@ -59,8 +59,8 @@ const moveCalendarRight = useThrottleFn(() => {
       :key="day"
       :date="{
         day: day,
-        month: Number(currentDate.currentMonth),
-        year: Number(currentDate.currentYear),
+        month: currentDate.currentMonth,
+        year: currentDate.currentYear,
         period: currentDate.currentPeriod
       }"
     />

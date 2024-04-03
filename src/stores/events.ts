@@ -93,23 +93,23 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
     switch (currentConfig.viewType) {
       case 'month':
         return (
-          event.date.month === Number(currentDate.currentMonth) ||
-          (event.date.month === Number(currentDate.currentMonth) + 1 && event.date.day <= 8) // This is to allow leap events from appearing on the last 8 tiles
+          event.date.month === currentDate.currentMonth ||
+          (event.date.month === currentDate.currentMonth + 1 && event.date.day <= 8) // This is to allow leap events from appearing on the last 8 tiles
         )
 
       case 'year':
-        return event.date.year === Number(currentDate.currentYear)
+        return event.date.year === currentDate.currentYear
 
       case 'decade':
         return (
-          event.date.year >= Number(currentDate.currentYear) &&
-          event.date.year <= Number(currentDate.currentYear) + 10
+          event.date.year >= currentDate.currentYear &&
+          event.date.year <= currentDate.currentYear + 10
         )
 
       case 'century':
         return (
-          event.date.year >= Number(currentDate.currentYear) &&
-          event.date.year <= Number(currentDate.currentYear) + 100
+          event.date.year >= currentDate.currentYear &&
+          event.date.year <= currentDate.currentYear + 100
         )
 
       default:

@@ -18,10 +18,10 @@ type CalendarCurrentConfig = {
 }
 
 type CalendarCurrentDate = {
-  currentDay: ComputedRef<string | string[]>
-  currentMonth: ComputedRef<string | string[]>
+  currentDay: ComputedRef<number>
+  currentMonth: ComputedRef<number>
   currentMonthName: ComputedRef<string>
-  currentYear: ComputedRef<string | string[]>
+  currentYear: ComputedRef<number>
   currentPeriod: Ref<LeimPeriod>
   currentPeriodAbbr: Ref<LeimPeriodShort>
   currentDateTitle: ComputedRef<string>
@@ -77,52 +77,58 @@ export const useCalendar = defineStore('calendar', () => {
   })
 
   // Default date settings (current day)
-  const defaultDay = String(12)
-  const defaultMonth = String(7)
-  const defaultYear = String(3209)
+  const defaultDay = 12
+  const defaultMonth = 7
+  const defaultYear = 3209
   const defaultDate: ComputedRef<LeimDate> = computed(() => {
     return {
-      day: Number(defaultDay),
-      month: Number(defaultMonth),
-      year: Number(defaultYear),
+      day: defaultDay,
+      month: defaultMonth,
+      year: defaultYear,
       period: 'nante'
     }
   })
 
   // Assign default values if no params exist in URL
   if (!params.day) {
-    params.day = defaultDay
+    params.day = defaultDay.toString()
   }
   if (!params.month) {
-    params.month = defaultMonth
+    params.month = defaultMonth.toString()
   }
   if (!params.year) {
-    params.year = defaultYear
+    params.year = defaultYear.toString()
   }
 
-  const currentDay = computed(() => params.day)
+  const currentDay = computed(() => {
+    return Number(params.day)
+  })
 
-  const currentMonth = computed(() => params.month)
+  const currentMonth = computed(() => {
+    return Number(params.month)
+  })
   // Gets the label from currentMonth index
-  const currentMonthName = computed(() => getMonthName(Number(currentMonth.value)))
+  const currentMonthName = computed(() => getMonthName(currentMonth.value))
 
-  const currentYear = computed(() => params.year)
+  const currentYear = computed(() => {
+    return Number(params.year)
+  })
 
   // Get period from currentYear
   const currentPeriod: ComputedRef<LeimPeriod> = computed(
-    () => getPeriodOfYear(Number(currentYear.value)).long
+    () => getPeriodOfYear(currentYear.value).long
   )
   const currentPeriodAbbr: ComputedRef<LeimPeriodShort> = computed(
-    () => getPeriodOfYear(Number(currentYear.value)).short
+    () => getPeriodOfYear(currentYear.value).short
   )
 
   const currentDateTitle = computed(() => {
     switch (currentConfig.value.viewType) {
       case 'month':
         return getFormattedDateTitle({
-          day: Number(currentDate.currentDay.value),
-          month: Number(currentDate.currentMonth.value),
-          year: Number(currentDate.currentYear.value),
+          day: currentDate.currentDay.value,
+          month: currentDate.currentMonth.value,
+          year: currentDate.currentYear.value,
           period: currentDate.currentPeriod.value
         })
 
@@ -130,10 +136,10 @@ export const useCalendar = defineStore('calendar', () => {
         return `Année ${currentYear.value} ${currentPeriodAbbr.value}`
 
       case 'decade':
-        return `Années ${Number(currentYear.value)} ${getPeriodOfYear(Number(currentYear.value)).short} - ${Number(currentYear.value) + 10} ${getPeriodOfYear(Number(currentYear.value) + 10).short}`
+        return `Années ${currentYear.value} ${getPeriodOfYear(currentYear.value).short} - ${currentYear.value + 10} ${getPeriodOfYear(currentYear.value + 10).short}`
 
       case 'century':
-        return `Années ${Number(currentYear.value)} ${getPeriodOfYear(Number(currentYear.value)).short} - ${Number(currentYear.value) + 100} ${getPeriodOfYear(Number(currentYear.value) + 100).short}`
+        return `Années ${currentYear.value} ${getPeriodOfYear(currentYear.value).short} - ${currentYear.value + 100} ${getPeriodOfYear(currentYear.value + 100).short}`
 
       default:
         return 'Date inconnue'
@@ -152,9 +158,9 @@ export const useCalendar = defineStore('calendar', () => {
   }
 
   const currentLeimDate: LeimDate = {
-    day: Number(currentDay.value),
-    month: Number(currentMonth.value),
-    year: Number(currentYear.value),
+    day: currentDay.value,
+    month: currentMonth.value,
+    year: currentYear.value,
     period: currentPeriod.value
   }
 
@@ -162,14 +168,14 @@ export const useCalendar = defineStore('calendar', () => {
     switch (currentConfig.value.viewType) {
       case 'month':
         return (
-          defaultDate.value.month === Number(currentDate.currentMonth.value) &&
-          defaultDate.value.year === Number(currentDate.currentYear.value)
+          defaultDate.value.month === currentDate.currentMonth.value &&
+          defaultDate.value.year === currentDate.currentYear.value
         )
 
       case 'year':
       case 'decade':
       case 'century':
-        return defaultDate.value.year === Number(currentDate.currentYear.value)
+        return defaultDate.value.year === currentDate.currentYear.value
 
       default:
         return false
@@ -297,9 +303,9 @@ export const useCalendar = defineStore('calendar', () => {
   }
 
   function jumpToDefaultDate() {
-    params.day = defaultDay
-    params.month = defaultMonth
-    params.year = defaultYear
+    params.day = defaultDay.toString()
+    params.month = defaultMonth.toString()
+    params.year = defaultYear.toString()
     currentConfig.value.viewType = 'month'
   }
 
