@@ -161,7 +161,10 @@ export const useCalendar = defineStore('calendar', () => {
   const isCurrentScreenActive = computed(() => {
     switch (currentConfig.value.viewType) {
       case 'month':
-        return defaultDate.value.month === Number(currentDate.currentMonth.value)
+        return (
+          defaultDate.value.month === Number(currentDate.currentMonth.value) &&
+          defaultDate.value.year === Number(currentDate.currentYear.value)
+        )
 
       case 'year':
       case 'decade':
