@@ -9,8 +9,16 @@ export type CalendarEvent = {
   title: string
   date: LeimDate
   description?: string
-  category?: 'birth' | 'death' | 'catastrophe' | 'natural-disaster' | 'player'
+  category?: CalendarEventCategory
 }
+
+export type CalendarEventCategory =
+  | 'birth'
+  | 'death'
+  | 'catastrophe'
+  | 'legal'
+  | 'natural-disaster'
+  | 'player'
 
 export const useCalendarEvents = defineStore('calendar-events', () => {
   const { currentDate, currentConfig } = useCalendar()
@@ -28,12 +36,20 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
       title: "Naufrage de l'Éclipse",
       description:
         "L'Éclipse, le navire de la garde contenant des condamnés à destination des Cages Handaniennes, s'échoue au large des côtes montagneuses de la Lance d'Aldys.",
-      date: { day: 14, month: 7, year: 3209, period: 'nante' }
+      date: { day: 14, month: 7, year: 3209, period: 'nante' },
+      category: 'catastrophe'
     },
     {
       title: 'Sulvan et Anastael atteignent Bamast',
       date: { day: 19, month: 2, year: 3210, period: 'nante' },
       category: 'player'
+    },
+    {
+      title: 'Jugement de Bormis Griloup',
+      description:
+        "Bromis Griloup est jugé coupable d'escroquerie et sabotage aux Cours d'Acier de Tourgrise. Il purgera une peine de 10 ans au sein des prisons royales.",
+      date: { day: 4, month: 8, year: 3209, period: 'nante' },
+      category: 'legal'
     }
   ])
 

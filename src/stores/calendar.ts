@@ -244,6 +244,27 @@ export const useCalendar = defineStore('calendar', () => {
     return staticConfig.months[index]
   }
 
+  function setViewType(viewType: CalendarViewType): void {
+    currentConfig.value.viewType = viewType
+  }
+
+  function getViewTypeTitle(viewType: CalendarViewType): string {
+    switch (viewType) {
+      case 'year':
+        return 'Année'
+
+      case 'decade':
+        return 'Décennie'
+
+      case 'century':
+        return 'Siècle'
+
+      case 'month':
+      default:
+        return 'Mois'
+    }
+  }
+
   function getFormattedDateTitle(date: LeimDate, showNumber?: boolean): string {
     if (showNumber) {
       return `${date.day} ${getMonthName(date.month)} ${date.year} ${getPeriodOfYear(date.year).short}`
@@ -280,6 +301,9 @@ export const useCalendar = defineStore('calendar', () => {
     decrementYear,
     jumpToDefaultDate,
     compareTwoDates,
-    getFormattedDateTitle
+    getFormattedDateTitle,
+    getMonthName,
+    setViewType,
+    getViewTypeTitle
   }
 })

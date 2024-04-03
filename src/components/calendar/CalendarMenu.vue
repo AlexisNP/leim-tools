@@ -11,6 +11,7 @@ import {
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { useCalendar } from '@/stores/calendar'
 import Button from '../ui/button/Button.vue'
+import CalendarSwitch from './CalendarSwitch.vue'
 
 const {
   currentConfig,
@@ -33,6 +34,9 @@ const defaultDateFormatted = computed(() => getFormattedDateTitle(defaultDate, t
         <div class="md:col-span-9">
           <div class="flex items-center gap-6">
             <menu class="flex items-center gap-2">
+              <li>
+                <CalendarSwitch />
+              </li>
               <li>
                 <TooltipProvider :delayDuration="250">
                   <Tooltip>
