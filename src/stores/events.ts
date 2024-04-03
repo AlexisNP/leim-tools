@@ -92,7 +92,10 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
   function shouldEventBeDisplayed(event: CalendarEvent): boolean {
     switch (currentConfig.viewType) {
       case 'month':
-        return event.date.month === Number(currentDate.currentMonth)
+        return (
+          event.date.month === Number(currentDate.currentMonth) ||
+          (event.date.month === Number(currentDate.currentMonth) + 1 && event.date.day <= 8) // This is to allow leap events from appearing on the last 8 tiles
+        )
 
       case 'year':
         return event.date.year === Number(currentDate.currentYear)
