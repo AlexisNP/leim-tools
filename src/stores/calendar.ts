@@ -2,6 +2,7 @@ import { computed, type Ref, type ComputedRef, ref } from 'vue'
 import { defineStore } from 'pinia'
 import { useUrlSearchParams } from '@vueuse/core'
 import type { LeimDate, LeimPeriod, LeimPeriodShort } from '@/models/Date'
+import { isDigit, isInt, isSignedInt } from '@/utils/Regex'
 
 type CalendarViewType = 'month' | 'year' | 'decade' | 'century'
 
@@ -73,7 +74,7 @@ export const useCalendar = defineStore('calendar', () => {
 
   // Get date from URL params
   const params = useUrlSearchParams('history', {
-    removeNullishValues: true
+    write: true
   })
 
   // Default date settings (current day)
@@ -90,13 +91,13 @@ export const useCalendar = defineStore('calendar', () => {
   })
 
   // Assign default values if no params exist in URL
-  if (!params.day) {
+  if (!params.day || typeof params.day === 'object' || !isInt(params.day)) {
     params.day = defaultDay.toString()
   }
-  if (!params.month) {
+  if (!params.month || typeof params.month === 'object' || !isDigit(params.month)) {
     params.month = defaultMonth.toString()
   }
-  if (!params.year) {
+  if (!params.year || typeof params.year === 'object' || !isSignedInt(params.year)) {
     params.year = defaultYear.toString()
   }
 
