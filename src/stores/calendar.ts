@@ -158,13 +158,6 @@ export const useCalendar = defineStore('calendar', () => {
     currentDateTitle
   }
 
-  const currentLeimDate: LeimDate = {
-    day: currentDay.value,
-    month: currentMonth.value,
-    year: currentYear.value,
-    period: currentPeriod.value
-  }
-
   const isCurrentScreenActive = computed(() => {
     switch (currentConfig.value.viewType) {
       case 'month':
@@ -316,7 +309,6 @@ export const useCalendar = defineStore('calendar', () => {
     currentConfig,
     currentDate,
     defaultDate,
-    currentLeimDate,
     params,
     getPeriodOfYear,
     incrementMonth,
