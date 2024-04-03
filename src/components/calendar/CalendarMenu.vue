@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { computed } from 'vue'
 import {
   Select,
   SelectContent,
@@ -7,17 +8,22 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { useCalendar } from '@/stores/calendar'
 import Button from '../ui/button/Button.vue'
 
 const {
   currentConfig,
   currentDate,
+  defaultDate,
   viewTypeOptions,
   decrementMonth,
   incrementMonth,
-  jumpToDefaultDate
+  jumpToDefaultDate,
+  getFormattedDateTitle
 } = useCalendar()
+
+const defaultDateFormatted = computed(() => getFormattedDateTitle(defaultDate, true))
 </script>
 
 <template>
@@ -28,39 +34,66 @@ const {
           <div class="flex items-center gap-6">
             <menu class="flex items-center gap-2">
               <li>
-                <Button @click="jumpToDefaultDate" size="sm"> Today </Button>
+                <TooltipProvider :delayDuration="250">
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <Button @click="jumpToDefaultDate" size="sm"> Aujourd'hui </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>{{ defaultDateFormatted }}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </li>
               <li>
                 <!-- Implement decrementDate to account for other mods -->
-                <Button variant="outline" size="icon" @click="decrementMonth">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="#FFF"
-                    viewBox="0 0 256 256"
-                  >
-                    <path
-                      d="M165.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L91.31,128Z"
-                    />
-                  </svg>
-                </Button>
+                <TooltipProvider :delayDuration="250">
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <Button variant="outline" size="icon" @click="decrementMonth">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          fill="#FFF"
+                          viewBox="0 0 256 256"
+                        >
+                          <path
+                            d="M165.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L91.31,128Z"
+                          />
+                        </svg>
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Mois précédent</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </li>
               <li>
                 <!-- Implement decrementDate to account for other mods -->
-                <Button variant="outline" size="icon" @click="incrementMonth">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="#FFF"
-                    viewBox="0 0 256 256"
-                  >
-                    <path
-                      d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"
-                    />
-                  </svg>
-                </Button>
+                <TooltipProvider :delayDuration="250">
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <Button variant="outline" size="icon" @click="incrementMonth">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          fill="#FFF"
+                          viewBox="0 0 256 256"
+                        >
+                          <path
+                            d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"
+                          />
+                        </svg>
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Mois suivant</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </li>
             </menu>
             <h1 class="text-2xl font-bold">

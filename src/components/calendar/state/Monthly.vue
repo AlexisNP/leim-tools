@@ -3,8 +3,9 @@ import type { LeimDate } from '@/models/Date'
 import { useCalendar } from '@/stores/calendar'
 import { computed } from 'vue'
 import CalendarTile from '../CalendarTile.vue'
+import { useThrottleFn } from '@vueuse/core'
 
-const { staticConfig, currentDate } = useCalendar()
+const { staticConfig, currentDate, decrementMonth, incrementMonth } = useCalendar()
 
 const daysPerMonth = computed(() => staticConfig.daysPerMonth)
 
@@ -32,10 +33,27 @@ function getNextMonthDate(day: number): LeimDate {
     period: nextPeriod
   }
 }
+
+function handleWheel(e: WheelEvent) {
+  const isMovingUp = e.deltaY < 0
+  if (isMovingUp) {
+    moveCalendarLeft()
+  } else {
+    moveCalendarRight()
+  }
+}
+
+const moveCalendarLeft = useThrottleFn(() => {
+  decrementMonth()
+}, 100)
+
+const moveCalendarRight = useThrottleFn(() => {
+  incrementMonth()
+}, 100)
 </script>
 
 <template>
-  <div class="grid" :class="`grid-cols-10`">
+  <div class="grid" :class="`grid-cols-10`" @wheel="handleWheel">
     <CalendarTile
       v-for="day in daysPerMonth"
       :key="day"
