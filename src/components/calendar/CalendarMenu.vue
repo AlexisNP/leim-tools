@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { computed } from 'vue'
 import {
   Select,
   SelectContent,
@@ -12,19 +11,10 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { useCalendar } from '@/stores/calendar'
 import Button from '../ui/button/Button.vue'
 import CalendarSwitch from './CalendarSwitch.vue'
+import CalendarJumpToday from './CalendarJumpToday.vue'
 
-const {
-  currentConfig,
-  currentDate,
-  defaultDate,
-  viewTypeOptions,
-  decrementMonth,
-  incrementMonth,
-  jumpToDefaultDate,
-  getFormattedDateTitle
-} = useCalendar()
-
-const defaultDateFormatted = computed(() => getFormattedDateTitle(defaultDate, true))
+const { currentConfig, currentDate, viewTypeOptions, decrementMonth, incrementMonth } =
+  useCalendar()
 </script>
 
 <template>
@@ -38,16 +28,7 @@ const defaultDateFormatted = computed(() => getFormattedDateTitle(defaultDate, t
                 <CalendarSwitch />
               </li>
               <li>
-                <TooltipProvider :delayDuration="250">
-                  <Tooltip>
-                    <TooltipTrigger>
-                      <Button @click="jumpToDefaultDate" size="sm"> Aujourd'hui </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>{{ defaultDateFormatted }}</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
+                <CalendarJumpToday />
               </li>
               <li>
                 <!-- Implement decrementDate to account for other mods -->
@@ -105,20 +86,7 @@ const defaultDateFormatted = computed(() => getFormattedDateTitle(defaultDate, t
             </h1>
           </div>
         </div>
-        <div class="md:col-span-3">
-          <Select v-model="currentConfig.viewType">
-            <SelectTrigger>
-              <SelectValue placeholder="Changer le mode d'affichage" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectItem v-for="(option, index) in viewTypeOptions" :key="index" :value="option">
-                  {{ option }}
-                </SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
+        <div class="md:col-span-3"></div>
       </div>
     </div>
   </header>

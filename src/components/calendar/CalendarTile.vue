@@ -44,7 +44,7 @@ const isDefaultDate = computed(() => {
       v-if="eventsForTheDay.length > 0"
       class="absolute top-12 bottom-2 inset-x-2 grid auto-rows-min gap-1"
       :class="{
-        'opacity-50': props.faded
+        'opacity-40': props.faded
       }"
     >
       <li v-for="event in eventsForTheDay" :key="event.title" class="grid">

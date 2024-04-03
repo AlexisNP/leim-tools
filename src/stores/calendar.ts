@@ -158,6 +158,21 @@ export const useCalendar = defineStore('calendar', () => {
     period: currentPeriod.value
   }
 
+  const isCurrentScreenActive = computed(() => {
+    switch (currentConfig.value.viewType) {
+      case 'month':
+        return defaultDate.value.month === Number(currentDate.currentMonth.value)
+
+      case 'year':
+      case 'decade':
+      case 'century':
+        return defaultDate.value.year === Number(currentDate.currentYear.value)
+
+      default:
+        return false
+    }
+  })
+
   /**
    * Moves the current date forward one month
    */
@@ -304,6 +319,7 @@ export const useCalendar = defineStore('calendar', () => {
     getFormattedDateTitle,
     getMonthName,
     setViewType,
-    getViewTypeTitle
+    getViewTypeTitle,
+    isCurrentScreenActive
   }
 })
