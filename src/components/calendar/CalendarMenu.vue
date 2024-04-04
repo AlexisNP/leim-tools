@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useCalendar } from '@/stores/calendar'
-import CalendarJumpToday from './CalendarJumpToday.vue'
-import CalendarNavigation from './CalendarNavigation.vue'
+import CalendarMenuToday from './CalendarMenuToday.vue'
+import CalendarMenuNav from './CalendarMenuNav.vue'
 import CalendarSwitch from './CalendarSwitch.vue'
 
 const { currentDate } = useCalendar()
@@ -18,10 +18,10 @@ const { currentDate } = useCalendar()
                 <CalendarSwitch />
               </li>
               <li>
-                <CalendarJumpToday />
+                <CalendarMenuToday />
               </li>
               <li>
-                <CalendarNavigation />
+                <CalendarMenuNav />
               </li>
             </menu>
             <h1 class="text-2xl font-bold">
