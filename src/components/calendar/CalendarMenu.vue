@@ -30,7 +30,7 @@ const { currentDate } = useCalendar()
             </h1>
           </div>
         </div>
-        <div class="md:col-span-3">
+        <div class="md:col-span-3 flex justify-end">
           <CalendarMenuSearch />
         </div>
       </div>
