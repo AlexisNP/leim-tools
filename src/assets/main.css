@@ -75,7 +75,4 @@
   body {
     @apply bg-background text-foreground;
   }
-  svg {
-    fill: hsl(var(--foreground));
-  }
 }
