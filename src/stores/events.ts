@@ -56,7 +56,7 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
   const characterBirthEvents = computed(() => {
     return charactersWithBirthData.map((character) => {
       return {
-        title: `${character.name}`,
+        title: `Naissance de ${character.name}`,
         date: character.birth,
         category: 'birth'
       } as CalendarEvent
@@ -66,7 +66,7 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
   const characterDeathEvents = computed(() => {
     return charactersWithDeathData.map((character) => {
       return {
-        title: `${character.name}`,
+        title: `Décès de ${character.name}`,
         date: character.death,
         category: 'death'
       } as CalendarEvent
