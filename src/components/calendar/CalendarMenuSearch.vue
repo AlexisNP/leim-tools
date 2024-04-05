@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input'
 import { PhMagnifyingGlass } from '@phosphor-icons/vue'
 import { useCalendarEvents } from '@/stores/events'
 import CalendarEventList from './CalendarEventList.vue'
+import { useMagicKeys, whenever } from '@vueuse/core'
 
 const { allEvents } = useCalendarEvents()
 
@@ -34,15 +35,26 @@ function resetSearch() {
   searchQuery.value = ''
 }
 
+function openDialog() {
+  modalOpen.value = true
+}
+
 function closeDialog() {
   modalOpen.value = false
 }
+
+// Key combos to deploy modal
+const keys = useMagicKeys()
+
+whenever(keys.control_period, () => {
+  openDialog()
+})
 </script>
 
 <template>
   <Dialog v-model:open="modalOpen" @update:open="resetSearch">
     <DialogTrigger>
-      <Button>
+      <Button search-slash>
         <PhMagnifyingGlass size="20" weight="light" />
         Recherche avancée
       </Button>
