@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { PhMagnifyingGlass } from '@phosphor-icons/vue'
 import { useCalendarEvents } from '@/stores/events'
-import CalendarEventList from './CalendarEventList.vue'
+import CalendarMenuSearchResults from './CalendarMenuSearchResults.vue'
 import { useMagicKeys, whenever } from '@vueuse/core'
 
 const { allEvents } = useCalendarEvents()
@@ -73,6 +73,7 @@ whenever(keys.control_period, () => {
           placeholder="Rechercher un évènement, un personnage…"
           class="pl-10 py-6 text-lg"
           v-model:model-value="searchQuery"
+          autocomplete="off"
         />
         <span class="absolute start-1 inset-y-0 flex items-center justify-center px-2 opacity-50">
           <PhMagnifyingGlass size="20" />
@@ -81,7 +82,7 @@ whenever(keys.control_period, () => {
 
       <div v-if="displaySearch && searchResults.length > 0" class="overflow-y-auto">
         <hr class="mb-4" />
-        <CalendarEventList :events="searchResults" @jumped-to-date="closeDialog()" />
+        <CalendarMenuSearchResults :events="searchResults" @jumped-to-date="closeDialog()" />
       </div>
     </DialogContent>
   </Dialog>
