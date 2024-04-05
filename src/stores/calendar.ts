@@ -296,10 +296,14 @@ export const useCalendar = defineStore('calendar', () => {
     return JSON.stringify({ ...date1 }) === JSON.stringify({ ...date2 })
   }
 
+  function jumpToDate(date: LeimDate) {
+    params.day = date.day.toString()
+    params.month = date.month.toString()
+    params.year = date.year.toString()
+  }
+
   function jumpToDefaultDate() {
-    params.day = defaultDay.toString()
-    params.month = defaultMonth.toString()
-    params.year = defaultYear.toString()
+    jumpToDate(defaultDate.value)
     currentConfig.value.viewType = 'month'
   }
 
@@ -316,6 +320,7 @@ export const useCalendar = defineStore('calendar', () => {
     setMonth,
     incrementYear,
     decrementYear,
+    jumpToDate,
     jumpToDefaultDate,
     compareTwoDates,
     getFormattedDateTitle,

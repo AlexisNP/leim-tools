@@ -73,6 +73,10 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
     })
   })
 
+  const allEvents = computed(() => {
+    return [...characterBirthEvents.value, ...characterDeathEvents.value, ...baseEvents.value]
+  })
+
   // Gets all current event in its default state
   const currentEvents: Ref<CalendarEvent[]> = ref(computeCurrentEvents())
 
@@ -123,14 +127,8 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
    * @returns A list of events that can appear in the current view
    */
   function computeCurrentEvents(): CalendarEvent[] {
-    const allEvents = [
-      ...characterBirthEvents.value,
-      ...characterDeathEvents.value,
-      ...baseEvents.value
-    ]
-
-    return allEvents.filter((event) => shouldEventBeDisplayed(event))
+    return allEvents.value.filter((event) => shouldEventBeDisplayed(event))
   }
 
-  return { currentEvents }
+  return { allEvents, currentEvents }
 })
