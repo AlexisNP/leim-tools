@@ -158,6 +158,9 @@ export const useCalendar = defineStore('calendar', () => {
     currentDateTitle
   }
 
+  /**
+   * Check whether the current viewType is active
+   */
   const isCurrentScreenActive = computed(() => {
     switch (currentConfig.value.viewType) {
       case 'month':
@@ -180,7 +183,6 @@ export const useCalendar = defineStore('calendar', () => {
    * Moves the current date forward one month
    */
   function incrementMonth() {
-    // const oldValue = params.month
     let newValue = Number(params.month) + 1
 
     // If the new value would exceed the max number of month per year
@@ -197,7 +199,6 @@ export const useCalendar = defineStore('calendar', () => {
    * Moves the current date backward one month
    */
   function decrementMonth() {
-    // const oldValue = params.month
     let newValue = Number(params.month) - 1
 
     // If the new value would go below 0
@@ -257,15 +258,32 @@ export const useCalendar = defineStore('calendar', () => {
     }
   }
 
-  function getMonthName(monthNumber: number) {
+  /**
+   * Get the formatted month name given its index
+   *
+   * @param monthNumber Index of the month
+   * @returns Formatted month name
+   */
+  function getMonthName(monthNumber: number): string {
     const index = Number(monthNumber)
     return staticConfig.months[index]
   }
 
+  /**
+   * Switches the active viewType
+   *
+   * @param viewType Target viewType
+   */
   function setViewType(viewType: CalendarViewType): void {
     currentConfig.value.viewType = viewType
   }
 
+  /**
+   * Gets the formatted viewType title
+   *
+   * @param viewType Target viewType
+   * @returns Formatted mode title
+   */
   function getViewTypeTitle(viewType: CalendarViewType): string {
     switch (viewType) {
       case 'year':
@@ -283,6 +301,13 @@ export const useCalendar = defineStore('calendar', () => {
     }
   }
 
+  /**
+   * From a LeimDate, returns the legible date title
+   *
+   * @param date Date target
+   * @param showNumber Should the date show the day number
+   * @returns Formatted date name
+   */
   function getFormattedDateTitle(date: LeimDate, showNumber?: boolean): string {
     if (showNumber) {
       return `${date.day} ${getMonthName(date.month)} ${date.year} ${getPeriodOfYear(date.year).short}`
@@ -291,17 +316,32 @@ export const useCalendar = defineStore('calendar', () => {
     return `${getMonthName(date.month)} ${date.year} ${getPeriodOfYear(date.year).short}`
   }
 
+  /**
+   * Check whether two dates are identical
+   *
+   * @param date1 First date
+   * @param date2 Second date
+   * @returns True if the dates are identical
+   */
   function compareTwoDates(date1: LeimDate, date2: LeimDate) {
     // To refacto to be more precise
     return JSON.stringify({ ...date1 }) === JSON.stringify({ ...date2 })
   }
 
+  /**
+   * Jumps the calendar to the given date
+   *
+   * @param date Target date
+   */
   function jumpToDate(date: LeimDate) {
     params.day = date.day.toString()
     params.month = date.month.toString()
     params.year = date.year.toString()
   }
 
+  /**
+   * Jump the calendar to the default date
+   */
   function jumpToDefaultDate() {
     jumpToDate(defaultDate.value)
     currentConfig.value.viewType = 'month'
