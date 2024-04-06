@@ -1,6 +1,12 @@
 <script lang="ts" setup>
 import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger
+} from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
@@ -11,6 +17,7 @@ import { useCharacters } from '@/stores/characters'
 import { useCalendarEvents } from '@/stores/events'
 import { PhCaretDoubleDown, PhCaretDoubleUp, PhMagnifyingGlass } from '@phosphor-icons/vue'
 import { useMagicKeys, useStorage, useTimeoutFn, whenever } from '@vueuse/core'
+import { VisuallyHidden } from 'radix-vue'
 import { computed, ref } from 'vue'
 import { searchUnifier, type SearchMode } from '../Search'
 import SearchList from './lists/SearchList.vue'
@@ -124,6 +131,14 @@ whenever(keys.control_period, () => {
         'bottom-16': searchResults.length > 0
       }"
     >
+      <VisuallyHidden>
+        <DialogTitle> Recherche avancée </DialogTitle>
+      </VisuallyHidden>
+      <VisuallyHidden>
+        <DialogDescription>
+          Rechercher les données disponibles sur le calendrier
+        </DialogDescription>
+      </VisuallyHidden>
       <div class="relative w-full h-fit">
         <Input
           id="search"
