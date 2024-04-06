@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { useCalendar } from '@/stores/calendar'
-import Button from '../ui/button/Button.vue'
 import {
   PhCaretDoubleLeft,
   PhCaretDoubleRight,
   PhCaretLeft,
   PhCaretRight
 } from '@phosphor-icons/vue'
+import Button from '../ui/button/Button.vue'
 
 const { decrementMonth, incrementMonth, decrementYear, incrementYear } = useCalendar()
 </script>

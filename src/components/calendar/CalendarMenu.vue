@@ -3,7 +3,7 @@ import { useCalendar } from '@/stores/calendar'
 import CalendarMenuToday from './CalendarMenuToday.vue'
 import CalendarMenuNav from './CalendarMenuNav.vue'
 import CalendarSwitch from './CalendarSwitch.vue'
-import CalendarMenuSearch from './CalendarMenuSearch.vue'
+import CalendarSearch from './search/CalendarSearch.vue'
 
 const { currentDate } = useCalendar()
 </script>
@@ -31,7 +31,7 @@ const { currentDate } = useCalendar()
           </div>
         </div>
         <div class="md:col-span-3 flex justify-end">
-          <CalendarMenuSearch />
+          <CalendarSearch />
         </div>
       </div>
     </div>

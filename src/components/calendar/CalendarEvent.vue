@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { Popover, PopoverTrigger } from '@/components/ui/popover'
-import type { CalendarEvent } from '@/stores/events'
+import type { CalendarEvent } from '@/models/Events'
 import CalendarEventDetails from './CalendarEventDetails.vue'
 
 defineProps<{

@@ -1,12 +1,6 @@
+import type { Character } from '@/models/Characters'
 import { defineStore } from 'pinia'
-import type { LeimDate } from '@/models/Date'
 import { computed, type ComputedRef } from 'vue'
-
-export type Character = {
-  name: string
-  birth?: LeimDate
-  death?: LeimDate
-}
 
 export const useCharacters = defineStore('characters', () => {
   const characters: Character[] = [

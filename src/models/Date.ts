@@ -1,4 +1,4 @@
-export type LeimDate = {
+export interface LeimDate {
   day: number
   month: number
   year: number

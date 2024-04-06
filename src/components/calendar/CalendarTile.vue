@@ -2,9 +2,9 @@
 import type { LeimDate } from '@/models/Date'
 import { useCalendar } from '@/stores/calendar'
 import { useCalendarEvents } from '@/stores/events'
+import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
 import CalendarEvent from './CalendarEvent.vue'
-import { storeToRefs } from 'pinia'
 
 const props = defineProps<{
   date: LeimDate

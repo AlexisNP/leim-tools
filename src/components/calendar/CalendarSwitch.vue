@@ -7,10 +7,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
-import Button from '../ui/button/Button.vue'
 import { useCalendar } from '@/stores/calendar'
-import { computed } from 'vue'
 import { PhCalendarBlank } from '@phosphor-icons/vue'
+import { computed } from 'vue'
+import Button from '../ui/button/Button.vue'
 
 const { currentConfig, viewTypeOptions, getViewTypeTitle, setViewType } = useCalendar()
 

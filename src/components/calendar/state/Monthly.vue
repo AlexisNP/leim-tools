@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import type { LeimDate } from '@/models/Date'
 import { useCalendar } from '@/stores/calendar'
+import { useThrottleFn } from '@vueuse/core'
 import { computed } from 'vue'
 import CalendarTile from '../CalendarTile.vue'
-import { useThrottleFn } from '@vueuse/core'
 
 const { staticConfig, currentDate, decrementMonth, incrementMonth } = useCalendar()
 

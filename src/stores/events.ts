@@ -1,24 +1,8 @@
+import type { CalendarEvent } from '@/models/Events'
 import { defineStore } from 'pinia'
-import { computed, watch, type Ref, ref, toRaw } from 'vue'
-import { useCharacters } from './characters'
-
-import type { LeimDate } from '@/models/Date'
+import { computed, ref, watch, type Ref } from 'vue'
 import { useCalendar } from './calendar'
-
-export type CalendarEvent = {
-  title: string
-  date: LeimDate
-  description?: string
-  category?: CalendarEventCategory
-}
-
-export type CalendarEventCategory =
-  | 'birth'
-  | 'death'
-  | 'catastrophe'
-  | 'legal'
-  | 'natural-disaster'
-  | 'player'
+import { useCharacters } from './characters'
 
 export const useCalendarEvents = defineStore('calendar-events', () => {
   const { currentDate, currentConfig } = useCalendar()
@@ -130,5 +114,5 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
     return allEvents.value.filter((event) => shouldEventBeDisplayed(event))
   }
 
-  return { allEvents, currentEvents }
+  return { baseEvents, allEvents, currentEvents }
 })
