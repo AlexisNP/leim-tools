@@ -317,18 +317,6 @@ export const useCalendar = defineStore('calendar', () => {
   }
 
   /**
-   * Check whether two dates are identical
-   *
-   * @param date1 First date
-   * @param date2 Second date
-   * @returns True if the dates are identical
-   */
-  function compareTwoDates(date1: LeimDate, date2: LeimDate) {
-    // To refacto to be more precise
-    return JSON.stringify({ ...date1 }) === JSON.stringify({ ...date2 })
-  }
-
-  /**
    * Jumps the calendar to the given date
    *
    * @param date Target date
@@ -362,7 +350,6 @@ export const useCalendar = defineStore('calendar', () => {
     decrementYear,
     jumpToDate,
     jumpToDefaultDate,
-    compareTwoDates,
     getFormattedDateTitle,
     getMonthName,
     setViewType,

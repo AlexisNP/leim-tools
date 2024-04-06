@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { LeimDate } from '@/models/Date'
+import { areDatesIdentical, type LeimDate } from '@/models/Date'
 import { useCalendar } from '@/stores/calendar'
 import { useCalendarEvents } from '@/stores/events'
 import { storeToRefs } from 'pinia'
@@ -11,17 +11,17 @@ const props = defineProps<{
   faded?: boolean
 }>()
 
-const { compareTwoDates, defaultDate } = useCalendar()
+const { defaultDate } = useCalendar()
 const { currentEvents } = storeToRefs(useCalendarEvents())
 
 const eventsForTheDay = computed(() => {
   return currentEvents.value.filter((currentEvent) => {
-    return compareTwoDates(currentEvent.date, props.date)
+    return areDatesIdentical(currentEvent.date, props.date)
   })
 })
 
 const isDefaultDate = computed(() => {
-  return compareTwoDates(props.date, defaultDate)
+  return areDatesIdentical(props.date, defaultDate)
 })
 </script>
 

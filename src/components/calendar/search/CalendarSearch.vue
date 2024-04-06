@@ -3,15 +3,17 @@ import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import { isCharacter, type Character } from '@/models/Characters'
+import type { LeimDateOrder } from '@/models/Date'
+import { isCalendarEvent, type CalendarEvent } from '@/models/Events'
 import { useCharacters } from '@/stores/characters'
 import { useCalendarEvents } from '@/stores/events'
-import { PhMagnifyingGlass } from '@phosphor-icons/vue'
+import { PhCaretDoubleDown, PhCaretDoubleUp, PhMagnifyingGlass } from '@phosphor-icons/vue'
 import { useMagicKeys, useStorage, useTimeoutFn, whenever } from '@vueuse/core'
 import { computed, ref } from 'vue'
 import { searchUnifier, type SearchMode } from '../Search'
 import SearchList from './lists/SearchList.vue'
-import { isCalendarEvent, type CalendarEvent } from '@/models/Events'
-import { isCharacter, type Character } from '@/models/Characters'
 
 const { characters } = useCharacters()
 const { baseEvents } = useCalendarEvents()
@@ -22,6 +24,15 @@ const searchQuery = ref('')
 const searchEnough = computed(() => searchQuery.value.length >= 2)
 
 const selectedEntity = useStorage('se', undefined as SearchMode)
+const selectedOrder = ref<LeimDateOrder>('desc')
+
+function setOrderAsc() {
+  selectedOrder.value = 'asc'
+}
+
+function setOrderDesc() {
+  selectedOrder.value = 'desc'
+}
 
 const searchResults = computed(() => {
   let results: (Character | CalendarEvent)[] = []
@@ -127,14 +138,53 @@ whenever(keys.control_period, () => {
         </span>
       </div>
 
-      <ToggleGroup type="single" class="justify-start" v-model="selectedEntity">
-        <ToggleGroupItem value="events" aria-label="Uniquement les évènements">
-          Évènements
-        </ToggleGroupItem>
-        <ToggleGroupItem value="characters" aria-label="Uniquement les personnages">
-          Personnages
-        </ToggleGroupItem>
-      </ToggleGroup>
+      <div class="flex items-center justify-between">
+        <div>
+          <ToggleGroup type="single" class="justify-start" v-model="selectedEntity">
+            <ToggleGroupItem value="events" aria-label="Uniquement les évènements">
+              Évènements
+            </ToggleGroupItem>
+            <ToggleGroupItem value="characters" aria-label="Uniquement les personnages">
+              Personnages
+            </ToggleGroupItem>
+          </ToggleGroup>
+        </div>
+        <div class="flex items-center gap-1">
+          <TooltipProvider :delayDuration="250">
+            <Tooltip>
+              <TooltipTrigger>
+                <Button
+                  :variant="selectedOrder === 'desc' ? 'secondary' : 'outline'"
+                  size="icon"
+                  @click="setOrderDesc()"
+                >
+                  <PhCaretDoubleUp size="18" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Plus ancien</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+
+          <TooltipProvider :delayDuration="250">
+            <Tooltip>
+              <TooltipTrigger>
+                <Button
+                  :variant="selectedOrder === 'asc' ? 'secondary' : 'outline'"
+                  size="icon"
+                  @click="setOrderAsc()"
+                >
+                  <PhCaretDoubleDown size="18" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Plus récent</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
+      </div>
 
       <hr />
 
@@ -142,6 +192,7 @@ whenever(keys.control_period, () => {
         <SearchList
           :results="searchResults"
           :current-entity="selectedEntity"
+          :order="selectedOrder"
           @jumped-to-date="closeDialog()"
         />
       </div>

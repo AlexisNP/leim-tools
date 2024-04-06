@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { Button } from '@/components/ui/button'
 import { isCharacter, type Character } from '@/models/Characters'
-import type { LeimDate } from '@/models/Date'
+import { compareDates, type LeimDate, type LeimDateOrder } from '@/models/Date'
 import { isCalendarEvent, type CalendarEvent } from '@/models/Events'
 import { useCalendar } from '@/stores/calendar'
 import { computed } from 'vue'
@@ -10,6 +10,7 @@ import type { SearchMode } from '../../Search'
 const props = defineProps<{
   results: (Character | CalendarEvent)[]
   currentEntity: SearchMode
+  order: LeimDateOrder
 }>()
 
 const emit = defineEmits(['jumpedToDate'])
@@ -27,11 +28,35 @@ const searchLimit = 10
 const activeSearchLimit = computed<number>(() => (!props.currentEntity ? searchLimit : 9999))
 
 const resultsToDisplay = computed(() => props.results.slice(0, activeSearchLimit.value))
+const sortedResults = computed(() => {
+  return [...resultsToDisplay.value].sort((a, b) => {
+    let firstDate: LeimDate
+    let secondDate: LeimDate
+
+    if (isCalendarEvent(a)) {
+      firstDate = a.date
+    } else if (isCharacter(a) && a.birth) {
+      firstDate = a.birth
+    } else {
+      return 1
+    }
+
+    if (isCalendarEvent(b)) {
+      secondDate = b.date
+    } else if (isCharacter(b) && b.birth) {
+      secondDate = b.birth
+    } else {
+      return -1
+    }
+
+    return compareDates(firstDate, secondDate, props.order)
+  })
+})
 </script>
 
 <template>
   <ul class="grid gap-3">
-    <li v-for="r in resultsToDisplay" :key="isCalendarEvent(r) ? r.title : r.name">
+    <li v-for="r in sortedResults" :key="isCalendarEvent(r) ? r.title : r.name">
       <button
         v-if="isCalendarEvent(r)"
         class="block w-full text-left p-2 rounded-sm"
