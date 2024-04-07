@@ -81,7 +81,7 @@ export const useCalendar = defineStore('calendar', () => {
     write: true
   })
 
-  // Default date settings (current day)
+  // Default date settings (current day in the world)
   const defaultDay = 23
   const defaultMonth = 8
   const defaultYear = 3209

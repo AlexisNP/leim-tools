@@ -51,8 +51,8 @@ const dateDifference = computed(() => getRelativeString(defaultDate, selectedDat
     </div>
     <div class="container">
       <div class="flex">
-        <div class="px-4 py-2 border-slate-700 border-x-[1px] border-t-[1px] rounded-sm">
-          <span class="text-sm font-bold">{{ currentDate.currentDateTitle }}</span>
+        <div class="px-4 py-2 border-slate-700 border-x-[1px] border-t-[1px] rounded-t-sm">
+          <span class="text-sm">{{ currentDate.currentDateTitle }}</span>
         </div>
       </div>
     </div>
