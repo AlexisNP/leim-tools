@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useCalendar } from '@/stores/calendar'
+import { useCalendar } from '@/stores/CalendarStore'
 import CalendarMenu from './CalendarMenu.vue'
 import Century from './state/Century.vue'
 import Decade from './state/Decade.vue'

@@ -1,8 +1,8 @@
 import type { CalendarEvent } from '@/models/Events'
 import { defineStore } from 'pinia'
 import { computed, ref, watch, type Ref } from 'vue'
-import { useCalendar } from './calendar'
-import { useCharacters } from './characters'
+import { useCalendar } from './CalendarStore'
+import { useCharacters } from './CharacterStore'
 
 export const useCalendarEvents = defineStore('calendar-events', () => {
   const { currentDate, currentConfig } = useCalendar()

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
-import { useCalendar } from '@/stores/calendar'
+import { useCalendar } from '@/stores/CalendarStore'
 import {
   PhCaretDoubleLeft,
   PhCaretDoubleRight,

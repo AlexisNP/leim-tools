@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { areDatesIdentical, type LeimDate } from '@/models/Date'
-import { useCalendar } from '@/stores/calendar'
-import { useCalendarEvents } from '@/stores/events'
+import { useCalendar } from '@/stores/CalendarStore'
+import { useCalendarEvents } from '@/stores/EventStore'
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
 import CalendarEvent from './CalendarEvent.vue'

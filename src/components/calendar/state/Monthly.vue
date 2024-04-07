@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { LeimDate } from '@/models/Date'
-import { useCalendar } from '@/stores/calendar'
+import { useCalendar } from '@/stores/CalendarStore'
 import { useThrottleFn } from '@vueuse/core'
 import { computed } from 'vue'
 import CalendarTile from '../CalendarTile.vue'

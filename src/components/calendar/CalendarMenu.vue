@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { getRelativeString } from '@/models/Date'
-import { useCalendar } from '@/stores/calendar'
+import { useCalendar } from '@/stores/CalendarStore'
 import { PhMapPin } from '@phosphor-icons/vue'
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'

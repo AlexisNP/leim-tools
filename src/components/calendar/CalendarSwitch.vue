@@ -7,7 +7,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
-import { useCalendar } from '@/stores/calendar'
+import { useCalendar } from '@/stores/CalendarStore'
 import { PhCalendarBlank } from '@phosphor-icons/vue'
 import { computed } from 'vue'
 import Button from '../ui/button/Button.vue'

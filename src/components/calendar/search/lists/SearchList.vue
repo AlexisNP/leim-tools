@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button'
 import { isCharacter, type Character } from '@/models/Characters'
 import { compareDates, type LeimDate, type LeimDateOrder } from '@/models/Date'
 import { isCalendarEvent, type CalendarEvent } from '@/models/Events'
-import { useCalendar } from '@/stores/calendar'
+import { useCalendar } from '@/stores/CalendarStore'
 import { computed } from 'vue'
 import type { SearchMode } from '../../Search'
 
