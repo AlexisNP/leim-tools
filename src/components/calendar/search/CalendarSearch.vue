@@ -15,7 +15,7 @@ import type { LeimDateOrder } from '@/models/Date'
 import { isCalendarEvent, type CalendarEvent } from '@/models/Events'
 import { useCharacters } from '@/stores/CharacterStore'
 import { useCalendarEvents } from '@/stores/EventStore'
-import { PhCaretDoubleDown, PhCaretDoubleUp, PhMagnifyingGlass } from '@phosphor-icons/vue'
+import { PhClockClockwise, PhClockCounterClockwise, PhMagnifyingGlass } from '@phosphor-icons/vue'
 import { useMagicKeys, useStorage, useTimeoutFn, whenever } from '@vueuse/core'
 import { VisuallyHidden } from 'radix-vue'
 import { computed, ref } from 'vue'
@@ -173,7 +173,7 @@ whenever(keys.control_period, () => {
                   size="icon"
                   @click="setOrderDesc()"
                 >
-                  <PhCaretDoubleUp size="18" />
+                  <PhClockCounterClockwise size="18" />
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
@@ -190,7 +190,7 @@ whenever(keys.control_period, () => {
                   size="icon"
                   @click="setOrderAsc()"
                 >
-                  <PhCaretDoubleDown size="18" />
+                  <PhClockClockwise size="18" />
                 </Button>
               </TooltipTrigger>
               <TooltipContent>

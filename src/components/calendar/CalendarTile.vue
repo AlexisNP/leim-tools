@@ -38,9 +38,15 @@ const isSelectedDate = computed(() => {
       'text-slate-300': !props.faded
     }"
   >
-    <div class="text-center">
+    <!-- Used for "display all events" -->
+    <button class="absolute inset-0 w-full h-full cursor-default z-0" />
+
+    <button
+      class="relative z-10 group block w-full text-center cursor-pointer"
+      @click="selectDate(date)"
+    >
       <span
-        class="inline-flex w-8 h-8 aspect-square items-center justify-center rounded-full font-bold transition-colors"
+        class="inline-flex w-8 h-8 aspect-square items-center justify-center rounded-full border-2 border-transparent font-bold transition-colors group-hover:border-slate-800"
         :class="{
           'bg-slate-800': isDefaultDate && !isSelectedDate,
           'text-white bg-blue-500': isSelectedDate
@@ -48,7 +54,7 @@ const isSelectedDate = computed(() => {
       >
         {{ date.day }}
       </span>
-    </div>
+    </button>
 
     <ul
       v-if="eventsForTheDay.length > 0"
@@ -61,8 +67,6 @@ const isSelectedDate = computed(() => {
         <CalendarEvent :event />
       </li>
     </ul>
-
-    <button class="absolute inset-0 w-full h-full cursor-default z-0" @click="selectDate(date)" />
   </div>
 </template>
 

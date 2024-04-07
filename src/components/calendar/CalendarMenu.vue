@@ -4,6 +4,7 @@ import { useCalendar } from '@/stores/CalendarStore'
 import { PhMapPin } from '@phosphor-icons/vue'
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
+
 import CalendarMenuNav from './CalendarMenuNav.vue'
 import CalendarMenuToday from './CalendarMenuToday.vue'
 import CalendarSwitch from './CalendarSwitch.vue'

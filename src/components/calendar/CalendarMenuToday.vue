@@ -3,6 +3,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { useCalendar } from '@/stores/CalendarStore'
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
+
 import Button from '../ui/button/Button.vue'
 
 const { defaultDate, isCurrentScreenActive } = storeToRefs(useCalendar())

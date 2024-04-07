@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import { useCalendar } from '@/stores/CalendarStore'
+import { computed } from 'vue'
 import CalendarMenu from './CalendarMenu.vue'
 import Century from './state/Century.vue'
 import Decade from './state/Decade.vue'
 import Monthly from './state/Monthly.vue'
 import Year from './state/Year.vue'
-import { computed } from 'vue'
 
 const { currentConfig } = useCalendar()
 

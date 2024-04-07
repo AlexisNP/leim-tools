@@ -1,7 +1,8 @@
 <script lang="ts" setup>
-import { PopoverContent } from '@/components/ui/popover'
 import type { CalendarEvent } from '@/models/Events'
 import { useCalendar } from '@/stores/CalendarStore'
+
+import { PopoverContent } from '@/components/ui/popover'
 
 const { getFormattedDateTitle } = useCalendar()
 
