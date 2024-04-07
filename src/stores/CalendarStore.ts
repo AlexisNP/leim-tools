@@ -82,8 +82,8 @@ export const useCalendar = defineStore('calendar', () => {
   })
 
   // Default date settings (current day)
-  const defaultDay = 12
-  const defaultMonth = 7
+  const defaultDay = 23
+  const defaultMonth = 8
   const defaultYear = 3209
   const defaultDate: ComputedRef<LeimDate> = computed(() => {
     return {
