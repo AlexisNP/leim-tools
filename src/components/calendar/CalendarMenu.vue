@@ -1,21 +1,20 @@
 <script lang="ts" setup>
+import { getRelativeString } from '@/models/Date'
 import { useCalendar } from '@/stores/calendar'
-import CalendarMenuToday from './CalendarMenuToday.vue'
+import { PhMapPin } from '@phosphor-icons/vue'
+import { storeToRefs } from 'pinia'
+import { computed } from 'vue'
 import CalendarMenuNav from './CalendarMenuNav.vue'
+import CalendarMenuToday from './CalendarMenuToday.vue'
 import CalendarSwitch from './CalendarSwitch.vue'
 import CalendarSearch from './search/CalendarSearch.vue'
-import { substractToDate } from '@/models/Date'
-import { computed } from 'vue'
-import { storeToRefs } from 'pinia'
-import { PhMapPin } from '@phosphor-icons/vue'
 
 const { defaultDate, getFormattedDateTitle, currentDate } = useCalendar()
-const { currentLeimDate, selectedDate } = storeToRefs(useCalendar())
+const { selectedDate } = storeToRefs(useCalendar())
 
 const mainDateTitle = computed(() => getFormattedDateTitle(selectedDate.value, true))
 
-const dateDifference = computed(() => substractToDate(defaultDate, currentLeimDate.value))
-const formattedDateDifference = computed(() => getFormattedDateTitle(dateDifference.value, true))
+const dateDifference = computed(() => getRelativeString(defaultDate, selectedDate.value))
 </script>
 
 <template>
@@ -39,7 +38,9 @@ const formattedDateDifference = computed(() => getFormattedDateTitle(dateDiffere
               <h1 class="text-2xl font-bold flex items-center gap-1">
                 <PhMapPin size="26" weight="bold" /> {{ mainDateTitle }}
               </h1>
-              <h2 class="text-lg italic opacity-75">Placeholder</h2>
+              <h2 class="text-lg italic opacity-75">
+                {{ dateDifference }}
+              </h2>
             </div>
           </div>
         </div>
