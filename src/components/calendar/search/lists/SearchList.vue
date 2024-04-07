@@ -63,12 +63,14 @@ const sortedResults = computed(() => {
         class="block w-full text-left p-2 rounded-sm"
         :class="{
           'bg-slate-600 hover:bg-slate-700': !r.category,
-          'bg-green-700 hover:bg-green-800': r.category === 'birth',
-          'bg-stone-600 hover:bg-stone-800': r.category === 'death',
-          'bg-red-600 hover:bg-red-800': r.category === 'catastrophe',
-          'bg-pink-600 hover:bg-pink-800': r.category === 'natural-disaster',
-          'bg-blue-600 hover:bg-blue-800': r.category === 'legal',
-          'bg-amber-700 hover:bg-amber-800': r.category === 'player'
+          'bg-lime-600 hover:bg-lime-700': r.category === 'birth',
+          'bg-stone-600 hover:bg-stone-700': r.category === 'death',
+          'bg-orange-600 hover:bg-orange-700': r.category === 'catastrophe',
+          'bg-pink-600 hover:bg-pink-700': r.category === 'natural-disaster',
+          'bg-sky-600 hover:bg-sky-700': r.category === 'legal',
+          'text-slate-900 bg-amber-300 hover:bg-amber-400': r.category === 'inauguration',
+          'bg-purple-600 hover:bg-purple-700': r.category === 'religious',
+          'bg-emerald-600 hover:bg-emerald-700': r.category === 'player'
         }"
         @click="handleJumpToDate(r.date)"
       >

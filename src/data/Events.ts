@@ -32,5 +32,43 @@ export const regularEvents: CalendarEvent[] = [
       "Bromis Griloup est jugé coupable d'escroquerie et sabotage aux Cours d'Acier de Tourgrise. Il purgera une peine de 10 ans au sein des prisons royales.",
     date: { day: 4, month: 8, year: 3209, period: 'nante' },
     category: 'legal'
+  },
+
+  // "Les Cloches de Cantane"
+  {
+    title: 'Inauguration de la Cloche du Pilier',
+    description: "Le Moine Premier inaugure la grande cloche d'argent au sommet du Pilier d'Ikami.",
+    date: { day: 29, month: 5, year: 3209, period: 'nante' },
+    category: 'religious'
+  },
+  {
+    title: '1ère disparation à Cantane',
+    description: 'Première victime de la série de disparitions qui affecte Cantane',
+    date: { day: 28, month: 7, year: 3209, period: 'nante' },
+    category: 'death'
+  },
+  {
+    title: '2ème disparation à Cantane',
+    description: 'Seconde victime de la série de disparitions qui affecte Cantane',
+    date: { day: 32, month: 7, year: 3209, period: 'nante' },
+    category: 'death'
+  },
+  {
+    title: '3ème disparation à Cantane',
+    description: 'Troisième victime de la série de disparitions qui affecte Cantane',
+    date: { day: 10, month: 8, year: 3209, period: 'nante' },
+    category: 'death'
+  },
+  {
+    title: '4ème disparation à Cantane',
+    description: 'Quatrième victime de la série de disparitions qui affecte Cantane',
+    date: { day: 19, month: 8, year: 3209, period: 'nante' },
+    category: 'death'
+  },
+  {
+    title: '5ème disparation à Cantane',
+    description: 'Cinquième victime de la série de disparitions qui affecte Cantane',
+    date: { day: 22, month: 8, year: 3209, period: 'nante' },
+    category: 'death'
   }
 ]

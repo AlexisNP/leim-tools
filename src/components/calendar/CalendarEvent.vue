@@ -21,6 +21,8 @@ defineProps<{
           'bg-orange-600 hover:bg-orange-700': event.category === 'catastrophe',
           'bg-pink-600 hover:bg-pink-700': event.category === 'natural-disaster',
           'bg-sky-600 hover:bg-sky-700': event.category === 'legal',
+          'text-slate-900 bg-amber-300 hover:bg-amber-400': event.category === 'inauguration',
+          'bg-purple-600 hover:bg-purple-700': event.category === 'religious',
           'bg-emerald-600 hover:bg-emerald-700': event.category === 'player'
         }"
       >

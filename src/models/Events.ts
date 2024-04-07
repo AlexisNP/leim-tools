@@ -13,6 +13,8 @@ export type CalendarEventCategory =
   | 'catastrophe'
   | 'legal'
   | 'natural-disaster'
+  | 'inauguration'
+  | 'religious'
   | 'player'
 
 export function isCalendarEvent(object: any): object is CalendarEvent {
