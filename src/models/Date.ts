@@ -9,6 +9,11 @@ export type LeimPeriod = 'ante' | 'nante'
 export type LeimPeriodShort = 'A.R' | 'N.R'
 export type LeimDateOrder = 'asc' | 'desc'
 
+export const monthsPerYear = 10
+export const daysPerYear = 320
+export const daysPerMonth = 32
+export const daysPerWeek = 6
+
 /**
  * Check whether two dates are identical
  *
@@ -17,8 +22,7 @@ export type LeimDateOrder = 'asc' | 'desc'
  * @returns True if the dates are identical
  */
 export function areDatesIdentical(date1: LeimDate, date2: LeimDate) {
-  // To refacto to be more precise
-  return JSON.stringify({ ...date1 }) === JSON.stringify({ ...date2 })
+  return convertDateToDays({ ...date1 }) === convertDateToDays({ ...date2 })
 }
 
 /**
@@ -46,3 +50,33 @@ export function compareDates(a: LeimDate, b: LeimDate, order: LeimDateOrder = 'd
 
   return 0
 }
+
+export function convertDateToDays(dateToConvert: LeimDate) {
+  let numberOfDays: number = dateToConvert.day
+
+  numberOfDays = numberOfDays + dateToConvert.month * daysPerMonth
+  numberOfDays = numberOfDays + dateToConvert.year * daysPerYear
+
+  return numberOfDays
+}
+
+export function substractToDate(baseDate: LeimDate, substractionDate: LeimDate) {
+  let newDay: number
+  let newMonth: number
+  let newYear: number
+  let newPeriod: LeimPeriod
+
+  // console.log(baseDate, substractionDate)
+  // console.log(convertDateToDays(baseDate), convertDateToDays(substractionDate))
+
+  return baseDate
+
+  // return {
+  //   day: newDay,
+  //   month: newMonth,
+  //   year: newYear,
+  //   period: newPeriod
+  // }
+}
+
+export function addToDate(firstDate: LeimDate, secondDate: LeimDate) {}

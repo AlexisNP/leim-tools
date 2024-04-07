@@ -1,4 +1,12 @@
-import type { LeimDate, LeimPeriod, LeimPeriodShort } from '@/models/Date'
+import {
+  monthsPerYear,
+  daysPerWeek,
+  daysPerMonth,
+  daysPerYear,
+  type LeimDate,
+  type LeimPeriod,
+  type LeimPeriodShort
+} from '@/models/Date'
 import { isDigit, isInt, isSignedInt } from '@/utils/Regex'
 import { useUrlSearchParams } from '@vueuse/core'
 import { defineStore } from 'pinia'
@@ -48,17 +56,13 @@ export const useCalendar = defineStore('calendar', () => {
     'Farene',
     'Dalvene'
   ]
-  const monthsPerYear = computed(() => months.length)
-  const daysPerYear = 320
-  const daysPerMonth = computed(() => daysPerYear / monthsPerYear.value)
-  const daysPerWeek = 6
 
   // Assign the static config
   const staticConfig: CalendarStaticConfig = {
     months,
-    monthsPerYear: monthsPerYear.value,
+    monthsPerYear,
     daysPerYear,
-    daysPerMonth: daysPerMonth.value,
+    daysPerMonth,
     daysPerWeek
   }
 
@@ -116,10 +120,8 @@ export const useCalendar = defineStore('calendar', () => {
   })
 
   // Get period from currentYear
-  const currentPeriod: ComputedRef<LeimPeriod> = computed(
-    () => getPeriodOfYear(currentYear.value).long
-  )
-  const currentPeriodAbbr: ComputedRef<LeimPeriodShort> = computed(
+  const currentPeriod = computed<LeimPeriod>(() => getPeriodOfYear(currentYear.value).long)
+  const currentPeriodAbbr = computed<LeimPeriodShort>(
     () => getPeriodOfYear(currentYear.value).short
   )
 
@@ -157,6 +159,17 @@ export const useCalendar = defineStore('calendar', () => {
     currentPeriodAbbr,
     currentDateTitle
   }
+
+  const currentLeimDate = computed<LeimDate>(() => {
+    return {
+      day: currentDate.currentDay.value,
+      month: currentDate.currentMonth.value,
+      year: currentDate.currentYear.value,
+      period: currentDate.currentPeriod.value
+    }
+  })
+
+  const selectedDate = ref<LeimDate>(currentLeimDate.value)
 
   /**
    * Check whether the current viewType is active
@@ -325,6 +338,7 @@ export const useCalendar = defineStore('calendar', () => {
     params.day = date.day.toString()
     params.month = date.month.toString()
     params.year = date.year.toString()
+    selectDate(date)
   }
 
   /**
@@ -335,12 +349,22 @@ export const useCalendar = defineStore('calendar', () => {
     currentConfig.value.viewType = 'month'
   }
 
+  /**
+   * Jump the calendar to the default date
+   */
+  function selectDate(date: LeimDate) {
+    selectedDate.value = date
+  }
+
   return {
     staticConfig,
     viewTypeOptions,
     currentConfig,
     currentDate,
+    currentLeimDate,
     defaultDate,
+    selectedDate,
+    selectDate,
     params,
     getPeriodOfYear,
     incrementMonth,

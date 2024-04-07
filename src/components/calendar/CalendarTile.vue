@@ -11,7 +11,8 @@ const props = defineProps<{
   faded?: boolean
 }>()
 
-const { defaultDate } = useCalendar()
+const { defaultDate, selectDate } = useCalendar()
+const { selectedDate } = storeToRefs(useCalendar())
 const { currentEvents } = storeToRefs(useCalendarEvents())
 
 const eventsForTheDay = computed(() => {
@@ -22,6 +23,10 @@ const eventsForTheDay = computed(() => {
 
 const isDefaultDate = computed(() => {
   return areDatesIdentical(props.date, defaultDate)
+})
+
+const isSelectedDate = computed(() => {
+  return areDatesIdentical(props.date, selectedDate.value)
 })
 </script>
 
@@ -35,22 +40,29 @@ const isDefaultDate = computed(() => {
   >
     <div class="text-center">
       <span
-        class="inline-flex w-8 h-8 aspect-square items-center justify-center rounded-full font-bold"
-        :class="{ 'bg-slate-800': isDefaultDate }"
-        >{{ date.day }}</span
+        class="inline-flex w-8 h-8 aspect-square items-center justify-center rounded-full font-bold transition-colors"
+        :class="{
+          'bg-slate-800': isDefaultDate && !isSelectedDate,
+          'text-white bg-blue-500': isSelectedDate
+        }"
       >
+        {{ date.day }}
+      </span>
     </div>
+
     <ul
       v-if="eventsForTheDay.length > 0"
-      class="absolute top-12 bottom-2 inset-x-2 grid auto-rows-min gap-1"
+      class="absolute top-12 bottom-2 inset-x-2 grid auto-rows-min gap-1 z-10 pointer-events-none transition-opacity"
       :class="{
-        'opacity-40': props.faded
+        'opacity-40': props.faded && !isSelectedDate
       }"
     >
-      <li v-for="event in eventsForTheDay" :key="event.title" class="grid">
+      <li v-for="event in eventsForTheDay" :key="event.title" class="grid pointer-events-auto">
         <CalendarEvent :event />
       </li>
     </ul>
+
+    <button class="absolute inset-0 w-full h-full cursor-default z-0" @click="selectDate(date)" />
   </div>
 </template>
 
