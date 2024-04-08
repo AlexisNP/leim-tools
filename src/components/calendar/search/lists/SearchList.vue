@@ -12,6 +12,9 @@ const props = defineProps<{
   results: (Character | CalendarEvent)[]
   currentEntity: SearchMode
   order: LeimDateOrder
+  startAt: number
+  endAt: number
+  limit?: number
 }>()
 
 const emit = defineEmits(['jumpedToDate'])
@@ -25,12 +28,9 @@ function handleJumpToDate(date?: LeimDate) {
   emit('jumpedToDate')
 }
 
-const searchLimit = 10
-const activeSearchLimit = computed<number>(() => (!props.currentEntity ? searchLimit : 9999))
-
-const resultsToDisplay = computed(() => props.results)
+// Initial sorting of the results
 const sortedResults = computed(() => {
-  return [...resultsToDisplay.value].sort((a, b) => {
+  return [...props.results].sort((a, b) => {
     let firstDate: LeimDate
     let secondDate: LeimDate
 
@@ -53,11 +53,14 @@ const sortedResults = computed(() => {
     return compareDates(firstDate, secondDate, props.order)
   })
 })
+
+// Page the sorted results
+const pagedResults = computed(() => sortedResults.value.slice(props.startAt, props.endAt))
 </script>
 
 <template>
   <ul class="grid gap-3">
-    <li v-for="r in sortedResults" :key="isCalendarEvent(r) ? r.title : r.name">
+    <li v-for="r in pagedResults" :key="isCalendarEvent(r) ? r.title : r.name">
       <button
         v-if="isCalendarEvent(r)"
         class="block w-full text-left p-2 rounded-sm"

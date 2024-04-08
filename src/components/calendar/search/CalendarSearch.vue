@@ -1,15 +1,4 @@
 <script lang="ts" setup>
-import { Button } from '@/components/ui/button'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-  DialogTrigger
-} from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
-import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { isCharacter, type Character } from '@/models/Characters'
 import type { LeimDateOrder } from '@/models/Date'
 import { isCalendarEvent, type CalendarEvent } from '@/models/Events'
@@ -20,6 +9,28 @@ import { useMagicKeys, useStorage, useTimeoutFn, whenever } from '@vueuse/core'
 import { VisuallyHidden } from 'radix-vue'
 import { computed, ref } from 'vue'
 import { searchUnifier, type SearchMode } from '../Search'
+
+import { Button } from '@/components/ui/button'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger
+} from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
+import {
+  Pagination,
+  PaginationEllipsis,
+  PaginationFirst,
+  PaginationLast,
+  PaginationList,
+  PaginationListItem,
+  PaginationNext,
+  PaginationPrev
+} from '@/components/ui/pagination'
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import SearchList from './lists/SearchList.vue'
 
 const { characters } = useCharacters()
@@ -31,14 +42,27 @@ const searchQuery = ref('')
 const searchEnough = computed(() => searchQuery.value.length >= 2)
 
 const selectedEntity = useStorage('se', undefined as SearchMode)
-const selectedOrder = ref<LeimDateOrder>('asc')
 
+// Order
+const selectedOrder = ref<LeimDateOrder>('asc')
 function setOrderAsc() {
   selectedOrder.value = 'asc'
+  resetPage()
 }
 
 function setOrderDesc() {
   selectedOrder.value = 'desc'
+  resetPage()
+}
+
+// Limit
+const currentPage = ref<number>(1)
+const itemsPerPage = 20
+const startOfList = computed(() => (currentPage.value - 1) * itemsPerPage)
+const endOfList = computed(() => startOfList.value + itemsPerPage)
+
+function resetPage() {
+  currentPage.value = 1
 }
 
 const searchResults = computed(() => {
@@ -98,7 +122,7 @@ function resetSearch() {
 
 const resetSearchLazy = useTimeoutFn(() => {
   resetSearch()
-}, 300)
+}, 100)
 
 function openDialog() {
   modalOpen.value = true
@@ -139,77 +163,125 @@ whenever(keys.control_period, () => {
           Rechercher les données disponibles sur le calendrier
         </DialogDescription>
       </VisuallyHidden>
-      <div class="relative w-full h-fit">
-        <Input
-          id="search"
-          type="text"
-          placeholder="Rechercher le calendrier"
-          class="pl-10 py-6 text-lg"
-          v-model:model-value="searchQuery"
-          autocomplete="off"
-        />
-        <span class="absolute start-1 inset-y-0 flex items-center justify-center px-2 opacity-50">
-          <PhMagnifyingGlass size="20" />
-        </span>
+
+      <!-- Dialog header -->
+      <div class="grid gap-2">
+        <div class="relative w-full h-fit">
+          <Input
+            id="search"
+            type="text"
+            placeholder="Rechercher le calendrier"
+            class="pl-10 py-6 text-lg"
+            v-model:model-value="searchQuery"
+            autocomplete="off"
+          />
+          <span class="absolute start-1 inset-y-0 flex items-center justify-center px-2 opacity-50">
+            <PhMagnifyingGlass size="20" />
+          </span>
+        </div>
+
+        <div class="flex items-center justify-between">
+          <div>
+            <ToggleGroup
+              type="single"
+              class="justify-start"
+              v-model="selectedEntity"
+              @update:model-value="resetPage()"
+            >
+              <ToggleGroupItem value="events" aria-label="Uniquement les évènements">
+                Évènements
+              </ToggleGroupItem>
+              <ToggleGroupItem value="characters" aria-label="Uniquement les personnages">
+                Personnages
+              </ToggleGroupItem>
+            </ToggleGroup>
+          </div>
+
+          <div class="flex items-center gap-1">
+            <TooltipProvider :delayDuration="250">
+              <Tooltip>
+                <TooltipTrigger>
+                  <Button
+                    :variant="selectedOrder === 'desc' ? 'secondary' : 'outline'"
+                    size="icon"
+                    @click="setOrderDesc()"
+                  >
+                    <PhClockCounterClockwise size="18" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Plus ancien</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
+            <TooltipProvider :delayDuration="250">
+              <Tooltip>
+                <TooltipTrigger>
+                  <Button
+                    :variant="selectedOrder === 'asc' ? 'secondary' : 'outline'"
+                    size="icon"
+                    @click="setOrderAsc()"
+                  >
+                    <PhClockClockwise size="18" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Plus récent</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+        </div>
+
+        <hr />
       </div>
 
-      <div class="flex items-center justify-between">
-        <div>
-          <ToggleGroup type="single" class="justify-start" v-model="selectedEntity">
-            <ToggleGroupItem value="events" aria-label="Uniquement les évènements">
-              Évènements
-            </ToggleGroupItem>
-            <ToggleGroupItem value="characters" aria-label="Uniquement les personnages">
-              Personnages
-            </ToggleGroupItem>
-          </ToggleGroup>
-        </div>
-        <div class="flex items-center gap-1">
-          <TooltipProvider :delayDuration="250">
-            <Tooltip>
-              <TooltipTrigger>
-                <Button
-                  :variant="selectedOrder === 'desc' ? 'secondary' : 'outline'"
-                  size="icon"
-                  @click="setOrderDesc()"
-                >
-                  <PhClockCounterClockwise size="18" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Plus ancien</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-
-          <TooltipProvider :delayDuration="250">
-            <Tooltip>
-              <TooltipTrigger>
-                <Button
-                  :variant="selectedOrder === 'asc' ? 'secondary' : 'outline'"
-                  size="icon"
-                  @click="setOrderAsc()"
-                >
-                  <PhClockClockwise size="18" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Plus récent</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        </div>
-      </div>
-
-      <hr />
-
-      <div v-if="searchResults.length > 0" class="overflow-y-auto">
+      <div v-if="searchResults.length > 0" class="grow overflow-y-auto">
         <SearchList
           :results="searchResults"
           :current-entity="selectedEntity"
           :order="selectedOrder"
+          :start-at="startOfList"
+          :end-at="endOfList"
           @jumped-to-date="closeDialog()"
         />
+      </div>
+
+      <div class="flex justify-end">
+        <Pagination
+          v-model:page="currentPage"
+          :total="searchResults.length"
+          :items-per-page="itemsPerPage"
+          :sibling-count="2"
+          show-edges
+          :default-page="1"
+        >
+          <PaginationList v-slot="{ items }" class="flex items-center gap-1">
+            <PaginationFirst />
+            <PaginationPrev />
+
+            <template v-for="(item, index) in items">
+              <PaginationListItem
+                v-if="item.type === 'page'"
+                :key="index"
+                :value="item.value"
+                as-child
+              >
+                <Button
+                  class="w-10 h-10 p-0"
+                  :variant="item.value === currentPage ? 'default' : 'outline'"
+                >
+                  {{ item.value }}
+                </Button>
+              </PaginationListItem>
+              <PaginationEllipsis v-else :key="item.type" :index="index" />
+            </template>
+
+            <PaginationNext />
+            <PaginationLast />
+          </PaginationList>
+        </Pagination>
       </div>
     </DialogContent>
   </Dialog>
