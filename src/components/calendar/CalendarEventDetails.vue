@@ -16,7 +16,7 @@ const dateDifference = computed(() => getRelativeString(defaultDate, props.event
 </script>
 
 <template>
-  <PopoverContent class="w-96" align="start">
+  <PopoverContent class="w-96" align="start" :align-offset="50" :collision-padding="20">
     <div class="grid gap-1">
       <div class="text-lg font-semibold">
         {{ event.title }}
