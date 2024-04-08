@@ -6,7 +6,7 @@ import { useCharacters } from './CharacterStore'
 import { regularEvents } from '@/data/Events'
 
 export const useCalendarEvents = defineStore('calendar-events', () => {
-  const { currentDate, currentConfig } = useCalendar()
+  const { currentDate, currentConfig, getNextMonth } = useCalendar()
   const { charactersWithBirthData, charactersWithDeathData } = useCharacters()
 
   const baseEvents = ref<CalendarEvent[]>(regularEvents)
@@ -16,7 +16,7 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
       return {
         title: `Naissance de ${character.name}`,
         date: character.birth,
-        category: 'birth'
+        category: 'naissance'
       } as CalendarEvent
     })
   })
@@ -26,7 +26,7 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
       return {
         title: `Décès de ${character.name}`,
         date: character.death,
-        category: 'death'
+        category: 'mort'
       } as CalendarEvent
     })
   })
@@ -56,7 +56,7 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
       case 'month':
         return (
           event.date.month === currentDate.currentMonth ||
-          (event.date.month === currentDate.currentMonth + 1 && event.date.day <= 8) // This is to allow leap events from appearing on the last 8 tiles
+          (event.date.month === getNextMonth(currentDate.currentMonth) && event.date.day <= 8) // This is to allow leap events from appearing on the last 8 tiles
         )
 
       case 'year':

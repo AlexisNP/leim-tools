@@ -225,6 +225,38 @@ export const useCalendar = defineStore('calendar', () => {
   }
 
   /**
+   * Get the previous month number
+   *
+   * @param monthNumber Initial month
+   * @returns The previous month number in the year
+   */
+  function getPreviousMonth(monthNumber: number): number {
+    const target: number = monthNumber - 1
+
+    if (target < 0) {
+      return monthsPerYear - 1
+    }
+
+    return target
+  }
+
+  /**
+   * Get the following month number
+   *
+   * @param monthNumber Initial month
+   * @returns The next month number in the year
+   */
+  function getNextMonth(monthNumber: number): number {
+    const target: number = monthNumber + 1
+
+    if (target + 1 >= monthsPerYear) {
+      return 0
+    }
+
+    return target
+  }
+
+  /**
    * Moves the current date to a particular month
    */
   function setMonth(target: number): void {
@@ -370,6 +402,8 @@ export const useCalendar = defineStore('calendar', () => {
     incrementMonth,
     decrementMonth,
     setMonth,
+    getPreviousMonth,
+    getNextMonth,
     incrementYear,
     decrementYear,
     jumpToDate,
