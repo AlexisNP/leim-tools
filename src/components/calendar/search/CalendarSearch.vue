@@ -31,7 +31,7 @@ const searchQuery = ref('')
 const searchEnough = computed(() => searchQuery.value.length >= 2)
 
 const selectedEntity = useStorage('se', undefined as SearchMode)
-const selectedOrder = ref<LeimDateOrder>('desc')
+const selectedOrder = ref<LeimDateOrder>('asc')
 
 function setOrderAsc() {
   selectedOrder.value = 'asc'
