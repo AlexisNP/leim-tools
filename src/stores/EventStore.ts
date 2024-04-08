@@ -42,7 +42,6 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
   // Watch for currentDate changes
   watch(currentDate, () => {
     currentEvents.value = computeCurrentEvents()
-    console.log(currentEvents.value)
   })
 
   /**
