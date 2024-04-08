@@ -5,18 +5,23 @@ import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
 
 import Button from '../ui/button/Button.vue'
+import { areDatesIdentical } from '@/models/Date'
 
-const { defaultDate, isCurrentScreenActive } = storeToRefs(useCalendar())
+const { defaultDate, selectedDate } = storeToRefs(useCalendar())
 const { jumpToDefaultDate, getFormattedDateTitle } = useCalendar()
 
 const defaultDateFormatted = computed(() => getFormattedDateTitle(defaultDate.value, true))
+
+const isDefaultDate = computed(() => {
+  return areDatesIdentical(selectedDate.value, defaultDate.value)
+})
 </script>
 
 <template>
   <TooltipProvider :delayDuration="250">
     <Tooltip>
       <TooltipTrigger>
-        <Button @click="jumpToDefaultDate" size="sm" :disabled="isCurrentScreenActive">
+        <Button @click="jumpToDefaultDate" size="sm" :disabled="isDefaultDate">
           Aujourd'hui
         </Button>
       </TooltipTrigger>
