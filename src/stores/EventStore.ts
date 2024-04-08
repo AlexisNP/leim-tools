@@ -4,9 +4,10 @@ import { computed, ref, watch, type Ref } from 'vue'
 import { useCalendar } from './CalendarStore'
 import { useCharacters } from './CharacterStore'
 import { regularEvents } from '@/data/Events'
+import { convertDateToDays, daysPerMonth } from '@/models/Date'
 
 export const useCalendarEvents = defineStore('calendar-events', () => {
-  const { currentDate, currentConfig, getNextMonth } = useCalendar()
+  const { currentDate, currentConfig, currentLeimDate } = useCalendar()
   const { charactersWithBirthData, charactersWithDeathData } = useCharacters()
 
   const baseEvents = ref<CalendarEvent[]>(regularEvents)
@@ -41,6 +42,7 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
   // Watch for currentDate changes
   watch(currentDate, () => {
     currentEvents.value = computeCurrentEvents()
+    console.log(currentEvents.value)
   })
 
   /**
@@ -52,12 +54,26 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
    * @returns Whether the event should appear in the current view
    */
   function shouldEventBeDisplayed(event: CalendarEvent): boolean {
+    const eventDateToDays = convertDateToDays(event.date)
+    const isEventOnCurrentScreen =
+      event.date.year === currentDate.currentYear && event.date.month === currentDate.currentMonth
+
+    // Check whether the event is on the last 8 tiles
+    // This is to allow leap events from appearing on the last 8 tiles
+    const firstDayOfCurrentMonth = convertDateToDays({
+      day: 1,
+      month: currentDate.currentMonth,
+      year: currentDate.currentYear
+    })
+    const lastDayOfCurrentMonth = firstDayOfCurrentMonth + daysPerMonth
+    const last8Tiles = lastDayOfCurrentMonth + 8
+
+    const isEventOnNext8Tiles =
+      eventDateToDays <= last8Tiles && eventDateToDays >= lastDayOfCurrentMonth
+
     switch (currentConfig.viewType) {
       case 'month':
-        return (
-          event.date.month === currentDate.currentMonth ||
-          (event.date.month === getNextMonth(currentDate.currentMonth) && event.date.day <= 8) // This is to allow leap events from appearing on the last 8 tiles
-        )
+        return isEventOnCurrentScreen || isEventOnNext8Tiles
 
       case 'year':
         return event.date.year === currentDate.currentYear
