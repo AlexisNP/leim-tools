@@ -21,10 +21,12 @@ defineProps<{
           'text-white bg-orange-600 hover:bg-orange-700': event.category === 'catastrophe',
           'text-white bg-pink-600 hover:bg-pink-700': event.category === 'natural-disaster',
           'text-white bg-sky-600 hover:bg-sky-700': event.category === 'legal',
-          'text-slate-900 bg-amber-300 hover:bg-amber-400': event.category === 'inauguration',
           'text-white bg-purple-600 hover:bg-purple-700': event.category === 'religious',
-          'text-slate-900 bg-yellow-100 hover:bg-yellow-300': event.category === 'boon',
-          'text-white bg-emerald-600 hover:bg-emerald-700': event.category === 'player'
+          'text-white bg-emerald-600 hover:bg-emerald-700': event.category === 'player',
+          'text-slate-900 bg-amber-300 hover:bg-amber-400': event.category === 'inauguration',
+          'text-slate-900 bg-emerald-200 hover:bg-emerald-300': event.category === 'invention',
+          'text-slate-900 bg-cyan-300 hover:bg-cyan-400': event.category === 'science',
+          'text-slate-900 bg-yellow-100 hover:bg-yellow-200': event.category === 'boon'
         }"
       >
         {{ event.title }}

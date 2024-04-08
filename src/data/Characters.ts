@@ -1,6 +1,11 @@
 import type { Character } from '@/models/Characters'
 
 export const charactersList: Character[] = [
+  // Player characters
+  { name: 'Sulvan Trois-Barbes', birth: { day: 20, month: 3, year: 3169, period: 'nante' } },
+  { name: 'Vascylly', birth: { day: 3, month: 5, year: 3181, period: 'nante' } },
+  { name: 'Tara Belyus', birth: { day: 14, month: 9, year: 3186, period: 'nante' } },
+
   // Counts of the Alliance
   { name: 'Alfrid de Lagarde', birth: { day: 29, month: 7, year: 3193, period: 'nante' } },
   { name: 'Alaric de Lagarde', birth: { day: 23, month: 8, year: 3192, period: 'nante' } },
@@ -14,7 +19,8 @@ export const charactersList: Character[] = [
   {
     name: 'Laura de Montardieu',
     birth: { day: 32, month: 3, year: 3167, period: 'nante' },
-    death: { day: 1, month: 4, year: 3217, period: 'nante' }
+    death: { day: 1, month: 4, year: 3217, period: 'nante' },
+    hiddenDeath: true
   },
   { name: 'Lazarus Tymos', birth: { day: 29, month: 9, year: 3145, period: 'nante' } },
   { name: 'Marion de Corambre', birth: { day: 14, month: 7, year: 3190, period: 'nante' } },
@@ -22,13 +28,18 @@ export const charactersList: Character[] = [
   { name: 'Vilgarde de Ternâcre', birth: { day: 3, month: 3, year: 2998, period: 'nante' } },
   { name: 'Ysildy Milopée', birth: { day: 3, month: 1, year: 3187, period: 'nante' } },
 
+  // Sparks
+  { name: 'Izàc Tymos', birth: { day: 13, month: 6, year: 3192, period: 'nante' } },
+  { name: 'Tvernée', birth: { day: 19, month: 2, year: 3205, period: 'nante' } },
+
+  // Pirates
+  { name: 'Räzal', birth: { day: 13, month: 8, year: 3178, period: 'nante' } },
+
   // "Les Milles Cages"
   { name: 'Ernestin Pomel', birth: { day: 11, month: 2, year: 3179, period: 'nante' } },
   { name: 'Quacille Lévios', birth: { day: 3, month: 6, year: 3162, period: 'nante' } },
   { name: 'Anastael Simon', birth: { day: 32, month: 2, year: 3166, period: 'nante' } },
   { name: 'Grestain', birth: { day: 9, month: 2, year: 3162, period: 'nante' } },
-  { name: 'Tivian Rodhus', birth: { day: 13, month: 3, year: 3157, period: 'nante' } },
-
-  // Player characters
-  { name: 'Sulvan Trois-Barbes', birth: { day: 20, month: 3, year: 3169, period: 'nante' } }
+  { name: 'Lucien Malanth', birth: { day: 31, month: 4, year: 3167, period: 'nante' } },
+  { name: 'Tivian Rodhus', birth: { day: 13, month: 3, year: 3157, period: 'nante' } }
 ]

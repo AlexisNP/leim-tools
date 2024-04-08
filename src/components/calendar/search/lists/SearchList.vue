@@ -68,10 +68,12 @@ const sortedResults = computed(() => {
           'text-white bg-orange-600 hover:bg-orange-700': r.category === 'catastrophe',
           'text-white bg-pink-600 hover:bg-pink-700': r.category === 'natural-disaster',
           'text-white bg-sky-600 hover:bg-sky-700': r.category === 'legal',
-          'text-slate-900 bg-amber-300 hover:bg-amber-400': r.category === 'inauguration',
           'text-white bg-purple-600 hover:bg-purple-700': r.category === 'religious',
-          'text-slate-900 bg-yellow-50 hover:bg-yellow-200': r.category === 'boon',
-          'text-white bg-emerald-600 hover:bg-emerald-700': r.category === 'player'
+          'text-white bg-emerald-600 hover:bg-emerald-700': r.category === 'player',
+          'text-slate-900 bg-amber-300 hover:bg-amber-400': r.category === 'inauguration',
+          'text-slate-900 bg-emerald-200 hover:bg-emerald-300': r.category === 'invention',
+          'text-slate-900 bg-cyan-300 hover:bg-cyan-400': r.category === 'science',
+          'text-slate-900 bg-yellow-100 hover:bg-yellow-200': r.category === 'boon'
         }"
         @click="handleJumpToDate(r.date)"
       >

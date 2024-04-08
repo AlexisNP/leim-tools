@@ -6,6 +6,7 @@ export interface CalendarEvent {
   description?: string
   category?: CalendarEventCategory
   secondaryCategories?: CalendarEventCategory[]
+  hidden?: boolean
   wiki?: string
 }
 
@@ -17,7 +18,9 @@ export type CalendarEventCategory =
   | 'natural-disaster'
   | 'inauguration'
   | 'religious'
-  | 'boon'
+  | 'invention'
+  | 'science'
+  | 'boon' // Great event on a global scale
   | 'player'
 
 export function isCalendarEvent(object: any): object is CalendarEvent {

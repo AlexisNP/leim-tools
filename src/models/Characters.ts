@@ -5,6 +5,8 @@ export interface Character {
   description?: string
   birth?: LeimDate
   death?: LeimDate
+  hiddenBirth?: boolean
+  hiddenDeath?: boolean
 }
 
 export function isCharacter(object: any): object is Character {

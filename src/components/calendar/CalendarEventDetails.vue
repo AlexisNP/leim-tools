@@ -12,13 +12,13 @@ defineProps<{ event: CalendarEvent }>()
 <template>
   <PopoverContent class="w-96" align="start">
     <div class="space-y-1">
-      <div class="font-semibold">
+      <div class="text-lg font-semibold">
         {{ event.title }}
       </div>
-      <div class="text-sm">
+      <div class="">
         {{ getFormattedDateTitle(event.date, true) }}
       </div>
-      <div class="text-sm italic text-slate-500">
+      <div class="italic text-slate-500">
         {{ event.description }}
       </div>
     </div>

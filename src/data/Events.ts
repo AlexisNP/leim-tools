@@ -1,7 +1,7 @@
 import type { CalendarEvent } from '@/models/Events'
 
 export const regularEvents: CalendarEvent[] = [
-  // Histoire Ancienne
+  // Histoire Antique
   {
     title: 'Exécution de Tyhos',
     date: { day: 1, month: 0, year: 0, period: 'nante' },
@@ -9,7 +9,8 @@ export const regularEvents: CalendarEvent[] = [
       "Le léviathan Tyhos rend l'âme après un combat de plusieurs années contre Lystos, le dieu du Soleil.",
     category: 'boon',
     secondaryCategories: ['death'],
-    wiki: 'https://alexcreates.fr/leim/index.php/Alliance_Kald%C3%A9lienne#Trait%C3%A9_de_Kadel'
+    wiki: 'https://alexcreates.fr/leim/index.php/Alliance_Kald%C3%A9lienne#Trait%C3%A9_de_Kadel',
+    hidden: true
   },
   {
     title: 'Traité de Kadel',
@@ -19,6 +20,18 @@ export const regularEvents: CalendarEvent[] = [
     secondaryCategories: ['legal'],
     wiki: 'https://alexcreates.fr/leim/index.php/Alliance_Kald%C3%A9lienne#Trait%C3%A9_de_Kadel'
   },
+
+  // Histoire Récente
+  {
+    title: 'Création de la buse kaldélienne',
+    date: { day: 4, month: 2, year: 3113, period: 'nante' },
+    description:
+      'Sophia de Rougefer invente la buse kaldélienne, une arme à feu souple à deux canons.',
+    category: 'invention',
+    secondaryCategories: ['science'],
+    wiki: 'https://alexcreates.fr/leim/index.php/Buse_(arme)'
+  },
+
   // "Les Milles Cages"
   {
     title: "Arrivée d'aventuriers à Borélis",
@@ -58,36 +71,42 @@ export const regularEvents: CalendarEvent[] = [
     title: 'Inauguration de la Cloche du Pilier',
     description: "Le Moine Premier inaugure la grande cloche d'argent au sommet du Pilier d'Ikami.",
     date: { day: 29, month: 5, year: 3209, period: 'nante' },
-    category: 'religious'
+    category: 'religious',
+    hidden: true
   },
   {
     title: '1ère disparation à Cantane',
     description: 'Première victime de la série de disparitions qui affecte Cantane',
     date: { day: 28, month: 7, year: 3209, period: 'nante' },
-    category: 'death'
+    category: 'death',
+    hidden: true
   },
   {
     title: '2ème disparation à Cantane',
     description: 'Seconde victime de la série de disparitions qui affecte Cantane',
     date: { day: 32, month: 7, year: 3209, period: 'nante' },
-    category: 'death'
+    category: 'death',
+    hidden: true
   },
   {
     title: '3ème disparation à Cantane',
     description: 'Troisième victime de la série de disparitions qui affecte Cantane',
     date: { day: 10, month: 8, year: 3209, period: 'nante' },
-    category: 'death'
+    category: 'death',
+    hidden: true
   },
   {
     title: '4ème disparation à Cantane',
     description: 'Quatrième victime de la série de disparitions qui affecte Cantane',
     date: { day: 19, month: 8, year: 3209, period: 'nante' },
-    category: 'death'
+    category: 'death',
+    hidden: true
   },
   {
     title: '5ème disparation à Cantane',
     description: 'Cinquième victime de la série de disparitions qui affecte Cantane',
     date: { day: 22, month: 8, year: 3209, period: 'nante' },
-    category: 'death'
+    category: 'death',
+    hidden: true
   }
 ]
