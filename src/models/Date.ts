@@ -2,7 +2,7 @@ export interface LeimDate {
   day: number
   month: number
   year: number
-  period: LeimPeriod
+  period?: LeimPeriod
 }
 
 export type LeimPeriod = 'ante' | 'nante'
@@ -36,15 +36,21 @@ export function compareDates(a: LeimDate, b: LeimDate, order: LeimDateOrder = 'd
   // Reverses the order if specified
   const orderFactor: number = order === 'desc' ? 1 : -1
 
-  if (a.period === 'ante' && b.period === 'nante') return -1 * orderFactor
-  if (a.period === 'nante' && b.period === 'ante') return 1 * orderFactor
+  // Compare eras
+  if ((a.period === 'ante' && b.period === 'nante') || (a.year < 0 && b.year >= 0))
+    return -1 * orderFactor
+  if ((a.period === 'nante' && b.period === 'ante') || (a.year >= 0 && b.year < 0))
+    return 1 * orderFactor
 
+  // Compare years
   if (a.year < b.year) return -1 * orderFactor
   if (a.year > b.year) return 1 * orderFactor
 
+  // Compare months
   if (a.month < b.month) return -1 * orderFactor
   if (a.month > b.month) return 1 * orderFactor
 
+  // Compare days
   if (a.day < b.day) return -1 * orderFactor
   if (a.day > b.day) return 1 * orderFactor
 

@@ -44,7 +44,7 @@ export const useCalendar = defineStore('calendar', () => {
   /**
    * Month list
    */
-  const months = [
+  const months: string[] = [
     'Jalen',
     'Malsen',
     'Verlys',
@@ -82,9 +82,9 @@ export const useCalendar = defineStore('calendar', () => {
   })
 
   // Default date settings (current day in the world)
-  const defaultDay = 23
-  const defaultMonth = 8
-  const defaultYear = 3209
+  const defaultDay: number = 23
+  const defaultMonth: number = 8
+  const defaultYear: number = 3209
   const defaultDate: ComputedRef<LeimDate> = computed(() => {
     return {
       day: defaultDay,
@@ -105,17 +105,17 @@ export const useCalendar = defineStore('calendar', () => {
     params.year = defaultYear.toString()
   }
 
-  const currentDay = computed(() => {
+  const currentDay = computed<number>(() => {
     return Number(params.day)
   })
 
-  const currentMonth = computed(() => {
+  const currentMonth = computed<number>(() => {
     return Number(params.month)
   })
   // Gets the label from currentMonth index
-  const currentMonthName = computed(() => getMonthName(currentMonth.value))
+  const currentMonthName = computed<string>(() => getMonthName(currentMonth.value))
 
-  const currentYear = computed(() => {
+  const currentYear = computed<number>(() => {
     return Number(params.year)
   })
 
@@ -125,7 +125,7 @@ export const useCalendar = defineStore('calendar', () => {
     () => getPeriodOfYear(currentYear.value).short
   )
 
-  const currentDateTitle = computed(() => {
+  const currentDateTitle = computed<string>(() => {
     switch (currentConfig.value.viewType) {
       case 'month':
         return getFormattedDateTitle({
@@ -169,12 +169,12 @@ export const useCalendar = defineStore('calendar', () => {
     }
   })
 
-  const selectedDate = useStorage('selected-date', currentLeimDate.value)
+  const selectedDate = useStorage<LeimDate>('selected-date', currentLeimDate.value)
 
   /**
    * Check whether the current viewType is active
    */
-  const isCurrentScreenActive = computed(() => {
+  const isCurrentScreenActive = computed<boolean>(() => {
     switch (currentConfig.value.viewType) {
       case 'month':
         return (
@@ -195,7 +195,7 @@ export const useCalendar = defineStore('calendar', () => {
   /**
    * Moves the current date forward one month
    */
-  function incrementMonth() {
+  function incrementMonth(): void {
     let newValue = Number(params.month) + 1
 
     // If the new value would exceed the max number of month per year
@@ -211,7 +211,7 @@ export const useCalendar = defineStore('calendar', () => {
   /**
    * Moves the current date backward one month
    */
-  function decrementMonth() {
+  function decrementMonth(): void {
     let newValue = Number(params.month) - 1
 
     // If the new value would go below 0
@@ -227,7 +227,7 @@ export const useCalendar = defineStore('calendar', () => {
   /**
    * Moves the current date to a particular month
    */
-  function setMonth(target: number) {
+  function setMonth(target: number): void {
     // If the target is outside the month bounds
     if (target < 0 || target >= staticConfig.monthsPerYear) {
       return
@@ -239,7 +239,7 @@ export const useCalendar = defineStore('calendar', () => {
   /**
    * Moves the current date forward one year
    */
-  function incrementYear(inc: number = 1) {
+  function incrementYear(inc: number = 1): void {
     const newValue = Number(params.year) + inc
 
     params.year = newValue.toString()
@@ -248,7 +248,7 @@ export const useCalendar = defineStore('calendar', () => {
   /**
    * Moves the current date backward one year
    */
-  function decrementYear(inc: number = 1) {
+  function decrementYear(inc: number = 1): void {
     const newValue = Number(params.year) - inc
 
     params.year = newValue.toString()
@@ -334,7 +334,7 @@ export const useCalendar = defineStore('calendar', () => {
    *
    * @param date Target date
    */
-  function jumpToDate(date: LeimDate) {
+  function jumpToDate(date: LeimDate): void {
     params.day = date.day.toString()
     params.month = date.month.toString()
     params.year = date.year.toString()
@@ -344,7 +344,7 @@ export const useCalendar = defineStore('calendar', () => {
   /**
    * Jump the calendar to the default date
    */
-  function jumpToDefaultDate() {
+  function jumpToDefaultDate(): void {
     jumpToDate(defaultDate.value)
     currentConfig.value.viewType = 'month'
   }
@@ -352,7 +352,7 @@ export const useCalendar = defineStore('calendar', () => {
   /**
    * Jump the calendar to the default date
    */
-  function selectDate(date: LeimDate) {
+  function selectDate(date: LeimDate): void {
     selectedDate.value = date
   }
 
