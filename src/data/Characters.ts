@@ -38,6 +38,7 @@ export const charactersList: Character[] = [
   // "Les Milles Cages"
   { name: 'Ernestin Pomel', birth: { day: 11, month: 2, year: 3179, period: 'nante' } },
   { name: 'Quacille Lévios', birth: { day: 3, month: 6, year: 3162, period: 'nante' } },
+  { name: 'Morel Lévios', birth: { day: 26, month: 3, year: 3157, period: 'nante' } },
   { name: 'Anastael Simon', birth: { day: 32, month: 2, year: 3166, period: 'nante' } },
   { name: 'Grestain', birth: { day: 9, month: 2, year: 3162, period: 'nante' } },
   { name: 'Lucien Malanth', birth: { day: 31, month: 4, year: 3167, period: 'nante' } },
