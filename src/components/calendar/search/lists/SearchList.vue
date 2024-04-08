@@ -28,7 +28,7 @@ function handleJumpToDate(date?: LeimDate) {
 const searchLimit = 10
 const activeSearchLimit = computed<number>(() => (!props.currentEntity ? searchLimit : 9999))
 
-const resultsToDisplay = computed(() => props.results.slice(0, activeSearchLimit.value))
+const resultsToDisplay = computed(() => props.results)
 const sortedResults = computed(() => {
   return [...resultsToDisplay.value].sort((a, b) => {
     let firstDate: LeimDate
