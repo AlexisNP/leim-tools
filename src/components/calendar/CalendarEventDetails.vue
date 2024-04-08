@@ -1,13 +1,18 @@
 <script lang="ts" setup>
+import { getRelativeString } from '@/models/Date'
 import type { CalendarEvent } from '@/models/Events'
 import { useCalendar } from '@/stores/CalendarStore'
+import { computed } from 'vue'
 
-import { PopoverContent } from '@/components/ui/popover'
+import { PhHourglassMedium } from '@phosphor-icons/vue'
 import { Badge } from '@/components/ui/badge'
+import { PopoverContent } from '@/components/ui/popover'
 
-const { getFormattedDateTitle } = useCalendar()
+const { defaultDate, getFormattedDateTitle } = useCalendar()
 
-defineProps<{ event: CalendarEvent }>()
+const props = defineProps<{ event: CalendarEvent }>()
+
+const dateDifference = computed(() => getRelativeString(defaultDate, props.event.date))
 </script>
 
 <template>
@@ -17,8 +22,11 @@ defineProps<{ event: CalendarEvent }>()
         {{ event.title }}
       </div>
 
-      <div>
-        {{ getFormattedDateTitle(event.date, true) }}
+      <div class="mb-1 space-y-1">
+        <p class="font-semibold">{{ getFormattedDateTitle(event.date, true) }}</p>
+        <p class="text-sm italic opacity-75 flex items-center gap-1">
+          <PhHourglassMedium size="16" weight="fill" /> {{ dateDifference }}
+        </p>
       </div>
 
       <div v-if="event.category || event.secondaryCategories">
@@ -37,9 +45,7 @@ defineProps<{ event: CalendarEvent }>()
         </ul>
       </div>
 
-      <hr class="my-2" />
-
-      <div class="italic text-slate-500">
+      <div class="mt-2 italic text-sm text-slate-500">
         {{ event.description }}
       </div>
     </div>
