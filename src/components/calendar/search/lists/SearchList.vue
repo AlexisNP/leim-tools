@@ -62,15 +62,16 @@ const sortedResults = computed(() => {
         v-if="isCalendarEvent(r)"
         class="block w-full text-left p-2 rounded-sm"
         :class="{
-          'bg-slate-600 hover:bg-slate-700': !r.category,
-          'bg-lime-600 hover:bg-lime-700': r.category === 'birth',
-          'bg-stone-600 hover:bg-stone-700': r.category === 'death',
-          'bg-orange-600 hover:bg-orange-700': r.category === 'catastrophe',
-          'bg-pink-600 hover:bg-pink-700': r.category === 'natural-disaster',
-          'bg-sky-600 hover:bg-sky-700': r.category === 'legal',
+          'text-white bg-slate-600 hover:bg-slate-700': !r.category,
+          'text-white bg-lime-600 hover:bg-lime-700': r.category === 'birth',
+          'text-white bg-stone-600 hover:bg-stone-700': r.category === 'death',
+          'text-white bg-orange-600 hover:bg-orange-700': r.category === 'catastrophe',
+          'text-white bg-pink-600 hover:bg-pink-700': r.category === 'natural-disaster',
+          'text-white bg-sky-600 hover:bg-sky-700': r.category === 'legal',
           'text-slate-900 bg-amber-300 hover:bg-amber-400': r.category === 'inauguration',
-          'bg-purple-600 hover:bg-purple-700': r.category === 'religious',
-          'bg-emerald-600 hover:bg-emerald-700': r.category === 'player'
+          'text-white bg-purple-600 hover:bg-purple-700': r.category === 'religious',
+          'text-slate-900 bg-yellow-50 hover:bg-yellow-200': r.category === 'boon',
+          'text-white bg-emerald-600 hover:bg-emerald-700': r.category === 'player'
         }"
         @click="handleJumpToDate(r.date)"
       >

@@ -1,6 +1,25 @@
 import type { CalendarEvent } from '@/models/Events'
 
 export const regularEvents: CalendarEvent[] = [
+  // Histoire Ancienne
+  {
+    title: 'Exécution de Tyhos',
+    date: { day: 1, month: 0, year: 0, period: 'nante' },
+    description:
+      "Le léviathan Tyhos rend l'âme après un combat de plusieurs années contre Lystos, le dieu du Soleil.",
+    category: 'boon',
+    secondaryCategories: ['death'],
+    wiki: 'https://alexcreates.fr/leim/index.php/Alliance_Kald%C3%A9lienne#Trait%C3%A9_de_Kadel'
+  },
+  {
+    title: 'Traité de Kadel',
+    date: { day: 20, month: 4, year: 100, period: 'nante' },
+    description: '',
+    category: 'inauguration',
+    secondaryCategories: ['legal'],
+    wiki: 'https://alexcreates.fr/leim/index.php/Alliance_Kald%C3%A9lienne#Trait%C3%A9_de_Kadel'
+  },
+  // "Les Milles Cages"
   {
     title: "Arrivée d'aventuriers à Borélis",
     date: { day: 12, month: 7, year: 3209, period: 'nante' },

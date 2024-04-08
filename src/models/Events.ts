@@ -5,6 +5,8 @@ export interface CalendarEvent {
   date: LeimDate
   description?: string
   category?: CalendarEventCategory
+  secondaryCategories?: CalendarEventCategory[]
+  wiki?: string
 }
 
 export type CalendarEventCategory =
@@ -15,6 +17,7 @@ export type CalendarEventCategory =
   | 'natural-disaster'
   | 'inauguration'
   | 'religious'
+  | 'boon'
   | 'player'
 
 export function isCalendarEvent(object: any): object is CalendarEvent {
