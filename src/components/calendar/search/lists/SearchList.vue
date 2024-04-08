@@ -7,6 +7,7 @@ import { computed } from 'vue'
 import type { SearchMode } from '../../Search'
 
 import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
 
 const props = defineProps<{
   results: (Character | CalendarEvent)[]
@@ -66,17 +67,17 @@ const pagedResults = computed(() => sortedResults.value.slice(props.startAt, pro
         class="block w-full text-left p-2 rounded-sm"
         :class="{
           'text-white bg-slate-600 hover:bg-slate-700': !r.category,
-          'text-white bg-lime-600 hover:bg-lime-700': r.category === 'birth',
-          'text-white bg-stone-600 hover:bg-stone-700': r.category === 'death',
+          'text-white bg-lime-600 hover:bg-lime-700': r.category === 'naissance',
+          'text-white bg-stone-500 hover:bg-stone-700': r.category === 'mort',
           'text-white bg-orange-600 hover:bg-orange-700': r.category === 'catastrophe',
-          'text-white bg-pink-600 hover:bg-pink-700': r.category === 'natural-disaster',
-          'text-white bg-sky-600 hover:bg-sky-700': r.category === 'legal',
-          'text-white bg-purple-600 hover:bg-purple-700': r.category === 'religious',
-          'text-white bg-emerald-600 hover:bg-emerald-700': r.category === 'player',
+          'text-white bg-pink-600 hover:bg-pink-700': r.category === 'catastrophe-naturel',
+          'text-white bg-sky-600 hover:bg-sky-700': r.category === 'législation',
+          'text-white bg-purple-600 hover:bg-purple-700': r.category === 'religion',
+          'text-white bg-emerald-600 hover:bg-emerald-700': r.category === 'joueurs',
           'text-slate-900 bg-amber-300 hover:bg-amber-400': r.category === 'inauguration',
           'text-slate-900 bg-emerald-200 hover:bg-emerald-300': r.category === 'invention',
           'text-slate-900 bg-cyan-300 hover:bg-cyan-400': r.category === 'science',
-          'text-slate-900 bg-yellow-100 hover:bg-yellow-200': r.category === 'boon'
+          'text-slate-900 bg-yellow-100 hover:bg-yellow-200': r.category === 'bénédiction'
         }"
         @click="handleJumpToDate(r.date)"
       >
@@ -88,8 +89,24 @@ const pagedResults = computed(() => sortedResults.value.slice(props.startAt, pro
           <span class="opacity-75 italic">{{ getFormattedDateTitle(r.date, true) }}</span>
         </div>
 
+        <div v-if="r.category || r.secondaryCategories">
+          <ul class="flex gap-1">
+            <li v-if="r.category">
+              <Badge class="mix-blend-luminosity font-bold bg-gray-600" variant="secondary">
+                {{ r.category }}
+              </Badge>
+            </li>
+
+            <li v-for="cat in r.secondaryCategories" :key="cat">
+              <Badge class="mix-blend-luminosity bg-gray-600" variant="secondary">
+                {{ cat }}
+              </Badge>
+            </li>
+          </ul>
+        </div>
+
         <div v-if="r.description" class="text-sm">
-          <hr class="my-2 border-white opacity-25" />
+          <hr class="my-2 border-white opacity-50" />
           <span class="opacity-75">
             {{ r.description }}
           </span>

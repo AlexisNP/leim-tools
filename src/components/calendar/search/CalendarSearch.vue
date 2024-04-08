@@ -165,7 +165,7 @@ whenever(keys.control_period, () => {
       </VisuallyHidden>
 
       <!-- Dialog header -->
-      <div class="grid gap-2">
+      <div class="grid gap-3">
         <div class="relative w-full h-fit">
           <Input
             id="search"
@@ -233,9 +233,9 @@ whenever(keys.control_period, () => {
             </TooltipProvider>
           </div>
         </div>
-
-        <hr />
       </div>
+
+      <hr />
 
       <div v-if="searchResults.length > 0" class="grow overflow-y-auto">
         <SearchList

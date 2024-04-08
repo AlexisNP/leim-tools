@@ -11,17 +11,17 @@ export interface CalendarEvent {
 }
 
 export type CalendarEventCategory =
-  | 'birth'
-  | 'death'
+  | 'naissance'
+  | 'mort'
   | 'catastrophe'
-  | 'legal'
-  | 'natural-disaster'
+  | 'législation'
+  | 'catastrophe-naturel'
   | 'inauguration'
-  | 'religious'
+  | 'religion'
   | 'invention'
   | 'science'
-  | 'boon' // Great event on a global scale
-  | 'player'
+  | 'bénédiction' // Great event on a global scale
+  | 'joueurs'
 
 export function isCalendarEvent(object: any): object is CalendarEvent {
   return 'date' in object

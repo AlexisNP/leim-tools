@@ -7,8 +7,8 @@ export const regularEvents: CalendarEvent[] = [
     date: { day: 1, month: 0, year: 0 },
     description:
       "Le léviathan Tyhos rend l'âme après un combat de plusieurs années contre Lystos, le dieu du Soleil.",
-    category: 'boon',
-    secondaryCategories: ['death'],
+    category: 'bénédiction',
+    secondaryCategories: ['mort'],
     wiki: 'https://alexcreates.fr/leim/index.php/Alliance_Kald%C3%A9lienne#Trait%C3%A9_de_Kadel',
     hidden: true
   },
@@ -17,7 +17,7 @@ export const regularEvents: CalendarEvent[] = [
     date: { day: 20, month: 4, year: 100 },
     description: '',
     category: 'inauguration',
-    secondaryCategories: ['legal'],
+    secondaryCategories: ['législation'],
     wiki: 'https://alexcreates.fr/leim/index.php/Alliance_Kald%C3%A9lienne#Trait%C3%A9_de_Kadel'
   },
 
@@ -38,7 +38,7 @@ export const regularEvents: CalendarEvent[] = [
     date: { day: 12, month: 7, year: 3209 },
     description:
       'Tara Belyus, Vascylly et Adol Sulvan livrent 3 condamnés à Handany. Ils partent pour la mer durant la journée.',
-    category: 'player'
+    category: 'joueurs'
   },
   {
     title: "Naufrage de l'Éclipse",
@@ -51,19 +51,19 @@ export const regularEvents: CalendarEvent[] = [
     title: 'Emprisonnement de Tivian Rodhus',
     description: "Celui qu'on surnomme la Bête d'Ambrose arrive à Handany, où il purgera sa peine.",
     date: { day: 14, month: 7, year: 3209 },
-    category: 'legal'
+    category: 'législation'
   },
   {
     title: 'Sulvan et Anastael atteignent Bamast',
     date: { day: 19, month: 2, year: 3210 },
-    category: 'player'
+    category: 'joueurs'
   },
   {
     title: 'Jugement de Bormis Griloup',
     description:
       "Bromis Griloup est jugé coupable d'escroquerie et sabotage aux Cours d'Acier de Tourgrise. Il purgera une peine de 10 ans au sein des prisons royales.",
     date: { day: 4, month: 8, year: 3209 },
-    category: 'legal'
+    category: 'législation'
   },
 
   // "Les Cloches de Cantane"
@@ -71,42 +71,42 @@ export const regularEvents: CalendarEvent[] = [
     title: 'Inauguration de la Cloche du Pilier',
     description: "Le Moine Premier inaugure la grande cloche d'argent au sommet du Pilier d'Ikami.",
     date: { day: 29, month: 5, year: 3209 },
-    category: 'religious',
+    category: 'religion',
     hidden: true
   },
   {
     title: '1ère disparation à Cantane',
     description: 'Première victime de la série de disparitions qui affecte Cantane',
     date: { day: 28, month: 7, year: 3209 },
-    category: 'death',
+    category: 'mort',
     hidden: true
   },
   {
     title: '2ème disparation à Cantane',
     description: 'Seconde victime de la série de disparitions qui affecte Cantane',
     date: { day: 32, month: 7, year: 3209 },
-    category: 'death',
+    category: 'mort',
     hidden: true
   },
   {
     title: '3ème disparation à Cantane',
     description: 'Troisième victime de la série de disparitions qui affecte Cantane',
     date: { day: 10, month: 8, year: 3209 },
-    category: 'death',
+    category: 'mort',
     hidden: true
   },
   {
     title: '4ème disparation à Cantane',
     description: 'Quatrième victime de la série de disparitions qui affecte Cantane',
     date: { day: 19, month: 8, year: 3209 },
-    category: 'death',
+    category: 'mort',
     hidden: true
   },
   {
     title: '5ème disparation à Cantane',
     description: 'Cinquième victime de la série de disparitions qui affecte Cantane',
     date: { day: 22, month: 8, year: 3209 },
-    category: 'death',
+    category: 'mort',
     hidden: true
   }
 ]
