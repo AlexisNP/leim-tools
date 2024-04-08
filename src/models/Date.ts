@@ -107,6 +107,18 @@ export function getRelativeString(baseDate: LeimDate, relativeDate: LeimDate): s
   if (direction === 'present') {
     return "Aujourd'hui"
   }
+  if (differenceInDays === -2) {
+    return 'Avant-hier'
+  }
+  if (differenceInDays === -1) {
+    return 'Hier'
+  }
+  if (differenceInDays === 1) {
+    return 'Demain'
+  }
+  if (differenceInDays === 2) {
+    return 'Après-demain'
+  }
 
   // Get relevant prefix for the string
   if (direction === 'future') {
