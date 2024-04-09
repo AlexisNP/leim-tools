@@ -1,11 +1,12 @@
 <script lang="ts" setup>
 import { isCharacter, type Character } from '@/models/Characters'
-import { compareDates, type LeimDate, type LeimDateOrder } from '@/models/Date'
+import { compareDates, getRelativeString, type LeimDate, type LeimDateOrder } from '@/models/Date'
 import { isCalendarEvent, type CalendarEvent } from '@/models/Events'
 import { useCalendar } from '@/stores/CalendarStore'
 import { computed } from 'vue'
 import type { SearchMode } from '../../Search'
 
+import { PhHourglassMedium } from '@phosphor-icons/vue'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 
@@ -20,7 +21,7 @@ const props = defineProps<{
 
 const emit = defineEmits(['jumpedToDate'])
 
-const { getFormattedDateTitle, jumpToDate } = useCalendar()
+const { defaultDate, getFormattedDateTitle, jumpToDate } = useCalendar()
 
 function handleJumpToDate(date?: LeimDate) {
   if (!date) return
@@ -64,7 +65,7 @@ const pagedResults = computed(() => sortedResults.value.slice(props.startAt, pro
     <li v-for="r in pagedResults" :key="isCalendarEvent(r) ? r.title : r.name">
       <button
         v-if="isCalendarEvent(r)"
-        class="block w-full text-left p-2 rounded-sm"
+        class="relative block w-full text-left p-2 rounded-sm"
         :class="{
           'text-white bg-slate-600 hover:bg-slate-700': !r.category,
           'text-white bg-lime-600 hover:bg-lime-700': r.category === 'naissance',
@@ -85,11 +86,15 @@ const pagedResults = computed(() => sortedResults.value.slice(props.startAt, pro
           {{ r.title }}
         </div>
 
-        <div>
-          <span class="opacity-75 italic">{{ getFormattedDateTitle(r.date, true) }}</span>
+        <div class="mb-1 space-y-1">
+          <p class="opacity-75 font-semibold">{{ getFormattedDateTitle(r.date, true) }}</p>
+          <p class="text-sm italic opacity-75 flex items-center gap-1">
+            <PhHourglassMedium size="16" weight="fill" />
+            {{ getRelativeString(defaultDate, r.date) }}
+          </p>
         </div>
 
-        <div v-if="r.category || r.secondaryCategories">
+        <div v-if="r.category || r.secondaryCategories" class="absolute top-2 right-2">
           <ul class="flex gap-1">
             <li v-if="r.category">
               <Badge class="mix-blend-luminosity font-bold bg-gray-600" variant="secondary">
