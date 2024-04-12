@@ -76,7 +76,7 @@ export const regularEvents: CalendarEvent[] = [
   },
   {
     title: '1ère disparation à Cantane',
-    description: 'Première victime de la série de disparitions qui affecte Cantane',
+    description: "Taleb Vaht décède dans une grotte à la suite d'une attaque d'ischiels enragées.",
     date: { day: 28, month: 7, year: 3209 },
     category: 'mort',
     hidden: true
@@ -107,6 +107,14 @@ export const regularEvents: CalendarEvent[] = [
     description: 'Cinquième victime de la série de disparitions qui affecte Cantane',
     date: { day: 22, month: 8, year: 3209 },
     category: 'mort',
+    hidden: true
+  },
+  {
+    title: 'Grande Banque Minérale de Cantane',
+    description:
+      'Les artisans et mineurs de Rougefer se réunissent à Cantane pour vendre le fruit de leur dur labeur.',
+    date: { day: 23, month: 8, year: 3209 },
+    category: 'inauguration',
     hidden: true
   }
 ]
