@@ -6,7 +6,8 @@ import { useCalendar } from '@/stores/CalendarStore'
 import { computed } from 'vue'
 import type { SearchMode } from '../../Search'
 
-import { PhHourglassMedium } from '@phosphor-icons/vue'
+import { PhHourglassMedium, PhPlant, PhSkull } from '@phosphor-icons/vue'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 
@@ -61,11 +62,11 @@ const pagedResults = computed(() => sortedResults.value.slice(props.startAt, pro
 </script>
 
 <template>
-  <ul class="grid gap-3">
+  <ul class="grid gap-4">
     <li v-for="r in pagedResults" :key="isCalendarEvent(r) ? r.title : r.name">
       <button
         v-if="isCalendarEvent(r)"
-        class="relative block w-full text-left p-2 rounded-sm"
+        class="relative block w-full text-left py-3 px-4 rounded-sm transition-colors"
         :class="{
           'text-white bg-slate-600 hover:bg-slate-700': !r.category,
           'text-white bg-lime-600 hover:bg-lime-700': r.category === 'naissance',
@@ -82,19 +83,19 @@ const pagedResults = computed(() => sortedResults.value.slice(props.startAt, pro
         }"
         @click="handleJumpToDate(r.date)"
       >
-        <div>
+        <div class="font-bold">
           {{ r.title }}
         </div>
 
         <div class="mb-1 space-y-1">
-          <p class="opacity-75 font-semibold">{{ getFormattedDateTitle(r.date, true) }}</p>
+          <p class="opacity-75">{{ getFormattedDateTitle(r.date, true) }}</p>
           <p class="text-sm italic opacity-75 flex items-center gap-1">
             <PhHourglassMedium size="16" weight="fill" />
             {{ getRelativeString(defaultDate, r.date) }}
           </p>
         </div>
 
-        <div v-if="r.category || r.secondaryCategories" class="absolute top-2 right-2">
+        <div v-if="r.category || r.secondaryCategories" class="absolute top-3 right-4">
           <ul class="flex gap-1">
             <li v-if="r.category">
               <Badge class="mix-blend-luminosity font-bold bg-gray-600" variant="secondary">
@@ -120,34 +121,54 @@ const pagedResults = computed(() => sortedResults.value.slice(props.startAt, pro
 
       <div
         v-else-if="isCharacter(r)"
-        class="block w-full text-left py-2 px-4 border-[1px] border-slate-700 rounded-sm"
+        class="block w-full text-left py-3 px-4 border-[1px] border-slate-700 rounded-sm"
       >
-        <div class="flex items-center gap-6">
-          <div>
-            <div>
-              {{ r.name }}
-            </div>
+        <div class="grid gap-2">
+          <h2>
+            {{ r.name }}
+          </h2>
 
-            <div v-if="r.description" class="text-sm">
-              <hr class="my-2 border-white opacity-25" />
-              <span class="opacity-75">
-                {{ r.description }}
-              </span>
-            </div>
-          </div>
-
-          <menu class="flex gap-2">
+          <menu class="flex gap-2 border-[1px] border-slate-700 rounded-sm w-fit">
             <li v-if="r.birth">
-              <Button @click="handleJumpToDate(r.birth)" variant="outline" size="sm">
-                Naissance
-              </Button>
+              <TooltipProvider :delayDuration="100">
+                <Tooltip>
+                  <TooltipTrigger>
+                    <Button @click="handleJumpToDate(r.birth)" variant="ghost" size="xs">
+                      <PhPlant size="16" weight="fill" />
+                      {{ getFormattedDateTitle(r.birth, true) }}
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Date de naissance</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             </li>
+            <span v-if="r.birth && r.death">-</span>
             <li v-if="r.death">
-              <Button @click="handleJumpToDate(r.death)" variant="outline" size="sm">
-                Décès
-              </Button>
+              <TooltipProvider :delayDuration="100">
+                <Tooltip>
+                  <TooltipTrigger>
+                    <Button @click="handleJumpToDate(r.death)" variant="ghost" size="xs">
+                      <PhSkull size="16" weight="fill" />
+                      {{ getFormattedDateTitle(r.death, true) }}
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Date de décès</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             </li>
           </menu>
+
+          <hr v-if="r.description" class="border-white opacity-25" />
+
+          <div v-if="r.description" class="text-sm">
+            <span class="opacity-75">
+              {{ r.description }}
+            </span>
+          </div>
         </div>
       </div>
     </li>
