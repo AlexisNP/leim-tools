@@ -6,7 +6,7 @@ import { useCalendar } from '@/stores/CalendarStore'
 import { computed } from 'vue'
 import type { SearchMode } from '../../Search'
 
-import { PhHourglassMedium, PhPlant, PhSkull } from '@phosphor-icons/vue'
+import { PhHourglassMedium, PhPlant, PhSkull, PhArrowSquareOut } from '@phosphor-icons/vue'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -72,7 +72,7 @@ const pagedResults = computed(() => sortedResults.value.slice(props.startAt, pro
           'text-white bg-lime-600 hover:bg-lime-700': r.category === 'naissance',
           'text-white bg-stone-500 hover:bg-stone-700': r.category === 'mort',
           'text-white bg-orange-600 hover:bg-orange-700': r.category === 'catastrophe',
-          'text-white bg-pink-600 hover:bg-pink-700': r.category === 'catastrophe-naturel',
+          'text-white bg-pink-600 hover:bg-pink-700': r.category === 'catastrophe-naturelle',
           'text-white bg-sky-600 hover:bg-sky-700': r.category === 'législation',
           'text-white bg-purple-600 hover:bg-purple-700': r.category === 'religion',
           'text-white bg-emerald-600 hover:bg-emerald-700': r.category === 'joueurs',
@@ -83,8 +83,13 @@ const pagedResults = computed(() => sortedResults.value.slice(props.startAt, pro
         }"
         @click="handleJumpToDate(r.date)"
       >
-        <div class="font-bold">
-          {{ r.title }}
+        <div>
+          <h2 class="font-bold">
+            {{ r.title }}
+          </h2>
+          <div v-if="r.wiki">
+            <a :href="r.wiki" target="_blank" title="Voir sur le Wiki">Page wiki</a>
+          </div>
         </div>
 
         <div class="mb-1 space-y-1">
@@ -124,9 +129,19 @@ const pagedResults = computed(() => sortedResults.value.slice(props.startAt, pro
         class="block w-full text-left py-3 px-4 border-[1px] border-slate-700 rounded-sm"
       >
         <div class="grid gap-2">
-          <h2>
-            {{ r.name }}
-          </h2>
+          <div class="flex gap-2">
+            <h2 class="font-bold">
+              {{ r.name }}
+            </h2>
+            <div v-if="r.wiki">
+              <Button variant="link" size="xs" as-child>
+                <a :href="r.wiki" target="_blank">
+                  Wiki
+                  <PhArrowSquareOut size="16" weight="fill" />
+                </a>
+              </Button>
+            </div>
+          </div>
 
           <menu class="flex gap-2 border-[1px] border-slate-700 rounded-sm w-fit">
             <li v-if="r.birth">

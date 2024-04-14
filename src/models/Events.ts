@@ -15,7 +15,7 @@ export type CalendarEventCategory =
   | 'mort'
   | 'catastrophe'
   | 'législation'
-  | 'catastrophe-naturel'
+  | 'catastrophe-naturelle'
   | 'inauguration'
   | 'religion'
   | 'invention'
