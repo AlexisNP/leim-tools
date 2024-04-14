@@ -41,7 +41,7 @@ const modalOpen = ref(false)
 const searchQuery = ref('')
 const searchEnough = computed(() => searchQuery.value.length >= 2)
 
-const selectedEntity = useStorage('se', undefined as SearchMode)
+const selectedEntity = useStorage('se', 'events' as SearchMode)
 
 // Order
 const selectedOrder = ref<LeimDateOrder>('asc')
