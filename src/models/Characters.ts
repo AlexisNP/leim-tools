@@ -12,7 +12,17 @@ export interface Character {
   wiki?: string
 }
 
-export type CharacterCategory = 'joueur' | 'comte' | 'scientifique' | 'mage' | 'professeur'
+export type CharacterCategory =
+  | 'joueur'
+  | 'comte'
+  | 'scientifique'
+  | 'mage'
+  | 'professeur'
+  | 'criminel'
+  | 'étincelle'
+  | 'buse blanche'
+  | 'ecclésiastique'
+  | 'sentinelle'
 
 export function isCharacter(object: any): object is Character {
   return 'birth' in object
