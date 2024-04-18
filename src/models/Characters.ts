@@ -11,18 +11,20 @@ export interface Character {
   secondaryCategories?: CharacterCategory[]
   wiki?: string
 }
+export const characterCategories = [
+  'joueur',
+  'comte',
+  'scientifique',
+  'mage',
+  'professeur',
+  'criminel',
+  'étincelle',
+  'buse blanche',
+  'ecclésiastique',
+  'sentinelle'
+] as const
 
-export type CharacterCategory =
-  | 'joueur'
-  | 'comte'
-  | 'scientifique'
-  | 'mage'
-  | 'professeur'
-  | 'criminel'
-  | 'étincelle'
-  | 'buse blanche'
-  | 'ecclésiastique'
-  | 'sentinelle'
+export type CharacterCategory = (typeof characterCategories)[number]
 
 export function isCharacter(object: any): object is Character {
   return 'birth' in object

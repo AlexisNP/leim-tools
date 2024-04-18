@@ -10,18 +10,21 @@ export interface CalendarEvent {
   wiki?: string
 }
 
-export type CalendarEventCategory =
-  | 'naissance'
-  | 'mort'
-  | 'catastrophe'
-  | 'législation'
-  | 'catastrophe-naturelle'
-  | 'inauguration'
-  | 'religion'
-  | 'invention'
-  | 'science'
-  | 'bénédiction' // Great event on a global scale
-  | 'joueurs'
+export const calendarEventCategories = [
+  'naissance',
+  'mort',
+  'catastrophe',
+  'législation',
+  'catastrophe naturelle',
+  'inauguration',
+  'religion',
+  'invention',
+  'science',
+  'bénédiction',
+  'joueurs'
+]
+
+export type CalendarEventCategory = (typeof calendarEventCategories)[number]
 
 export function isCalendarEvent(object: any): object is CalendarEvent {
   return 'date' in object

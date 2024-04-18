@@ -1,16 +1,26 @@
 <script lang="ts" setup>
-import { isCharacter, type Character } from '@/models/Characters'
+import {
+  isCharacter,
+  type Character,
+  characterCategories,
+  type CharacterCategory
+} from '@/models/Characters'
 import type { LeimDateOrder } from '@/models/Date'
-import { isCalendarEvent, type CalendarEvent } from '@/models/Events'
+import {
+  isCalendarEvent,
+  type CalendarEvent,
+  calendarEventCategories,
+  type CalendarEventCategory
+} from '@/models/Events'
+import { capitalize } from '@/utils/Strings'
 import { useCharacters } from '@/stores/CharacterStore'
 import { useCalendarEvents } from '@/stores/EventStore'
-import { PhClockClockwise, PhClockCounterClockwise, PhMagnifyingGlass } from '@phosphor-icons/vue'
-import { useMagicKeys, useStorage, useTimeoutFn, whenever } from '@vueuse/core'
-import { VisuallyHidden } from 'radix-vue'
+import { useMagicKeys, useStorage, whenever } from '@vueuse/core'
 import { computed, ref } from 'vue'
 import { searchUnifier, type SearchMode } from '../Search'
 
 import { Button } from '@/components/ui/button'
+import { CommandEmpty, CommandGroup, CommandItem, CommandList } from '@/components/ui/command'
 import {
   Dialog,
   DialogContent,
@@ -29,17 +39,33 @@ import {
   PaginationNext,
   PaginationPrev
 } from '@/components/ui/pagination'
+import {
+  TagsInput,
+  TagsInputInput,
+  TagsInputItem,
+  TagsInputItemDelete,
+  TagsInputItemText
+} from '@/components/ui/tags-input'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import { PhClockClockwise, PhClockCounterClockwise, PhMagnifyingGlass } from '@phosphor-icons/vue'
+import {
+  ComboboxAnchor,
+  ComboboxInput,
+  ComboboxPortal,
+  ComboboxRoot,
+  VisuallyHidden
+} from 'radix-vue'
+
 import SearchList from './lists/SearchList.vue'
 
 const { characters } = useCharacters()
 const { baseEvents } = useCalendarEvents()
 
-const modalOpen = ref(false)
+const modalOpen = ref<boolean>(false)
 
-const searchQuery = ref('')
-const searchEnough = computed(() => searchQuery.value.length >= 2)
+const searchQuery = ref<string>('')
+// const searchEnough = computed<boolean>(() => searchQuery.value.length >= 2)
 
 const selectedEntity = useStorage('se', 'events' as SearchMode)
 
@@ -57,17 +83,18 @@ function setOrderDesc() {
 
 // Limit
 const currentPage = ref<number>(1)
-const itemsPerPage = 20
-const startOfList = computed(() => (currentPage.value - 1) * itemsPerPage)
-const endOfList = computed(() => startOfList.value + itemsPerPage)
+const itemsPerPage: number = 20
+const startOfList = computed<number>(() => (currentPage.value - 1) * itemsPerPage)
+const endOfList = computed<number>(() => startOfList.value + itemsPerPage)
 
 function resetPage() {
   currentPage.value = 1
 }
 
-const searchResults = computed(() => {
+const searchResults = computed<(Character | CalendarEvent)[]>(() => {
   let results: (Character | CalendarEvent)[] = []
   let dataToFilter: Character[] | CalendarEvent[] | (Character | CalendarEvent)[]
+  const shouldFilterCategories = selectedCategories.value.length > 0
 
   // Assign data to loop over and filter
   // They are assigned this way for readability
@@ -79,6 +106,9 @@ const searchResults = computed(() => {
     dataToFilter = [...baseEvents, ...characters]
   }
 
+  /**
+   * TODO: Refactor the categories logic, basically extract the return out of the ifs, like above
+   */
   results = dataToFilter.filter((item) => {
     // Filter calendar events
     if (isCalendarEvent(item)) {
@@ -95,7 +125,27 @@ const searchResults = computed(() => {
         .toLocaleLowerCase()
         .includes(queryString)
 
-      return hitTitle || hitDesc
+      if (!shouldFilterCategories) {
+        return hitTitle || hitDesc
+      }
+
+      // Handle categories logic
+      let hitCategories: boolean = false
+      let allCategories: CalendarEventCategory[] = []
+
+      if (item.category) {
+        allCategories.push(item.category)
+      }
+
+      if (item.secondaryCategories && item.secondaryCategories?.length > 0) {
+        allCategories.push(...item.secondaryCategories)
+      }
+
+      hitCategories = selectedCategories.value.every((selectedCat) => {
+        return allCategories.includes(selectedCat)
+      })
+
+      return (hitTitle || hitDesc) && hitCategories
     }
 
     // Filter characters
@@ -109,7 +159,27 @@ const searchResults = computed(() => {
         .toLocaleLowerCase()
         .includes(queryString)
 
-      return hitTitle
+      if (!shouldFilterCategories) {
+        return hitTitle
+      }
+
+      // Handle categories logic
+      let hitCategories: boolean = false
+      let allCategories: CalendarEventCategory[] = []
+
+      if (item.category) {
+        allCategories.push(item.category)
+      }
+
+      if (item.secondaryCategories && item.secondaryCategories?.length > 0) {
+        allCategories.push(...item.secondaryCategories)
+      }
+
+      hitCategories = selectedCategories.value.every((selectedCat) => {
+        return allCategories.includes(selectedCat)
+      })
+
+      return hitTitle && hitCategories
     }
   })
 
@@ -118,11 +188,9 @@ const searchResults = computed(() => {
 
 function resetSearch() {
   searchQuery.value = ''
+  resetPage()
+  selectedCategories.value = []
 }
-
-const resetSearchLazy = useTimeoutFn(() => {
-  resetSearch()
-}, 100)
 
 function openDialog() {
   modalOpen.value = true
@@ -132,16 +200,49 @@ function closeDialog() {
   modalOpen.value = false
 }
 
+function handleEntitySwitch() {
+  resetPage()
+  selectedCategories.value = []
+}
+
 // Key combos to deploy modal
 const keys = useMagicKeys()
 
 whenever(keys.control_period, () => {
   openDialog()
 })
+
+// Categories
+const currentCategories = computed(() => {
+  if (selectedEntity.value === 'characters') {
+    return [...characterCategories]
+  } else {
+    return [...calendarEventCategories]
+  }
+})
+
+const selectedCategories = ref<(CharacterCategory | CalendarEventCategory)[]>([])
+const categoryFilterOpened = ref<boolean>(false)
+const searchCategory = ref<string>('')
+
+const filteredFrameworks = computed(() =>
+  currentCategories.value.filter((i) => !selectedCategories.value.includes(i))
+)
+
+function handleCategorySelect(e: any) {
+  if (typeof e.detail.value === 'string') {
+    searchCategory.value = ''
+    selectedCategories.value.push(e.detail.value)
+  }
+
+  if (filteredFrameworks.value.length === 0) {
+    categoryFilterOpened.value = false
+  }
+}
 </script>
 
 <template>
-  <Dialog v-model:open="modalOpen" @update:open="resetSearchLazy.start">
+  <Dialog v-model:open="modalOpen" @update:open="resetSearch()">
     <DialogTrigger>
       <Button search-slash>
         <PhMagnifyingGlass size="20" weight="light" />
@@ -165,7 +266,7 @@ whenever(keys.control_period, () => {
       </VisuallyHidden>
 
       <!-- Dialog header -->
-      <div class="grid gap-3">
+      <div class="grid gap-3" id="searchForm">
         <div class="relative w-full h-fit">
           <Input
             id="search"
@@ -186,7 +287,7 @@ whenever(keys.control_period, () => {
               type="single"
               class="justify-start"
               v-model="selectedEntity"
-              @update:model-value="resetPage()"
+              @update:model-value="handleEntitySwitch()"
             >
               <ToggleGroupItem value="events" aria-label="Uniquement les évènements">
                 Évènements
@@ -198,6 +299,52 @@ whenever(keys.control_period, () => {
           </div>
 
           <div class="flex items-center gap-1">
+            <TagsInput class="px-0 gap-0 w-52" :model-value="selectedCategories">
+              <div class="flex gap-2 flex-wrap items-center px-3">
+                <TagsInputItem v-for="item in selectedCategories" :key="item" :value="item">
+                  <TagsInputItemText class="capitalize" />
+                  <TagsInputItemDelete />
+                </TagsInputItem>
+              </div>
+
+              <ComboboxRoot
+                v-model="selectedCategories"
+                v-model:open="categoryFilterOpened"
+                v-model:searchTerm="searchCategory"
+                class="w-full"
+              >
+                <ComboboxAnchor as-child>
+                  <ComboboxInput placeholder="Catégories" as-child>
+                    <TagsInputInput
+                      class="w-full px-3"
+                      :class="selectedCategories.length > 0 ? 'mt-2' : ''"
+                      @keydown.enter.prevent
+                    />
+                  </ComboboxInput>
+                </ComboboxAnchor>
+
+                <ComboboxPortal :to="'#searchForm'">
+                  <CommandList
+                    position="popper"
+                    class="w-[--radix-popper-anchor-width] rounded-md mt-2 border bg-popover text-popover-foreground shadow-md outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50"
+                    :dismissable="true"
+                  >
+                    <CommandEmpty />
+                    <CommandGroup>
+                      <CommandItem
+                        v-for="framework in filteredFrameworks"
+                        :key="framework"
+                        :value="framework"
+                        @select.prevent="handleCategorySelect"
+                      >
+                        {{ capitalize(framework) }}
+                      </CommandItem>
+                    </CommandGroup>
+                  </CommandList>
+                </ComboboxPortal>
+              </ComboboxRoot>
+            </TagsInput>
+
             <TooltipProvider :delayDuration="250">
               <Tooltip>
                 <TooltipTrigger>

@@ -9,7 +9,7 @@ export const regularEvents: CalendarEvent[] = [
       "Le léviathan Tyhos rend l'âme après un combat de plusieurs années contre Lystos, le dieu du Soleil.",
     category: 'bénédiction',
     secondaryCategories: ['mort'],
-    wiki: 'https://alexcreates.fr/leim/index.php/Alliance_Kald%C3%A9lienne#Trait%C3%A9_de_Kadel',
+    wiki: 'https://alexcreates.fr/leim/index.php/Tyhos',
     hidden: true
   },
   {

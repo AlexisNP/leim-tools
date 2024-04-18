@@ -9,19 +9,41 @@ export const charactersList: Character[] = [
     name: 'Sulvan Trois-Barbes',
     birth: { day: 20, month: 3, year: 3169 },
     wiki: 'https://alexcreates.fr/leim/index.php/Sulvan_Trois-Barbes',
-    category: 'joueur'
+    category: 'joueur',
+    secondaryCategories: ['criminel', 'étincelle']
   },
   {
     name: 'Vascylly',
     birth: { day: 3, month: 5, year: 3181 },
     wiki: 'https://alexcreates.fr/leim/index.php/Vascylly',
-    category: 'joueur'
+    category: 'joueur',
+    secondaryCategories: ['mage']
   },
-  { name: 'Tara Belyus', birth: { day: 14, month: 9, year: 3186 }, category: 'joueur' },
+  {
+    name: 'Tara Belyus',
+    birth: { day: 14, month: 9, year: 3186 },
+    category: 'joueur',
+    secondaryCategories: ['mage']
+  },
   // "Les Cloches de Cantane"
-  { name: 'Malik', birth: { day: 22, month: 8, year: 3181 }, category: 'joueur' },
-  { name: 'Elie', birth: { day: 5, month: 6, year: 3192 }, category: 'joueur' },
-  { name: 'Clayron', birth: { day: 3, month: 5, year: 3178 }, category: 'joueur' },
+  {
+    name: 'Malik',
+    birth: { day: 22, month: 8, year: 3181 },
+    category: 'joueur',
+    secondaryCategories: ['scientifique']
+  },
+  {
+    name: 'Elie',
+    birth: { day: 5, month: 6, year: 3192 },
+    category: 'joueur',
+    secondaryCategories: ['ecclésiastique']
+  },
+  {
+    name: 'Clayron',
+    birth: { day: 3, month: 5, year: 3178 },
+    category: 'joueur',
+    secondaryCategories: ['sentinelle']
+  },
 
   /**
    * NPC

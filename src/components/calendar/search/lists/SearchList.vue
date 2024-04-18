@@ -72,7 +72,7 @@ const pagedResults = computed(() => sortedResults.value.slice(props.startAt, pro
           'text-white bg-lime-600 hover:bg-lime-700': r.category === 'naissance',
           'text-white bg-stone-500 hover:bg-stone-700': r.category === 'mort',
           'text-white bg-orange-600 hover:bg-orange-700': r.category === 'catastrophe',
-          'text-white bg-pink-600 hover:bg-pink-700': r.category === 'catastrophe-naturelle',
+          'text-white bg-pink-600 hover:bg-pink-700': r.category === 'catastrophe naturelle',
           'text-white bg-sky-600 hover:bg-sky-700': r.category === 'législation',
           'text-white bg-purple-600 hover:bg-purple-700': r.category === 'religion',
           'text-white bg-emerald-600 hover:bg-emerald-700': r.category === 'joueurs',
@@ -83,16 +83,21 @@ const pagedResults = computed(() => sortedResults.value.slice(props.startAt, pro
         }"
         @click="handleJumpToDate(r.date)"
       >
-        <div>
+        <div class="flex gap-2 items-center">
           <h2 class="font-bold">
             {{ r.title }}
           </h2>
           <div v-if="r.wiki">
-            <a :href="r.wiki" target="_blank" title="Voir sur le Wiki">Page wiki</a>
+            <Button variant="link" size="xs" as-child class="text-inherit">
+              <a :href="r.wiki" target="_blank">
+                Wiki
+                <PhArrowSquareOut size="16" weight="fill" />
+              </a>
+            </Button>
           </div>
         </div>
 
-        <div class="mb-1 space-y-1">
+        <div class="mb-1 flex gap-4 items-center">
           <p class="opacity-75">{{ getFormattedDateTitle(r.date, true) }}</p>
           <p class="text-sm italic opacity-75 flex items-center gap-1">
             <PhHourglassMedium size="16" weight="fill" />

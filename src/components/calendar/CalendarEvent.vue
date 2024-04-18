@@ -19,7 +19,7 @@ defineProps<{
           'text-white bg-lime-600 hover:bg-lime-700': event.category === 'naissance',
           'text-white bg-stone-500 hover:bg-stone-700': event.category === 'mort',
           'text-white bg-orange-600 hover:bg-orange-700': event.category === 'catastrophe',
-          'text-white bg-pink-600 hover:bg-pink-700': event.category === 'catastrophe-naturelle',
+          'text-white bg-pink-600 hover:bg-pink-700': event.category === 'catastrophe naturelle',
           'text-white bg-sky-600 hover:bg-sky-700': event.category === 'législation',
           'text-white bg-purple-600 hover:bg-purple-700': event.category === 'religion',
           'text-white bg-emerald-600 hover:bg-emerald-700': event.category === 'joueurs',
