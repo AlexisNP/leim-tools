@@ -17,8 +17,14 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@phosphor-icons/vue": "^2.1.6",
     "@vueuse/core": "^10.9.0",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.0",
     "pinia": "^2.1.7",
+    "radix-vue": "^1.6.1",
+    "tailwind-merge": "^2.2.2",
+    "tailwindcss-animate": "^1.0.7",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
   },
@@ -38,6 +44,7 @@
     "npm-run-all2": "^6.1.2",
     "postcss": "^8.4.38",
     "prettier": "^3.0.3",
+    "sass": "^1.72.0",
     "start-server-and-test": "^2.0.3",
     "tailwindcss": "^3.4.3",
     "typescript": "~5.4.0",
