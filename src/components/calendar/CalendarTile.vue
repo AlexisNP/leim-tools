@@ -2,14 +2,20 @@
 import { areDatesIdentical, type LeimDate } from '@/models/Date'
 import { useCalendar } from '@/stores/CalendarStore'
 import { useCalendarEvents } from '@/stores/EventStore'
+import { useElementBounding } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
-import { computed } from 'vue'
-import CalendarEvent from './CalendarEvent.vue'
+import { computed, ref, type ComputedRef } from 'vue'
+
+import CalendarEventButton from './CalendarEvent.vue'
+import type { CalendarEvent } from '@/models/Events'
 
 const props = defineProps<{
   date: LeimDate
   faded?: boolean
 }>()
+
+const calendarTile = ref()
+const calendarEventsList = ref()
 
 const { defaultDate, selectDate } = useCalendar()
 const { selectedDate } = storeToRefs(useCalendar())
@@ -28,10 +34,29 @@ const isDefaultDate = computed(() => {
 const isSelectedDate = computed(() => {
   return areDatesIdentical(props.date, selectedDate.value)
 })
+
+// Get bounding elements for both tile and events list
+const { height: tileHeight, top: tileTop } = useElementBounding(calendarTile)
+const { top: tileListTop } = useElementBounding(calendarEventsList)
+
+// Compute the available number of events that can be displayed from refs heights
+const numberOfEventsToFit: ComputedRef<number> = computed(() => {
+  if (!eventsForTheDay.value.length) return 0
+
+  return Math.trunc((tileHeight.value - (tileListTop.value - tileTop.value)) / 40)
+})
+
+const eventsToDisplay: ComputedRef<CalendarEvent[]> = computed(() => {
+  return [...eventsForTheDay.value].splice(0, numberOfEventsToFit.value)
+})
+const eventsNotDisplayed = computed(
+  () => eventsForTheDay.value.length - eventsToDisplay.value.length
+)
 </script>
 
 <template>
   <div
+    ref="calendarTile"
     class="tile relative text-xs p-2 border-slate-700"
     :class="{
       'text-slate-500': props.faded,
@@ -57,14 +82,23 @@ const isSelectedDate = computed(() => {
     </button>
 
     <ul
-      v-if="eventsForTheDay.length > 0"
+      ref="calendarEventsList"
       class="absolute top-12 bottom-2 inset-x-2 grid auto-rows-min gap-1 z-10 pointer-events-none transition-opacity"
       :class="{
         'opacity-40': props.faded && !isSelectedDate
       }"
     >
-      <li v-for="event in eventsForTheDay" :key="event.title" class="grid pointer-events-auto">
-        <CalendarEvent :event />
+      <li v-for="event in eventsToDisplay" :key="event.title" class="grid pointer-events-auto">
+        <CalendarEventButton :event />
+      </li>
+
+      <li class="pointer-events-auto">
+        <button
+          v-if="eventsNotDisplayed > 0"
+          class="text-xs px-2 py-1 block w-full text-left rounded-sm whitespace-nowrap overflow-hidden text-ellipsis cursor-pointer font-bold"
+        >
+          {{ eventsNotDisplayed }} autre{{ eventsNotDisplayed > 1 ? 's' : '' }}
+        </button>
       </li>
     </ul>
   </div>

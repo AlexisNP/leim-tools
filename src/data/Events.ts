@@ -114,7 +114,27 @@ export const regularEvents: CalendarEvent[] = [
     description:
       'Les artisans et mineurs de Rougefer se réunissent à Cantane pour vendre le fruit de leur dur labeur.',
     date: { day: 23, month: 8, year: 3209 },
-    category: 'inauguration',
-    hidden: true
+    category: 'inauguration'
+  },
+  {
+    title: 'Grande Banque Minérale de Cantane',
+    description:
+      'Les artisans et mineurs de Rougefer se réunissent à Cantane pour vendre le fruit de leur dur labeur.',
+    date: { day: 23, month: 8, year: 3209 },
+    category: 'inauguration'
+  },
+  {
+    title: 'Grande Banque Minérale de Cantane',
+    description:
+      'Les artisans et mineurs de Rougefer se réunissent à Cantane pour vendre le fruit de leur dur labeur.',
+    date: { day: 23, month: 8, year: 3209 },
+    category: 'inauguration'
+  },
+  {
+    title: 'Grande Banque Minérale de Cantane',
+    description:
+      'Les artisans et mineurs de Rougefer se réunissent à Cantane pour vendre le fruit de leur dur labeur.',
+    date: { day: 23, month: 8, year: 3209 },
+    category: 'inauguration'
   }
 ]
