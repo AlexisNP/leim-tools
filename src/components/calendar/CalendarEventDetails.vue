@@ -16,7 +16,26 @@ const dateDifference = computed(() => getRelativeString(defaultDate, props.event
 </script>
 
 <template>
-  <PopoverContent class="w-96" align="start" :align-offset="50" :collision-padding="20">
+  <PopoverContent
+    class="w-96"
+    align="start"
+    :align-offset="50"
+    :collision-padding="20"
+    :class="{
+      'border-slate-800': !event.category,
+      'border-lime-800': event.category === 'naissance',
+      'border-stone-800': event.category === 'mort',
+      'border-orange-800': event.category === 'catastrophe',
+      'border-pink-800': event.category === 'catastrophe naturelle',
+      'border-sky-800': event.category === 'législation',
+      'border-purple-800': event.category === 'religion',
+      'border-emerald-800': event.category === 'joueurs',
+      'border-amber-800': event.category === 'inauguration',
+      'border-green-800': event.category === 'invention',
+      'border-cyan-800': event.category === 'science',
+      'border-yellow-800': event.category === 'bénédiction'
+    }"
+  >
     <div class="grid gap-1">
       <div class="text-lg font-semibold">
         {{ event.title }}
@@ -51,3 +70,42 @@ const dateDifference = computed(() => getRelativeString(defaultDate, props.event
     </div>
   </PopoverContent>
 </template>
+
+<style lang="scss">
+.border-slate-800 {
+  background-color: color-mix(in srgb, var(--color-slate-800), var(--color-slate-950) 85%);
+}
+.border-lime-800 {
+  background-color: color-mix(in srgb, var(--color-lime-800), var(--color-slate-950) 85%);
+}
+.border-stone-800 {
+  background-color: color-mix(in srgb, var(--color-stone-800), var(--color-slate-950) 85%);
+}
+.border-orange-800 {
+  background-color: color-mix(in srgb, var(--color-orange-800), var(--color-slate-950) 85%);
+}
+.border-pink-800 {
+  background-color: color-mix(in srgb, var(--color-pink-800), var(--color-slate-950) 85%);
+}
+.border-sky-800 {
+  background-color: color-mix(in srgb, var(--color-sky-800), var(--color-slate-950) 85%);
+}
+.border-purple-800 {
+  background-color: color-mix(in srgb, var(--color-purple-800), var(--color-slate-950) 85%);
+}
+.border-emerald-800 {
+  background-color: color-mix(in srgb, var(--color-emerald-800), var(--color-slate-950) 85%);
+}
+.border-amber-800 {
+  background-color: color-mix(in srgb, var(--color-amber-800), var(--color-slate-950) 85%);
+}
+.border-green-800 {
+  background-color: color-mix(in srgb, var(--color-green-800), var(--color-slate-950) 85%);
+}
+.border-cyan-800 {
+  background-color: color-mix(in srgb, var(--color-cyan-800), var(--color-slate-950) 85%);
+}
+.border-yellow-800 {
+  background-color: color-mix(in srgb, var(--color-yellow-800), var(--color-slate-950) 85%);
+}
+</style>
