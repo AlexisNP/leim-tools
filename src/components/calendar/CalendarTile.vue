@@ -6,6 +6,7 @@ import { useElementBounding } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 import { computed, ref, type ComputedRef } from 'vue'
 
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import CalendarEventButton from './CalendarEvent.vue'
 import type { CalendarEvent } from '@/models/Events'
 
@@ -92,13 +93,34 @@ const eventsNotDisplayed = computed(
         <CalendarEventButton :event />
       </li>
 
-      <li class="pointer-events-auto">
-        <button
-          v-if="eventsNotDisplayed > 0"
-          class="text-xs px-2 py-1 block w-full text-left rounded-sm whitespace-nowrap overflow-hidden text-ellipsis cursor-pointer font-bold"
-        >
-          {{ eventsNotDisplayed }} autre{{ eventsNotDisplayed > 1 ? 's' : '' }}
-        </button>
+      <li v-if="eventsNotDisplayed > 0" class="pointer-events-auto">
+        <Popover>
+          <PopoverTrigger as-child>
+            <button
+              class="text-xs px-2 py-1 block w-full text-left font-bold rounded-sm whitespace-nowrap overflow-hidden text-ellipsis cursor-pointer transition-colors hover:bg-slate-800"
+            >
+              {{ eventsNotDisplayed }} autre{{ eventsNotDisplayed > 1 ? 's' : '' }}
+            </button>
+          </PopoverTrigger>
+          <PopoverContent class="w-80" :align="'center'" :side="'right'">
+            <div class="text-center mb-4">
+              <span
+                class="inline-flex w-12 h-12 aspect-square items-center justify-center text-lg font-semibold text-slate-300 bg-slate-800 rounded-full"
+              >
+                {{ date.day }}</span
+              >
+            </div>
+            <ul class="grid auto-rows-min gap-1 z-10 pointer-events-none transition-opacity">
+              <li
+                v-for="event in eventsForTheDay"
+                :key="event.title"
+                class="grid pointer-events-auto"
+              >
+                <CalendarEventButton :event />
+              </li>
+            </ul>
+          </PopoverContent>
+        </Popover>
       </li>
     </ul>
   </div>
