@@ -7,7 +7,7 @@ import { storeToRefs } from 'pinia'
 import { computed, ref, type ComputedRef } from 'vue'
 
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import CalendarEventButton from './CalendarEvent.vue'
+import CalendarEventButton from '../../CalendarEvent.vue'
 import type { CalendarEvent } from '@/models/Events'
 
 const props = defineProps<{
@@ -107,8 +107,8 @@ const eventsNotDisplayed = computed(
               <span
                 class="inline-flex w-12 h-12 aspect-square items-center justify-center text-lg font-semibold text-slate-300 bg-slate-800 rounded-full"
               >
-                {{ date.day }}</span
-              >
+                {{ date.day }}
+              </span>
             </div>
             <ul class="grid auto-rows-min gap-1 z-10 pointer-events-none transition-opacity">
               <li

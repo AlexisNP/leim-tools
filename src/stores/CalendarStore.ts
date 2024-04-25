@@ -378,7 +378,6 @@ export const useCalendar = defineStore('calendar', () => {
    */
   function jumpToDefaultDate(): void {
     jumpToDate(defaultDate.value)
-    currentConfig.value.viewType = 'month'
   }
 
   /**
