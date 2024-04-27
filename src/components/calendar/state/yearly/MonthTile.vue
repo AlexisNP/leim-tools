@@ -1,18 +1,15 @@
 <script lang="ts" setup>
-import type { LeimDate } from '@/models/Date'
 import { useCalendar } from '@/stores/CalendarStore'
-import { computed, type ComputedRef } from 'vue'
 
 import DayTile from './DayTile.vue'
 
-const { staticConfig, currentDate, getMonthName } = useCalendar()
+const { staticConfig, getMonthName } = useCalendar()
 
 const props = defineProps<{
   monthNumber: number
 }>()
 
-const daysPerMonth = computed(() => staticConfig.daysPerMonth)
-const tileMonthName = computed(() => getMonthName(props.monthNumber))
+const tileMonthName: string = getMonthName(props.monthNumber)
 </script>
 
 <template>
@@ -22,7 +19,7 @@ const tileMonthName = computed(() => getMonthName(props.monthNumber))
     </div>
     <div class="grid grid-cols-7">
       <DayTile
-        v-for="day in daysPerMonth"
+        v-for="day in staticConfig.daysPerMonth"
         :key="day"
         :month-number="monthNumber"
         :day-number="day"

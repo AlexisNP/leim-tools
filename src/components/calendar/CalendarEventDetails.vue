@@ -2,7 +2,6 @@
 import { getRelativeString } from '@/models/Date'
 import type { CalendarEvent } from '@/models/Events'
 import { useCalendar } from '@/stores/CalendarStore'
-import { computed } from 'vue'
 
 import { PhHourglassMedium } from '@phosphor-icons/vue'
 import { Badge } from '@/components/ui/badge'
@@ -12,7 +11,7 @@ const { defaultDate, getFormattedDateTitle } = useCalendar()
 
 const props = defineProps<{ event: CalendarEvent }>()
 
-const dateDifference = computed(() => getRelativeString(defaultDate, props.event.date))
+const dateDifference: string = getRelativeString(defaultDate, props.event.date)
 </script>
 
 <template>

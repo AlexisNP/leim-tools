@@ -289,10 +289,10 @@ function handleCategorySelect(e: any) {
               v-model="selectedEntity"
               @update:model-value="handleEntitySwitch()"
             >
-              <ToggleGroupItem value="events" aria-label="Uniquement les évènements">
+              <ToggleGroupItem value="events" aria-label="Uniquement les évènements" v-once>
                 Évènements
               </ToggleGroupItem>
-              <ToggleGroupItem value="characters" aria-label="Uniquement les personnages">
+              <ToggleGroupItem value="characters" aria-label="Uniquement les personnages" v-once>
                 Personnages
               </ToggleGroupItem>
             </ToggleGroup>

@@ -89,8 +89,7 @@ export const useCalendar = defineStore('calendar', () => {
     return {
       day: defaultDay,
       month: defaultMonth,
-      year: defaultYear,
-      period: 'nante'
+      year: defaultYear
     }
   })
 

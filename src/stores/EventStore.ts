@@ -1,40 +1,34 @@
-import type { CalendarEvent } from '@/models/Events'
-import { defineStore } from 'pinia'
-import { computed, ref, watch, type Ref } from 'vue'
-import { useCalendar } from './CalendarStore'
-import { useCharacters } from './CharacterStore'
 import { regularEvents } from '@/data/Events'
 import { convertDateToDays, daysPerMonth } from '@/models/Date'
+import type { CalendarEvent } from '@/models/Events'
+import { defineStore } from 'pinia'
+import { ref, watch, type Ref } from 'vue'
+import { useCalendar } from './CalendarStore'
+import { useCharacters } from './CharacterStore'
 
 export const useCalendarEvents = defineStore('calendar-events', () => {
-  const { currentDate, currentConfig, currentLeimDate } = useCalendar()
+  const { currentDate, currentConfig } = useCalendar()
   const { charactersWithBirthData, charactersWithDeathData } = useCharacters()
 
-  const baseEvents = ref<CalendarEvent[]>(regularEvents)
+  const baseEvents: CalendarEvent[] = regularEvents
 
-  const characterBirthEvents = computed(() => {
-    return charactersWithBirthData.map((character) => {
-      return {
-        title: `Naissance de ${character.name}`,
-        date: character.birth,
-        category: 'naissance'
-      } as CalendarEvent
-    })
+  const characterBirthEvents = charactersWithBirthData.map((character) => {
+    return {
+      title: `Naissance de ${character.name}`,
+      date: character.birth,
+      category: 'naissance'
+    } as CalendarEvent
   })
 
-  const characterDeathEvents = computed(() => {
-    return charactersWithDeathData.map((character) => {
-      return {
-        title: `Décès de ${character.name}`,
-        date: character.death,
-        category: 'mort'
-      } as CalendarEvent
-    })
+  const characterDeathEvents = charactersWithDeathData.map((character) => {
+    return {
+      title: `Décès de ${character.name}`,
+      date: character.death,
+      category: 'mort'
+    } as CalendarEvent
   })
 
-  const allEvents = computed(() => {
-    return [...characterBirthEvents.value, ...characterDeathEvents.value, ...baseEvents.value]
-  })
+  const allEvents = [...characterBirthEvents, ...characterDeathEvents, ...baseEvents]
 
   // Gets all current event in its default state
   const currentEvents: Ref<CalendarEvent[]> = ref(computeCurrentEvents())
@@ -100,7 +94,7 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
    * @returns A list of events that can appear in the current view
    */
   function computeCurrentEvents(): CalendarEvent[] {
-    return allEvents.value.filter((event) => shouldEventBeDisplayed(event))
+    return allEvents.filter((event) => shouldEventBeDisplayed(event))
   }
 
   return { baseEvents, allEvents, currentEvents }

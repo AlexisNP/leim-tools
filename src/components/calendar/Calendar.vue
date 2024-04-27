@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useCalendar } from '@/stores/CalendarStore'
-import { computed } from 'vue'
+import { computed, type Component, type ComputedRef } from 'vue'
 
 import CalendarMenu from './CalendarMenu.vue'
 
@@ -11,7 +11,7 @@ import YearLayout from './state/yearly/Layout.vue'
 
 const { currentConfig } = useCalendar()
 
-const currentViewComponent = computed(() => {
+const currentViewComponent: ComputedRef<Component> = computed<Component>(() => {
   switch (currentConfig.viewType) {
     case 'month':
       return MonthlyLayout
@@ -32,6 +32,8 @@ const currentViewComponent = computed(() => {
 <template>
   <div class="h-full grid grid-rows-[auto,1fr]">
     <CalendarMenu />
-    <component :is="currentViewComponent" />
+    <KeepAlive>
+      <component :is="currentViewComponent" />
+    </KeepAlive>
   </div>
 </template>
