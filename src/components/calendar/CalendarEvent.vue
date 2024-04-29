@@ -33,6 +33,6 @@ defineProps<{
       </button>
     </PopoverTrigger>
 
-    <CalendarEventDetails :event />
+    <CalendarEventDetails :event v-once />
   </Popover>
 </template>

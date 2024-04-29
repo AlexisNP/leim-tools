@@ -89,21 +89,9 @@ export const useCalendar = defineStore('calendar', () => {
     return {
       day: defaultDay,
       month: defaultMonth,
-      year: defaultYear,
-      period: 'nante'
+      year: defaultYear
     }
   })
-
-  // Assign default values if no params exist in URL
-  if (!params.day || typeof params.day === 'object' || !isInt(params.day)) {
-    params.day = defaultDay.toString()
-  }
-  if (!params.month || typeof params.month === 'object' || !isDigit(params.month)) {
-    params.month = defaultMonth.toString()
-  }
-  if (!params.year || typeof params.year === 'object' || !isSignedInt(params.year)) {
-    params.year = defaultYear.toString()
-  }
 
   const currentDay = computed<number>(() => {
     return Number(params.day)
@@ -191,6 +179,19 @@ export const useCalendar = defineStore('calendar', () => {
         return false
     }
   })
+
+  function validateUrlParams(): void {
+    // Assign default values if no params exist in URL
+    if (!params.day || typeof params.day === 'object' || !isInt(params.day)) {
+      params.day = defaultDate.value.day.toString()
+    }
+    if (!params.month || typeof params.month === 'object' || !isDigit(params.month)) {
+      params.month = defaultDate.value.month.toString()
+    }
+    if (!params.year || typeof params.year === 'object' || !isSignedInt(params.year)) {
+      params.year = defaultDate.value.year.toString()
+    }
+  }
 
   /**
    * Moves the current date forward one month
@@ -378,7 +379,6 @@ export const useCalendar = defineStore('calendar', () => {
    */
   function jumpToDefaultDate(): void {
     jumpToDate(defaultDate.value)
-    currentConfig.value.viewType = 'month'
   }
 
   /**
@@ -386,6 +386,12 @@ export const useCalendar = defineStore('calendar', () => {
    */
   function selectDate(date: LeimDate): void {
     selectedDate.value = date
+  }
+
+  const isAdvancedSearchOpen: Ref<boolean> = ref<boolean>(false)
+
+  function revealAdvancedSearch() {
+    isAdvancedSearchOpen.value = true
   }
 
   return {
@@ -398,6 +404,7 @@ export const useCalendar = defineStore('calendar', () => {
     selectedDate,
     selectDate,
     params,
+    validateUrlParams,
     getPeriodOfYear,
     incrementMonth,
     decrementMonth,
@@ -412,6 +419,8 @@ export const useCalendar = defineStore('calendar', () => {
     getMonthName,
     setViewType,
     getViewTypeTitle,
-    isCurrentScreenActive
+    isCurrentScreenActive,
+    isAdvancedSearchOpen,
+    revealAdvancedSearch
   }
 })

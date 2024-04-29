@@ -2,7 +2,7 @@
 import { useDark } from '@vueuse/core'
 import { RouterView } from 'vue-router'
 
-const dark = useDark()
+useDark()
 </script>
 
 <template>

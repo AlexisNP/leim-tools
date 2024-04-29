@@ -83,28 +83,28 @@ export const regularEvents: CalendarEvent[] = [
   },
   {
     title: '2ème disparation à Cantane',
-    description: 'Seconde victime de la série de disparitions qui affecte Cantane',
+    description: 'Donovane le mineur kéturien disparait sans laisser de traces.',
     date: { day: 32, month: 7, year: 3209 },
     category: 'mort',
     hidden: true
   },
   {
     title: '3ème disparation à Cantane',
-    description: 'Troisième victime de la série de disparitions qui affecte Cantane',
+    description: 'Disparition de Sébastien, gredin sauride.',
     date: { day: 10, month: 8, year: 3209 },
     category: 'mort',
     hidden: true
   },
   {
     title: '4ème disparation à Cantane',
-    description: 'Quatrième victime de la série de disparitions qui affecte Cantane',
+    description: 'Disparition de Thérence, patrouilleur sauride de la Vieille Garde.',
     date: { day: 19, month: 8, year: 3209 },
     category: 'mort',
     hidden: true
   },
   {
     title: '5ème disparation à Cantane',
-    description: 'Cinquième victime de la série de disparitions qui affecte Cantane',
+    description: 'Disparition de Mathilda Boulais, vendeuse de pierres.',
     date: { day: 22, month: 8, year: 3209 },
     category: 'mort',
     hidden: true
@@ -114,7 +114,6 @@ export const regularEvents: CalendarEvent[] = [
     description:
       'Les artisans et mineurs de Rougefer se réunissent à Cantane pour vendre le fruit de leur dur labeur.',
     date: { day: 23, month: 8, year: 3209 },
-    category: 'inauguration',
-    hidden: true
+    category: 'inauguration'
   }
 ]
