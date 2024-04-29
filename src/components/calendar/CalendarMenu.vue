@@ -1,14 +1,13 @@
 <script lang="ts" setup>
 import { useCalendar } from '@/stores/CalendarStore'
 
+import { Button } from '@/components/ui/button'
 import CalendarMenuNav from './CalendarMenuNav.vue'
 import CalendarMenuToday from './CalendarMenuToday.vue'
 import CalendarSwitch from './CalendarSwitch.vue'
 import CalendarCurrentDate from './CalendarCurrentDate.vue'
 
-import CalendarSearch from './search/CalendarSearch.vue'
-
-const { currentDate } = useCalendar()
+const { currentDate, revealAdvancedSearch } = useCalendar()
 </script>
 
 <template>
@@ -28,7 +27,10 @@ const { currentDate } = useCalendar()
 
       <menu class="flex items-center gap-2">
         <li>
-          <CalendarSearch />
+          <Button search-slash @click="revealAdvancedSearch()">
+            <PhMagnifyingGlass size="20" weight="light" />
+            Recherche avancée
+          </Button>
         </li>
         <li>
           <CalendarSwitch />

@@ -1,12 +1,16 @@
 <script lang="ts" setup>
+import { storeToRefs } from 'pinia'
+import { onMounted } from 'vue'
 import { useCalendar } from '@/stores/CalendarStore'
 
 import Calendar from '@/components/calendar/Calendar.vue'
 import Sidebar from '@/components/calendar/Sidebar.vue'
+import CalendarSearch from '@/components/calendar/search/CalendarSearch.vue'
 
 const { validateUrlParams } = useCalendar()
+const { isAdvancedSearchOpen } = storeToRefs(useCalendar())
 
-validateUrlParams()
+onMounted(() => validateUrlParams())
 </script>
 
 <template>
@@ -14,4 +18,6 @@ validateUrlParams()
     <Sidebar />
     <Calendar />
   </main>
+
+  <CalendarSearch v-model:model-value="isAdvancedSearchOpen" />
 </template>

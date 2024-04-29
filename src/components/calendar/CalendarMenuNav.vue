@@ -145,7 +145,6 @@ function toFutureFar(): void {
 
 <template>
   <div class="flex items-center gap-2">
-    <!-- Implement decrementDate to account for other mods -->
     <TooltipProvider :delayDuration="250">
       <Tooltip>
         <TooltipTrigger>

@@ -62,7 +62,7 @@ import SearchList from './lists/SearchList.vue'
 const { characters } = useCharacters()
 const { baseEvents } = useCalendarEvents()
 
-const modalOpen = ref<boolean>(false)
+const modalOpen = defineModel({ default: false })
 
 const searchQuery = ref<string>('')
 // const searchEnough = computed<boolean>(() => searchQuery.value.length >= 2)
@@ -243,13 +243,6 @@ function handleCategorySelect(e: any) {
 
 <template>
   <Dialog v-model:open="modalOpen" @update:open="resetSearch()">
-    <DialogTrigger>
-      <Button search-slash>
-        <PhMagnifyingGlass size="20" weight="light" />
-        Recherche avancée
-      </Button>
-    </DialogTrigger>
-
     <DialogContent
       class="flex flex-col flex-nowrap top-16 -translate-y-0 data-[state=closed]:slide-out-to-top-[5%] data-[state=open]:slide-in-from-top-[5%]"
       :class="{

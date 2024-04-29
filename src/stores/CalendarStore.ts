@@ -388,6 +388,12 @@ export const useCalendar = defineStore('calendar', () => {
     selectedDate.value = date
   }
 
+  const isAdvancedSearchOpen: Ref<boolean> = ref<boolean>(false)
+
+  function revealAdvancedSearch() {
+    isAdvancedSearchOpen.value = true
+  }
+
   return {
     staticConfig,
     viewTypeOptions,
@@ -413,6 +419,8 @@ export const useCalendar = defineStore('calendar', () => {
     getMonthName,
     setViewType,
     getViewTypeTitle,
-    isCurrentScreenActive
+    isCurrentScreenActive,
+    isAdvancedSearchOpen,
+    revealAdvancedSearch
   }
 })
