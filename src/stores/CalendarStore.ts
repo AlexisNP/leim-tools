@@ -93,17 +93,6 @@ export const useCalendar = defineStore('calendar', () => {
     }
   })
 
-  // Assign default values if no params exist in URL
-  if (!params.day || typeof params.day === 'object' || !isInt(params.day)) {
-    params.day = defaultDay.toString()
-  }
-  if (!params.month || typeof params.month === 'object' || !isDigit(params.month)) {
-    params.month = defaultMonth.toString()
-  }
-  if (!params.year || typeof params.year === 'object' || !isSignedInt(params.year)) {
-    params.year = defaultYear.toString()
-  }
-
   const currentDay = computed<number>(() => {
     return Number(params.day)
   })
@@ -190,6 +179,19 @@ export const useCalendar = defineStore('calendar', () => {
         return false
     }
   })
+
+  function validateUrlParams(): void {
+    // Assign default values if no params exist in URL
+    if (!params.day || typeof params.day === 'object' || !isInt(params.day)) {
+      params.day = defaultDate.value.day.toString()
+    }
+    if (!params.month || typeof params.month === 'object' || !isDigit(params.month)) {
+      params.month = defaultDate.value.month.toString()
+    }
+    if (!params.year || typeof params.year === 'object' || !isSignedInt(params.year)) {
+      params.year = defaultDate.value.year.toString()
+    }
+  }
 
   /**
    * Moves the current date forward one month
@@ -396,6 +398,7 @@ export const useCalendar = defineStore('calendar', () => {
     selectedDate,
     selectDate,
     params,
+    validateUrlParams,
     getPeriodOfYear,
     incrementMonth,
     decrementMonth,
