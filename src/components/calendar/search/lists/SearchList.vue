@@ -62,7 +62,7 @@ const pagedResults = computed(() => sortedResults.value.slice(props.startAt, pro
 <template>
   <ul class="grid gap-4">
     <li v-for="r in pagedResults" :key="isCalendarEvent(r) ? r.title : r.name">
-      <EventCallout v-if="isCalendarEvent(r)" @click="handleJumpToDate(r.startDate)" :event="r" />
+      <EventCallout v-if="isCalendarEvent(r)" :event="r" @query:date-jump="handleJumpToDate" />
 
       <CharacterCallout
         v-else-if="isCharacter(r)"

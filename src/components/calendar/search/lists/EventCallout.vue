@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { getRelativeString } from '@/models/Date'
+import { getRelativeString, type LeimDate } from '@/models/Date'
 import type { CalendarEvent } from '@/models/Events'
 import { useCalendar } from '@/stores/CalendarStore'
 
@@ -9,6 +9,10 @@ import { PhArrowSquareOut, PhHourglassMedium } from '@phosphor-icons/vue'
 
 defineProps<{
   event: CalendarEvent
+}>()
+
+defineEmits<{
+  (e: 'query:date-jump', payload: LeimDate): void
 }>()
 
 const { defaultDate, getFormattedDateTitle } = useCalendar()
@@ -37,6 +41,7 @@ const { defaultDate, getFormattedDateTitle } = useCalendar()
       'text-white bg-rose-600 hover:bg-rose-700': event.category === 'criminalité',
       'text-white bg-stone-600 hover:bg-stone-700': event.category === 'scandale'
     }"
+    @click="$emit('query:date-jump', event.startDate)"
   >
     <div class="flex gap-2 items-center">
       <h2 class="font-bold">
