@@ -23,6 +23,16 @@ export const regularEvents: CalendarEvent[] = [
     hidden: true
   },
   {
+    title: 'Marche du sang',
+    startDate: { day: 18, month: 9, year: -420 },
+    endDate: { day: 27, month: 1, year: -419 },
+    description:
+      "L'empereur de Kaliatos ordonne personnellement la traque de Jorhas Kirendre pour connivence avec les démons. Plusieurs bataillons sont affectés à la chasse de Jorhas, qui se terminera par son incarcération ainsi que la mort de plusieurs centaines de soldats.",
+    category: 'criminalité',
+    wiki: 'https://alexcreates.fr/leim/index.php/Jorhas_Kirendre',
+    hidden: true
+  },
+  {
     title: 'Exécution de Tyhos',
     startDate: { day: 1, month: 0, year: 0 },
     description:
@@ -130,7 +140,7 @@ export const regularEvents: CalendarEvent[] = [
     description: "Le Moine Premier inaugure la grande cloche d'argent au sommet du Pilier d'Ikami.",
     startDate: { day: 29, month: 5, year: 3209 },
     category: 'religion',
-    hidden: true
+    secondaryCategories: ['inauguration']
   },
   {
     title: '1ère disparation à Cantane',

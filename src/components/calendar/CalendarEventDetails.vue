@@ -3,13 +3,18 @@ import { getRelativeString } from '@/models/Date'
 import type { CalendarEvent } from '@/models/Events'
 import { useCalendar } from '@/stores/CalendarStore'
 
-import { PhHourglassMedium, PhAlarm } from '@phosphor-icons/vue'
+import { PhHourglassMedium, PhAlarm, PhHourglassHigh, PhHourglassLow } from '@phosphor-icons/vue'
 import { Badge } from '@/components/ui/badge'
 import { PopoverContent } from '@/components/ui/popover'
 
 const { defaultDate, getFormattedDateTitle } = useCalendar()
 
-const props = defineProps<{ event: CalendarEvent }>()
+const props = defineProps<{
+  event: CalendarEvent
+  spansMultipleDays: boolean
+  isStartEvent?: boolean
+  isEndEvent?: boolean
+}>()
 
 const dateDifference: string = getRelativeString(defaultDate, props.event.startDate)
 const dateDuration: string | null = props.event.endDate
@@ -20,9 +25,11 @@ const dateDuration: string | null = props.event.endDate
 <template>
   <PopoverContent
     class="event-details w-96"
-    :align="'start'"
+    :align="'center'"
     :align-offset="50"
+    :side="'left'"
     :collision-padding="20"
+    :hide-when-detached="true"
     :class="{
       'border-slate-800': !event.category,
       'border-lime-800': event.category === 'naissance',
@@ -50,24 +57,27 @@ const dateDuration: string | null = props.event.endDate
         {{ event.title }}
       </div>
 
-      <div class="mb-1 space-y-1">
-        <template v-if="event.startDate && !event.endDate">
+      <div class="mb-1">
+        <template v-if="!event.endDate">
           <p class="font-semibold">{{ getFormattedDateTitle(event.startDate, true) }}</p>
         </template>
-        <template v-else-if="event.startDate && event.endDate">
+        <template v-else>
           <p class="font-semibold">
             Du {{ getFormattedDateTitle(event.startDate, true) }} au
             {{ getFormattedDateTitle(event.endDate, true) }}
           </p>
-          <template v-if="dateDuration">
-            <p class="text-sm italic opacity-75 flex items-center gap-1">
-              <PhHourglassMedium size="16" weight="fill" /> Pendant {{ dateDuration }}
-            </p>
-          </template>
         </template>
+      </div>
+
+      <div class="mb-1 space-y-1">
         <p class="text-sm italic opacity-75 flex items-center gap-1">
           <PhAlarm size="16" weight="fill" /> {{ dateDifference }}
         </p>
+        <template v-if="dateDuration">
+          <p class="text-sm italic opacity-75 flex items-center gap-1">
+            <PhHourglassMedium size="16" weight="fill" /> Pendant {{ dateDuration }}
+          </p>
+        </template>
       </div>
 
       <template v-if="event.category || event.secondaryCategories">
@@ -86,12 +96,21 @@ const dateDuration: string | null = props.event.endDate
         </ul>
       </template>
 
-      <hr class="border-slate-500 mt-2" />
+      <template v-if="event.description">
+        <hr class="border-slate-500 mt-2" />
 
-      <div class="mt-2 text-sm text-slate-300">
-        {{ event.description }}
-      </div>
+        <div class="mt-2 text-sm text-slate-300">
+          {{ event.description }}
+        </div>
+      </template>
     </div>
+
+    <Badge v-if="isStartEvent" class="absolute -top-2 left-2 hover:bg-slate-300 hover:opacity-100">
+      <PhHourglassHigh size="16" weight="fill" /> Début
+    </Badge>
+    <Badge v-if="isEndEvent" class="absolute -top-2 left-2 hover:bg-slate-300 hover:opacity-100">
+      <PhHourglassLow size="16" weight="fill" /> Fin
+    </Badge>
   </PopoverContent>
 </template>
 

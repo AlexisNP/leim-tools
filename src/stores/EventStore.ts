@@ -47,10 +47,15 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
    * @returns Whether the event should appear in the current view
    */
   function shouldEventBeDisplayed(event: CalendarEvent): boolean {
-    const eventDateToDays = convertDateToDays(event.startDate)
+    const eventStartDateToDays = convertDateToDays(event.startDate)
+    const eventEndDateToDays: number = event.endDate ? convertDateToDays(event.endDate) : 0
+
     const isEventOnCurrentScreen =
-      event.startDate.year === currentDate.currentYear &&
-      event.startDate.month === currentDate.currentMonth
+      (event.startDate.year === currentDate.currentYear &&
+        event.startDate.month === currentDate.currentMonth) ||
+      (event.endDate &&
+        event.endDate.year === currentDate.currentYear &&
+        event.endDate.month === currentDate.currentMonth)
 
     // Check whether the event is on the last 8 tiles
     // This is to allow leap events from appearing on the last 8 tiles
@@ -63,7 +68,10 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
     const last8Tiles = lastDayOfCurrentMonth + 8
 
     const isEventOnNext8Tiles =
-      eventDateToDays <= last8Tiles && eventDateToDays >= lastDayOfCurrentMonth
+      (eventStartDateToDays <= last8Tiles && eventStartDateToDays >= lastDayOfCurrentMonth) ||
+      (Boolean(event.endDate) &&
+        eventEndDateToDays <= last8Tiles &&
+        eventEndDateToDays >= lastDayOfCurrentMonth)
 
     switch (currentConfig.viewType) {
       case 'month':
