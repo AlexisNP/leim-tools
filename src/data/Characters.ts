@@ -174,6 +174,15 @@ export const charactersList: Character[] = [
     wiki: 'https://alexcreates.fr/leim/index.php/Räzal'
   },
 
+  // Legends
+  {
+    name: 'Jorhas Kirendre',
+    birth: { day: 2, month: 9, year: -452 },
+    death: { day: 2, month: 2, year: -419 },
+    category: 'sentinelle',
+    wiki: 'https://alexcreates.fr/leim/index.php/Jorhas_Kirendre'
+  },
+
   // "Les Milles Cages"
   {
     name: 'Ernestin Pomel',

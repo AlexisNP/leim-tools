@@ -3,6 +3,26 @@ import type { CalendarEvent } from '@/models/Events'
 export const regularEvents: CalendarEvent[] = [
   // Histoire Antique
   {
+    title: "Laurdieu devient la première cité de l'empire de Kaliatos",
+    date: { day: 3, month: 4, year: -1932 },
+    description:
+      "L'empire de Kaliatos établi sa capitale dans la cité de Laurdieu, qui connaitra une prospérité nouvelle au sein d'Aldys.",
+    category: 'législation',
+    secondaryCategories: ['inauguration'],
+    wiki: 'https://alexcreates.fr/leim/index.php/Laurdieu',
+    hidden: true
+  },
+  {
+    title: "Apparition d'Asménys",
+    date: { day: 19, month: 7, year: -1358 },
+    description:
+      "La défunte chanteuse Asménys apparaît à un barde pendant son jeune public, démarrant la religion des Prêtresses d'Asménys.",
+    category: 'religion',
+    secondaryCategories: ['bénédiction'],
+    wiki: 'https://alexcreates.fr/leim/index.php/Pr%C3%AAtresses_d%27Asm%C3%A9nys',
+    hidden: true
+  },
+  {
     title: 'Exécution de Tyhos',
     date: { day: 1, month: 0, year: 0 },
     description:
@@ -14,14 +34,52 @@ export const regularEvents: CalendarEvent[] = [
   },
   {
     title: 'Traité de Kadel',
-    date: { day: 20, month: 4, year: 100 },
+    date: { day: 29, month: 4, year: 100 },
     description: '',
     category: 'inauguration',
     secondaryCategories: ['législation'],
     wiki: 'https://alexcreates.fr/leim/index.php/Alliance_Kald%C3%A9lienne#Trait%C3%A9_de_Kadel'
   },
+  {
+    title: 'Découverte des Plaines de Poussières',
+    date: { day: 17, month: 7, year: 305 },
+    description:
+      "Les troupes de la reconquête aldienne explorent le littoral d'une immense étendue grise et inerte.",
+    category: 'découverte',
+    secondaryCategories: ['exploration'],
+    wiki: 'https://alexcreates.fr/leim/index.php/Plaines_de_poussi%C3%A8re',
+    hidden: true
+  },
+  {
+    title: 'Début de la construction du Rempart de Laurdieu',
+    date: { day: 30, month: 2, year: 340 },
+    description:
+      "Le Grand Conseil Kaldélien ordonne la construction d'une muraille autour des Plaines de Poussières, afin de contenir les quelques démons y sortant.",
+    category: 'construction',
+    wiki: 'https://alexcreates.fr/leim/index.php/Plaines_de_poussi%C3%A8re',
+    hidden: true
+  },
+  {
+    title: 'Finition du Rempart de Laurdieu',
+    date: { day: 27, month: 9, year: 355 },
+    description:
+      "Les terramanciens kaldéliens terminent les remparts protégeant l'alliance des démons des Plaines de Poussières.",
+    category: 'construction',
+    secondaryCategories: ['inauguration'],
+    wiki: 'https://alexcreates.fr/leim/index.php/Plaines_de_poussi%C3%A8re',
+    hidden: true
+  },
 
   // Histoire Récente
+  {
+    title: "Inauguration de l'Académie Artistique Arcanique",
+    date: { day: 11, month: 6, year: 2545 },
+    description:
+      "Scäd Sceni ouvre son institut artistique dédié à l'apprentissage des arts arcaniques",
+    category: 'inauguration',
+    secondaryCategories: ['arcanologie'],
+    wiki: 'https://alexcreates.fr/leim/index.php/Buse_(arme)'
+  },
   {
     title: 'Création de la buse kaldélienne',
     date: { day: 4, month: 2, year: 3113 },
@@ -30,6 +88,15 @@ export const regularEvents: CalendarEvent[] = [
     category: 'invention',
     secondaryCategories: ['science'],
     wiki: 'https://alexcreates.fr/leim/index.php/Buse_(arme)'
+  },
+  {
+    title: 'Scandale Rodhus',
+    date: { day: 25, month: 9, year: 3208 },
+    description:
+      "Tivian Rodhus, un professeur estimé de l'Académie Centrale Kaldélienne, est emprisonné pour corruption et aggression sexuelle. Le corps enseignant y est remanié sur ordre de Lazarus Tymos, comte de Nacride.",
+    category: 'criminalité',
+    secondaryCategories: ['scandale'],
+    wiki: 'https://alexcreates.fr/leim/index.php/Tivian_Rodhus'
   },
 
   // "Les Milles Cages"

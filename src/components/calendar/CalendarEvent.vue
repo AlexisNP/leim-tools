@@ -26,7 +26,13 @@ defineProps<{
           'text-slate-900 bg-amber-300 hover:bg-amber-400': event.category === 'inauguration',
           'text-slate-900 bg-emerald-200 hover:bg-emerald-300': event.category === 'invention',
           'text-slate-900 bg-cyan-300 hover:bg-cyan-400': event.category === 'science',
-          'text-slate-900 bg-yellow-100 hover:bg-yellow-200': event.category === 'bénédiction'
+          'text-slate-900 bg-white hover:bg-yellow-200': event.category === 'bénédiction',
+          'text-slate-900 bg-purple-200 hover:bg-purple-300': event.category === 'découverte',
+          'text-slate-900 bg-indigo-200 hover:bg-indigo-300': event.category === 'exploration',
+          'text-white bg-amber-600 hover:bg-amber-700': event.category === 'construction',
+          'text-slate-900 bg-violet-200 hover:bg-violet-300': event.category === 'arcanologie',
+          'text-white bg-rose-600 hover:bg-rose-700': event.category === 'criminalité',
+          'text-white bg-stone-600 hover:bg-stone-700': event.category === 'scandale'
         }"
       >
         {{ event.title }}

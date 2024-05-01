@@ -32,7 +32,13 @@ const dateDifference: string = getRelativeString(defaultDate, props.event.date)
       'border-amber-800': event.category === 'inauguration',
       'border-green-800': event.category === 'invention',
       'border-cyan-800': event.category === 'science',
-      'border-yellow-800': event.category === 'bénédiction'
+      'border-slate-600': event.category === 'bénédiction',
+      'border-purple-700': event.category === 'découverte',
+      'border-indigo-700': event.category === 'exploration',
+      'border-amber-700': event.category === 'construction',
+      'border-violet-700': event.category === 'arcanologie',
+      'border-rose-800': event.category === 'criminalité',
+      'border-stone-700': event.category === 'scandale'
     }"
   >
     <div class="grid gap-1">
@@ -104,7 +110,25 @@ const dateDifference: string = getRelativeString(defaultDate, props.event.date)
 .border-cyan-800 {
   background-color: color-mix(in srgb, var(--color-cyan-800), var(--color-slate-950) 85%);
 }
-.border-yellow-800 {
-  background-color: color-mix(in srgb, var(--color-yellow-800), var(--color-slate-950) 85%);
+.border-slate-600 {
+  background-color: color-mix(in srgb, var(--color-slate-600), var(--color-slate-950) 85%);
+}
+.border-purple-700 {
+  background-color: color-mix(in srgb, var(--color-purple-700), var(--color-slate-950) 85%);
+}
+.border-indigo-700 {
+  background-color: color-mix(in srgb, var(--color-indigo-700), var(--color-slate-950) 85%);
+}
+.border-amber-700 {
+  background-color: color-mix(in srgb, var(--color-amber-700), var(--color-slate-950) 85%);
+}
+.border-violet-700 {
+  background-color: color-mix(in srgb, var(--color-violet-700), var(--color-slate-950) 85%);
+}
+.border-rose-800 {
+  background-color: color-mix(in srgb, var(--color-rose-800), var(--color-slate-950) 85%);
+}
+.border-stone-700 {
+  background-color: color-mix(in srgb, var(--color-stone-700), var(--color-slate-950) 85%);
 }
 </style>
