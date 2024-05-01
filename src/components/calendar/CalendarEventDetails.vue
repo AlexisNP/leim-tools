@@ -3,7 +3,7 @@ import { getRelativeString } from '@/models/Date'
 import type { CalendarEvent } from '@/models/Events'
 import { useCalendar } from '@/stores/CalendarStore'
 
-import { PhHourglassMedium } from '@phosphor-icons/vue'
+import { PhHourglassMedium, PhAlarm } from '@phosphor-icons/vue'
 import { Badge } from '@/components/ui/badge'
 import { PopoverContent } from '@/components/ui/popover'
 
@@ -12,11 +12,14 @@ const { defaultDate, getFormattedDateTitle } = useCalendar()
 const props = defineProps<{ event: CalendarEvent }>()
 
 const dateDifference: string = getRelativeString(defaultDate, props.event.startDate)
+const dateDuration: string | null = props.event.endDate
+  ? getRelativeString(props.event.startDate, props.event.endDate, 'compact')
+  : null
 </script>
 
 <template>
   <PopoverContent
-    class="w-96"
+    class="event-details w-96"
     :align="'start'"
     :align-offset="50"
     :collision-padding="20"
@@ -56,9 +59,14 @@ const dateDifference: string = getRelativeString(defaultDate, props.event.startD
             Du {{ getFormattedDateTitle(event.startDate, true) }} au
             {{ getFormattedDateTitle(event.endDate, true) }}
           </p>
+          <template v-if="dateDuration">
+            <p class="text-sm italic opacity-75 flex items-center gap-1">
+              <PhHourglassMedium size="16" weight="fill" /> Pendant {{ dateDuration }}
+            </p>
+          </template>
         </template>
         <p class="text-sm italic opacity-75 flex items-center gap-1">
-          <PhHourglassMedium size="16" weight="fill" /> {{ dateDifference }}
+          <PhAlarm size="16" weight="fill" /> {{ dateDifference }}
         </p>
       </div>
 
@@ -78,7 +86,9 @@ const dateDifference: string = getRelativeString(defaultDate, props.event.startD
         </ul>
       </template>
 
-      <div class="mt-2 italic text-sm text-slate-500">
+      <hr class="border-slate-500 mt-2" />
+
+      <div class="mt-2 text-sm text-slate-300">
         {{ event.description }}
       </div>
     </div>
@@ -87,60 +97,69 @@ const dateDifference: string = getRelativeString(defaultDate, props.event.startD
 
 <style lang="scss">
 .border-slate-800 {
-  background-color: color-mix(in srgb, var(--color-slate-800), var(--color-slate-950) 85%);
+  --base-color: var(--color-slate-800);
 }
 .border-lime-800 {
-  background-color: color-mix(in srgb, var(--color-lime-800), var(--color-slate-950) 85%);
+  --base-color: var(--color-lime-800);
 }
 .border-stone-600 {
-  background-color: color-mix(in srgb, var(--color-stone-600), var(--color-slate-950) 85%);
+  --base-color: var(--color-stone-600);
 }
 .border-orange-800 {
-  background-color: color-mix(in srgb, var(--color-orange-800), var(--color-slate-950) 85%);
+  --base-color: var(--color-orange-800);
 }
 .border-pink-800 {
-  background-color: color-mix(in srgb, var(--color-pink-800), var(--color-slate-950) 85%);
+  --base-color: var(--color-pink-800);
 }
 .border-sky-800 {
-  background-color: color-mix(in srgb, var(--color-sky-800), var(--color-slate-950) 85%);
+  --base-color: var(--color-sky-800);
 }
 .border-purple-800 {
-  background-color: color-mix(in srgb, var(--color-purple-800), var(--color-slate-950) 85%);
+  --base-color: var(--color-purple-800);
 }
 .border-emerald-800 {
-  background-color: color-mix(in srgb, var(--color-emerald-800), var(--color-slate-950) 85%);
+  --base-color: var(--color-emerald-800);
 }
 .border-amber-800 {
-  background-color: color-mix(in srgb, var(--color-amber-800), var(--color-slate-950) 85%);
+  --base-color: var(--color-amber-800);
 }
 .border-green-800 {
-  background-color: color-mix(in srgb, var(--color-green-800), var(--color-slate-950) 85%);
+  --base-color: var(--color-green-800);
 }
 .border-cyan-800 {
-  background-color: color-mix(in srgb, var(--color-cyan-800), var(--color-slate-950) 85%);
+  --base-color: var(--color-cyan-800);
 }
 .border-slate-600 {
-  background-color: color-mix(in srgb, var(--color-slate-600), var(--color-slate-950) 85%);
+  --base-color: var(--color-slate-600);
 }
 .border-purple-700 {
-  background-color: color-mix(in srgb, var(--color-purple-700), var(--color-slate-950) 85%);
+  --base-color: var(--color-purple-700);
 }
 .border-indigo-700 {
-  background-color: color-mix(in srgb, var(--color-indigo-700), var(--color-slate-950) 85%);
+  --base-color: var(--color-indigo-700);
 }
 .border-amber-700 {
-  background-color: color-mix(in srgb, var(--color-amber-700), var(--color-slate-950) 85%);
+  --base-color: var(--color-amber-700);
 }
 .border-violet-700 {
-  background-color: color-mix(in srgb, var(--color-violet-700), var(--color-slate-950) 85%);
+  --base-color: var(--color-violet-700);
 }
 .border-rose-800 {
-  background-color: color-mix(in srgb, var(--color-rose-800), var(--color-slate-950) 85%);
+  --base-color: var(--color-rose-800);
 }
 .border-stone-700 {
-  background-color: color-mix(in srgb, var(--color-stone-700), var(--color-slate-950) 85%);
+  --base-color: var(--color-stone-700);
 }
 .border-yellow-600 {
-  background-color: color-mix(in srgb, var(--color-yellow-600), var(--color-slate-950) 85%);
+  --base-color: var(--color-yellow-600);
+}
+
+.event-details {
+  --bg-color: color-mix(in srgb, var(--base-color), var(--color-slate-950) 85%);
+  background-color: var(--bg-color);
+
+  hr {
+    border-color: var(--base-color);
+  }
 }
 </style>

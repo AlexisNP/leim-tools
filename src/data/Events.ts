@@ -55,7 +55,7 @@ export const regularEvents: CalendarEvent[] = [
     startDate: { day: 30, month: 2, year: 340 },
     endDate: { day: 27, month: 9, year: 355 },
     description:
-      "Le Grand Conseil Kaldélien ordonne la construction d'une muraille autour des Plaines de Poussières, afin de contenir les quelques démons y sortant.",
+      "Le Grand Conseil Kaldélien ordonne la construction d'une muraille autour des Plaines de Poussières, afin de contenir les démons y sortant.",
     category: 'construction',
     wiki: 'https://alexcreates.fr/leim/index.php/Plaines_de_poussi%C3%A8re',
     hidden: true

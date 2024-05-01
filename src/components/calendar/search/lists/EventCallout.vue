@@ -5,9 +5,9 @@ import { useCalendar } from '@/stores/CalendarStore'
 
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { PhArrowSquareOut, PhHourglassMedium } from '@phosphor-icons/vue'
+import { PhArrowSquareOut, PhHourglassMedium, PhAlarm } from '@phosphor-icons/vue'
 
-defineProps<{
+const props = defineProps<{
   event: CalendarEvent
 }>()
 
@@ -16,6 +16,11 @@ defineEmits<{
 }>()
 
 const { defaultDate, getFormattedDateTitle } = useCalendar()
+
+const dateDifference: string = getRelativeString(defaultDate, props.event.startDate)
+const dateDuration: string | null = props.event.endDate
+  ? getRelativeString(props.event.startDate, props.event.endDate, 'compact')
+  : null
 </script>
 
 <template>
@@ -58,12 +63,29 @@ const { defaultDate, getFormattedDateTitle } = useCalendar()
       </div>
     </div>
 
-    <div class="mb-1 flex gap-4 items-center">
-      <p class="opacity-75">{{ getFormattedDateTitle(event.startDate, true) }}</p>
-      <p class="text-sm italic opacity-75 flex items-center gap-1">
-        <PhHourglassMedium size="16" weight="fill" />
-        {{ getRelativeString(defaultDate, event.startDate) }}
+    <div class="mb-1">
+      <template v-if="!event.endDate">
+        <p class="col-span-2 font-semibold text-sm opacity-75">
+          {{ getFormattedDateTitle(event.startDate, true) }}
+        </p>
+      </template>
+      <template v-else>
+        <p class="col-span-2 font-semibold text-sm opacity-75">
+          Du {{ getFormattedDateTitle(event.startDate, true) }} au
+          {{ getFormattedDateTitle(event.endDate, true) }}
+        </p>
+      </template>
+    </div>
+
+    <div class="mb-1 flex gap-x-2 items-center">
+      <p class="w-fit text-sm italic opacity-75 flex items-center gap-1">
+        <PhAlarm size="16" weight="fill" /> {{ dateDifference }}
       </p>
+      <template v-if="dateDuration">
+        <p class="w-fit text-sm italic opacity-75 flex items-center gap-1">
+          <PhHourglassMedium size="16" weight="fill" /> Pendant {{ dateDuration }}
+        </p>
+      </template>
     </div>
 
     <div v-if="event.category || event.secondaryCategories" class="absolute top-3 right-4">

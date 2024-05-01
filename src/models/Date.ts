@@ -90,7 +90,11 @@ export function getDifferenceInDays(baseDate: LeimDate, relativeDate: LeimDate):
  * @param relativeDate The year to compare it to
  * @returns A string with info on how the relative date differs to the base date
  */
-export function getRelativeString(baseDate: LeimDate, relativeDate: LeimDate): string {
+export function getRelativeString(
+  baseDate: LeimDate,
+  relativeDate: LeimDate,
+  formatting: 'compact' | 'complex' = 'complex'
+): string {
   const differenceInDays: number = getDifferenceInDays(baseDate, relativeDate)
   let output: string = ''
   let direction: 'past' | 'present' | 'future' = 'present'
@@ -103,31 +107,33 @@ export function getRelativeString(baseDate: LeimDate, relativeDate: LeimDate): s
     direction = 'past'
   }
 
-  // Handle if it's the same date
-  if (direction === 'present') {
-    return "Aujourd'hui"
-  }
-  if (differenceInDays === -2) {
-    return 'Avant-hier'
-  }
-  if (differenceInDays === -1) {
-    return 'Hier'
-  }
-  if (differenceInDays === 1) {
-    return 'Demain'
-  }
-  if (differenceInDays === 2) {
-    return 'Après-demain'
-  }
+  if (formatting === 'complex') {
+    // Handle if it's the same date
+    if (direction === 'present') {
+      return "Aujourd'hui"
+    }
+    if (differenceInDays === -2) {
+      return 'Avant-hier'
+    }
+    if (differenceInDays === -1) {
+      return 'Hier'
+    }
+    if (differenceInDays === 1) {
+      return 'Demain'
+    }
+    if (differenceInDays === 2) {
+      return 'Après-demain'
+    }
 
-  // Get relevant prefix for the string
-  if (direction === 'future') {
-    directionPrefix = 'Dans'
-  } else if (direction === 'past') {
-    directionPrefix = 'Il y a'
-  }
+    // Get relevant prefix for the string
+    if (direction === 'future') {
+      directionPrefix = 'Dans '
+    } else if (direction === 'past') {
+      directionPrefix = 'Il y a '
+    }
 
-  output += directionPrefix
+    output += directionPrefix
+  }
 
   const yearPackets: number = Math.abs(Math.trunc(differenceInDays / daysPerYear))
   const monthPackets: number = Math.abs(Math.trunc(differenceInDays / daysPerMonth) % monthsPerYear)
@@ -138,9 +144,9 @@ export function getRelativeString(baseDate: LeimDate, relativeDate: LeimDate): s
   // Assign year part
   if (yearPackets) {
     if (yearPackets === 1) {
-      output += ` ${yearPackets} an`
+      output += `${yearPackets} an`
     } else {
-      output += ` ${yearPackets} ans`
+      output += `${yearPackets} ans`
     }
   }
 
