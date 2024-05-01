@@ -33,7 +33,7 @@ const isSelectedDate = computed<boolean>(() => {
 const hasAtLeastOneEvent = computed<boolean>(() => {
   return Boolean(
     currentEvents.value.find((currentEvent) => {
-      return areDatesIdentical(currentEvent.date, tileDate.value)
+      return areDatesIdentical(currentEvent.startDate, tileDate.value)
     })
   )
 })

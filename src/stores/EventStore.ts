@@ -15,7 +15,7 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
   const characterBirthEvents = charactersWithBirthData.map((character) => {
     return {
       title: `Naissance de ${character.name}`,
-      date: character.birth,
+      startDate: character.birth,
       category: 'naissance'
     } as CalendarEvent
   })
@@ -23,7 +23,7 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
   const characterDeathEvents = charactersWithDeathData.map((character) => {
     return {
       title: `Décès de ${character.name}`,
-      date: character.death,
+      startDate: character.death,
       category: 'mort'
     } as CalendarEvent
   })
@@ -47,9 +47,10 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
    * @returns Whether the event should appear in the current view
    */
   function shouldEventBeDisplayed(event: CalendarEvent): boolean {
-    const eventDateToDays = convertDateToDays(event.date)
+    const eventDateToDays = convertDateToDays(event.startDate)
     const isEventOnCurrentScreen =
-      event.date.year === currentDate.currentYear && event.date.month === currentDate.currentMonth
+      event.startDate.year === currentDate.currentYear &&
+      event.startDate.month === currentDate.currentMonth
 
     // Check whether the event is on the last 8 tiles
     // This is to allow leap events from appearing on the last 8 tiles
@@ -69,18 +70,18 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
         return isEventOnCurrentScreen || isEventOnNext8Tiles
 
       case 'year':
-        return event.date.year === currentDate.currentYear
+        return event.startDate.year === currentDate.currentYear
 
       case 'decade':
         return (
-          event.date.year >= currentDate.currentYear &&
-          event.date.year <= currentDate.currentYear + 10
+          event.startDate.year >= currentDate.currentYear &&
+          event.startDate.year <= currentDate.currentYear + 10
         )
 
       case 'century':
         return (
-          event.date.year >= currentDate.currentYear &&
-          event.date.year <= currentDate.currentYear + 100
+          event.startDate.year >= currentDate.currentYear &&
+          event.startDate.year <= currentDate.currentYear + 100
         )
 
       default:

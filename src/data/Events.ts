@@ -4,7 +4,7 @@ export const regularEvents: CalendarEvent[] = [
   // Histoire Antique
   {
     title: "Laurdieu devient la première cité de l'empire de Kaliatos",
-    date: { day: 3, month: 4, year: -1932 },
+    startDate: { day: 3, month: 4, year: -1932 },
     description:
       "L'empire de Kaliatos établi sa capitale dans la cité de Laurdieu, qui connaitra une prospérité nouvelle au sein d'Aldys.",
     category: 'législation',
@@ -14,7 +14,7 @@ export const regularEvents: CalendarEvent[] = [
   },
   {
     title: "Apparition d'Asménys",
-    date: { day: 19, month: 7, year: -1358 },
+    startDate: { day: 19, month: 7, year: -1358 },
     description:
       "La défunte chanteuse Asménys apparaît à un barde pendant son jeune public, démarrant la religion des Prêtresses d'Asménys.",
     category: 'religion',
@@ -24,7 +24,7 @@ export const regularEvents: CalendarEvent[] = [
   },
   {
     title: 'Exécution de Tyhos',
-    date: { day: 1, month: 0, year: 0 },
+    startDate: { day: 1, month: 0, year: 0 },
     description:
       "Le léviathan Tyhos rend l'âme après un combat de plusieurs années contre Lystos, le dieu du Soleil.",
     category: 'bénédiction',
@@ -34,7 +34,7 @@ export const regularEvents: CalendarEvent[] = [
   },
   {
     title: 'Traité de Kadel',
-    date: { day: 29, month: 4, year: 100 },
+    startDate: { day: 29, month: 4, year: 100 },
     description: '',
     category: 'inauguration',
     secondaryCategories: ['législation'],
@@ -42,7 +42,7 @@ export const regularEvents: CalendarEvent[] = [
   },
   {
     title: 'Découverte des Plaines de Poussières',
-    date: { day: 17, month: 7, year: 305 },
+    startDate: { day: 17, month: 7, year: 305 },
     description:
       "Les troupes de la reconquête aldienne explorent le littoral d'une immense étendue grise et inerte.",
     category: 'découverte',
@@ -52,7 +52,7 @@ export const regularEvents: CalendarEvent[] = [
   },
   {
     title: 'Début de la construction du Rempart de Laurdieu',
-    date: { day: 30, month: 2, year: 340 },
+    startDate: { day: 30, month: 2, year: 340 },
     description:
       "Le Grand Conseil Kaldélien ordonne la construction d'une muraille autour des Plaines de Poussières, afin de contenir les quelques démons y sortant.",
     category: 'construction',
@@ -61,7 +61,7 @@ export const regularEvents: CalendarEvent[] = [
   },
   {
     title: 'Finition du Rempart de Laurdieu',
-    date: { day: 27, month: 9, year: 355 },
+    startDate: { day: 27, month: 9, year: 355 },
     description:
       "Les terramanciens kaldéliens terminent les remparts protégeant l'alliance des démons des Plaines de Poussières.",
     category: 'construction',
@@ -73,7 +73,7 @@ export const regularEvents: CalendarEvent[] = [
   // Histoire Récente
   {
     title: "Inauguration de l'Académie Artistique Arcanique",
-    date: { day: 11, month: 6, year: 2545 },
+    startDate: { day: 11, month: 6, year: 2545 },
     description:
       "Scäd Sceni ouvre son institut artistique dédié à l'apprentissage des arts arcaniques",
     category: 'inauguration',
@@ -82,7 +82,7 @@ export const regularEvents: CalendarEvent[] = [
   },
   {
     title: 'Création de la buse kaldélienne',
-    date: { day: 4, month: 2, year: 3113 },
+    startDate: { day: 4, month: 2, year: 3113 },
     description:
       'Sophia de Rougefer invente la buse kaldélienne, une arme à feu souple à deux canons.',
     category: 'invention',
@@ -91,7 +91,7 @@ export const regularEvents: CalendarEvent[] = [
   },
   {
     title: 'Scandale Rodhus',
-    date: { day: 25, month: 9, year: 3208 },
+    startDate: { day: 25, month: 9, year: 3208 },
     description:
       "Tivian Rodhus, un professeur estimé de l'Académie Centrale Kaldélienne, est emprisonné pour corruption et aggression sexuelle. Le corps enseignant y est remanié sur ordre de Lazarus Tymos, comte de Nacride.",
     category: 'criminalité',
@@ -102,7 +102,7 @@ export const regularEvents: CalendarEvent[] = [
   // "Les Milles Cages"
   {
     title: "Arrivée d'aventuriers à Borélis",
-    date: { day: 12, month: 7, year: 3209 },
+    startDate: { day: 12, month: 7, year: 3209 },
     description:
       'Tara Belyus, Vascylly et Adol Sulvan livrent 3 condamnés à Handany. Ils partent pour la mer durant la journée.',
     category: 'joueurs'
@@ -111,25 +111,25 @@ export const regularEvents: CalendarEvent[] = [
     title: "Naufrage de l'Éclipse",
     description:
       "L'Éclipse, le navire de la garde contenant des condamnés à destination des Cages Handaniennes, s'échoue au large des côtes montagneuses de la Lance d'Aldys.",
-    date: { day: 14, month: 7, year: 3209 },
+    startDate: { day: 14, month: 7, year: 3209 },
     category: 'catastrophe'
   },
   {
     title: 'Emprisonnement de Tivian Rodhus',
     description: "Celui qu'on surnomme la Bête d'Ambrose arrive à Handany, où il purgera sa peine.",
-    date: { day: 14, month: 7, year: 3209 },
+    startDate: { day: 14, month: 7, year: 3209 },
     category: 'législation'
   },
   {
     title: 'Sulvan et Anastael atteignent Bamast',
-    date: { day: 19, month: 2, year: 3210 },
+    startDate: { day: 19, month: 2, year: 3210 },
     category: 'joueurs'
   },
   {
     title: 'Jugement de Bormis Griloup',
     description:
       "Bromis Griloup est jugé coupable d'escroquerie et sabotage aux Cours d'Acier de Tourgrise. Il purgera une peine de 10 ans au sein des prisons royales.",
-    date: { day: 4, month: 8, year: 3209 },
+    startDate: { day: 4, month: 8, year: 3209 },
     category: 'législation'
   },
 
@@ -137,42 +137,42 @@ export const regularEvents: CalendarEvent[] = [
   {
     title: 'Inauguration de la Cloche du Pilier',
     description: "Le Moine Premier inaugure la grande cloche d'argent au sommet du Pilier d'Ikami.",
-    date: { day: 29, month: 5, year: 3209 },
+    startDate: { day: 29, month: 5, year: 3209 },
     category: 'religion',
     hidden: true
   },
   {
     title: '1ère disparation à Cantane',
     description: "Taleb Vaht décède dans une grotte à la suite d'une attaque d'ischiels enragées.",
-    date: { day: 28, month: 7, year: 3209 },
+    startDate: { day: 28, month: 7, year: 3209 },
     category: 'mort',
     hidden: true
   },
   {
     title: '2ème disparation à Cantane',
     description: 'Donovane le mineur kéturien disparait sans laisser de traces.',
-    date: { day: 32, month: 7, year: 3209 },
+    startDate: { day: 32, month: 7, year: 3209 },
     category: 'mort',
     hidden: true
   },
   {
     title: '3ème disparation à Cantane',
     description: 'Disparition de Sébastien, gredin sauride.',
-    date: { day: 10, month: 8, year: 3209 },
+    startDate: { day: 10, month: 8, year: 3209 },
     category: 'mort',
     hidden: true
   },
   {
     title: '4ème disparation à Cantane',
     description: 'Disparition de Thérence, patrouilleur sauride de la Vieille Garde.',
-    date: { day: 19, month: 8, year: 3209 },
+    startDate: { day: 19, month: 8, year: 3209 },
     category: 'mort',
     hidden: true
   },
   {
     title: '5ème disparation à Cantane',
     description: 'Disparition de Mathilda Boulais, vendeuse de pierres.',
-    date: { day: 22, month: 8, year: 3209 },
+    startDate: { day: 22, month: 8, year: 3209 },
     category: 'mort',
     hidden: true
   },
@@ -180,7 +180,7 @@ export const regularEvents: CalendarEvent[] = [
     title: 'Grande Banque Minérale de Cantane',
     description:
       'Les artisans et mineurs de Rougefer se réunissent à Cantane pour vendre le fruit de leur dur labeur.',
-    date: { day: 23, month: 8, year: 3209 },
+    startDate: { day: 23, month: 8, year: 3209 },
     category: 'inauguration'
   }
 ]

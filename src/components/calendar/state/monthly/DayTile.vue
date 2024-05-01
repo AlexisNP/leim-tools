@@ -24,7 +24,7 @@ const { currentEvents } = storeToRefs(useCalendarEvents())
 
 const eventsForTheDay = computed(() => {
   return currentEvents.value.filter((currentEvent) => {
-    return areDatesIdentical(currentEvent.date, props.date)
+    return areDatesIdentical(currentEvent.startDate, props.date)
   })
 })
 

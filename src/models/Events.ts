@@ -2,7 +2,8 @@ import type { LeimDate } from './Date'
 
 export interface CalendarEvent {
   title: string
-  date: LeimDate
+  startDate: LeimDate
+  endDate?: LeimDate
   description?: string
   category?: CalendarEventCategory
   secondaryCategories?: CalendarEventCategory[]

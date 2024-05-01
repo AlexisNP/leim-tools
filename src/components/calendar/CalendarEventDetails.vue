@@ -11,7 +11,7 @@ const { defaultDate, getFormattedDateTitle } = useCalendar()
 
 const props = defineProps<{ event: CalendarEvent }>()
 
-const dateDifference: string = getRelativeString(defaultDate, props.event.date)
+const dateDifference: string = getRelativeString(defaultDate, props.event.startDate)
 </script>
 
 <template>
@@ -47,7 +47,7 @@ const dateDifference: string = getRelativeString(defaultDate, props.event.date)
       </div>
 
       <div class="mb-1 space-y-1">
-        <p class="font-semibold">{{ getFormattedDateTitle(event.date, true) }}</p>
+        <p class="font-semibold">{{ getFormattedDateTitle(event.startDate, true) }}</p>
         <p class="text-sm italic opacity-75 flex items-center gap-1">
           <PhHourglassMedium size="16" weight="fill" /> {{ dateDifference }}
         </p>
