@@ -17,7 +17,7 @@ const dateDifference: string = getRelativeString(defaultDate, props.event.startD
 <template>
   <PopoverContent
     class="w-96"
-    align="start"
+    :align="'start'"
     :align-offset="50"
     :collision-padding="20"
     :class="{
@@ -47,13 +47,21 @@ const dateDifference: string = getRelativeString(defaultDate, props.event.startD
       </div>
 
       <div class="mb-1 space-y-1">
-        <p class="font-semibold">{{ getFormattedDateTitle(event.startDate, true) }}</p>
+        <template v-if="event.startDate && !event.endDate">
+          <p class="font-semibold">{{ getFormattedDateTitle(event.startDate, true) }}</p>
+        </template>
+        <template v-else-if="event.startDate && event.endDate">
+          <p class="font-semibold">
+            Du {{ getFormattedDateTitle(event.startDate, true) }} au
+            {{ getFormattedDateTitle(event.endDate, true) }}
+          </p>
+        </template>
         <p class="text-sm italic opacity-75 flex items-center gap-1">
           <PhHourglassMedium size="16" weight="fill" /> {{ dateDifference }}
         </p>
       </div>
 
-      <div v-if="event.category || event.secondaryCategories">
+      <template v-if="event.category || event.secondaryCategories">
         <ul class="flex gap-1">
           <li v-if="event.category">
             <Badge class="mix-blend-luminosity font-bold bg-gray-600" variant="secondary">
@@ -67,7 +75,7 @@ const dateDifference: string = getRelativeString(defaultDate, props.event.startD
             </Badge>
           </li>
         </ul>
-      </div>
+      </template>
 
       <div class="mt-2 italic text-sm text-slate-500">
         {{ event.description }}
