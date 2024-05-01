@@ -53,10 +53,10 @@ const { defaultDate, getFormattedDateTitle } = useCalendar()
     </div>
 
     <div class="mb-1 flex gap-4 items-center">
-      <p class="opacity-75">{{ getFormattedDateTitle(event.date, true) }}</p>
+      <p class="opacity-75">{{ getFormattedDateTitle(event.startDate, true) }}</p>
       <p class="text-sm italic opacity-75 flex items-center gap-1">
         <PhHourglassMedium size="16" weight="fill" />
-        {{ getRelativeString(defaultDate, event.date) }}
+        {{ getRelativeString(defaultDate, event.startDate) }}
       </p>
     </div>
 

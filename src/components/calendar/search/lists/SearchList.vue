@@ -36,7 +36,7 @@ const sortedResults = computed(() => {
     let secondDate: LeimDate
 
     if (isCalendarEvent(a)) {
-      firstDate = a.date
+      firstDate = a.startDate
     } else if (isCharacter(a) && a.birth) {
       firstDate = a.birth
     } else {
@@ -44,7 +44,7 @@ const sortedResults = computed(() => {
     }
 
     if (isCalendarEvent(b)) {
-      secondDate = b.date
+      secondDate = b.startDate
     } else if (isCharacter(b) && b.birth) {
       secondDate = b.birth
     } else {
@@ -62,7 +62,7 @@ const pagedResults = computed(() => sortedResults.value.slice(props.startAt, pro
 <template>
   <ul class="grid gap-4">
     <li v-for="r in pagedResults" :key="isCalendarEvent(r) ? r.title : r.name">
-      <EventCallout v-if="isCalendarEvent(r)" @click="handleJumpToDate(r.date)" :event="r" />
+      <EventCallout v-if="isCalendarEvent(r)" @click="handleJumpToDate(r.startDate)" :event="r" />
 
       <CharacterCallout
         v-else-if="isCharacter(r)"

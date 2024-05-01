@@ -139,7 +139,7 @@ const searchResults = computed<(Character | CalendarEvent)[]>(() => {
       }
 
       hitCategories = selectedCategories.value.every((selectedCat) => {
-        return allCategories.includes(selectedCat)
+        return allCategories.includes(selectedCat as CalendarEventCategory)
       })
 
       return (hitTitle || hitDesc) && hitCategories
@@ -162,7 +162,7 @@ const searchResults = computed<(Character | CalendarEvent)[]>(() => {
 
       // Handle categories logic
       let hitCategories: boolean = false
-      let allCategories: CalendarEventCategory[] = []
+      let allCategories: CharacterCategory[] = []
 
       if (item.category) {
         allCategories.push(item.category)
@@ -173,7 +173,7 @@ const searchResults = computed<(Character | CalendarEvent)[]>(() => {
       }
 
       hitCategories = selectedCategories.value.every((selectedCat) => {
-        return allCategories.includes(selectedCat)
+        return allCategories.includes(selectedCat as CharacterCategory)
       })
 
       return hitTitle && hitCategories

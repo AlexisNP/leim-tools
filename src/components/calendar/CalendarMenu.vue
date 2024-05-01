@@ -2,6 +2,7 @@
 import { useCalendar } from '@/stores/CalendarStore'
 
 import { Button } from '@/components/ui/button'
+import { PhMagnifyingGlass } from '@phosphor-icons/vue'
 import CalendarMenuNav from './CalendarMenuNav.vue'
 import CalendarMenuToday from './CalendarMenuToday.vue'
 import CalendarSwitch from './CalendarSwitch.vue'

@@ -34,5 +34,5 @@ export const calendarEventCategories = [
 export type CalendarEventCategory = (typeof calendarEventCategories)[number]
 
 export function isCalendarEvent(object: any): object is CalendarEvent {
-  return 'date' in object
+  return 'startDate' in object
 }
