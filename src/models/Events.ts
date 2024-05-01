@@ -28,7 +28,8 @@ export const calendarEventCategories = [
   'construction',
   'arcanologie',
   'criminalité',
-  'scandale'
+  'scandale',
+  'commerce'
 ] as const
 
 export type CalendarEventCategory = (typeof calendarEventCategories)[number]

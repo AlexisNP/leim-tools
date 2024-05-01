@@ -23,7 +23,7 @@ const dateDifference: string = getRelativeString(defaultDate, props.event.startD
     :class="{
       'border-slate-800': !event.category,
       'border-lime-800': event.category === 'naissance',
-      'border-stone-800': event.category === 'mort',
+      'border-stone-600': event.category === 'mort',
       'border-orange-800': event.category === 'catastrophe',
       'border-pink-800': event.category === 'catastrophe naturelle',
       'border-sky-800': event.category === 'législation',
@@ -38,7 +38,8 @@ const dateDifference: string = getRelativeString(defaultDate, props.event.startD
       'border-amber-700': event.category === 'construction',
       'border-violet-700': event.category === 'arcanologie',
       'border-rose-800': event.category === 'criminalité',
-      'border-stone-700': event.category === 'scandale'
+      'border-stone-700': event.category === 'scandale',
+      'border-yellow-600': event.category === 'commerce'
     }"
   >
     <div class="grid gap-1">
@@ -91,8 +92,8 @@ const dateDifference: string = getRelativeString(defaultDate, props.event.startD
 .border-lime-800 {
   background-color: color-mix(in srgb, var(--color-lime-800), var(--color-slate-950) 85%);
 }
-.border-stone-800 {
-  background-color: color-mix(in srgb, var(--color-stone-800), var(--color-slate-950) 85%);
+.border-stone-600 {
+  background-color: color-mix(in srgb, var(--color-stone-600), var(--color-slate-950) 85%);
 }
 .border-orange-800 {
   background-color: color-mix(in srgb, var(--color-orange-800), var(--color-slate-950) 85%);
@@ -138,5 +139,8 @@ const dateDifference: string = getRelativeString(defaultDate, props.event.startD
 }
 .border-stone-700 {
   background-color: color-mix(in srgb, var(--color-stone-700), var(--color-slate-950) 85%);
+}
+.border-yellow-600 {
+  background-color: color-mix(in srgb, var(--color-yellow-600), var(--color-slate-950) 85%);
 }
 </style>

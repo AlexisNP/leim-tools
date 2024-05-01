@@ -32,7 +32,8 @@ defineProps<{
           'text-white bg-amber-600 hover:bg-amber-700': event.category === 'construction',
           'text-slate-900 bg-violet-200 hover:bg-violet-300': event.category === 'arcanologie',
           'text-white bg-rose-600 hover:bg-rose-700': event.category === 'criminalité',
-          'text-white bg-stone-600 hover:bg-stone-700': event.category === 'scandale'
+          'text-white bg-stone-600 hover:bg-stone-700': event.category === 'scandale',
+          'text-slate-900 bg-yellow-500 hover:bg-yellow-600': event.category === 'commerce'
         }"
       >
         {{ event.title }}

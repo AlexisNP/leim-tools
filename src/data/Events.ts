@@ -172,6 +172,7 @@ export const regularEvents: CalendarEvent[] = [
     description:
       'Les artisans et mineurs de Rougefer se réunissent à Cantane pour vendre le fruit de leur dur labeur.',
     startDate: { day: 23, month: 8, year: 3209 },
-    category: 'inauguration'
+    endDate: { day: 26, month: 8, year: 3209 },
+    category: 'commerce'
   }
 ]
