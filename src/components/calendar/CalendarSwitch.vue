@@ -27,7 +27,7 @@ const viewTypeTitle = computed(() => getViewTypeTitle(currentConfig.viewType))
         {{ viewTypeTitle }}
       </Button>
     </DropdownMenuTrigger>
-    <DropdownMenuContent>
+    <DropdownMenuContent :side="'bottom'" :collision-padding="30">
       <DropdownMenuLabel>Mode d'affichage</DropdownMenuLabel>
       <DropdownMenuSeparator />
       <DropdownMenuItem
