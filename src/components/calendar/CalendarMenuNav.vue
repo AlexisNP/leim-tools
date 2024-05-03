@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { computed, type ComputedRef } from 'vue'
 import { useCalendar } from '@/stores/CalendarStore'
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
@@ -9,7 +10,6 @@ import {
   PhCaretRight
 } from '@phosphor-icons/vue'
 import Button from '../ui/button/Button.vue'
-import { computed, type ComputedRef } from 'vue'
 
 interface DirectionLabels {
   pastFar: string

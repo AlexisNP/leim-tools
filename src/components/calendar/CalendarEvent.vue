@@ -1,11 +1,11 @@
 <script lang="ts" setup>
+import { ref } from 'vue'
 import { cn } from '@/lib/utils'
+import { areDatesIdentical, type LeimDate } from '@/models/Date'
+
 import { Popover, PopoverTrigger } from '@/components/ui/popover'
 import type { CalendarEvent } from '@/models/Events'
-
 import CalendarEventDetails from './CalendarEventDetails.vue'
-import { areDatesIdentical, type LeimDate } from '@/models/Date'
-import { ref } from 'vue'
 
 const props = defineProps<{
   event: CalendarEvent

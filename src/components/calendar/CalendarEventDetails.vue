@@ -2,12 +2,21 @@
 import { getRelativeString, type LeimDate } from '@/models/Date'
 import type { CalendarEvent } from '@/models/Events'
 import { useCalendar } from '@/stores/CalendarStore'
+import { useCalendarEvents } from '@/stores/EventStore'
 
-import { PhHourglassMedium, PhAlarm, PhHourglassHigh, PhHourglassLow } from '@phosphor-icons/vue'
+import {
+  PhHourglassMedium,
+  PhAlarm,
+  PhHourglassHigh,
+  PhHourglassLow,
+  PhArrowBendDoubleUpLeft,
+  PhArrowBendDoubleUpRight
+} from '@phosphor-icons/vue'
 import { Badge } from '@/components/ui/badge'
 import { PopoverContent } from '@/components/ui/popover'
 
 const { defaultDate, getFormattedDateTitle, jumpToDate } = useCalendar()
+const { getRelativeEvent } = useCalendarEvents()
 
 const props = defineProps<{
   event: CalendarEvent
@@ -16,7 +25,9 @@ const props = defineProps<{
   isEndEvent?: boolean
 }>()
 
-const emit = defineEmits(['query:close-popover'])
+const emit = defineEmits<{
+  (e: 'query:close-popover'): void
+}>()
 
 const dateDifference: string = getRelativeString(defaultDate, props.event.startDate)
 const dateDuration: string | null = props.event.endDate
@@ -26,6 +37,16 @@ const dateDuration: string | null = props.event.endDate
 function handleJumpToDate(date: LeimDate) {
   jumpToDate(date)
   emit('query:close-popover')
+}
+
+function handleGotoRelativeEvent(position: 'next' | 'prev' = 'next') {
+  try {
+    const { targetDate } = getRelativeEvent(props.event, position, props.isEndEvent)
+
+    handleJumpToDate(targetDate)
+  } catch (err) {
+    console.log(err)
+  }
 }
 </script>
 
@@ -123,8 +144,33 @@ function handleJumpToDate(date: LeimDate) {
         </button>
       </Badge>
       <Badge class="hover:opacity-100 hover:bg-slate-300" as-child title="Naviguer à la fin">
-        <button class="flex gap-1" @click="handleJumpToDate(event.endDate!)">
+        <button
+          class="flex gap-1"
+          @click="handleJumpToDate(event.endDate!)"
+          title="Naviguer à la fin"
+        >
           <PhHourglassLow size="16" weight="fill" /> Fin
+        </button>
+      </Badge>
+    </nav>
+
+    <nav class="mt-2 flex gap-2">
+      <Badge class="hover:opacity-100 hover:bg-slate-300" as-child>
+        <button
+          class="flex gap-1"
+          @click="handleGotoRelativeEvent('prev')"
+          title="Évènement précédent"
+        >
+          <PhArrowBendDoubleUpLeft size="16" weight="fill" /> Précédent
+        </button>
+      </Badge>
+      <Badge class="hover:opacity-100 hover:bg-slate-300" as-child title="Naviguer à la fin">
+        <button
+          class="flex gap-1"
+          @click="handleGotoRelativeEvent('next')"
+          title="Évènement suivant"
+        >
+          <PhArrowBendDoubleUpRight size="16" weight="fill" /> Suivant
         </button>
       </Badge>
     </nav>

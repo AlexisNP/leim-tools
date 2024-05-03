@@ -1,5 +1,5 @@
 import { initialEvents } from '@/data/Events'
-import { compareDates, convertDateToDays, daysPerMonth } from '@/models/Date'
+import { compareDates, convertDateToDays, daysPerMonth, type LeimDate } from '@/models/Date'
 import type { CalendarEvent } from '@/models/Events'
 import { defineStore } from 'pinia'
 import { ref, watch, type Ref } from 'vue'
@@ -108,5 +108,97 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
     return allEvents.filter((event) => shouldEventBeDisplayed(event))
   }
 
-  return { allEvents, currentEvents }
+  /**
+   * From a base event, gets the next or previous in the timeline
+   * @todo **This should probably be extracted to function FIRST with dates only, as the initialIsEnd param is only used at the beggining to establish a pivot**
+   *
+   * @param event The event at a given position in the data
+   * @param position Whether we should get the next or previous event
+   * @returns The next event in chronological order
+   */
+  function getRelativeEvent(
+    event: CalendarEvent,
+    position: 'next' | 'prev' = 'next',
+    initialIsEnd: boolean = false
+  ): { event: CalendarEvent; targetDate: LeimDate } {
+    let eventPivotValue: number // Day value of the date that the user interacted with
+
+    if (initialIsEnd && event.endDate) {
+      eventPivotValue = convertDateToDays(event.endDate)
+    } else {
+      eventPivotValue = convertDateToDays(event.startDate)
+    }
+
+    const t: { eventData: CalendarEvent; distance: number; targetKey: 'startDate' | 'endDate' }[] =
+      []
+    let eventPivotIndex: number | null = null // Pivot index to save
+    let realPositon: number = 0
+
+    // Loop over all event once to convert the structure to a usable one
+    for (let i = 0; i < allEvents.length; i++) {
+      const e: CalendarEvent = allEvents[i]
+      // Estimate distance from pivot
+      const startDateDays: number = convertDateToDays(e.startDate)
+      const startDistance: number = startDateDays - eventPivotValue
+
+      // Push startDate to comparator array
+      t.push({
+        eventData: e,
+        distance: startDistance,
+        targetKey: 'startDate'
+      })
+
+      // If the distance from initial pivot is 0, this is our target index
+      if (startDistance === 0) {
+        eventPivotIndex = realPositon
+      }
+
+      // Check the same things for endDate
+      if (e.endDate) {
+        realPositon++
+        const endDateDays: number = convertDateToDays(e.endDate)
+        const endDistance: number = endDateDays - eventPivotValue
+
+        // Push optional endDate to comparator array
+        t.push({
+          eventData: e,
+          distance: endDistance,
+          targetKey: 'endDate'
+        })
+
+        // Same as above, but with the optional end distance
+        if (endDistance === 0) {
+          eventPivotIndex = realPositon
+        }
+      }
+
+      realPositon++
+
+      // Optimization possible with index skipping (once we find the pivot index)
+    }
+
+    // If SOMEHOW we can't find the pivot index
+    if (eventPivotIndex === null) {
+      throw new Error("Impossible de trouver l'évènement initial.")
+    }
+
+    let returnEventIndex: number | null = null // Output event index
+    if (position === 'next') {
+      returnEventIndex = eventPivotIndex + 1
+    } else {
+      returnEventIndex = eventPivotIndex - 1
+    }
+
+    if (!t[returnEventIndex])
+      throw new Error(
+        "Aucun évènement trouvé ; Peut-être l'évènement se situe au début ou à la fin du calendrier ?"
+      )
+
+    return {
+      event: t[returnEventIndex].eventData,
+      targetDate: t[returnEventIndex].eventData[t[returnEventIndex].targetKey]!
+    }
+  }
+
+  return { allEvents, currentEvents, getRelativeEvent }
 })
