@@ -1,6 +1,6 @@
 import type { CalendarEvent } from '@/models/Events'
 
-export const regularEvents: CalendarEvent[] = [
+export const initialEvents: CalendarEvent[] = [
   // Histoire Antique
   {
     title: "Laurdieu devient la première cité de l'empire de Kaliatos",

@@ -54,7 +54,7 @@ import {
 import SearchList from './lists/SearchList.vue'
 
 const { characters } = useCharacters()
-const { baseEvents } = useCalendarEvents()
+const { allEvents } = useCalendarEvents()
 
 const modalOpen = defineModel({ default: false })
 
@@ -96,11 +96,11 @@ const searchResults = computed<(Character | CalendarEvent)[]>(() => {
   // Assign data to loop over and filter
   // They are assigned this way for readability
   if (selectedEntity.value === 'events') {
-    dataToFilter = baseEvents
+    dataToFilter = allEvents
   } else if (selectedEntity.value === 'characters') {
     dataToFilter = characters
   } else {
-    dataToFilter = [...baseEvents, ...characters]
+    dataToFilter = [...allEvents, ...characters]
   }
 
   /**
@@ -306,7 +306,7 @@ function handleCategorySelect(e: any) {
           </div>
 
           <div class="flex items-center gap-1">
-            <TagsInput class="px-0 gap-0 w-52" :model-value="selectedCategories">
+            <TagsInput class="px-0 gap-0 w-72" :model-value="selectedCategories">
               <div class="flex gap-2 flex-wrap items-center px-3">
                 <TagsInputItem v-for="item in selectedCategories" :key="item" :value="item">
                   <TagsInputItemText class="capitalize" />
