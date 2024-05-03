@@ -1,8 +1,4 @@
-<script lang="ts" setup>
-import { useCalendarEvents } from '@/stores/EventStore'
-
-const { currentEvents } = useCalendarEvents()
-</script>
+<script lang="ts" setup></script>
 
 <template>
   <div>Century</div>
