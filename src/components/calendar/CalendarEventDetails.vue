@@ -35,7 +35,7 @@ function handleJumpToDate(date: LeimDate) {
     :align="'center'"
     :align-offset="50"
     :side="'left'"
-    :collision-padding="20"
+    :collision-padding="60"
     :hide-when-detached="true"
     :class="{
       'border-slate-800': !event.category,
