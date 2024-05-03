@@ -5,6 +5,7 @@ import type { CalendarEvent } from '@/models/Events'
 
 import CalendarEventDetails from './CalendarEventDetails.vue'
 import { areDatesIdentical, type LeimDate } from '@/models/Date'
+import { ref } from 'vue'
 
 const props = defineProps<{
   event: CalendarEvent
@@ -16,10 +17,16 @@ const spansMultipleDays = Boolean(props.event.startDate && props.event.endDate)
 const isStartEvent = spansMultipleDays && areDatesIdentical(props.tileDate, props.event.startDate)
 const isEndEvent =
   spansMultipleDays && props.event.endDate && areDatesIdentical(props.tileDate, props.event.endDate)
+
+const isPopoverOpen = ref<boolean>(false)
+
+function handleClosePopover() {
+  isPopoverOpen.value = false
+}
 </script>
 
 <template>
-  <Popover>
+  <Popover v-model:open="isPopoverOpen">
     <PopoverTrigger as-child>
       <button
         class="text-xs px-2 py-1 block w-full text-left rounded-sm whitespace-nowrap overflow-hidden text-ellipsis"
@@ -53,6 +60,13 @@ const isEndEvent =
       </button>
     </PopoverTrigger>
 
-    <CalendarEventDetails :event :spans-multiple-days :is-start-event :is-end-event v-once />
+    <CalendarEventDetails
+      :event
+      :spans-multiple-days
+      :is-start-event
+      :is-end-event
+      @query:close-popover="handleClosePopover"
+      v-once
+    />
   </Popover>
 </template>

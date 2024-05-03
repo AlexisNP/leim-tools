@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { getRelativeString } from '@/models/Date'
+import { getRelativeString, type LeimDate } from '@/models/Date'
 import type { CalendarEvent } from '@/models/Events'
 import { useCalendar } from '@/stores/CalendarStore'
 
@@ -7,7 +7,7 @@ import { PhHourglassMedium, PhAlarm, PhHourglassHigh, PhHourglassLow } from '@ph
 import { Badge } from '@/components/ui/badge'
 import { PopoverContent } from '@/components/ui/popover'
 
-const { defaultDate, getFormattedDateTitle } = useCalendar()
+const { defaultDate, getFormattedDateTitle, jumpToDate } = useCalendar()
 
 const props = defineProps<{
   event: CalendarEvent
@@ -16,10 +16,17 @@ const props = defineProps<{
   isEndEvent?: boolean
 }>()
 
+const emit = defineEmits(['query:close-popover'])
+
 const dateDifference: string = getRelativeString(defaultDate, props.event.startDate)
 const dateDuration: string | null = props.event.endDate
   ? getRelativeString(props.event.startDate, props.event.endDate, 'compact')
   : null
+
+function handleJumpToDate(date: LeimDate) {
+  jumpToDate(date)
+  emit('query:close-popover')
+}
 </script>
 
 <template>
@@ -105,12 +112,22 @@ const dateDuration: string | null = props.event.endDate
       </template>
     </div>
 
-    <Badge v-if="isStartEvent" class="absolute -top-2 left-2 hover:bg-slate-300 hover:opacity-100">
-      <PhHourglassHigh size="16" weight="fill" /> Début
-    </Badge>
-    <Badge v-if="isEndEvent" class="absolute -top-2 left-2 hover:bg-slate-300 hover:opacity-100">
-      <PhHourglassLow size="16" weight="fill" /> Fin
-    </Badge>
+    <nav v-if="event.startDate && event.endDate" class="absolute -top-2 right-2 flex gap-2">
+      <Badge class="hover:opacity-100 hover:bg-slate-300" as-child>
+        <button
+          class="flex gap-1"
+          @click="handleJumpToDate(event.startDate!)"
+          title="Naviguer au début"
+        >
+          <PhHourglassHigh size="16" weight="fill" /> Début
+        </button>
+      </Badge>
+      <Badge class="hover:opacity-100 hover:bg-slate-300" as-child title="Naviguer à la fin">
+        <button class="flex gap-1" @click="handleJumpToDate(event.endDate!)">
+          <PhHourglassLow size="16" weight="fill" /> Fin
+        </button>
+      </Badge>
+    </nav>
   </PopoverContent>
 </template>
 
