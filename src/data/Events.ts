@@ -23,6 +23,17 @@ export const initialEvents: CalendarEvent[] = [
     hidden: true
   },
   {
+    title: 'La Rupture',
+    startDate: { day: 26, month: 5, year: -756 },
+    endDate: { day: 4, month: 9, year: 29 },
+    description:
+      "Les Abysses se déversent à la surface de Léim, à travers plusieurs brèches. Plusieurs hordes de démons se rapprochent des villes, et ce qu'on appellera l'Âge des Abysses commencent alors sur la planète entière.",
+    category: 'catastrophe',
+    secondaryCategories: ['catastrophe naturelle'],
+    wiki: 'https://alexcreates.fr/leim/index.php/Seconde_Rupture',
+    hidden: true
+  },
+  {
     title: 'Marche du sang',
     startDate: { day: 18, month: 9, year: -420 },
     endDate: { day: 27, month: 1, year: -419 },
