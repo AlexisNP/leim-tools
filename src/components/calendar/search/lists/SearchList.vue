@@ -3,11 +3,12 @@ import { isCharacter, type Character } from '@/models/Characters'
 import { compareDates, type LeimDate, type LeimDateOrder } from '@/models/Date'
 import { isCalendarEvent, type CalendarEvent } from '@/models/Events'
 import { useCalendar } from '@/stores/CalendarStore'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import type { SearchMode } from '../../Search'
 
 import CharacterCallout from './CharacterCallout.vue'
 import EventCallout from './EventCallout.vue'
+import { useScroll } from '@vueuse/core'
 
 const props = defineProps<{
   results: (Character | CalendarEvent)[]

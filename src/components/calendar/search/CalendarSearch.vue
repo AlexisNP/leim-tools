@@ -15,8 +15,8 @@ import {
 import { useCharacters } from '@/stores/CharacterStore'
 import { useCalendarEvents } from '@/stores/EventStore'
 import { capitalize } from '@/utils/Strings'
-import { useMagicKeys, useStorage, whenever } from '@vueuse/core'
-import { computed, ref } from 'vue'
+import { useMagicKeys, useScroll, useStorage, whenever } from '@vueuse/core'
+import { computed, ref, watch } from 'vue'
 import { searchUnifier, type SearchMode } from '../Search'
 
 import { Button } from '@/components/ui/button'
@@ -221,6 +221,13 @@ whenever(keys.control_period, () => {
   openDialog()
 })
 
+const searchResultsRef = ref<HTMLElement | null>(null)
+const { y: searchResultsY } = useScroll(searchResultsRef)
+
+watch(currentPage, () => {
+  searchResultsY.value = 0
+})
+
 // Compute categories based on current selectedEntity
 const currentCategories = computed(() => {
   if (selectedEntity.value === 'characters') {
@@ -391,7 +398,7 @@ function handleCategorySelect(e: any) {
 
       <hr />
 
-      <div v-if="searchResults.length > 0" class="grow overflow-y-auto">
+      <div v-if="searchResults.length > 0" class="grow overflow-y-auto" ref="searchResultsRef">
         <SearchList
           :results="searchResults"
           :current-entity="selectedEntity"
