@@ -91,6 +91,24 @@ export const initialEvents: CalendarEvent[] = [
     wiki: 'https://alexcreates.fr/leim/index.php/Buse_(arme)'
   },
   {
+    title: 'Feux dans les champs de Bamast',
+    startDate: { day: 9, month: 5, year: 3200 },
+    description:
+      "Plusieurs incendies criminels se propagent à travers les champs de sérille des fermiers des littoraux de Bamast. Aucun suspect ni coupable ne sera trouvé et l'enquête sera baclée.",
+    category: 'catastrophe',
+    secondaryCategories: ['criminalité'],
+    wiki: 'https://alexcreates.fr/leim/index.php/Vascylly'
+  },
+  {
+    title: 'Meurtre de Darléon Typhos',
+    startDate: { day: 21, month: 6, year: 3200 },
+    description:
+      'Darléon Typhos surprend Vascylly fouillant sa demeure peu après la tombée de la nuit. Le majordome de la famille Typhos découvre le corps sans vie de son maître le lendemain.',
+    category: 'criminalité',
+    secondaryCategories: ['joueurs'],
+    wiki: 'https://alexcreates.fr/leim/index.php/Vascylly'
+  },
+  {
     title: 'Scandale Rodhus',
     startDate: { day: 25, month: 9, year: 3208 },
     description:
