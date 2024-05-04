@@ -137,14 +137,12 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
     position: 'next' | 'prev' = 'next'
   ): { event: CalendarEvent; targetDate: LeimDate } {
     const pivotValue = convertDateToDays(date)
-    const t: { eventData: CalendarEvent; distance: number; targetKey: 'startDate' | 'endDate' }[] =
-      []
-    let eventPivotIndex: number | null = null // Pivot index to save
-    let realPositon: number = 0
+    let t: { eventData: CalendarEvent; distance: number; targetKey: 'startDate' | 'endDate' }[] = []
 
     // Loop over all event once to convert the structure to a usable one
     for (let i = 0; i < allEvents.length; i++) {
       const e: CalendarEvent = allEvents[i]
+
       // Estimate distance from pivot
       const startDateDays: number = convertDateToDays(e.startDate)
       const startDistance: number = startDateDays - pivotValue
@@ -156,14 +154,8 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
         targetKey: 'startDate'
       })
 
-      // If the distance from initial pivot is 0, this is our target index
-      if (startDistance === 0) {
-        eventPivotIndex = realPositon
-      }
-
       // Check the same things for endDate
       if (e.endDate) {
-        realPositon++
         const endDateDays: number = convertDateToDays(e.endDate)
         const endDistance: number = endDateDays - pivotValue
 
@@ -173,38 +165,49 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
           distance: endDistance,
           targetKey: 'endDate'
         })
-
-        // Same as above, but with the optional end distance
-        if (endDistance === 0) {
-          eventPivotIndex = realPositon
-        }
       }
-
-      realPositon++
-
-      // Optimization possible with index skipping (once we find the pivot index)
     }
 
-    // If SOMEHOW we can't find the pivot index
-    if (eventPivotIndex === null) {
-      throw new Error("Impossible de trouver l'évènement initial.")
-    }
+    // // Special case : If we query the first one but it already is
+    // if (position === 'prev' && t[0].distance === 0) {
+    //   const targetDate =
+    //     t[0].targetKey === 'startDate' ? t[0].eventData.startDate : t[0].eventData.endDate!
+    //   return {
+    //     event: t[0].eventData,
+    //     targetDate: targetDate
+    //   }
+    // }
+    // // Special case : If we query the last one but it already is
+    // if (position === 'next' && t[t.length - 1].distance === 0) {
+    //   const targetDate =
+    //     t[t.length - 1].targetKey === 'startDate'
+    //       ? t[t.length - 1].eventData.startDate
+    //       : t[t.length - 1].eventData.endDate!
+    //   return {
+    //     event: t[t.length - 1].eventData,
+    //     targetDate: targetDate
+    //   }
+    // }
 
-    let returnEventIndex: number | null = null // Output event index
-    if (position === 'next') {
-      returnEventIndex = eventPivotIndex + 1
-    } else {
-      returnEventIndex = eventPivotIndex - 1
-    }
+    // Based on the direction, either ignore negative distance (past) or positive distance (future)
+    t = t.filter((i) => {
+      return position === 'next' ? i.distance > 0 : i.distance < 0
+    })
 
-    if (!t[returnEventIndex])
+    if (!t.length) {
       throw new Error(
-        "Aucun évènement trouvé ; Peut-être l'évènement se situe au début ou à la fin du calendrier ?"
+        "Aucun évènement suivant ou précédent trouvé ; Peut-être l'évènement se situe au début ou à la fin du calendrier ?"
       )
+    }
+
+    // Get event with remaining minimum distance
+    const closestEvent = t.reduce((a, b) => {
+      return Math.abs(b.distance) < Math.abs(a.distance) ? b : a
+    })
 
     return {
-      event: t[returnEventIndex].eventData,
-      targetDate: t[returnEventIndex].eventData[t[returnEventIndex].targetKey]!
+      event: closestEvent.eventData,
+      targetDate: closestEvent.eventData[closestEvent.targetKey]!
     }
   }
 
