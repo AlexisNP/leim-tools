@@ -9,7 +9,7 @@ import {
   PhCaretLeft,
   PhCaretRight
 } from '@phosphor-icons/vue'
-import Button from '../ui/button/Button.vue'
+import Button from '@/components/ui/button/Button.vue'
 
 interface DirectionLabels {
   pastFar: string
