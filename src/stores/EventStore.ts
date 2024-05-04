@@ -116,19 +116,27 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
    * @param position Whether we should get the next or previous event
    * @returns The next event in chronological order
    */
-  function getRelativeEvent(
+  function getRelativeEventFromEvent(
     event: CalendarEvent,
     position: 'next' | 'prev' = 'next',
     initialIsEnd: boolean = false
   ): { event: CalendarEvent; targetDate: LeimDate } {
-    let eventPivotValue: number // Day value of the date that the user interacted with
+    let dateToParse: LeimDate // Day value of the date that the user interacted with
 
     if (initialIsEnd && event.endDate) {
-      eventPivotValue = convertDateToDays(event.endDate)
+      dateToParse = event.endDate
     } else {
-      eventPivotValue = convertDateToDays(event.startDate)
+      dateToParse = event.startDate
     }
 
+    return getRelativeEventFromDate(dateToParse, position)
+  }
+
+  function getRelativeEventFromDate(
+    date: LeimDate,
+    position: 'next' | 'prev' = 'next'
+  ): { event: CalendarEvent; targetDate: LeimDate } {
+    const pivotValue = convertDateToDays(date)
     const t: { eventData: CalendarEvent; distance: number; targetKey: 'startDate' | 'endDate' }[] =
       []
     let eventPivotIndex: number | null = null // Pivot index to save
@@ -139,7 +147,7 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
       const e: CalendarEvent = allEvents[i]
       // Estimate distance from pivot
       const startDateDays: number = convertDateToDays(e.startDate)
-      const startDistance: number = startDateDays - eventPivotValue
+      const startDistance: number = startDateDays - pivotValue
 
       // Push startDate to comparator array
       t.push({
@@ -157,7 +165,7 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
       if (e.endDate) {
         realPositon++
         const endDateDays: number = convertDateToDays(e.endDate)
-        const endDistance: number = endDateDays - eventPivotValue
+        const endDistance: number = endDateDays - pivotValue
 
         // Push optional endDate to comparator array
         t.push({
@@ -200,5 +208,5 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
     }
   }
 
-  return { allEvents, currentEvents, getRelativeEvent }
+  return { allEvents, currentEvents, getRelativeEventFromDate, getRelativeEventFromEvent }
 })

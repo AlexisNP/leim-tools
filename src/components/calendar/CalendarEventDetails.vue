@@ -16,7 +16,7 @@ import { Badge } from '@/components/ui/badge'
 import { PopoverContent } from '@/components/ui/popover'
 
 const { defaultDate, getFormattedDateTitle, jumpToDate } = useCalendar()
-const { getRelativeEvent } = useCalendarEvents()
+const { getRelativeEventFromEvent } = useCalendarEvents()
 
 const props = defineProps<{
   event: CalendarEvent
@@ -41,7 +41,7 @@ function handleJumpToDate(date: LeimDate) {
 
 function handleGotoRelativeEvent(position: 'next' | 'prev' = 'next') {
   try {
-    const { targetDate } = getRelativeEvent(props.event, position, props.isEndEvent)
+    const { targetDate } = getRelativeEventFromEvent(props.event, position, props.isEndEvent)
 
     handleJumpToDate(targetDate)
   } catch (err) {
