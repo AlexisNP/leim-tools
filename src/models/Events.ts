@@ -2,7 +2,8 @@ import type { LeimDate } from './Date'
 
 export interface CalendarEvent {
   title: string
-  date: LeimDate
+  startDate: LeimDate
+  endDate?: LeimDate
   description?: string
   category?: CalendarEventCategory
   secondaryCategories?: CalendarEventCategory[]
@@ -21,11 +22,18 @@ export const calendarEventCategories = [
   'invention',
   'science',
   'bénédiction',
-  'joueurs'
-]
+  'joueurs',
+  'découverte',
+  'exploration',
+  'construction',
+  'arcanologie',
+  'criminalité',
+  'scandale',
+  'commerce'
+] as const
 
 export type CalendarEventCategory = (typeof calendarEventCategories)[number]
 
 export function isCalendarEvent(object: any): object is CalendarEvent {
-  return 'date' in object
+  return 'startDate' in object
 }

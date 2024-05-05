@@ -2,6 +2,8 @@
 import { storeToRefs } from 'pinia'
 import { onMounted } from 'vue'
 import { useCalendar } from '@/stores/CalendarStore'
+import { useTitle } from '@vueuse/core'
+import { titleTemplate } from './meta'
 
 import Calendar from '@/components/calendar/Calendar.vue'
 import Sidebar from '@/components/calendar/Sidebar.vue'
@@ -11,6 +13,8 @@ const { validateUrlParams } = useCalendar()
 const { isAdvancedSearchOpen } = storeToRefs(useCalendar())
 
 onMounted(() => validateUrlParams())
+
+useTitle('Calendrier', titleTemplate)
 </script>
 
 <template>

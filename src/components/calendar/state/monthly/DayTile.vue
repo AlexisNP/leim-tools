@@ -24,7 +24,10 @@ const { currentEvents } = storeToRefs(useCalendarEvents())
 
 const eventsForTheDay = computed(() => {
   return currentEvents.value.filter((currentEvent) => {
-    return areDatesIdentical(currentEvent.date, props.date)
+    return (
+      areDatesIdentical(currentEvent.startDate, props.date) ||
+      areDatesIdentical(currentEvent.endDate!, props.date)
+    )
   })
 })
 
@@ -90,7 +93,7 @@ const eventsNotDisplayed = computed(
       }"
     >
       <li v-for="event in eventsToDisplay" :key="event.title" class="grid pointer-events-auto">
-        <CalendarEventButton :event />
+        <CalendarEventButton :event :tile-date="date" />
       </li>
 
       <li v-if="eventsNotDisplayed > 0" class="pointer-events-auto">
@@ -116,7 +119,7 @@ const eventsNotDisplayed = computed(
                 :key="event.title"
                 class="grid pointer-events-auto"
               >
-                <CalendarEventButton :event />
+                <CalendarEventButton :event :tile-date="date" />
               </li>
             </ul>
           </PopoverContent>

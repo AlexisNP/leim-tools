@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { computed, type ComputedRef } from 'vue'
 import { useCalendar } from '@/stores/CalendarStore'
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
@@ -8,8 +9,7 @@ import {
   PhCaretLeft,
   PhCaretRight
 } from '@phosphor-icons/vue'
-import Button from '../ui/button/Button.vue'
-import { computed, type ComputedRef } from 'vue'
+import Button from '@/components/ui/button/Button.vue'
 
 interface DirectionLabels {
   pastFar: string
@@ -147,7 +147,7 @@ function toFutureFar(): void {
   <div class="flex items-center gap-2">
     <TooltipProvider :delayDuration="250">
       <Tooltip>
-        <TooltipTrigger>
+        <TooltipTrigger as-child>
           <Button variant="outline" size="icon" @click="toPastFar()">
             <PhCaretDoubleLeft size="18" />
           </Button>
@@ -160,7 +160,7 @@ function toFutureFar(): void {
 
     <TooltipProvider :delayDuration="250">
       <Tooltip>
-        <TooltipTrigger>
+        <TooltipTrigger as-child>
           <Button variant="outline" size="icon" @click="toPastNear()">
             <PhCaretLeft size="18" />
           </Button>
@@ -173,7 +173,7 @@ function toFutureFar(): void {
 
     <TooltipProvider :delayDuration="250">
       <Tooltip>
-        <TooltipTrigger>
+        <TooltipTrigger as-child>
           <Button variant="outline" size="icon" @click="toFutureNear()">
             <PhCaretRight size="18" />
           </Button>
@@ -186,7 +186,7 @@ function toFutureFar(): void {
 
     <TooltipProvider :delayDuration="250">
       <Tooltip>
-        <TooltipTrigger>
+        <TooltipTrigger as-child>
           <Button variant="outline" size="icon" @click="toFutureFar()">
             <PhCaretDoubleRight size="18" />
           </Button>

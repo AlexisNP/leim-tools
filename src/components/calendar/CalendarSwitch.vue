@@ -20,14 +20,14 @@ const viewTypeTitle = computed(() => getViewTypeTitle(currentConfig.viewType))
 
 <template>
   <DropdownMenu>
-    <DropdownMenuTrigger>
+    <DropdownMenuTrigger as-child>
       <Button size="sm" variant="secondary">
         <PhCalendarBlank size="18" weight="fill" />
 
         {{ viewTypeTitle }}
       </Button>
     </DropdownMenuTrigger>
-    <DropdownMenuContent>
+    <DropdownMenuContent :side="'bottom'" :collision-padding="30">
       <DropdownMenuLabel>Mode d'affichage</DropdownMenuLabel>
       <DropdownMenuSeparator />
       <DropdownMenuItem

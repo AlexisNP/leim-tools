@@ -1,33 +1,27 @@
 <script lang="ts" setup>
 import {
+  characterCategories,
   isCharacter,
   type Character,
-  characterCategories,
   type CharacterCategory
 } from '@/models/Characters'
 import type { LeimDateOrder } from '@/models/Date'
 import {
+  calendarEventCategories,
   isCalendarEvent,
   type CalendarEvent,
-  calendarEventCategories,
   type CalendarEventCategory
 } from '@/models/Events'
-import { capitalize } from '@/utils/Strings'
 import { useCharacters } from '@/stores/CharacterStore'
 import { useCalendarEvents } from '@/stores/EventStore'
-import { useMagicKeys, useStorage, whenever } from '@vueuse/core'
-import { computed, ref } from 'vue'
+import { capitalize } from '@/utils/Strings'
+import { useMagicKeys, useScroll, useStorage, whenever } from '@vueuse/core'
+import { computed, ref, watch } from 'vue'
 import { searchUnifier, type SearchMode } from '../Search'
 
 import { Button } from '@/components/ui/button'
 import { CommandEmpty, CommandGroup, CommandItem, CommandList } from '@/components/ui/command'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-  DialogTrigger
-} from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import {
   Pagination,
@@ -60,7 +54,7 @@ import {
 import SearchList from './lists/SearchList.vue'
 
 const { characters } = useCharacters()
-const { baseEvents } = useCalendarEvents()
+const { allEvents } = useCalendarEvents()
 
 const modalOpen = defineModel({ default: false })
 
@@ -87,6 +81,9 @@ const itemsPerPage: number = 20
 const startOfList = computed<number>(() => (currentPage.value - 1) * itemsPerPage)
 const endOfList = computed<number>(() => startOfList.value + itemsPerPage)
 
+/**
+ * Resets the pagination
+ */
 function resetPage() {
   currentPage.value = 1
 }
@@ -99,11 +96,11 @@ const searchResults = computed<(Character | CalendarEvent)[]>(() => {
   // Assign data to loop over and filter
   // They are assigned this way for readability
   if (selectedEntity.value === 'events') {
-    dataToFilter = baseEvents
+    dataToFilter = allEvents
   } else if (selectedEntity.value === 'characters') {
     dataToFilter = characters
   } else {
-    dataToFilter = [...baseEvents, ...characters]
+    dataToFilter = [...allEvents, ...characters]
   }
 
   /**
@@ -142,7 +139,7 @@ const searchResults = computed<(Character | CalendarEvent)[]>(() => {
       }
 
       hitCategories = selectedCategories.value.every((selectedCat) => {
-        return allCategories.includes(selectedCat)
+        return allCategories.includes(selectedCat as CalendarEventCategory)
       })
 
       return (hitTitle || hitDesc) && hitCategories
@@ -165,7 +162,7 @@ const searchResults = computed<(Character | CalendarEvent)[]>(() => {
 
       // Handle categories logic
       let hitCategories: boolean = false
-      let allCategories: CalendarEventCategory[] = []
+      let allCategories: CharacterCategory[] = []
 
       if (item.category) {
         allCategories.push(item.category)
@@ -176,7 +173,7 @@ const searchResults = computed<(Character | CalendarEvent)[]>(() => {
       }
 
       hitCategories = selectedCategories.value.every((selectedCat) => {
-        return allCategories.includes(selectedCat)
+        return allCategories.includes(selectedCat as CharacterCategory)
       })
 
       return hitTitle && hitCategories
@@ -186,20 +183,32 @@ const searchResults = computed<(Character | CalendarEvent)[]>(() => {
   return results
 })
 
+/**
+ * Removes the search query, resets the pagination and removes all selected categories
+ */
 function resetSearch() {
   searchQuery.value = ''
   resetPage()
   selectedCategories.value = []
 }
 
+/**
+ * Opens the search dialog
+ */
 function openDialog() {
   modalOpen.value = true
 }
 
+/**
+ * Closes the search dialog
+ */
 function closeDialog() {
   modalOpen.value = false
 }
 
+/**
+ * Switches the selectedEntity
+ */
 function handleEntitySwitch() {
   resetPage()
   selectedCategories.value = []
@@ -212,7 +221,14 @@ whenever(keys.control_period, () => {
   openDialog()
 })
 
-// Categories
+const searchResultsRef = ref<HTMLElement | null>(null)
+const { y: searchResultsY } = useScroll(searchResultsRef)
+
+watch(currentPage, () => {
+  searchResultsY.value = 0
+})
+
+// Compute categories based on current selectedEntity
 const currentCategories = computed(() => {
   if (selectedEntity.value === 'characters') {
     return [...characterCategories]
@@ -225,17 +241,22 @@ const selectedCategories = ref<(CharacterCategory | CalendarEventCategory)[]>([]
 const categoryFilterOpened = ref<boolean>(false)
 const searchCategory = ref<string>('')
 
-const filteredFrameworks = computed(() =>
+const filteredCategories = computed(() =>
   currentCategories.value.filter((i) => !selectedCategories.value.includes(i))
 )
 
+/**
+ * Handles the category selections from the TagInput component
+ *
+ * @param e Radix Change Event
+ */
 function handleCategorySelect(e: any) {
   if (typeof e.detail.value === 'string') {
     searchCategory.value = ''
     selectedCategories.value.push(e.detail.value)
   }
 
-  if (filteredFrameworks.value.length === 0) {
+  if (filteredCategories.value.length === 0) {
     categoryFilterOpened.value = false
   }
 }
@@ -292,7 +313,7 @@ function handleCategorySelect(e: any) {
           </div>
 
           <div class="flex items-center gap-1">
-            <TagsInput class="px-0 gap-0 w-52" :model-value="selectedCategories">
+            <TagsInput class="px-0 gap-0 w-72" :model-value="selectedCategories">
               <div class="flex gap-2 flex-wrap items-center px-3">
                 <TagsInputItem v-for="item in selectedCategories" :key="item" :value="item">
                   <TagsInputItemText class="capitalize" />
@@ -325,7 +346,7 @@ function handleCategorySelect(e: any) {
                     <CommandEmpty />
                     <CommandGroup>
                       <CommandItem
-                        v-for="framework in filteredFrameworks"
+                        v-for="framework in filteredCategories"
                         :key="framework"
                         :value="framework"
                         @select.prevent="handleCategorySelect"
@@ -340,7 +361,7 @@ function handleCategorySelect(e: any) {
 
             <TooltipProvider :delayDuration="250">
               <Tooltip>
-                <TooltipTrigger>
+                <TooltipTrigger as-child>
                   <Button
                     :variant="selectedOrder === 'desc' ? 'secondary' : 'outline'"
                     size="icon"
@@ -357,7 +378,7 @@ function handleCategorySelect(e: any) {
 
             <TooltipProvider :delayDuration="250">
               <Tooltip>
-                <TooltipTrigger>
+                <TooltipTrigger as-child>
                   <Button
                     :variant="selectedOrder === 'asc' ? 'secondary' : 'outline'"
                     size="icon"
@@ -377,7 +398,7 @@ function handleCategorySelect(e: any) {
 
       <hr />
 
-      <div v-if="searchResults.length > 0" class="grow overflow-y-auto">
+      <div v-if="searchResults.length > 0" class="grow overflow-y-auto" ref="searchResultsRef">
         <SearchList
           :results="searchResults"
           :current-entity="selectedEntity"

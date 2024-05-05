@@ -1,6 +1,11 @@
 <script setup lang="ts">
+import { useTitle } from '@vueuse/core'
+import { titleTemplate } from './meta'
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
+
+useTitle('Outils', titleTemplate)
 </script>
 
 <template>

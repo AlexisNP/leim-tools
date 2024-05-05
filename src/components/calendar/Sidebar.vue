@@ -19,7 +19,7 @@ const { revealAdvancedSearch } = useCalendar()
       <li>
         <TooltipProvider :delayDuration="100">
           <Tooltip>
-            <TooltipTrigger>
+            <TooltipTrigger as-child>
               <Button variant="ghost" size="icon" class="rounded-full" as-child>
                 <RouterLink to="/">
                   <PhHouse size="24" weight="fill" />
@@ -35,7 +35,7 @@ const { revealAdvancedSearch } = useCalendar()
       <li>
         <TooltipProvider :delayDuration="100">
           <Tooltip>
-            <TooltipTrigger>
+            <TooltipTrigger as-child>
               <Button
                 variant="ghost"
                 size="icon"
