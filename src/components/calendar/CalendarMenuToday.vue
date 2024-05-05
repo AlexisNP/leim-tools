@@ -20,7 +20,7 @@ const isDefaultDate = computed(() => {
 <template>
   <TooltipProvider :delayDuration="250">
     <Tooltip>
-      <TooltipTrigger>
+      <TooltipTrigger as-child>
         <Button @click="jumpToDefaultDate" size="sm" :disabled="isDefaultDate">
           Aujourd'hui
         </Button>

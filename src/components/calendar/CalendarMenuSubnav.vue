@@ -68,7 +68,7 @@ function handleGotoPreviousEventPage(position: 'next' | 'prev' = 'next') {
     <div class="border-slate-700 border-x-[1px] border-t-[1px] rounded-t-sm">
       <TooltipProvider :delayDuration="250">
         <Tooltip>
-          <TooltipTrigger>
+          <TooltipTrigger as-child>
             <Button
               variant="ghost"
               size="icon"
@@ -87,7 +87,7 @@ function handleGotoPreviousEventPage(position: 'next' | 'prev' = 'next') {
     <div class="border-slate-700 border-x-[1px] border-t-[1px] rounded-t-sm">
       <TooltipProvider :delayDuration="250">
         <Tooltip>
-          <TooltipTrigger>
+          <TooltipTrigger as-child>
             <Button
               variant="ghost"
               size="icon"

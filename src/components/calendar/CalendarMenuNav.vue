@@ -147,7 +147,7 @@ function toFutureFar(): void {
   <div class="flex items-center gap-2">
     <TooltipProvider :delayDuration="250">
       <Tooltip>
-        <TooltipTrigger>
+        <TooltipTrigger as-child>
           <Button variant="outline" size="icon" @click="toPastFar()">
             <PhCaretDoubleLeft size="18" />
           </Button>
@@ -160,7 +160,7 @@ function toFutureFar(): void {
 
     <TooltipProvider :delayDuration="250">
       <Tooltip>
-        <TooltipTrigger>
+        <TooltipTrigger as-child>
           <Button variant="outline" size="icon" @click="toPastNear()">
             <PhCaretLeft size="18" />
           </Button>
@@ -173,7 +173,7 @@ function toFutureFar(): void {
 
     <TooltipProvider :delayDuration="250">
       <Tooltip>
-        <TooltipTrigger>
+        <TooltipTrigger as-child>
           <Button variant="outline" size="icon" @click="toFutureNear()">
             <PhCaretRight size="18" />
           </Button>
@@ -186,7 +186,7 @@ function toFutureFar(): void {
 
     <TooltipProvider :delayDuration="250">
       <Tooltip>
-        <TooltipTrigger>
+        <TooltipTrigger as-child>
           <Button variant="outline" size="icon" @click="toFutureFar()">
             <PhCaretDoubleRight size="18" />
           </Button>

@@ -39,7 +39,7 @@ const { getFormattedDateTitle } = useCalendar()
         <li v-if="character.birth">
           <TooltipProvider :delayDuration="100">
             <Tooltip>
-              <TooltipTrigger>
+              <TooltipTrigger as-child>
                 <Button
                   @click="$emit('query:date-jump', character.birth!)"
                   variant="ghost"
@@ -49,7 +49,7 @@ const { getFormattedDateTitle } = useCalendar()
                   {{ getFormattedDateTitle(character.birth, true) }}
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>
+              <TooltipContent :side="'bottom'" :align="'end'" :align-offset="20">
                 <p>Date de naissance</p>
               </TooltipContent>
             </Tooltip>
@@ -59,7 +59,7 @@ const { getFormattedDateTitle } = useCalendar()
         <li v-if="character.death">
           <TooltipProvider :delayDuration="100">
             <Tooltip>
-              <TooltipTrigger>
+              <TooltipTrigger as-child>
                 <Button
                   @click="$emit('query:date-jump', character.death!)"
                   variant="ghost"
@@ -69,7 +69,7 @@ const { getFormattedDateTitle } = useCalendar()
                   {{ getFormattedDateTitle(character.death, true) }}
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>
+              <TooltipContent :side="'bottom'" :align="'start'" :align-offset="20">
                 <p>Date de décès</p>
               </TooltipContent>
             </Tooltip>

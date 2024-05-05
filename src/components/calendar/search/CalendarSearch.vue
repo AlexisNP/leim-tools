@@ -361,7 +361,7 @@ function handleCategorySelect(e: any) {
 
             <TooltipProvider :delayDuration="250">
               <Tooltip>
-                <TooltipTrigger>
+                <TooltipTrigger as-child>
                   <Button
                     :variant="selectedOrder === 'desc' ? 'secondary' : 'outline'"
                     size="icon"
@@ -378,7 +378,7 @@ function handleCategorySelect(e: any) {
 
             <TooltipProvider :delayDuration="250">
               <Tooltip>
-                <TooltipTrigger>
+                <TooltipTrigger as-child>
                   <Button
                     :variant="selectedOrder === 'asc' ? 'secondary' : 'outline'"
                     size="icon"
