@@ -4,12 +4,13 @@ import { useCalendar } from '@/stores/CalendarStore'
 import { PhList, PhHouse, PhMagnifyingGlass } from '@phosphor-icons/vue'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import Button from '../ui/button/Button.vue'
+import UserCTA from '../global/user/CTA.vue'
 
 const { revealAdvancedSearch } = useCalendar()
 </script>
 
 <template>
-  <nav class="w-16 py-6 border-r-[1px] border-l-slate-500 grid justify-center">
+  <nav class="w-16 py-6 border-r-[1px] border-l-slate-500 grid grid-rows-[1fr_auto] justify-center">
     <menu class="flex flex-col gap-4">
       <li class="mb-12">
         <Button variant="ghost" size="icon" @click="console.log" class="rounded-full">
@@ -52,5 +53,9 @@ const { revealAdvancedSearch } = useCalendar()
         </TooltipProvider>
       </li>
     </menu>
+
+    <div>
+      <UserCTA />
+    </div>
   </nav>
 </template>

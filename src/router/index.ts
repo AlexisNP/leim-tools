@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomePage from '@/views/HomePage.vue'
 import CalendarPage from '@/views/CalendarPage.vue'
+import ProfilePage from '@/views/ProfilePage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -14,6 +15,11 @@ const router = createRouter({
       path: '/calendrier',
       name: 'calendrier',
       component: CalendarPage
+    },
+    {
+      path: '/profil',
+      name: 'profil',
+      component: ProfilePage
     }
   ]
 })

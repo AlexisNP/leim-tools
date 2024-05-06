@@ -1,22 +1,23 @@
 <script lang="ts" setup>
-import { storeToRefs } from 'pinia'
 import { useCalendar } from '@/stores/CalendarStore'
-import { useTitle } from '@vueuse/core'
+import { isDigit, isInt, isSignedInt } from '@/utils/Regex'
 import { titleTemplate } from '@/utils/meta'
+import { useTitle } from '@vueuse/core'
+import { storeToRefs } from 'pinia'
+import { onBeforeMount } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
 import Calendar from '@/components/calendar/Calendar.vue'
 import Sidebar from '@/components/calendar/Sidebar.vue'
 import CalendarSearch from '@/components/calendar/search/CalendarSearch.vue'
-import { useRoute, useRouter } from 'vue-router'
-import { isDigit, isInt, isSignedInt } from '@/utils/Regex'
-import { onBeforeMount } from 'vue'
 
 useTitle('Calendrier', titleTemplate)
 
-const router = useRouter()
-const route = useRoute()
 const { defaultDate, selectedDate, jumpToDate } = useCalendar()
 const { isAdvancedSearchOpen } = storeToRefs(useCalendar())
+
+const router = useRouter()
+const route = useRoute()
 
 // Check whether all the params are good to go before rendering anything
 onBeforeMount(() => {

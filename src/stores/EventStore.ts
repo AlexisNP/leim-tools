@@ -4,13 +4,13 @@ import type { CalendarEvent } from '@/models/Events'
 import { defineStore } from 'pinia'
 import { ref, watch, type Ref } from 'vue'
 import { useCalendar } from './CalendarStore'
+import { useAuth } from './AuthStore'
 // import { useCharacters } from './CharacterStore'
 
 export const useCalendarEvents = defineStore('calendar-events', () => {
+  const authStore = useAuth()
   const { currentDate, currentConfig } = useCalendar()
   // const { charactersWithBirthData, charactersWithDeathData } = useCharacters()
-
-  const baseEvents: CalendarEvent[] = initialEvents
 
   // const characterBirthEvents = charactersWithBirthData.map((character) => {
   //   return {
@@ -28,9 +28,13 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
   //   } as CalendarEvent
   // })
 
-  const allEvents = [...baseEvents].sort((a, b) => {
-    return compareDates(a.startDate, b.startDate, 'desc')
-  })
+  const allEvents: CalendarEvent[] = [...initialEvents]
+    .filter((event) => {
+      return !event.hidden || (event.hidden && ['sa', 'gm'].includes(authStore.userRoles))
+    })
+    .sort((a, b) => {
+      return compareDates(a.startDate, b.startDate, 'desc')
+    })
 
   // Gets all current event in its default state
   const currentEvents: Ref<CalendarEvent[]> = ref(computeCurrentEvents())
@@ -48,7 +52,7 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
    * @param event The event to analyze
    * @returns Whether the event should appear in the current view
    */
-  function shouldEventBeDisplayed(event: CalendarEvent): boolean {
+  function shouldEventBeDrawn(event: CalendarEvent): boolean {
     const eventStartDateToDays = convertDateToDays(event.startDate)
     const eventEndDateToDays: number = event.endDate ? convertDateToDays(event.endDate) : 0
 
@@ -105,7 +109,7 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
    * @returns A list of events that can appear in the current view
    */
   function computeCurrentEvents(): CalendarEvent[] {
-    return allEvents.filter((event) => shouldEventBeDisplayed(event))
+    return allEvents.filter((event) => shouldEventBeDrawn(event))
   }
 
   /**
@@ -167,27 +171,6 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
         })
       }
     }
-
-    // // Special case : If we query the first one but it already is
-    // if (position === 'prev' && t[0].distance === 0) {
-    //   const targetDate =
-    //     t[0].targetKey === 'startDate' ? t[0].eventData.startDate : t[0].eventData.endDate!
-    //   return {
-    //     event: t[0].eventData,
-    //     targetDate: targetDate
-    //   }
-    // }
-    // // Special case : If we query the last one but it already is
-    // if (position === 'next' && t[t.length - 1].distance === 0) {
-    //   const targetDate =
-    //     t[t.length - 1].targetKey === 'startDate'
-    //       ? t[t.length - 1].eventData.startDate
-    //       : t[t.length - 1].eventData.endDate!
-    //   return {
-    //     event: t[t.length - 1].eventData,
-    //     targetDate: targetDate
-    //   }
-    // }
 
     // Based on the direction, either ignore negative distance (past) or positive distance (future)
     t = t.filter((i) => {
