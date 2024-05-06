@@ -7,7 +7,6 @@ import {
   type LeimPeriod,
   type LeimPeriodShort
 } from '@/models/Date'
-import { isDigit, isInt, isSignedInt } from '@/utils/Regex'
 import { useStorage, useUrlSearchParams } from '@vueuse/core'
 import { defineStore } from 'pinia'
 import { computed, ref, type ComputedRef, type Ref } from 'vue'
@@ -76,11 +75,6 @@ export const useCalendar = defineStore('calendar', () => {
     'century'
   ])
 
-  // Get date from URL params
-  const params = useUrlSearchParams('history', {
-    write: true
-  })
-
   // Default date settings (current day in the world)
   const defaultDay: number = 23
   const defaultMonth: number = 8
@@ -90,6 +84,16 @@ export const useCalendar = defineStore('calendar', () => {
       day: defaultDay,
       month: defaultMonth,
       year: defaultYear
+    }
+  })
+
+  // Get date from URL params
+  const params = useUrlSearchParams('history', {
+    write: false,
+    initialValue: {
+      day: defaultDate.value.day.toString(),
+      month: defaultDate.value.month.toString(),
+      year: defaultDate.value.year.toString()
     }
   })
 
@@ -179,19 +183,6 @@ export const useCalendar = defineStore('calendar', () => {
         return false
     }
   })
-
-  function validateUrlParams(): void {
-    // Assign default values if no params exist in URL
-    if (!params.day || typeof params.day === 'object' || !isInt(params.day)) {
-      params.day = defaultDate.value.day.toString()
-    }
-    if (!params.month || typeof params.month === 'object' || !isDigit(params.month)) {
-      params.month = defaultDate.value.month.toString()
-    }
-    if (!params.year || typeof params.year === 'object' || !isSignedInt(params.year)) {
-      params.year = defaultDate.value.year.toString()
-    }
-  }
 
   /**
    * Moves the current date forward one month
@@ -404,7 +395,6 @@ export const useCalendar = defineStore('calendar', () => {
     selectedDate,
     selectDate,
     params,
-    validateUrlParams,
     getPeriodOfYear,
     incrementMonth,
     decrementMonth,
