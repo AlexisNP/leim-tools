@@ -50,7 +50,7 @@ function handleGotoRelativeEvent(position: 'next' | 'prev' = 'next') {
 
 <template>
   <UiPopoverContent
-    class="event-details w-96"
+    class="event-details w-96 bg-slate-900"
     :align="'center'"
     :align-offset="50"
     :side="'left'"
