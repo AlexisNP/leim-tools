@@ -26,7 +26,7 @@ const moveCalendarRight = useThrottleFn(() => {
 
 <template>
   <div class="container mt-[10vh] mb-auto" @wheel="handleWheel">
-    <div ref="test" class="grid grid-cols-5 gap-x-8 gap-y-16">
+    <div class="grid grid-cols-5 gap-x-8 gap-y-16">
       <MonthTile
         v-for="month in staticConfig.monthsPerYear"
         :key="month"
