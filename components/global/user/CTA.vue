@@ -8,7 +8,13 @@ const router = useRouter()
 const { auth } = useSupabaseClient()
 const user = useSupabaseUser()
 const userMeta = computed(() => user.value?.user_metadata)
-const hasSession = computed(() => Boolean(user.value))
+
+const menuOpened = ref<boolean>(false)
+
+function closeMenu() {
+  menuOpened.value = false
+}
+watch(user, closeMenu)
 
 async function handleGoogleLogin() {
   try {
@@ -43,9 +49,9 @@ function gotoProfilePage() {
 
 <template>
   <ClientOnly>
-    <UiPopover>
-      <UiPopoverTrigger :as-child="hasSession">
-        <UiAvatar v-if="hasSession" class="cursor-pointer">
+    <UiPopover v-model:open="menuOpened">
+      <UiPopoverTrigger>
+        <UiAvatar v-if="user" class="cursor-pointer">
           <UiAvatarImage
             :src="userMeta?.avatar_url"
             :alt="userMeta?.full_name"
@@ -58,19 +64,17 @@ function gotoProfilePage() {
         </UiButton>
       </UiPopoverTrigger>
       <UiPopoverContent class="w-fit p-0" :align="'start'" :side="'top'" :collision-padding="20">
-        <div id="user-popover">
-          <UiCommand>
-            <UiCommandList v-if="user">
-              <UiCommandGroup :heading="`Connecté en tant que ${user?.email}`">
-                <UiCommandItem value="profile" @select="gotoProfilePage"> Profil </UiCommandItem>
-                <UiCommandItem value="logout" @select="handleLogout"> Déconnexion </UiCommandItem>
-              </UiCommandGroup>
-            </UiCommandList>
-            <UiCommandList v-else>
-              <UiCommandItem value="logout" @select="handleGoogleLogin"> Connexion </UiCommandItem>
-            </UiCommandList>
-          </UiCommand>
-        </div>
+        <UiCommand>
+          <UiCommandList v-if="user">
+            <UiCommandGroup :heading="`Connecté en tant que ${user?.email}`">
+              <UiCommandItem value="profile" @select="gotoProfilePage"> Profil </UiCommandItem>
+              <UiCommandItem value="logout" @select="handleLogout"> Déconnexion </UiCommandItem>
+            </UiCommandGroup>
+          </UiCommandList>
+          <UiCommandList v-else>
+            <UiCommandItem value="logout" @select="handleGoogleLogin"> Connexion </UiCommandItem>
+          </UiCommandList>
+        </UiCommand>
       </UiPopoverContent>
     </UiPopover>
   </ClientOnly>

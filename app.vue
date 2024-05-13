@@ -31,6 +31,8 @@ const useIdFunction = () => useId()
 
 <template>
   <div class="h-screen">
+    <NuxtLoadingIndicator />
+
     <NuxtLayout>
       <ConfigProvider :use-id="useIdFunction">
         <NuxtPage/>
