@@ -1,44 +1,44 @@
-import { initialEvents } from '@/data/Events'
 import { compareDates, convertDateToDays, daysPerMonth, type LeimDate } from '@/models/Date'
 import type { CalendarEvent } from '@/models/Events'
 import { defineStore } from 'pinia'
 import { ref, watch, type Ref } from 'vue'
 import { useCalendar } from './CalendarStore'
-// import { useCharacters } from './CharacterStore'
 
 export const useCalendarEvents = defineStore('calendar-events', () => {
   const { currentDate, currentConfig } = useCalendar()
-  // const { charactersWithBirthData, charactersWithDeathData } = useCharacters()
 
-  const baseEvents: CalendarEvent[] = initialEvents
+  const baseEvents = ref<CalendarEvent[]>([])
+  const eventsAreLoading = ref<boolean>(false)
+  const eventsLoaded = ref<boolean>(false)
 
-  // const characterBirthEvents = charactersWithBirthData.map((character) => {
-  //   return {
-  //     title: `Naissance de ${character.name}`,
-  //     startDate: character.birth,
-  //     category: 'naissance'
-  //   } as CalendarEvent
-  // })
-
-  // const characterDeathEvents = charactersWithDeathData.map((character) => {
-  //   return {
-  //     title: `Décès de ${character.name}`,
-  //     startDate: character.death,
-  //     category: 'mort'
-  //   } as CalendarEvent
-  // })
-
-  const allEvents = [...baseEvents].sort((a, b) => {
+  const allEvents = computed(() => baseEvents.value.sort((a, b) => {
     return compareDates(a.startDate, b.startDate, 'desc')
-  })
+  }))
 
   // Gets all current event in its default state
   const currentEvents: Ref<CalendarEvent[]> = ref(computeCurrentEvents())
 
   // Watch for currentDate changes
-  watch(currentDate, () => {
+  watch([currentDate, allEvents], () => {
     currentEvents.value = computeCurrentEvents()
   })
+
+  async function fetchEvents() {
+    try {
+      eventsAreLoading.value = true
+      const fetched = await useFetch<CalendarEvent[]>('/api/events')
+
+      if (fetched.data.value) {
+        eventsLoaded.value = true
+        baseEvents.value = fetched.data.value
+      }
+    } catch (err) {
+      console.log(err)
+    } finally {
+      eventsAreLoading.value = false
+    }
+  }
+  fetchEvents()
 
   /**
    * Determines if the event can appear in the front end
@@ -105,7 +105,7 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
    * @returns A list of events that can appear in the current view
    */
   function computeCurrentEvents(): CalendarEvent[] {
-    return allEvents.filter((event) => shouldEventBeDisplayed(event))
+    return allEvents.value.filter((event) => shouldEventBeDisplayed(event))
   }
 
   /**
@@ -140,8 +140,8 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
     let t: { eventData: CalendarEvent; distance: number; targetKey: 'startDate' | 'endDate' }[] = []
 
     // Loop over all event once to convert the structure to a usable one
-    for (let i = 0; i < allEvents.length; i++) {
-      const e: CalendarEvent = allEvents[i]
+    for (let i = 0; i < allEvents.value.length; i++) {
+      const e: CalendarEvent = allEvents.value[i]
 
       // Estimate distance from pivot
       const startDateDays: number = convertDateToDays(e.startDate)
@@ -211,5 +211,5 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
     }
   }
 
-  return { allEvents, currentEvents, getRelativeEventFromDate, getRelativeEventFromEvent }
+  return { allEvents, eventsAreLoading, eventsLoaded, currentEvents, fetchEvents, getRelativeEventFromDate, getRelativeEventFromEvent }
 })

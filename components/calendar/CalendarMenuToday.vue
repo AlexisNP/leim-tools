@@ -8,11 +8,9 @@ import { areDatesIdentical } from '@/models/Date'
 const { defaultDate, selectedDate } = storeToRefs(useCalendar())
 const { jumpToDefaultDate, getFormattedDateTitle } = useCalendar()
 
-const defaultDateFormatted = getFormattedDateTitle(defaultDate.value, true)
+const defaultDateFormatted: string = getFormattedDateTitle(defaultDate.value, true)
 
-const isDefaultDate = computed(() => {
-  return areDatesIdentical(selectedDate.value, defaultDate.value)
-})
+const isDefaultDate: ComputedRef<boolean> = computed<boolean>(() => areDatesIdentical(selectedDate.value, defaultDate.value))
 </script>
 
 <template>

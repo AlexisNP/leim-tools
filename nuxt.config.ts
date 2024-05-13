@@ -3,11 +3,12 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   modules: [
-    "@nuxtjs/tailwindcss",
-    "shadcn-nuxt",
-    "@nuxtjs/color-mode",
+    '@nuxtjs/tailwindcss',
+    'shadcn-nuxt',
+    '@nuxtjs/color-mode',
     '@pinia/nuxt',
-    "@nuxt/eslint"
+    '@nuxt/eslint',
+    '@vueuse/nuxt'
   ],
   css: ['~/assets/main.css'],
 

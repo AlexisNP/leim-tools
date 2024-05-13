@@ -1,3 +1,9 @@
+<script lang="ts" setup>
+useHead({
+  title: 'Dashboard'
+})
+</script>
+
 <template>
   <main class="h-full grid place-items-center">
     <UiCard class="w-1/3 min-w-72" link="/calendar">

@@ -7,7 +7,7 @@ import {
   type LeimPeriod,
   type LeimPeriodShort
 } from '@/models/Date'
-import { useStorage, useUrlSearchParams } from '@vueuse/core'
+import { useSessionStorage, useUrlSearchParams } from '@vueuse/core'
 import { defineStore } from 'pinia'
 import { computed, ref, type ComputedRef, type Ref } from 'vue'
 
@@ -161,7 +161,7 @@ export const useCalendar = defineStore('calendar', () => {
     }
   })
 
-  const selectedDate = useStorage<LeimDate>('selected-date', currentLeimDate.value)
+  const selectedDate = useSessionStorage<LeimDate>('selected-date', currentLeimDate.value, { deep: true })
 
   /**
    * Check whether the current viewType is active

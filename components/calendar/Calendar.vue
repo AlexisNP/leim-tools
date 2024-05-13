@@ -10,6 +10,7 @@ import DecadeLayout from './state/decennially/Layout.vue'
 import YearLayout from './state/yearly/Layout.vue'
 
 const { currentConfig } = useCalendar()
+const { eventsLoaded, eventsAreLoading } = storeToRefs(useCalendarEvents())
 
 const currentViewComponent: ComputedRef<Component> = computed<Component>(() => {
   switch (currentConfig.viewType) {
@@ -32,8 +33,14 @@ const currentViewComponent: ComputedRef<Component> = computed<Component>(() => {
 <template>
   <div class="h-full grid grid-rows-[auto,1fr]">
     <CalendarMenu />
-    <KeepAlive>
-      <component :is="currentViewComponent" />
-    </KeepAlive>
+
+    <template v-if="eventsAreLoading">
+      <div>
+        Loading
+      </div>
+    </template>
+    <template v-else-if="eventsLoaded">
+      <component :is="currentViewComponent" v-if="eventsLoaded" />
+    </template>
   </div>
 </template>

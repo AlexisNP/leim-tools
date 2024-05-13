@@ -1,15 +1,27 @@
-import { charactersList } from '@/data/Characters'
 import type { Character } from '@/models/Characters'
 import { defineStore } from 'pinia'
 
 export const useCharacters = defineStore('characters', () => {
-  const characters: Character[] = charactersList
+  const characters = ref<Character[]>([])
+  const charactersAreLoading = ref<boolean>(false)
+  const charactersLoaded = ref<boolean>(false)
 
-  // Get all birth events
-  const charactersWithBirthData: Character[] = characters.filter((character) => character.birth)
+  async function fetchCharacters() {
+    try {
+      charactersAreLoading.value = true
+      const fetched = await useFetch<Character[]>('/api/characters')
 
-  // Get all death events
-  const charactersWithDeathData: Character[] = characters.filter((character) => character.death)
+      if (fetched.data.value) {
+        charactersLoaded.value = true
+        characters.value = fetched.data.value
+      }
+    } catch (err) {
+      console.log(err)
+    } finally {
+      charactersAreLoading.value = false
+    }
+  }
+  fetchCharacters()
 
-  return { characters, charactersWithBirthData, charactersWithDeathData }
+  return { characters }
 })

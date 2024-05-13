@@ -30,10 +30,10 @@ import {
 
 import SearchList from './lists/SearchList.vue'
 
-const { characters } = useCharacters()
-const { allEvents } = useCalendarEvents()
+const { characters } = storeToRefs(useCharacters())
+const { allEvents } = storeToRefs(useCalendarEvents())
 
-const modalOpen = defineModel({ default: false })
+const modalOpen = defineModel<boolean>({ default: false })
 
 const searchQuery = ref<string>('')
 // const searchEnough = computed<boolean>(() => searchQuery.value.length >= 2)
@@ -73,11 +73,11 @@ const searchResults = computed<(Character | CalendarEvent)[]>(() => {
   // Assign data to loop over and filter
   // They are assigned this way for readability
   if (selectedEntity.value === 'events') {
-    dataToFilter = allEvents
+    dataToFilter = allEvents.value
   } else if (selectedEntity.value === 'characters') {
-    dataToFilter = characters
+    dataToFilter = characters.value
   } else {
-    dataToFilter = [...allEvents, ...characters]
+    dataToFilter = [...allEvents.value, ...characters.value]
   }
 
   /**
