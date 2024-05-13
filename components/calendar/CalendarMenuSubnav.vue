@@ -60,8 +60,16 @@ function handleGotoPreviousEventPage(position: 'next' | 'prev' = 'next') {
 
 <template>
   <div class="flex gap-2">
-    <div class="w-40 px-4 py-2 border-slate-700 border-x-[1px] border-t-[1px] rounded-t-sm">
-      <span class="text-sm">{{ currentDate.currentDateTitle }}</span>
+    <div class="grid items-end w-40 px-4 py-2 border-slate-700 border-x-[1px] border-t-[1px] rounded-t-sm text-sm">
+      <ClientOnly>
+        <span>{{ currentDate.currentDateTitle }}</span>
+
+        <template #fallback>
+          <span class="inline-block">
+            <UiSkeleton class="h-[19px] w-full rounded-sm" />
+          </span>
+        </template>
+      </ClientOnly>
     </div>
     <div class="border-slate-700 border-x-[1px] border-t-[1px] rounded-t-sm">
       <UiTooltipProvider :delay-duration="250">

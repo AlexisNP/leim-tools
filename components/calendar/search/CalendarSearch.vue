@@ -201,7 +201,7 @@ whenever(keys.control_period, () => {
 const searchResultsRef = ref<HTMLElement | null>(null)
 const { y: searchResultsY } = useScroll(searchResultsRef)
 
-watch(currentPage, () => {
+watch([currentPage, selectedEntity], () => {
   searchResultsY.value = 0
 })
 

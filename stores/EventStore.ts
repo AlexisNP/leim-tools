@@ -38,7 +38,6 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
       eventsAreLoading.value = false
     }
   }
-  fetchEvents()
 
   /**
    * Determines if the event can appear in the front end

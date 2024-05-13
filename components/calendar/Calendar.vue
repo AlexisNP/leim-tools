@@ -10,7 +10,10 @@ import DecadeLayout from './state/decennially/Layout.vue'
 import YearLayout from './state/yearly/Layout.vue'
 
 const { currentConfig } = useCalendar()
-const { eventsLoaded, eventsAreLoading } = storeToRefs(useCalendarEvents())
+const { selectedDate, jumpToDate } = useCalendar()
+
+const { fetchEvents } = useCalendarEvents()
+fetchEvents()
 
 const currentViewComponent: ComputedRef<Component> = computed<Component>(() => {
   switch (currentConfig.viewType) {
@@ -28,19 +31,18 @@ const currentViewComponent: ComputedRef<Component> = computed<Component>(() => {
       return CenturyLayout
   }
 })
+
+onMounted(() => {
+  jumpToDate(selectedDate)
+})
 </script>
 
 <template>
   <div class="h-full grid grid-rows-[auto,1fr]">
     <CalendarMenu />
 
-    <template v-if="eventsAreLoading">
-      <div>
-        Loading
-      </div>
-    </template>
-    <template v-else-if="eventsLoaded">
-      <component :is="currentViewComponent" v-if="eventsLoaded" />
-    </template>
+    <KeepAlive>
+      <component :is="currentViewComponent" />
+    </KeepAlive>
   </div>
 </template>

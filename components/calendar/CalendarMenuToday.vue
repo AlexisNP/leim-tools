@@ -5,21 +5,30 @@ import { computed } from 'vue'
 
 import { areDatesIdentical } from '@/models/Date'
 
-const { defaultDate, selectedDate } = storeToRefs(useCalendar())
+const { defaultDate } = useCalendar()
+const { selectedDate } = storeToRefs(useCalendar())
 const { jumpToDefaultDate, getFormattedDateTitle } = useCalendar()
 
-const defaultDateFormatted: string = getFormattedDateTitle(defaultDate.value, true)
+const defaultDateFormatted: string = getFormattedDateTitle(defaultDate, true)
 
-const isDefaultDate: ComputedRef<boolean> = computed<boolean>(() => areDatesIdentical(selectedDate.value, defaultDate.value))
+const isDefaultDate: ComputedRef<boolean> = computed<boolean>(() => areDatesIdentical(selectedDate.value, defaultDate))
 </script>
 
 <template>
   <UiTooltipProvider :delay-duration="250">
     <UiTooltip>
       <UiTooltipTrigger as-child>
-        <UiButton size="sm" :disabled="isDefaultDate" @click="jumpToDefaultDate">
-          Aujourd'hui
-        </UiButton>
+        <ClientOnly>
+          <UiButton size="sm" :disabled="isDefaultDate" @click="jumpToDefaultDate">
+            Aujourd'hui
+          </UiButton>
+
+          <template #fallback>
+            <UiButton size="sm">
+              Aujourd'hui
+            </UiButton>
+          </template>
+        </ClientOnly>
       </UiTooltipTrigger>
       <UiTooltipContent>
         <p>{{ defaultDateFormatted }}</p>

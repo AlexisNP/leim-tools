@@ -73,15 +73,17 @@ const eventsNotDisplayed = computed(
       class="relative z-10 group block w-full text-center cursor-pointer"
       @click="selectDate(date)"
     >
-      <span
-        class="inline-flex w-8 h-8 aspect-square items-center justify-center rounded-full border-2 border-transparent font-bold transition-colors group-hover:border-slate-800"
-        :class="{
-          'bg-slate-800': isDefaultDate && !isSelectedDate,
-          'text-white bg-blue-500': isSelectedDate
-        }"
-      >
-        {{ date.day }}
-      </span>
+      <ClientOnly>
+        <span
+          class="inline-flex w-8 h-8 aspect-square items-center justify-center rounded-full border-2 border-transparent font-bold transition-colors group-hover:border-slate-800"
+          :class="{
+            'bg-slate-800': isDefaultDate && !isSelectedDate,
+            'text-white bg-blue-500': isSelectedDate
+          }"
+        >
+          {{ date.day }}
+        </span>
+      </ClientOnly>
     </button>
 
     <ul
