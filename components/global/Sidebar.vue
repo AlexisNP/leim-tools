@@ -1,9 +1,8 @@
 <script lang="ts" setup>
-import { useCalendar } from '@/stores/CalendarStore'
+import { PhHouse, PhList } from '@phosphor-icons/vue'
+import type { SidebarProps } from './SidebarProps';
 
-import { PhList, PhHouse, PhMagnifyingGlass } from '@phosphor-icons/vue'
-
-const { revealAdvancedSearch } = useCalendar()
+defineProps<SidebarProps>()
 </script>
 
 <template>
@@ -14,6 +13,7 @@ const { revealAdvancedSearch } = useCalendar()
           <PhList size="27" />
         </UiButton>
       </li>
+
       <li>
         <UiTooltipProvider :delay-duration="100">
           <UiTooltip>
@@ -30,7 +30,28 @@ const { revealAdvancedSearch } = useCalendar()
           </UiTooltip>
         </UiTooltipProvider>
       </li>
-      <li>
+
+      <li v-for="(item, i) in menuItems" :key="i">
+        <UiTooltipProvider :delay-duration="100">
+          <UiTooltip>
+            <UiTooltipTrigger as-child>
+              <UiButton v-if="item.to" variant="ghost" size="icon" class="rounded-full" as-child>
+                <RouterLink :to="item.to">
+                  <component :is="item.phIcon" size="24" weight="fill" />
+                </RouterLink>
+              </UiButton>
+              <UiButton v-if="item.clickHandler" variant="ghost" size="icon" class="rounded-full" @click="item.clickHandler">
+                <component :is="item.phIcon" size="24" weight="fill" />
+              </UiButton>
+            </UiTooltipTrigger>
+            <UiTooltipContent :side="'right'">
+              <p>{{ item.tooltip }}</p>
+            </UiTooltipContent>
+          </UiTooltip>
+        </UiTooltipProvider>
+      </li>
+
+      <!-- <li>
         <UiTooltipProvider :delay-duration="100">
           <UiTooltip>
             <UiTooltipTrigger as-child>
@@ -48,7 +69,7 @@ const { revealAdvancedSearch } = useCalendar()
             </UiTooltipContent>
           </UiTooltip>
         </UiTooltipProvider>
-      </li>
+      </li> -->
     </menu>
 
     <UserCTA />
