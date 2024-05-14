@@ -3,7 +3,7 @@
 --
 
 -- Custom types
-create type public.app_permission as enum ('events.see.hidden');
+create type public.app_permission as enum ('events.see.hidden', 'users.ban');
 create type public.app_role as enum ('sa', 'gm');
 
 -- USERS
