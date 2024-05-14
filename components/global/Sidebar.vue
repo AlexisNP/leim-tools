@@ -14,7 +14,7 @@ defineProps<SidebarProps>()
         </UiButton>
       </li>
 
-      <li>
+      <li v-if="!isHome">
         <UiTooltipProvider :delay-duration="100">
           <UiTooltip>
             <UiTooltipTrigger as-child>

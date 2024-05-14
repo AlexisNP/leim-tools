@@ -43,7 +43,7 @@ async function handleLogout() {
 }
 
 function gotoProfilePage() {
-  router.push({ path: '/profil' })
+  router.push({ path: '/profile' })
 }
 </script>
 

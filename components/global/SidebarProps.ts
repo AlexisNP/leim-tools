@@ -6,5 +6,6 @@ export interface MenuItem {
 }
 
 export interface SidebarProps {
-  menuItems: MenuItem[]
+  menuItems: MenuItem[],
+  isHome?: boolean
 }
