@@ -3,12 +3,13 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   modules: [
-    '@nuxtjs/tailwindcss',
-    'shadcn-nuxt',
-    '@nuxtjs/color-mode',
+    '@nuxtjs/supabase',
     '@pinia/nuxt',
+    '@vueuse/nuxt',
+    '@nuxtjs/tailwindcss',
+    '@nuxtjs/color-mode',
     '@nuxt/eslint',
-    '@vueuse/nuxt'
+    'shadcn-nuxt'
   ],
   css: ['~/assets/main.css'],
 
@@ -26,6 +27,9 @@ export default defineNuxtConfig({
     classSuffix: '',
     preference: 'dark',
     fallback: 'dark',
+  },
+  supabase: {
+    redirect: false
   },
   eslint: {}
 })
