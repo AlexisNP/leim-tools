@@ -4,7 +4,7 @@ import type { MenuItem } from '~/components/global/SidebarProps';
 const user = useSupabaseUser()
 
 useHead({
-  title: 'Profil'
+  title: 'Calendrier'
 })
 
 definePageMeta({
@@ -17,6 +17,7 @@ watch(user, (n, _o) => {
     navigateTo('/')
   }
 })
+
 const sidebarMenu: MenuItem[] = []
 </script>
 
@@ -24,6 +25,6 @@ const sidebarMenu: MenuItem[] = []
   <div class="h-full grid grid-cols-[auto_1fr]">
     <Sidebar :menu-items="sidebarMenu" />
 
-    <ProfileDashboard />
+    <CalendarDashboard />
   </div>
 </template>

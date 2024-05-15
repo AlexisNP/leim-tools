@@ -13,7 +13,7 @@ const sidebarMenu: MenuItem[] = []
     <Sidebar :menu-items="sidebarMenu" is-home />
 
     <div class="h-full grid place-items-center">
-      <UiCard class="w-1/3 min-w-72" link="/calendar">
+      <UiCard class="w-1/3 min-w-72 hover:bg-sky-950 focus-within:outline-sky-900" link="/calendar">
         <UiCardHeader>
           <UiCardTitle>Calendrier</UiCardTitle>
           <UiCardDescription>
