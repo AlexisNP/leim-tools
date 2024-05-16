@@ -5,13 +5,13 @@ import {
   type Character,
   type CharacterCategory
 } from '@/models/Characters'
-import type { LeimDateOrder } from '@/models/Date'
+import type { RPGDateOrder } from '@/models/Date'
 import {
   calendarEventCategories,
   isCalendarEvent,
   type CalendarEvent,
   type CalendarEventCategory
-} from '@/models/Events'
+} from '~/models/CalendarEvent'
 import { useCharacters } from '@/stores/CharacterStore'
 import { useCalendarEvents } from '@/stores/EventStore'
 import { capitalize } from '@/utils/Strings'
@@ -41,7 +41,7 @@ const searchQuery = ref<string>('')
 const selectedEntity = useStorage('se', 'events' as SearchMode)
 
 // Order
-const selectedOrder = ref<LeimDateOrder>('asc')
+const selectedOrder = ref<RPGDateOrder>('asc')
 function setOrderAsc() {
   selectedOrder.value = 'asc'
   resetPage()

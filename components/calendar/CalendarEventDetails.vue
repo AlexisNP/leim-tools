@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { getRelativeString, type LeimDate } from '@/models/Date'
+import { getRelativeString, type RPGDate } from '@/models/Date'
 import type { CalendarEvent } from '@/models/Events'
 import { useCalendar } from '@/stores/CalendarStore'
 import { useCalendarEvents } from '@/stores/EventStore'
@@ -32,7 +32,7 @@ const dateDuration: string | null = props.event.endDate
   ? getRelativeString(props.event.startDate, props.event.endDate, 'compact')
   : null
 
-function handleJumpToDate(date: LeimDate) {
+function handleJumpToDate(date: RPGDate) {
   jumpToDate(date)
   emit('query:close-popover')
 }

@@ -1,13 +1,13 @@
-export interface LeimDate {
+export interface RPGDate {
   day: number
   month: number
   year: number
-  period?: LeimPeriod
+  period?: RPGPeriod
 }
 
-export type LeimPeriod = 'ante' | 'nante'
-export type LeimPeriodShort = 'A.R' | 'N.R'
-export type LeimDateOrder = 'asc' | 'desc'
+export type RPGPeriod = 'ante' | 'nante'
+export type RPGPeriodShort = 'A.R' | 'N.R'
+export type RPGDateOrder = 'asc' | 'desc'
 
 export const monthsPerYear: number = 10
 export const daysPerYear: number = 320
@@ -21,7 +21,7 @@ export const daysPerWeek: number = 6
  * @param date2 Second date
  * @returns True if the dates are identical
  */
-export function areDatesIdentical(date1: LeimDate, date2: LeimDate): boolean {
+export function areDatesIdentical(date1: RPGDate, date2: RPGDate): boolean {
   return convertDateToDays({ ...date1 }) === convertDateToDays({ ...date2 })
 }
 
@@ -32,7 +32,7 @@ export function areDatesIdentical(date1: LeimDate, date2: LeimDate): boolean {
  * @param date2 Second date
  * @returns 1 means the first date comes before the second, -1 means the second comes before the first, and 0 if they're identical
  */
-export function compareDates(a: LeimDate, b: LeimDate, order: LeimDateOrder = 'desc'): number {
+export function compareDates(a: RPGDate, b: RPGDate, order: RPGDateOrder = 'desc'): number {
   // Reverses the order if specified
   const orderFactor: number = order === 'desc' ? 1 : -1
 
@@ -58,13 +58,13 @@ export function compareDates(a: LeimDate, b: LeimDate, order: LeimDateOrder = 'd
 }
 
 /**
- * Converts a LeimDate to its equivalent in days
+ * Converts a RPGDate to its equivalent in days
  *
  * @todo Handle negative dates
  * @param dateToConvert The date object
  * @returns How many days does it represent
  */
-export function convertDateToDays(dateToConvert: LeimDate): number {
+export function convertDateToDays(dateToConvert: RPGDate): number {
   let numberOfDays: number = dateToConvert.day
 
   numberOfDays = numberOfDays + dateToConvert.month * daysPerMonth
@@ -79,7 +79,7 @@ export function convertDateToDays(dateToConvert: LeimDate): number {
  * @param relativeDate The year to compare it to
  * @returns The number of days separating the two dates (both positive and negative numbers)
  */
-export function getDifferenceInDays(baseDate: LeimDate, relativeDate: LeimDate): number {
+export function getDifferenceInDays(baseDate: RPGDate, relativeDate: RPGDate): number {
   return convertDateToDays(relativeDate) - convertDateToDays(baseDate)
 }
 
@@ -91,8 +91,8 @@ export function getDifferenceInDays(baseDate: LeimDate, relativeDate: LeimDate):
  * @returns A string with info on how the relative date differs to the base date
  */
 export function getRelativeString(
-  baseDate: LeimDate,
-  relativeDate: LeimDate,
+  baseDate: RPGDate,
+  relativeDate: RPGDate,
   formatting: 'compact' | 'complex' = 'complex'
 ): string {
   const differenceInDays: number = getDifferenceInDays(baseDate, relativeDate)
@@ -177,11 +177,11 @@ export function getRelativeString(
   return output
 }
 
-// export function getRelativeDate(baseDate: LeimDate, relativeDate: LeimDate) {
+// export function getRelativeDate(baseDate: RPGDate, relativeDate: RPGDate) {
 //   let newDay: number
 //   let newMonth: number
 //   let newYear: number
-//   let newPeriod: LeimPeriod
+//   let newPeriod: RPGPeriod
 
 //   const differenceInDays = getDifferenceInDays(baseDate, relativeDate)
 

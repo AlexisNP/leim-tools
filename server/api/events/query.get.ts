@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
   const query = await getValidatedQuery(event, querySchema.parse)
 
   const output = client
-    .from('events')
+    .from('calendar_events')
     .select(`
       id,
       title,

@@ -1,25 +1,12 @@
 import {
-  monthsPerYear,
-  daysPerWeek,
-  daysPerMonth,
-  daysPerYear,
-  type LeimDate,
-  type LeimPeriod,
-  type LeimPeriodShort
+  type RPGDate,
 } from '@/models/Date'
 import { useLocalStorage, useUrlSearchParams } from '@vueuse/core'
 import { defineStore, skipHydrate } from 'pinia'
 import { computed, ref, type ComputedRef, type Ref } from 'vue'
+import type { CalendarMonth } from '~/models/CalendarMonth'
 
 type CalendarViewType = 'month' | 'year' | 'decade' | 'century'
-
-type CalendarStaticConfig = {
-  months: string[]
-  monthsPerYear: number
-  daysPerYear: number
-  daysPerMonth: number
-  daysPerWeek: number
-}
 
 type CalendarCurrentConfig = {
   viewType: CalendarViewType
@@ -30,8 +17,6 @@ type CalendarCurrentDate = {
   currentMonth: ComputedRef<number>
   currentMonthName: ComputedRef<string>
   currentYear: ComputedRef<number>
-  currentPeriod: Ref<LeimPeriod>
-  currentPeriodAbbr: Ref<LeimPeriodShort>
   currentDateTitle: ComputedRef<string>
 }
 
@@ -43,27 +28,10 @@ export const useCalendar = defineStore('calendar', () => {
   /**
    * Month list
    */
-  const months: string[] = [
-    'Jalen',
-    'Malsen',
-    'Verlys',
-    'Nalys',
-    'Verdore',
-    'Sidore',
-    'Lyllion',
-    'Rion',
-    'Farene',
-    'Dalvene'
-  ]
-
-  // Assign the static config
-  const staticConfig: CalendarStaticConfig = {
-    months,
-    monthsPerYear,
-    daysPerYear,
-    daysPerMonth,
-    daysPerWeek
-  }
+  const months: Ref<CalendarMonth[]> = ref<CalendarMonth[]>([])
+  const sortedMonths = computed<CalendarMonth[]>(() => months.value.sort((a, b) => a.position - b.position))
+  const monthsPerYear = computed(() => months.value.length)
+  const daysPerYear = computed(() => months.value.reduce((acc, o) => acc + o.days, 0))
 
   const currentConfig: Ref<CalendarCurrentConfig> = ref({
     viewType: 'month'
@@ -79,7 +47,7 @@ export const useCalendar = defineStore('calendar', () => {
   const defaultDay: number = 23
   const defaultMonth: number = 8
   const defaultYear: number = 3209
-  const defaultDate: ComputedRef<LeimDate> = computed(() => {
+  const defaultDate: ComputedRef<RPGDate> = computed(() => {
     return {
       day: defaultDay,
       month: defaultMonth,
@@ -104,18 +72,15 @@ export const useCalendar = defineStore('calendar', () => {
   const currentMonth = computed<number>(() => {
     return Number(params.month)
   })
+  const currentMonthData = computed<CalendarMonth>(() => {
+    return sortedMonths.value[currentMonth.value]
+  })
   // Gets the label from currentMonth index
   const currentMonthName = computed<string>(() => getMonthName(currentMonth.value))
 
   const currentYear = computed<number>(() => {
     return Number(params.year)
   })
-
-  // Get period from currentYear
-  const currentPeriod = computed<LeimPeriod>(() => getPeriodOfYear(currentYear.value).long)
-  const currentPeriodAbbr = computed<LeimPeriodShort>(
-    () => getPeriodOfYear(currentYear.value).short
-  )
 
   const currentDateTitle = computed<string>(() => {
     switch (currentConfig.value.viewType) {
@@ -124,17 +89,16 @@ export const useCalendar = defineStore('calendar', () => {
           day: currentDate.currentDay.value,
           month: currentDate.currentMonth.value,
           year: currentDate.currentYear.value,
-          period: currentDate.currentPeriod.value
         })
 
       case 'year':
-        return `Année ${currentYear.value} ${currentPeriodAbbr.value}`
+        return `Année ${currentYear.value}`
 
       case 'decade':
-        return `Années ${currentYear.value} ${getPeriodOfYear(currentYear.value).short} - ${currentYear.value + 10} ${getPeriodOfYear(currentYear.value + 10).short}`
+        return `Années ${currentYear.value} - ${currentYear.value + 10}`
 
       case 'century':
-        return `Années ${currentYear.value} ${getPeriodOfYear(currentYear.value).short} - ${currentYear.value + 100} ${getPeriodOfYear(currentYear.value + 100).short}`
+        return `Années ${currentYear.value} - ${currentYear.value + 100}`
 
       default:
         return 'Date inconnue'
@@ -147,21 +111,18 @@ export const useCalendar = defineStore('calendar', () => {
     currentMonth,
     currentMonthName,
     currentYear,
-    currentPeriod,
-    currentPeriodAbbr,
     currentDateTitle
   }
 
-  const currentLeimDate = computed<LeimDate>(() => {
+  const currentRPGDate = computed<RPGDate>(() => {
     return {
       day: currentDate.currentDay.value,
       month: currentDate.currentMonth.value,
       year: currentDate.currentYear.value,
-      period: currentDate.currentPeriod.value
     }
   })
 
-  const selectedDate = useLocalStorage<LeimDate>('selected-date', currentLeimDate.value, { deep: true })
+  const selectedDate = useLocalStorage<RPGDate>('selected-date', currentRPGDate.value, { deep: true })
 
   /**
    * Check whether the current viewType is active
@@ -192,7 +153,7 @@ export const useCalendar = defineStore('calendar', () => {
     let newValue = Number(params.month) + 1
 
     // If the new value would exceed the max number of month per year
-    if (newValue >= staticConfig.monthsPerYear) {
+    if (newValue >= monthsPerYear.value) {
       newValue = 0
       // Increment the year
       incrementYear()
@@ -209,7 +170,7 @@ export const useCalendar = defineStore('calendar', () => {
 
     // If the new value would go below 0
     if (newValue < 0) {
-      newValue = staticConfig.monthsPerYear - 1
+      newValue = monthsPerYear.value - 1
       // Decrement the year
       decrementYear()
     }
@@ -227,7 +188,7 @@ export const useCalendar = defineStore('calendar', () => {
     const target: number = monthNumber - 1
 
     if (target < 0) {
-      return monthsPerYear - 1
+      return monthsPerYear.value - 1
     }
 
     return target
@@ -242,7 +203,7 @@ export const useCalendar = defineStore('calendar', () => {
   function getNextMonth(monthNumber: number): number {
     const target: number = monthNumber + 1
 
-    if (target + 1 >= monthsPerYear) {
+    if (target + 1 >= monthsPerYear.value) {
       return 0
     }
 
@@ -254,7 +215,7 @@ export const useCalendar = defineStore('calendar', () => {
    */
   function setMonth(target: number): void {
     // If the target is outside the month bounds
-    if (target < 0 || target >= staticConfig.monthsPerYear) {
+    if (target < 0 || target >= monthsPerYear.value) {
       return
     }
 
@@ -280,23 +241,6 @@ export const useCalendar = defineStore('calendar', () => {
   }
 
   /**
-   * From a given year, returns a set of LeimPeriod identifier
-   *
-   * This is used in range use-cases
-   *
-   * @param year The year to display
-   * @returns An object containing both short and long LeimPeriod
-   */
-  function getPeriodOfYear(year: string | number): { long: LeimPeriod; short: LeimPeriodShort } {
-    const numYear = year as number
-
-    return {
-      long: numYear >= 0 ? 'nante' : 'ante',
-      short: numYear >= 0 ? 'N.R' : 'A.R'
-    }
-  }
-
-  /**
    * Get the formatted month name given its index
    *
    * @param monthNumber Index of the month
@@ -304,7 +248,7 @@ export const useCalendar = defineStore('calendar', () => {
    */
   function getMonthName(monthNumber: number): string {
     const index = Number(monthNumber)
-    return staticConfig.months[index]
+    return sortedMonths.value[index].name
   }
 
   /**
@@ -340,18 +284,18 @@ export const useCalendar = defineStore('calendar', () => {
   }
 
   /**
-   * From a LeimDate, returns the legible date title
+   * From a RPGDate, returns the legible date title
    *
    * @param date Date target
    * @param showNumber Should the date show the day number
    * @returns Formatted date name
    */
-  function getFormattedDateTitle(date: LeimDate, showNumber?: boolean): string {
+  function getFormattedDateTitle(date: RPGDate, showNumber?: boolean): string {
     if (showNumber) {
-      return `${date.day} ${getMonthName(date.month)} ${date.year} ${getPeriodOfYear(date.year).short}`
+      return `${date.day} ${getMonthName(date.month)} ${date.year}`
     }
 
-    return `${getMonthName(date.month)} ${date.year} ${getPeriodOfYear(date.year).short}`
+    return `${getMonthName(date.month)} ${date.year}`
   }
 
   /**
@@ -359,7 +303,7 @@ export const useCalendar = defineStore('calendar', () => {
    *
    * @param date Target date
    */
-  function jumpToDate(date: LeimDate): void {
+  function jumpToDate(date: RPGDate): void {
     params.day = date.day.toString()
     params.month = date.month.toString()
     params.year = date.year.toString()
@@ -376,7 +320,7 @@ export const useCalendar = defineStore('calendar', () => {
   /**
    * Jump the calendar to the default date
    */
-  function selectDate(date: LeimDate): void {
+  function selectDate(date: RPGDate): void {
     selectedDate.value = date
   }
 
@@ -387,16 +331,19 @@ export const useCalendar = defineStore('calendar', () => {
   }
 
   return {
-    staticConfig,
+    months,
+    sortedMonths,
+    daysPerYear,
+    monthsPerYear,
     viewTypeOptions,
     currentConfig,
     currentDate,
-    currentLeimDate,
+    currentRPGDate,
+    currentMonthData,
     defaultDate,
     selectedDate: skipHydrate(selectedDate),
     selectDate,
     params,
-    getPeriodOfYear,
     incrementMonth,
     decrementMonth,
     setMonth,

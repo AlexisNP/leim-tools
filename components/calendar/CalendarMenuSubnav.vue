@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { daysPerMonth, monthsPerYear, type LeimDate } from '@/models/Date'
+import { daysPerMonth, monthsPerYear, type RPGDate } from '@/models/Date'
 import { useCalendar } from '@/stores/CalendarStore'
 import { useCalendarEvents } from '@/stores/EventStore'
 
@@ -9,7 +9,7 @@ const { currentDate, currentConfig, jumpToDate } = useCalendar()
 const { getRelativeEventFromDate } = useCalendarEvents()
 
 function handleGotoPreviousEventPage(position: 'next' | 'prev' = 'next') {
-  let fromDate: LeimDate
+  let fromDate: RPGDate
   const toDay = position === 'next' ? daysPerMonth : 1
   const toMonth = position === 'next' ? monthsPerYear : 0
 

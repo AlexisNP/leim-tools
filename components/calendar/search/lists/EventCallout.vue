@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { getRelativeString, type LeimDate } from '@/models/Date'
+import { getRelativeString, type RPGDate } from '@/models/Date'
 import type { CalendarEvent } from '@/models/Events'
 import { useCalendar } from '@/stores/CalendarStore'
 
@@ -12,7 +12,7 @@ const props = defineProps<{
 }>()
 
 defineEmits<{
-  (e: 'query:date-jump', payload: LeimDate): void
+  (e: 'query:date-jump', payload: RPGDate): void
 }>()
 
 const { defaultDate, getFormattedDateTitle } = useCalendar()

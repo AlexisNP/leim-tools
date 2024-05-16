@@ -1,10 +1,10 @@
-import type { LeimDate } from './Date'
+import type { RPGDate } from './Date'
 
 export interface Character {
   name: string
   description?: string
-  birth?: LeimDate
-  death?: LeimDate
+  birth?: RPGDate
+  death?: RPGDate
   hiddenBirth?: boolean
   hiddenDeath?: boolean
   category?: CharacterCategory

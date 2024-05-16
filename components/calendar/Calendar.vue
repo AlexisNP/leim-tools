@@ -2,8 +2,6 @@
 import { useCalendar } from '@/stores/CalendarStore'
 import { computed, type Component, type ComputedRef } from 'vue'
 
-import CalendarMenu from './CalendarMenu.vue'
-
 import MonthlyLayout from './state/monthly/Layout.vue'
 import CenturyLayout from './state/centennially/Layout.vue'
 import DecadeLayout from './state/decennially/Layout.vue'

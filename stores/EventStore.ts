@@ -1,5 +1,5 @@
-import { compareDates, convertDateToDays, daysPerMonth, type LeimDate } from '@/models/Date'
-import type { CalendarEvent } from '@/models/Events'
+import { compareDates, convertDateToDays, daysPerMonth, type RPGDate } from '@/models/Date'
+import type { CalendarEvent } from '@/models/CalendarEvent'
 import { defineStore } from 'pinia'
 import { ref, watch, type Ref } from 'vue'
 import { useCalendar } from './CalendarStore'
@@ -119,8 +119,8 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
     event: CalendarEvent,
     position: 'next' | 'prev' = 'next',
     initialIsEnd: boolean = false
-  ): { event: CalendarEvent; targetDate: LeimDate } {
-    let dateToParse: LeimDate // Day value of the date that the user interacted with
+  ): { event: CalendarEvent; targetDate: RPGDate } {
+    let dateToParse: RPGDate // Day value of the date that the user interacted with
 
     if (initialIsEnd && event.endDate) {
       dateToParse = event.endDate
@@ -132,9 +132,9 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
   }
 
   function getRelativeEventFromDate(
-    date: LeimDate,
+    date: RPGDate,
     position: 'next' | 'prev' = 'next'
-  ): { event: CalendarEvent; targetDate: LeimDate } {
+  ): { event: CalendarEvent; targetDate: RPGDate } {
     const pivotValue = convertDateToDays(date)
     let t: { eventData: CalendarEvent; distance: number; targetKey: 'startDate' | 'endDate' }[] = []
 
