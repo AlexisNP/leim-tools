@@ -29,6 +29,14 @@ export const useCalendar = defineStore('calendar', () => {
    * Month list
    */
   const months: Ref<CalendarMonth[]> = ref<CalendarMonth[]>([])
+
+  function setMonths(data: CalendarMonth[]) {
+    months.value = data
+  }
+
+  /**
+   * Sorted month data
+   */
   const sortedMonths = computed<CalendarMonth[]>(() => months.value.sort((a, b) => a.position - b.position))
   const monthsPerYear = computed(() => months.value.length)
   const daysPerYear = computed(() => months.value.reduce((acc, o) => acc + o.days, 0))
@@ -332,6 +340,7 @@ export const useCalendar = defineStore('calendar', () => {
 
   return {
     months,
+    setMonths,
     sortedMonths,
     daysPerYear,
     monthsPerYear,
