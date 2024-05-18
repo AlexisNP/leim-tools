@@ -389,9 +389,12 @@ export const useCalendar = defineStore('calendar', () => {
    * @returns How many days does it represent
    */
   function convertDateToDays(dateToConvert: RPGDate): number {
+    // To modify, obviously
+    const daysPerMonth = 32
+
     let numberOfDays: number = dateToConvert.day
 
-    numberOfDays = numberOfDays + dateToConvert.month * 1 // daysPerMonth
+    numberOfDays = numberOfDays + dateToConvert.month * daysPerMonth
     numberOfDays = numberOfDays + dateToConvert.year * daysPerYear.value
 
     return numberOfDays
@@ -461,6 +464,10 @@ export const useCalendar = defineStore('calendar', () => {
     let direction: 'past' | 'present' | 'future' = 'present'
     let directionPrefix: string = ''
 
+    // To modify, obviously
+    const daysPerMonth = 32
+    const monthsPerYear = 10
+
     // Check whether it's a past or future date
     if (differenceInDays > 0) {
       direction = 'future'
@@ -497,10 +504,10 @@ export const useCalendar = defineStore('calendar', () => {
     }
 
     const yearPackets: number = Math.abs(Math.trunc(differenceInDays / daysPerYear.value))
-    const monthPackets: number = Math.abs(Math.trunc(differenceInDays / 1) % 1) // daysPerMonth, monthsPerYear
+    const monthPackets: number = Math.abs(Math.trunc(differenceInDays / daysPerMonth) % monthsPerYear)
 
     const remainingDays: number =
-    Math.abs(differenceInDays) - (yearPackets * daysPerYear.value + monthPackets * 1) // daysPerMonth
+    Math.abs(differenceInDays) - (yearPackets * daysPerYear.value + monthPackets * daysPerMonth)
 
     // Assign year part
     if (yearPackets) {

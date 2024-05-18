@@ -12,7 +12,7 @@ function handleGotoPreviousEventPage(position: 'next' | 'prev' = 'next') {
   let fromDate: RPGDate
 
   // To modify, obviously
-  const daysPerMonth = 30
+  const daysPerMonth = 32
   const monthsPerYear = 10
 
   const toDay = position === 'next' ? daysPerMonth : 1
