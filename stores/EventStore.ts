@@ -1,11 +1,11 @@
-import { compareDates, convertDateToDays, daysPerMonth, type RPGDate } from '@/models/Date'
+import type { RPGDate } from '@/models/Date'
 import type { CalendarEvent } from '@/models/CalendarEvent'
 import { defineStore } from 'pinia'
 import { ref, watch, type Ref } from 'vue'
 import { useCalendar } from './CalendarStore'
 
 export const useCalendarEvents = defineStore('calendar-events', () => {
-  const { currentDate, currentConfig } = useCalendar()
+  const { currentDate, currentConfig, convertDateToDays, compareDates } = useCalendar()
 
   const baseEvents = ref<CalendarEvent[]>([])
 
@@ -34,8 +34,8 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
    * @returns Whether the event should appear in the current view
    */
   function shouldEventBeDisplayed(event: CalendarEvent): boolean {
-    const eventStartDateToDays = convertDateToDays(event.startDate)
-    const eventEndDateToDays: number = event.endDate ? convertDateToDays(event.endDate) : 0
+    // const eventStartDateToDays = convertDateToDays(event.startDate)
+    // const eventEndDateToDays: number = event.endDate ? convertDateToDays(event.endDate) : 0
 
     const isEventOnCurrentScreen =
       (event.startDate.year === currentDate.currentYear &&
@@ -46,23 +46,26 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
 
     // Check whether the event is on the last 8 tiles
     // This is to allow leap events from appearing on the last 8 tiles
-    const firstDayOfCurrentMonth = convertDateToDays({
-      day: 1,
-      month: currentDate.currentMonth,
-      year: currentDate.currentYear
-    })
-    const lastDayOfCurrentMonth = firstDayOfCurrentMonth + daysPerMonth
-    const last8Tiles = lastDayOfCurrentMonth + 8
+    //
+    // This is not used for now
+    //
+    // const firstDayOfCurrentMonth = convertDateToDays({
+    //   day: 1,
+    //   month: currentDate.currentMonth,
+    //   year: currentDate.currentYear
+    // })
+    // const lastDayOfCurrentMonth = firstDayOfCurrentMonth + daysPerMonth
+    // const last8Tiles = lastDayOfCurrentMonth + 8
 
-    const isEventOnNext8Tiles =
-      (eventStartDateToDays <= last8Tiles && eventStartDateToDays >= lastDayOfCurrentMonth) ||
-      (Boolean(event.endDate) &&
-        eventEndDateToDays <= last8Tiles &&
-        eventEndDateToDays >= lastDayOfCurrentMonth)
+    // const isEventOnNext8Tiles =
+    //   (eventStartDateToDays <= last8Tiles && eventStartDateToDays >= lastDayOfCurrentMonth) ||
+    //   (Boolean(event.endDate) &&
+    //     eventEndDateToDays <= last8Tiles &&
+    //     eventEndDateToDays >= lastDayOfCurrentMonth)
 
     switch (currentConfig.viewType) {
       case 'month':
-        return isEventOnCurrentScreen || isEventOnNext8Tiles
+        return isEventOnCurrentScreen!
 
       case 'year':
         return event.startDate.year === currentDate.currentYear

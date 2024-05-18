@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { getRelativeString, type RPGDate } from '@/models/Date'
+import type { RPGDate } from '@/models/Date'
 import type { CalendarEvent } from '@/models/CalendarEvent'
 import { useCalendar } from '@/stores/CalendarStore'
 import { useCalendarEvents } from '@/stores/EventStore'
@@ -26,6 +26,8 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: 'query:close-popover'): void
 }>()
+
+const { getRelativeString } = useCalendar()
 
 const dateDifference: string = getRelativeString(defaultDate, props.event.startDate)
 const dateDuration: string | null = props.event.endDate

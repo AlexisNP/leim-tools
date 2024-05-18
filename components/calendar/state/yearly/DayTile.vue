@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { areDatesIdentical, type RPGDate } from '@/models/Date'
+import type { RPGDate } from '@/models/Date'
 import { useCalendar } from '@/stores/CalendarStore'
 import { useCalendarEvents } from '@/stores/EventStore'
 import { storeToRefs } from 'pinia'
@@ -13,6 +13,8 @@ const props = defineProps<{
   monthNumber: number
   dayNumber: number
 }>()
+
+const { areDatesIdentical } = useCalendar()
 
 const tileDate: ComputedRef<RPGDate> = computed(() => {
   return {

@@ -1,13 +1,15 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { cn } from '@/lib/utils'
-import { areDatesIdentical, type RPGDate } from '@/models/Date'
+import type { RPGDate } from '@/models/Date'
 import type { CalendarEvent } from '~/models/CalendarEvent'
 
 const props = defineProps<{
   event: CalendarEvent
   tileDate: RPGDate
 }>()
+
+const { areDatesIdentical } = useCalendar()
 
 const spansMultipleDays = Boolean(props.event.startDate && props.event.endDate)
 

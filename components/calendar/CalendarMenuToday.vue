@@ -3,9 +3,7 @@ import { useCalendar } from '@/stores/CalendarStore'
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
 
-import { areDatesIdentical } from '@/models/Date'
-
-const { defaultDate } = useCalendar()
+const { defaultDate, areDatesIdentical } = useCalendar()
 const { selectedDate } = storeToRefs(useCalendar())
 const { jumpToDefaultDate, getFormattedDateTitle } = useCalendar()
 

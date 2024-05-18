@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import { isCharacter, type Character } from '@/models/Characters'
-import { compareDates, type RPGDate, type RPGDateOrder } from '@/models/Date'
-import { isCalendarEvent, type CalendarEvent } from '~/models/CalendarEvent'
+import type { RPGDate, RPGDateOrder } from '@/models/Date'
 import { useCalendar } from '@/stores/CalendarStore'
 import { computed } from 'vue'
+import { isCalendarEvent, type CalendarEvent } from '~/models/CalendarEvent'
 import type { SearchMode } from '../../SearchMode'
 
 import CharacterCallout from './CharacterCallout.vue'
@@ -20,7 +20,7 @@ const props = defineProps<{
 
 const emit = defineEmits(['jumpedToDate'])
 
-const { jumpToDate } = useCalendar()
+const { jumpToDate, compareDates } = useCalendar()
 
 function handleJumpToDate(date?: RPGDate) {
   if (!date) return

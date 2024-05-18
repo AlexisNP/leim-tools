@@ -1,5 +1,6 @@
 import {
   type RPGDate,
+  type RPGDateOrder,
 } from '@/models/Date'
 import { useLocalStorage, useUrlSearchParams } from '@vueuse/core'
 import { defineStore, skipHydrate } from 'pinia'
@@ -285,6 +286,18 @@ export const useCalendar = defineStore('calendar', () => {
   }
 
   /**
+   * State for advanced search modal
+   */
+  const isAdvancedSearchOpen: Ref<boolean> = ref<boolean>(false)
+
+  /**
+   * Opens the search modal
+   */
+  function revealAdvancedSearch() {
+    isAdvancedSearchOpen.value = true
+  }
+
+  /**
    * Switches the active viewType
    *
    * @param viewType Target viewType
@@ -293,6 +306,9 @@ export const useCalendar = defineStore('calendar', () => {
     currentConfig.value.viewType = viewType
   }
 
+  /**
+   * FORMATTING
+   */
   /**
    * Gets the formatted viewType title
    *
@@ -332,6 +348,9 @@ export const useCalendar = defineStore('calendar', () => {
   }
 
   /**
+   * DATE JUMPS & SELECTION
+   */
+  /**
    * Jumps the calendar to the given date
    *
    * @param date Target date
@@ -357,10 +376,166 @@ export const useCalendar = defineStore('calendar', () => {
     selectedDate.value = date
   }
 
-  const isAdvancedSearchOpen: Ref<boolean> = ref<boolean>(false)
+  /**
+   * DATE OPERATIONS
+   *
+   * Used to convert dates, sort them and compare them
+   */
+  /**
+   * Converts a RPGDate to its equivalent in days
+   *
+   * @todo Handle negative dates
+   * @param dateToConvert The date object
+   * @returns How many days does it represent
+   */
+  function convertDateToDays(dateToConvert: RPGDate): number {
+    let numberOfDays: number = dateToConvert.day
 
-  function revealAdvancedSearch() {
-    isAdvancedSearchOpen.value = true
+    numberOfDays = numberOfDays + dateToConvert.month * 1 // daysPerMonth
+    numberOfDays = numberOfDays + dateToConvert.year * daysPerYear.value
+
+    return numberOfDays
+  }
+
+  /**
+   * From two dates, get the difference in days between them
+   * @param baseDate The base date
+   * @param relativeDate The year to compare it to
+   * @returns The number of days separating the two dates (both positive and negative numbers)
+   */
+  function getDifferenceInDays(baseDate: RPGDate, relativeDate: RPGDate): number {
+    return convertDateToDays(relativeDate) - convertDateToDays(baseDate)
+  }
+
+  /**
+   * Check whether two dates are identical
+   *
+   * @param date1 First date
+   * @param date2 Second date
+   * @returns True if the dates are identical
+   */
+  function areDatesIdentical(date1: RPGDate, date2: RPGDate): boolean {
+    return getDifferenceInDays({ ...date1 }, { ...date2 }) === 0
+  }
+
+  /**
+   * Compare dates (used for array sorting)
+   *
+   * @param date1 First date
+   * @param date2 Second date
+   * @returns 1 means the first date comes before the second, -1 means the second comes before the first, and 0 if they're identical
+   */
+  function compareDates(a: RPGDate, b: RPGDate, order: RPGDateOrder = 'desc'): number {
+  // Reverses the order if specified
+    const orderFactor: number = order === 'desc' ? 1 : -1
+
+    // Compare years
+    if (a.year < b.year) return -1 * orderFactor
+    if (a.year > b.year) return 1 * orderFactor
+
+    // Compare months
+    if (a.month < b.month) return -1 * orderFactor
+    if (a.month > b.month) return 1 * orderFactor
+
+    // Compare days
+    if (a.day < b.day) return -1 * orderFactor
+    if (a.day > b.day) return 1 * orderFactor
+
+    return 0
+  }
+
+  /**
+   * From two dates, gives information on how many years, months and days it has been / will be between them
+   *
+   * @param baseDate The base date
+   * @param relativeDate The year to compare it to
+   * @returns A string with info on how the relative date differs to the base date
+   */
+  function getRelativeString(
+    baseDate: RPGDate,
+    relativeDate: RPGDate,
+    formatting: 'compact' | 'complex' = 'complex'
+  ): string {
+    const differenceInDays: number = getDifferenceInDays(baseDate, relativeDate)
+    let output: string = ''
+    let direction: 'past' | 'present' | 'future' = 'present'
+    let directionPrefix: string = ''
+
+    // Check whether it's a past or future date
+    if (differenceInDays > 0) {
+      direction = 'future'
+    } else if (differenceInDays < 0) {
+      direction = 'past'
+    }
+
+    if (formatting === 'complex') {
+    // Handle if it's the same date
+      if (direction === 'present') {
+        return "Aujourd'hui"
+      }
+      if (differenceInDays === -2) {
+        return 'Avant-hier'
+      }
+      if (differenceInDays === -1) {
+        return 'Hier'
+      }
+      if (differenceInDays === 1) {
+        return 'Demain'
+      }
+      if (differenceInDays === 2) {
+        return 'Après-demain'
+      }
+
+      // Get relevant prefix for the string
+      if (direction === 'future') {
+        directionPrefix = 'Dans '
+      } else if (direction === 'past') {
+        directionPrefix = 'Il y a '
+      }
+
+      output += directionPrefix
+    }
+
+    const yearPackets: number = Math.abs(Math.trunc(differenceInDays / daysPerYear.value))
+    const monthPackets: number = Math.abs(Math.trunc(differenceInDays / 1) % 1) // daysPerMonth, monthsPerYear
+
+    const remainingDays: number =
+    Math.abs(differenceInDays) - (yearPackets * daysPerYear.value + monthPackets * 1) // daysPerMonth
+
+    // Assign year part
+    if (yearPackets) {
+      if (yearPackets === 1) {
+        output += `${yearPackets} an`
+      } else {
+        output += `${yearPackets} ans`
+      }
+    }
+
+    // Assign month part
+    if (monthPackets) {
+    // If there was a year packet(s), separate from them
+      if (yearPackets) {
+        output += ','
+      }
+
+      output += ` ${monthPackets} mois`
+    }
+
+    // Assign day part
+    if (remainingDays) {
+    // If there was a year OR month packet(s), separate from them
+      if (yearPackets || monthPackets) {
+        output += ' et'
+      }
+
+      if (remainingDays === 1) {
+        output += ` ${remainingDays} jour`
+      } else {
+        output += ` ${remainingDays} jours`
+      }
+    }
+
+    return output
   }
 
   return {
@@ -394,6 +569,11 @@ export const useCalendar = defineStore('calendar', () => {
     getViewTypeTitle,
     isCurrentScreenActive,
     isAdvancedSearchOpen,
+    convertDateToDays,
+    getDifferenceInDays,
+    areDatesIdentical,
+    compareDates,
+    getRelativeString,
     revealAdvancedSearch
   }
 })
