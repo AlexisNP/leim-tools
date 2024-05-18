@@ -25,22 +25,6 @@ export const useCalendar = defineStore('calendar', () => {
    * Static calendar config
    * This shouldn't change
    */
-  /**
-   * Month list
-   */
-  const months: Ref<CalendarMonth[]> = ref<CalendarMonth[]>([])
-
-  function setMonths(data: CalendarMonth[]) {
-    months.value = data
-  }
-
-  /**
-   * Sorted month data
-   */
-  const sortedMonths = computed<CalendarMonth[]>(() => months.value.sort((a, b) => a.position - b.position))
-  const monthsPerYear = computed(() => months.value.length)
-  const daysPerYear = computed(() => months.value.reduce((acc, o) => acc + o.days, 0))
-
   const currentConfig: Ref<CalendarCurrentConfig> = ref({
     viewType: 'month'
   })
@@ -51,15 +35,34 @@ export const useCalendar = defineStore('calendar', () => {
     'century'
   ])
 
+  /**
+   * Month list (queried from API)
+   */
+  const months: Ref<CalendarMonth[]> = ref<CalendarMonth[]>([])
+
+  function setMonths(data: CalendarMonth[]) {
+    months.value = data
+  }
+
+  /**
+   * Sorted month data using the raw months
+   */
+  const sortedMonths = computed<CalendarMonth[]>(() => months.value.sort((a, b) => a.position - b.position))
+  const monthsPerYear = computed(() => months.value.length)
+  const daysPerYear = computed(() => months.value.reduce((acc, o) => acc + o.days, 0))
+
   // Default date settings (current day in the world)
-  const defaultDay: number = 23
-  const defaultMonth: number = 8
-  const defaultYear: number = 3209
+  // The base setting is the first day / month of year 0
+  const defaultDay: Ref<number> = ref<number>(1)
+  const defaultMonth: Ref<number> = ref<number>(0)
+  const defaultYear: Ref<number> = ref<number>(0)
+
+  // Object representation
   const defaultDate: ComputedRef<RPGDate> = computed(() => {
     return {
-      day: defaultDay,
-      month: defaultMonth,
-      year: defaultYear
+      day: defaultDay.value,
+      month: defaultMonth.value,
+      year: defaultYear.value
     }
   })
 
@@ -71,6 +74,24 @@ export const useCalendar = defineStore('calendar', () => {
       month: defaultDate.value.month.toString(),
       year: defaultDate.value.year.toString()
     }
+  })
+
+  /**
+   * Sets the new defaultDate (aka the "today" value from the calendar)
+   *
+   * @param date The new data to set as defaultDate
+   */
+  function setDefaultDate(date: RPGDate) {
+    defaultDay.value = date.day
+    defaultMonth.value = date.month
+    defaultYear.value = date.year
+  }
+
+  // Everytime the defaultDate changes / is set, we should update the params in the URL
+  watch(defaultDate, () => {
+    params.day = String(defaultDate.value.day)
+    params.month = String(defaultDate.value.month)
+    params.year = String(defaultDate.value.year)
   })
 
   const currentDay = computed<number>(() => {
@@ -354,6 +375,7 @@ export const useCalendar = defineStore('calendar', () => {
     currentRPGDate,
     currentMonthData,
     defaultDate,
+    setDefaultDate,
     selectedDate: skipHydrate(selectedDate),
     selectDate,
     params,

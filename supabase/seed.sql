@@ -39,7 +39,7 @@ insert into public.character_categories (name) values ('commerçant');
 insert into public.worlds (name, description, color) values ('Léïm', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aliquet congue aliquet. Curabitur eu iaculis diam. Nunc iaculis nibh orci, eu semper nunc congue congue. Praesent euismod tortor eget metus tristique lobortis vel in risus. In volutpat ligula orci, id pharetra lectus egestas at.', 'black');
 
 -- Worlds' calendars
-insert into public.calendars (world_id, name) values (1, 'Calendrier solaire');
+insert into public.calendars (world_id, name, today) values (1, 'Calendrier solaire', '{ "day": 3, "month": 4, "year": -1932 }');
 
 -- Calendar's months
 insert into public.calendar_months (calendar_id, name, days, position) values (1, 'Jalen', 32, 1);

@@ -10,7 +10,7 @@ import YearLayout from './state/yearly/Layout.vue'
 const route = useRoute()
 const worldId = route.params.id
 
-const { setMonths, currentConfig, selectedDate, jumpToDate } = useCalendar()
+const { setMonths, setDefaultDate, currentConfig, selectedDate, jumpToDate } = useCalendar()
 const { setEvents } = useCalendarEvents()
 
 const { data: calendar, pending, refresh } = await useLazyFetch(`/api/calendars/query?world_id=${worldId}`)
@@ -21,6 +21,9 @@ if (!calendar.value) {
   if (calendar.value?.data?.months) {
     setMonths(calendar.value?.data?.months)
   }
+  if (calendar.value?.data?.today) {
+    setDefaultDate(calendar.value?.data?.today)
+  }
   if (calendar.value?.data?.events) {
     setEvents(calendar.value?.data?.events)
   }
@@ -30,6 +33,9 @@ watch(pending, (newStatus) => {
   if (!newStatus) {
     if (calendar.value?.data?.months) {
       setMonths(calendar.value?.data?.months)
+    }
+    if (calendar.value?.data?.today) {
+      setDefaultDate(calendar.value?.data?.today)
     }
     if (calendar.value?.data?.events) {
       setEvents(calendar.value?.data?.events)

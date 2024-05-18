@@ -2,11 +2,8 @@ export interface RPGDate {
   day: number
   month: number
   year: number
-  period?: RPGPeriod
 }
 
-export type RPGPeriod = 'ante' | 'nante'
-export type RPGPeriodShort = 'A.R' | 'N.R'
 export type RPGDateOrder = 'asc' | 'desc'
 
 export const monthsPerYear: number = 10
@@ -35,12 +32,6 @@ export function areDatesIdentical(date1: RPGDate, date2: RPGDate): boolean {
 export function compareDates(a: RPGDate, b: RPGDate, order: RPGDateOrder = 'desc'): number {
   // Reverses the order if specified
   const orderFactor: number = order === 'desc' ? 1 : -1
-
-  // Compare eras
-  if ((a.period === 'ante' && b.period === 'nante') || (a.year < 0 && b.year >= 0))
-    return -1 * orderFactor
-  if ((a.period === 'nante' && b.period === 'ante') || (a.year >= 0 && b.year < 0))
-    return 1 * orderFactor
 
   // Compare years
   if (a.year < b.year) return -1 * orderFactor

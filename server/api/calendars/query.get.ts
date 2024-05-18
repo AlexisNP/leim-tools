@@ -14,6 +14,8 @@ export default defineEventHandler(async (event) => {
     .from('calendars')
     .select(`
       id,
+      name,
+      today,
       months:calendar_months (*),
       events:calendar_events (
         id,
