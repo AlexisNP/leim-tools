@@ -8,8 +8,10 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
   const { currentDate, currentConfig } = useCalendar()
 
   const baseEvents = ref<CalendarEvent[]>([])
-  const eventsAreLoading = ref<boolean>(false)
-  const eventsLoaded = ref<boolean>(false)
+
+  function setEvents(data: CalendarEvent[]) {
+    baseEvents.value = data
+  }
 
   const allEvents = computed(() => baseEvents.value.sort((a, b) => {
     return compareDates(a.startDate, b.startDate, 'desc')
@@ -22,22 +24,6 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
   watch([currentDate, allEvents], () => {
     currentEvents.value = computeCurrentEvents()
   })
-
-  async function fetchEvents() {
-    try {
-      eventsAreLoading.value = true
-      const fetched = await useFetch<CalendarEvent[]>('/api/events')
-
-      if (fetched.data.value) {
-        eventsLoaded.value = true
-        baseEvents.value = fetched.data.value
-      }
-    } catch (err) {
-      console.log(err)
-    } finally {
-      eventsAreLoading.value = false
-    }
-  }
 
   /**
    * Determines if the event can appear in the front end
@@ -210,5 +196,5 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
     }
   }
 
-  return { allEvents, eventsAreLoading, eventsLoaded, currentEvents, fetchEvents, getRelativeEventFromDate, getRelativeEventFromEvent }
+  return { allEvents, setEvents, currentEvents, getRelativeEventFromDate, getRelativeEventFromEvent }
 })

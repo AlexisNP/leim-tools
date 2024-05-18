@@ -256,7 +256,11 @@ export const useCalendar = defineStore('calendar', () => {
    */
   function getMonthName(monthNumber: number): string {
     const index = Number(monthNumber)
-    return sortedMonths.value[index].name
+    if (sortedMonths.value[index]) {
+      return sortedMonths.value[index].name
+    }
+
+    return ''
   }
 
   /**
