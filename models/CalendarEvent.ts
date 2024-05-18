@@ -8,6 +8,7 @@ export interface CalendarEvent {
   endDate?: RPGDate
   description?: string
   category?: Category
+  secondaryCategories?: Category[]
   hidden?: boolean
   wiki?: string
 }

@@ -2,44 +2,44 @@ insert into public.role_permissions (role, permission) values ('sa', 'events.see
 insert into public.role_permissions (role, permission) values ('sa', 'users.ban');
 
 -- Event categories
-insert into public.calendar_events_category (name) values ('naissance');
-insert into public.calendar_events_category (name) values ('mort');
-insert into public.calendar_events_category (name) values ('catastrophe');
-insert into public.calendar_events_category (name) values ('catastrophe naturelle');
-insert into public.calendar_events_category (name) values ('inauguration');
-insert into public.calendar_events_category (name) values ('religion');
-insert into public.calendar_events_category (name) values ('invention');
-insert into public.calendar_events_category (name) values ('science');
-insert into public.calendar_events_category (name) values ('bénédiction');
-insert into public.calendar_events_category (name) values ('joueurs');
-insert into public.calendar_events_category (name) values ('découverte');
-insert into public.calendar_events_category (name) values ('exploration');
-insert into public.calendar_events_category (name) values ('construction');
-insert into public.calendar_events_category (name) values ('arcanologie');
-insert into public.calendar_events_category (name) values ('criminalité');
-insert into public.calendar_events_category (name) values ('scandale');
-insert into public.calendar_events_category (name) values ('commerce');
-insert into public.calendar_events_category (name) values ('législation');
+insert into public.calendar_event_categories (name) values ('naissance');
+insert into public.calendar_event_categories (name) values ('mort');
+insert into public.calendar_event_categories (name) values ('catastrophe');
+insert into public.calendar_event_categories (name) values ('catastrophe naturelle');
+insert into public.calendar_event_categories (name) values ('inauguration');
+insert into public.calendar_event_categories (name) values ('religion');
+insert into public.calendar_event_categories (name) values ('invention');
+insert into public.calendar_event_categories (name) values ('science');
+insert into public.calendar_event_categories (name) values ('bénédiction');
+insert into public.calendar_event_categories (name) values ('joueurs');
+insert into public.calendar_event_categories (name) values ('découverte');
+insert into public.calendar_event_categories (name) values ('exploration');
+insert into public.calendar_event_categories (name) values ('construction');
+insert into public.calendar_event_categories (name) values ('arcanologie');
+insert into public.calendar_event_categories (name) values ('criminalité');
+insert into public.calendar_event_categories (name) values ('scandale');
+insert into public.calendar_event_categories (name) values ('commerce');
+insert into public.calendar_event_categories (name) values ('législation');
 
 -- Character categories
-insert into public.characters_category (name) values ('joueur');
-insert into public.characters_category (name) values ('comte');
-insert into public.characters_category (name) values ('scientifique');
-insert into public.characters_category (name) values ('mage');
-insert into public.characters_category (name) values ('professeur');
-insert into public.characters_category (name) values ('criminel');
-insert into public.characters_category (name) values ('étincelle');
-insert into public.characters_category (name) values ('buse blanche');
-insert into public.characters_category (name) values ('ecclésiastique');
-insert into public.characters_category (name) values ('militaire');
-insert into public.characters_category (name) values ('activiste');
-insert into public.characters_category (name) values ('commerçant');
+insert into public.character_categories (name) values ('joueur');
+insert into public.character_categories (name) values ('comte');
+insert into public.character_categories (name) values ('scientifique');
+insert into public.character_categories (name) values ('mage');
+insert into public.character_categories (name) values ('professeur');
+insert into public.character_categories (name) values ('criminel');
+insert into public.character_categories (name) values ('étincelle');
+insert into public.character_categories (name) values ('buse blanche');
+insert into public.character_categories (name) values ('ecclésiastique');
+insert into public.character_categories (name) values ('militaire');
+insert into public.character_categories (name) values ('activiste');
+insert into public.character_categories (name) values ('commerçant');
 
 -- Worlds
-insert into public.worlds (name, description, color) values ('Léïm', 'Monde d''aventures et d''intrigues med-fan', 'black');
+insert into public.worlds (name, description, color) values ('Léïm', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aliquet congue aliquet. Curabitur eu iaculis diam. Nunc iaculis nibh orci, eu semper nunc congue congue. Praesent euismod tortor eget metus tristique lobortis vel in risus. In volutpat ligula orci, id pharetra lectus egestas at.', 'black');
 
 -- Worlds' calendars
-insert into public.world_calendars (world_id) values (1);
+insert into public.calendars (world_id, name) values (1, 'Calendrier solaire');
 
 -- Calendar's months
 insert into public.calendar_months (calendar_id, name, days, position) values (1, 'Jalen', 32, 1);

@@ -1,3 +1,4 @@
+import type { Category } from './Category'
 import type { RPGDate } from './Date'
 
 export interface Character {
@@ -7,8 +8,8 @@ export interface Character {
   death?: RPGDate
   hiddenBirth?: boolean
   hiddenDeath?: boolean
-  category?: CharacterCategory
-  secondaryCategories?: CharacterCategory[]
+  category?: Category
+  secondaryCategories?: Category[]
   wiki?: string
 }
 export const characterCategories = [

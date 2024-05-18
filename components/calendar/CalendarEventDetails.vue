@@ -114,9 +114,9 @@ function handleGotoRelativeEvent(position: 'next' | 'prev' = 'next') {
             </UiBadge>
           </li>
 
-          <li v-for="cat in event.secondaryCategories" :key="cat">
+          <li v-for="cat in event.secondaryCategories" :key="cat.id">
             <UiBadge class="mix-blend-luminosity bg-gray-600" variant="secondary">
-              {{ cat }}
+              {{ cat.name }}
             </UiBadge>
           </li>
         </ul>

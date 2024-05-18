@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
   const query = await getValidatedQuery(event, querySchema.parse)
 
   const output = client
-    .from('world_calendars')
+    .from('calendars')
     .select(`
       id,
       months:calendar_months (*),
@@ -23,7 +23,8 @@ export default defineEventHandler(async (event) => {
         startDate:start_date,
         endDate:end_date,
         wiki,
-        category:calendar_events_category (*)
+        category:calendar_event_categories!calendar_events_category_fkey (*),
+        secondaryCategories:calendar_event_categories!calendar_event_categories_links (*)
       )
     `)
     .eq('world_id', query.world_id)
