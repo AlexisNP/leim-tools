@@ -505,11 +505,20 @@ export const useCalendar = defineStore('calendar', () => {
     const isSameMonth = baseDate.month === relativeDate.month
     const isSameYear = baseDate.year === relativeDate.year
 
-    const yearPackets: number = direction === 'future' || isSameYear ? Math.abs(baseDate.year - relativeDate.year) : Math.abs(baseDate.year - relativeDate.year)
-    // const monthPackets: number = Math.abs(Math.trunc(differenceInDays / daysPerMonth) % months.value.length)
+    let yearPackets: number
     const monthPackets: number = direction === 'future' || isSameMonth ? Math.abs(baseDate.month - relativeDate.month) : Math.abs(months.value.length - relativeDate.month)
 
-    // This would need to be a reduce with an array of valid months appart like in the previous refactor
+    if (direction === 'future') {
+      yearPackets = Math.abs(baseDate.year - relativeDate.year)
+    } else {
+      if (!isSameYear && monthPackets === 0) {
+        yearPackets = Math.abs(baseDate.year - relativeDate.year)
+      } else {
+        yearPackets = Math.abs(baseDate.year - relativeDate.year) - 1
+      }
+    }
+
+    // This would need to be a reduce with an array of valid months appart like in the previous refactor ?
     const remainingDays: number =
     Math.abs(differenceInDays) - (yearPackets * daysPerYear.value * monthPackets)
 
@@ -517,10 +526,10 @@ export const useCalendar = defineStore('calendar', () => {
     // In the meantime : It's not really that much of a problem on larger scale to not compute days, honestly.
     if (isSameMonth && isSameYear) {
       if (remainingDays) {
-        if (remainingDays === 1) {
-          output += ` ${remainingDays} jour`
+        if (differenceInDays === 1) {
+          output += ` ${differenceInDays} jour`
         } else {
-          output += ` ${remainingDays} jours`
+          output += ` ${differenceInDays} jours`
         }
       }
 
@@ -529,26 +538,14 @@ export const useCalendar = defineStore('calendar', () => {
 
     // Assign year part
     if (yearPackets) {
-      if (yearPackets === 1) {
-        if (direction === 'future') {
-          return "L'année prochaine"
-        } else {
-          return "L'année dernière"
-        }
+      if (yearPackets <= 1 ) {
+        output += `${yearPackets} an`
+      } else {
+        output += `${yearPackets} ans`
       }
-
-      output += `${yearPackets} ans`
     }
 
     if (monthPackets) {
-      if (monthPackets === 1) {
-        if (direction === 'future') {
-          return 'Le mois prochain'
-        } else {
-          return 'Le mois dernier'
-        }
-      }
-
       if (yearPackets) {
         output += ' et '
       }
