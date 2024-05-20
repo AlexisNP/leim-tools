@@ -8,6 +8,7 @@ const { defaultDate, getFormattedDateTitle, getRelativeString } = useCalendar()
 const { selectedDate } = storeToRefs(useCalendar())
 
 const mainDateTitle = computed(() => getFormattedDateTitle(selectedDate.value, true))
+// const mainDateTitle = computed(() => convertDateToDays(selectedDate.value))
 
 const dateDifference = computed(() => getRelativeString(defaultDate, selectedDate.value))
 </script>

@@ -384,20 +384,23 @@ export const useCalendar = defineStore('calendar', () => {
   /**
    * Converts a RPGDate to its equivalent in days
    *
-   * @todo Handle negative dates
    * @param dateToConvert The date object
    * @returns How many days does it represent
    */
   function convertDateToDays(dateToConvert: RPGDate): number {
-    // To modify, obviously
-    const daysPerMonth = 32
-
     let numberOfDays: number = dateToConvert.day
 
-    numberOfDays = numberOfDays + dateToConvert.month * daysPerMonth
+    // Get only the remaining months on the year
+    const validMonths = sortedMonths.value.filter((m) => dateToConvert.month >= m.position)
+    // From remaining months, reduce their days value
+    const monthDaysToAdd = validMonths.reduce((a, b) => {
+      return a + b.days
+    }, 0)
+
+    numberOfDays = numberOfDays + monthDaysToAdd
     numberOfDays = numberOfDays + dateToConvert.year * daysPerYear.value
 
-    return numberOfDays
+    return numberOfDays - 1
   }
 
   /**
