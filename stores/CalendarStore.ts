@@ -526,10 +526,10 @@ export const useCalendar = defineStore('calendar', () => {
     // In the meantime : It's not really that much of a problem on larger scale to not compute days, honestly.
     if (isSameMonth && isSameYear) {
       if (remainingDays) {
-        if (differenceInDays === 1) {
-          output += ` ${differenceInDays} jour`
+        if (remainingDays === 1) {
+          output += ` ${remainingDays} jour`
         } else {
-          output += ` ${differenceInDays} jours`
+          output += ` ${remainingDays} jours`
         }
       }
 
