@@ -7,7 +7,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { Button } from '@/components/ui/button'
 import { PhArrowSquareOut, PhPlant, PhSkull } from '@phosphor-icons/vue'
 
-defineProps<{
+const props = defineProps<{
   character: Character
 }>()
 
@@ -16,6 +16,8 @@ defineEmits<{
 }>()
 
 const { getFormattedDateTitle } = useCalendar()
+
+console.log(props.character.birth)
 </script>
 
 <template>

@@ -12,21 +12,8 @@ export interface Character {
   secondaryCategories?: Category[]
   wiki?: string
 }
-export const characterCategories = [
-  'joueur',
-  'comte',
-  'scientifique',
-  'mage',
-  'professeur',
-  'criminel',
-  'étincelle',
-  'buse blanche',
-  'ecclésiastique',
-  'sentinelle'
-] as const
 
-export type CharacterCategory = (typeof characterCategories)[number]
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function isCharacter(object: any): object is Character {
   return 'birth' in object
 }

@@ -1,5 +1,6 @@
 import { serverSupabaseClient } from "#supabase/server";
 import { z } from 'zod'
+import type { CalendarEvent } from "~/models/CalendarEvent";
 
 const querySchema = z.object({
   world_id: z.number({ coerce: true }).positive().int()
@@ -17,7 +18,10 @@ export default defineEventHandler(async (event) => {
       description,
       world_calendars (id, world_id)
     `)
-    .eq('world_calendars.world_id', query.world_id)
 
-  return output
+  if (query.world_id) {
+    output.eq('world_calendars.world_id', query.world_id)
+  }
+
+  return output.returns<CalendarEvent[]>()
 })

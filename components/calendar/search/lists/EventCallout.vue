@@ -24,7 +24,7 @@ const dateDuration: string | null = props.event.endDate
 </script>
 
 <template>
-  <Uibutton
+  <button
     class="relative block w-full text-left py-3 px-4 rounded-sm transition-colors"
     :class="{
       'text-white bg-slate-600 hover:bg-slate-700': !event.category,
@@ -110,5 +110,5 @@ const dateDuration: string | null = props.event.endDate
         {{ event.description }}
       </span>
     </div>
-  </Uibutton>
+  </button>
 </template>

@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { PhMagnifyingGlass } from '@phosphor-icons/vue';
 import type { MenuItem } from '~/components/global/SidebarProps';
 
 useHead({
@@ -16,7 +17,16 @@ watch(user, (n, _o) => {
   }
 })
 
-const sidebarMenu: MenuItem[] = []
+const { revealAdvancedSearch } = useCalendar()
+const { isAdvancedSearchOpen } = storeToRefs(useCalendar())
+
+const sidebarMenu: MenuItem[] = [
+  {
+    phIcon: PhMagnifyingGlass,
+    tooltip: 'Recherche avancée',
+    clickHandler: revealAdvancedSearch
+  }
+]
 </script>
 
 <template>
@@ -24,5 +34,7 @@ const sidebarMenu: MenuItem[] = []
     <Sidebar :menu-items="sidebarMenu" />
 
     <Calendar />
+
+    <CalendarSearch v-model:model-value="isAdvancedSearchOpen" />
   </div>
 </template>

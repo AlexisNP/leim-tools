@@ -39,7 +39,7 @@ insert into public.character_categories (name) values ('commerçant');
 insert into public.worlds (name, description, color) values ('Léïm', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aliquet congue aliquet. Curabitur eu iaculis diam. Nunc iaculis nibh orci, eu semper nunc congue congue. Praesent euismod tortor eget metus tristique lobortis vel in risus. In volutpat ligula orci, id pharetra lectus egestas at.', 'black');
 
 -- Worlds' calendars
-insert into public.calendars (world_id, name, today) values (1, 'Calendrier solaire', '{ "day": 3, "month": 4, "year": -1932 }');
+insert into public.calendars (world_id, name, today) values (1, 'Calendrier solaire', '{ "day": 23, "month": 8, "year": 3209 }');
 
 -- Calendar's months
 insert into public.calendar_months (calendar_id, name, days, position) values (1, 'Jalen', 32, 1);
@@ -52,8 +52,6 @@ insert into public.calendar_months (calendar_id, name, days, position) values (1
 insert into public.calendar_months (calendar_id, name, days, position) values (1, 'Rion', 32, 8);
 insert into public.calendar_months (calendar_id, name, days, position) values (1, 'Farene', 32, 9);
 insert into public.calendar_months (calendar_id, name, days, position) values (1, 'Dalvene', 32, 10);
-insert into public.calendar_months (calendar_id, name, days, position) values (1, 'Testos', 32, 11);
-insert into public.calendar_months (calendar_id, name, days, position) values (1, 'Jalen2 le meilleur', 32, 12);
 
 -- Events
 insert into public.calendar_events (title, description, start_date, category, hidden, wiki, calendar_id) values (
@@ -117,5 +115,187 @@ insert into public.calendar_events (title, description, start_date, category, hi
   11,
   true,
   'https://alexcreates.fr/leim/index.php/Plaines_de_poussi%C3%A8re',
+  1
+);
+insert into public.calendar_events (title, description, start_date, end_date, category, hidden, wiki, calendar_id) values (
+  'Construction du Rempart de Laurdieu',
+  'Le Grand Conseil Kaldélien ordonne la construction d''une muraille autour des Plaines de Poussières, afin de contenir les démons y sortant.',
+  '{ "day": 30, "month": 2, "year": 340 }',
+  '{ "day": 27, "month": 9, "year": 355 }',
+  13,
+  true,
+  'https://alexcreates.fr/leim/index.php/Plaines_de_poussi%C3%A8re',
+  1
+);
+insert into public.calendar_events (title, description, start_date, end_date, category, hidden, wiki, calendar_id) values (
+  'Inauguration de l''Académie Artistique Arcanique',
+  'Scäd Sceni ouvre son institut artistique dédié à l''apprentissage des arts arcaniques.',
+  '{ "day": 11, "month": 6, "year": 2545 }',
+  null,
+  5,
+  false,
+  'https://alexcreates.fr/leim/index.php/Acad%C3%A9mie_Artistique_Arcanique',
+  1
+);
+insert into public.calendar_events (title, description, start_date, end_date, category, hidden, wiki, calendar_id) values (
+  'Création de la buse kaldélienne',
+  'Sophia de Rougefer invente la buse kaldélienne, une arme à feu souple à deux canons.',
+  '{ "day": 4, "month": 2, "year": 3113 }',
+  null,
+  7,
+  false,
+  'https://alexcreates.fr/leim/index.php/Buse_(arme)',
+  1
+);
+insert into public.calendar_events (title, description, start_date, end_date, category, hidden, wiki, calendar_id) values (
+  'Feux dans les champs de Bamast',
+  'Plusieurs incendies criminels se propagent à travers les champs de sérille des fermiers des littoraux de Bamast. Aucun suspect ni coupable ne sera trouvé et l''enquête sera baclée.',
+  '{ "day": 9, "month": 5, "year": 3200 }',
+  null,
+  15,
+  false,
+  'https://alexcreates.fr/leim/index.php/Vascylly',
+  1
+);
+insert into public.calendar_events (title, description, start_date, end_date, category, hidden, wiki, calendar_id) values (
+  'Meurtre de Darléon Typhos',
+  'Darléon Typhos surprend Vascylly fouillant sa demeure peu après la tombée de la nuit. Le majordome de la famille Typhos découvre le corps sans vie de son maître le lendemain.',
+  '{ "day": 21, "month": 6, "year": 3200 }',
+  null,
+  15,
+  false,
+  'https://alexcreates.fr/leim/index.php/Vascylly',
+  1
+);
+insert into public.calendar_events (title, description, start_date, end_date, category, hidden, wiki, calendar_id) values (
+  'Scandale Rodhus',
+  'Tivian Rodhus, un professeur estimé de l''Académie Centrale Kaldélienne, est emprisonné pour corruption et aggression sexuelle. Le corps enseignant y est remanié sur ordre de Lazarus Tymos, comte de Nacride.',
+  '{ "day": 25, "month": 9, "year": 3208 }',
+  null,
+  15,
+  false,
+  'https://alexcreates.fr/leim/index.php/Tivian_Rodhus',
+  1
+);
+
+insert into public.calendar_events (title, description, start_date, end_date, category, hidden, wiki, calendar_id) values (
+  'Arrivée d''aventuriers à Borélis',
+  'Tara Belyus, Vascylly et Adol Sulvan livrent 3 condamnés à Handany. Ils partent pour la mer durant la journée.',
+  '{ "day": 12, "month": 7, "year": 3209 }',
+  null,
+  10,
+  false,
+  null,
+  1
+);
+insert into public.calendar_events (title, description, start_date, end_date, category, hidden, wiki, calendar_id) values (
+  'Naufrage de l''Éclipse',
+  'L''Éclipse, le navire de la garde contenant des condamnés à destination des Cages Handaniennes, s''échoue au large des côtes montagneuses de la Lance d''Aldys.',
+  '{ "day": 14, "month": 7, "year": 3209 }',
+  null,
+  3,
+  false,
+  null,
+  1
+);
+insert into public.calendar_events (title, description, start_date, end_date, category, hidden, wiki, calendar_id) values (
+  'Emprisonnement de Tivian Rodhus',
+  'Celui qu''on surnomme la Bête d''Ambrose arrive à Handany, où il purgera sa peine.',
+  '{ "day": 14, "month": 7, "year": 3209 }',
+  null,
+  18,
+  false,
+  'https://alexcreates.fr/leim/index.php/Tivian_Rodhus',
+  1
+);
+insert into public.calendar_events (title, description, start_date, end_date, category, hidden, wiki, calendar_id) values (
+  'Sulvan et Anastael atteignent Bamast',
+  null,
+  '{ "day": 19, "month": 2, "year": 3210 }',
+  null,
+  10,
+  false,
+  null,
+  1
+);
+insert into public.calendar_events (title, description, start_date, end_date, category, hidden, wiki, calendar_id) values (
+  'Jugement de Bormis Griloup',
+  'Bormis Griloup est jugé coupable d''escroquerie et sabotage aux Cours d''Acier de Tourgrise. Il purgera une peine de 10 ans au sein des prisons royales.',
+  '{ "day": 4, "month": 8, "year": 3209 }',
+  null,
+  18,
+  false,
+  null,
+  1
+);
+
+insert into public.calendar_events (title, description, start_date, end_date, category, hidden, wiki, calendar_id) values (
+  'Inauguration de la Cloche du Pilier',
+  'Le Moine Premier inaugure la grande cloche d''argent au sommet du Pilier d''Ikami.',
+  '{ "day": 29, "month": 5, "year": 3209 }',
+  null,
+  6,
+  false,
+  null,
+  1
+);
+insert into public.calendar_events (title, description, start_date, end_date, category, hidden, wiki, calendar_id) values (
+  '1ère disparation à Cantane',
+  'Taleb Vaht décède dans une grotte à la suite d''une attaque d''ischiels enragées.',
+  '{ "day": 28, "month": 7, "year": 3209 }',
+  null,
+  2,
+  true,
+  null,
+  1
+);
+insert into public.calendar_events (title, description, start_date, end_date, category, hidden, wiki, calendar_id) values (
+  '2ème disparation à Cantane',
+  'Donovane le mineur kéturien disparait sans laisser de traces.',
+  '{ "day": 32, "month": 7, "year": 3209 }',
+  null,
+  2,
+  true,
+  null,
+  1
+);
+insert into public.calendar_events (title, description, start_date, end_date, category, hidden, wiki, calendar_id) values (
+  '3ème disparation à Cantane',
+  'Disparition de Sébastien, gredin sauride.',
+  '{ "day": 10, "month": 8, "year": 3209 }',
+  null,
+  2,
+  true,
+  null,
+  1
+);
+insert into public.calendar_events (title, description, start_date, end_date, category, hidden, wiki, calendar_id) values (
+  '4ème disparation à Cantane',
+  'Disparition de Thérence, patrouilleur sauride de la Vieille Garde.',
+  '{ "day": 19, "month": 8, "year": 3209 }',
+  null,
+  2,
+  true,
+  null,
+  1
+);
+insert into public.calendar_events (title, description, start_date, end_date, category, hidden, wiki, calendar_id) values (
+  '5ème disparation à Cantane',
+  'Disparition de Mathilda Boulais, vendeuse de pierres.',
+  '{ "day": 22, "month": 8, "year": 3209 }',
+  null,
+  2,
+  true,
+  null,
+  1
+);
+insert into public.calendar_events (title, description, start_date, end_date, category, hidden, wiki, calendar_id) values (
+  'Grande Banque Minérale de Cantane',
+  'Les artisans et mineurs de Rougefer se réunissent à Cantane pour vendre le fruit de leur dur labeur.',
+  '{ "day": 23, "month": 8, "year": 3209 }',
+  '{ "day": 26, "month": 8, "year": 3209 }',
+  17,
+  false,
+  null,
   1
 );
