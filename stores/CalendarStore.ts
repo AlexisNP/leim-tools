@@ -233,7 +233,7 @@ export const useCalendar = defineStore('calendar', () => {
   function getNextMonth(monthNumber: number): number {
     const target: number = monthNumber + 1
 
-    if (target + 1 >= monthsPerYear.value) {
+    if (target + 1 > monthsPerYear.value) {
       return 0
     }
 
@@ -391,9 +391,9 @@ export const useCalendar = defineStore('calendar', () => {
     let numberOfDays: number = dateToConvert.day
 
     // Get only the remaining months on the year
-    const validMonths = sortedMonths.value.filter((m) => dateToConvert.month >= m.position)
+    const remainingMonths = sortedMonths.value.filter((m) => dateToConvert.month >= m.position)
     // From remaining months, reduce their days value
-    const monthDaysToAdd = validMonths.reduce((a, b) => {
+    const monthDaysToAdd = remainingMonths.reduce((a, b) => {
       return a + b.days
     }, 0)
 
@@ -505,55 +505,96 @@ export const useCalendar = defineStore('calendar', () => {
     const isSameMonth = baseDate.month === relativeDate.month
     const isSameYear = baseDate.year === relativeDate.year
 
-    let yearPackets: number
-    const monthPackets: number = direction === 'future' || isSameMonth ? Math.abs(baseDate.month - relativeDate.month) : Math.abs(months.value.length - relativeDate.month)
+    // At this point, we are beyond simple scenarios and must calculate the distance accurately
 
-    if (direction === 'future') {
-      yearPackets = Math.abs(baseDate.year - relativeDate.year)
+    // Get which date should come first
+    let ancientDate: RPGDate
+    let futureDate: RPGDate
+
+    if (direction === "future") {
+      ancientDate = baseDate
+      futureDate = relativeDate
     } else {
-      if (!isSameYear && monthPackets === 0) {
-        yearPackets = Math.abs(baseDate.year - relativeDate.year)
-      } else {
-        yearPackets = Math.abs(baseDate.year - relativeDate.year) - 1
-      }
+      ancientDate = relativeDate
+      futureDate = baseDate
     }
 
-    // This would need to be a reduce with an array of valid months appart like in the previous refactor ?
-    const remainingDays: number =
-    Math.abs(differenceInDays) - (yearPackets * daysPerYear.value * monthPackets)
+    // The pivot point that will help proceed towards the relativeDate
+    const datePivot: RPGDate = { ...ancientDate }
+    // The accumulator that will hold the distance between the two dates
+    const dateAcc: RPGDate = { day: 0, month: 0, year: 0 }
 
-    // Assign day part
-    // In the meantime : It's not really that much of a problem on larger scale to not compute days, honestly.
+    // If we are on the same month / year during acceleration, just don't rev up
     if (isSameMonth && isSameYear) {
-      if (remainingDays) {
-        if (remainingDays === 1) {
-          output += ` ${remainingDays} jour`
-        } else {
-          output += ` ${remainingDays} jours`
-        }
+      dateAcc.day = futureDate.day - datePivot.day
+
+      if (dateAcc.day === 1) {
+        output += ` ${dateAcc.day} jour`
+      } else {
+        output += ` ${dateAcc.day} jours`
       }
 
       return output
     }
 
-    // Assign year part
-    if (yearPackets) {
-      if (yearPackets <= 1 ) {
-        output += `${yearPackets} an`
+    // If we are on the same year during acceleration, just don't rev up the next month, it might overflow to the next year
+    else if (isSameYear) {
+      dateAcc.month = futureDate.month - datePivot.month
+
+      output += ` ${dateAcc.month} mois`
+
+      return output
+    }
+
+    // Else, we need to accelerate and decelerate
+    else {
+      // First, get all the remaining days in the current month
+      const currentMonth = sortedMonths.value[datePivot.month]
+      dateAcc.day = currentMonth.days - datePivot.day
+      if (direction === 'future') {
+        datePivot.month = getNextMonth(datePivot.month)
       } else {
-        output += `${yearPackets} ans`
+        datePivot.month = getPreviousMonth(datePivot.month)
       }
-    }
+      datePivot.day = 1
 
-    if (monthPackets) {
-      if (yearPackets) {
-        output += ' et '
+      // Then, get the remaining months in the year
+      const remainingMonthsStart = sortedMonths.value.filter((m) => datePivot.month < m.position )
+      if (direction === 'future') {
+        dateAcc.month = remainingMonthsStart.length + 1
+      } else {
+        dateAcc.month = remainingMonthsStart.length - 1
+      }
+      datePivot.month = 0
+
+      // Then, Accelerate through years
+      dateAcc.month = dateAcc.month + ((futureDate.year - datePivot.year) - 1) * monthsPerYear.value
+      datePivot.year = futureDate.year
+
+      // Once we reached the relativeYear, decelerate and get through the extra months
+      const remainingMonthsEnd = futureDate.month
+      dateAcc.month = dateAcc.month + remainingMonthsEnd
+      datePivot.month = futureDate.month
+
+      // Then at the destination month, decelerate to get the rest of the days
+      dateAcc.day = dateAcc.day + futureDate.day
+      datePivot.day = futureDate.day
+
+      const computedYear = Math.trunc(dateAcc.month / monthsPerYear.value)
+      const remainderMonths = dateAcc.month % monthsPerYear.value
+
+      if (computedYear >= 1 && remainderMonths) {
+        output += ` ${computedYear} an(s) et ${remainderMonths} mois`
+      }
+      else if (computedYear >= 1 && !remainderMonths) {
+        output += ` ${computedYear} an(s)`;
+      }
+      else {
+        output += ` ${remainderMonths} mois`
       }
 
-      output += ` ${monthPackets} mois`
+      return output
     }
-
-    return output
   }
 
   return {
