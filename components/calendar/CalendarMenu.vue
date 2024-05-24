@@ -2,11 +2,6 @@
 import { useCalendar } from '@/stores/CalendarStore'
 
 import { PhMagnifyingGlass } from '@phosphor-icons/vue'
-import CalendarMenuNav from './CalendarMenuNav.vue'
-import CalendarMenuSubnav from './CalendarMenuSubnav.vue'
-import CalendarMenuToday from './CalendarMenuToday.vue'
-import CalendarSwitch from './CalendarSwitch.vue'
-import CalendarCurrentDate from './CalendarCurrentDate.vue'
 
 const { revealAdvancedSearch } = useCalendar()
 </script>

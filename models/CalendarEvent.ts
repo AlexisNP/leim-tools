@@ -1,19 +1,19 @@
 import type { Category } from './Category'
 import type { RPGDate } from './Date'
 
-export interface Character {
-  name: string
+export interface CalendarEvent {
+  id: number
+  title: string
+  startDate: RPGDate
+  endDate?: RPGDate
   description?: string
-  birth?: RPGDate
-  death?: RPGDate
-  hiddenBirth?: boolean
-  hiddenDeath?: boolean
   category?: Category
   secondaryCategories?: Category[]
+  hidden?: boolean
   wiki?: string
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function isCharacter(object: any): object is Character {
-  return 'birth' in object
+export function isCalendarEvent(object: any): object is CalendarEvent {
+  return 'startDate' in object
 }

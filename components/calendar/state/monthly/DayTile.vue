@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { areDatesIdentical, type LeimDate } from '@/models/Date'
+import type { RPGDate } from '@/models/Date'
 import { useCalendar } from '@/stores/CalendarStore'
 import { useCalendarEvents } from '@/stores/EventStore'
 import { useElementBounding } from '@vueuse/core'
@@ -7,17 +7,17 @@ import { storeToRefs } from 'pinia'
 import { computed, ref, type ComputedRef } from 'vue'
 
 import CalendarEventButton from '../../CalendarEvent.vue'
-import type { CalendarEvent } from '@/models/Events'
+import type { CalendarEvent } from '~/models/CalendarEvent'
 
 const props = defineProps<{
-  date: LeimDate
+  date: RPGDate
   faded?: boolean
 }>()
 
 const calendarTile = ref()
 const calendarEventsList = ref()
 
-const { defaultDate, selectDate } = useCalendar()
+const { defaultDate, selectDate, areDatesIdentical } = useCalendar()
 const { selectedDate } = storeToRefs(useCalendar())
 const { currentEvents } = storeToRefs(useCalendarEvents())
 

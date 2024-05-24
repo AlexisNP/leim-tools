@@ -1,15 +1,17 @@
-import { compareDates, convertDateToDays, daysPerMonth, type LeimDate } from '@/models/Date'
-import type { CalendarEvent } from '@/models/Events'
+import type { RPGDate } from '@/models/Date'
+import type { CalendarEvent } from '@/models/CalendarEvent'
 import { defineStore } from 'pinia'
 import { ref, watch, type Ref } from 'vue'
 import { useCalendar } from './CalendarStore'
 
 export const useCalendarEvents = defineStore('calendar-events', () => {
-  const { currentDate, currentConfig } = useCalendar()
+  const { currentDate, currentConfig, convertDateToDays, compareDates } = useCalendar()
 
   const baseEvents = ref<CalendarEvent[]>([])
-  const eventsAreLoading = ref<boolean>(false)
-  const eventsLoaded = ref<boolean>(false)
+
+  function setEvents(data: CalendarEvent[]) {
+    baseEvents.value = data
+  }
 
   const allEvents = computed(() => baseEvents.value.sort((a, b) => {
     return compareDates(a.startDate, b.startDate, 'desc')
@@ -23,22 +25,6 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
     currentEvents.value = computeCurrentEvents()
   })
 
-  async function fetchEvents() {
-    try {
-      eventsAreLoading.value = true
-      const fetched = await useFetch<CalendarEvent[]>('/api/events')
-
-      if (fetched.data.value) {
-        eventsLoaded.value = true
-        baseEvents.value = fetched.data.value
-      }
-    } catch (err) {
-      console.log(err)
-    } finally {
-      eventsAreLoading.value = false
-    }
-  }
-
   /**
    * Determines if the event can appear in the front end
    *
@@ -48,8 +34,8 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
    * @returns Whether the event should appear in the current view
    */
   function shouldEventBeDisplayed(event: CalendarEvent): boolean {
-    const eventStartDateToDays = convertDateToDays(event.startDate)
-    const eventEndDateToDays: number = event.endDate ? convertDateToDays(event.endDate) : 0
+    // const eventStartDateToDays = convertDateToDays(event.startDate)
+    // const eventEndDateToDays: number = event.endDate ? convertDateToDays(event.endDate) : 0
 
     const isEventOnCurrentScreen =
       (event.startDate.year === currentDate.currentYear &&
@@ -60,23 +46,26 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
 
     // Check whether the event is on the last 8 tiles
     // This is to allow leap events from appearing on the last 8 tiles
-    const firstDayOfCurrentMonth = convertDateToDays({
-      day: 1,
-      month: currentDate.currentMonth,
-      year: currentDate.currentYear
-    })
-    const lastDayOfCurrentMonth = firstDayOfCurrentMonth + daysPerMonth
-    const last8Tiles = lastDayOfCurrentMonth + 8
+    //
+    // This is not used for now
+    //
+    // const firstDayOfCurrentMonth = convertDateToDays({
+    //   day: 1,
+    //   month: currentDate.currentMonth,
+    //   year: currentDate.currentYear
+    // })
+    // const lastDayOfCurrentMonth = firstDayOfCurrentMonth + daysPerMonth
+    // const last8Tiles = lastDayOfCurrentMonth + 8
 
-    const isEventOnNext8Tiles =
-      (eventStartDateToDays <= last8Tiles && eventStartDateToDays >= lastDayOfCurrentMonth) ||
-      (Boolean(event.endDate) &&
-        eventEndDateToDays <= last8Tiles &&
-        eventEndDateToDays >= lastDayOfCurrentMonth)
+    // const isEventOnNext8Tiles =
+    //   (eventStartDateToDays <= last8Tiles && eventStartDateToDays >= lastDayOfCurrentMonth) ||
+    //   (Boolean(event.endDate) &&
+    //     eventEndDateToDays <= last8Tiles &&
+    //     eventEndDateToDays >= lastDayOfCurrentMonth)
 
     switch (currentConfig.viewType) {
       case 'month':
-        return isEventOnCurrentScreen || isEventOnNext8Tiles
+        return isEventOnCurrentScreen!
 
       case 'year':
         return event.startDate.year === currentDate.currentYear
@@ -119,8 +108,8 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
     event: CalendarEvent,
     position: 'next' | 'prev' = 'next',
     initialIsEnd: boolean = false
-  ): { event: CalendarEvent; targetDate: LeimDate } {
-    let dateToParse: LeimDate // Day value of the date that the user interacted with
+  ): { event: CalendarEvent; targetDate: RPGDate } {
+    let dateToParse: RPGDate // Day value of the date that the user interacted with
 
     if (initialIsEnd && event.endDate) {
       dateToParse = event.endDate
@@ -132,9 +121,9 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
   }
 
   function getRelativeEventFromDate(
-    date: LeimDate,
+    date: RPGDate,
     position: 'next' | 'prev' = 'next'
-  ): { event: CalendarEvent; targetDate: LeimDate } {
+  ): { event: CalendarEvent; targetDate: RPGDate } {
     const pivotValue = convertDateToDays(date)
     let t: { eventData: CalendarEvent; distance: number; targetKey: 'startDate' | 'endDate' }[] = []
 
@@ -210,5 +199,5 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
     }
   }
 
-  return { allEvents, eventsAreLoading, eventsLoaded, currentEvents, fetchEvents, getRelativeEventFromDate, getRelativeEventFromEvent }
+  return { allEvents, setEvents, currentEvents, getRelativeEventFromDate, getRelativeEventFromEvent }
 })

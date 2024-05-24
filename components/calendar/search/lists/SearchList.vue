@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import { isCharacter, type Character } from '@/models/Characters'
-import { compareDates, type LeimDate, type LeimDateOrder } from '@/models/Date'
-import { isCalendarEvent, type CalendarEvent } from '@/models/Events'
+import type { RPGDate, RPGDateOrder } from '@/models/Date'
 import { useCalendar } from '@/stores/CalendarStore'
 import { computed } from 'vue'
+import { isCalendarEvent, type CalendarEvent } from '~/models/CalendarEvent'
 import type { SearchMode } from '../../SearchMode'
 
 import CharacterCallout from './CharacterCallout.vue'
@@ -12,7 +12,7 @@ import EventCallout from './EventCallout.vue'
 const props = defineProps<{
   results: (Character | CalendarEvent)[]
   currentEntity: SearchMode
-  order: LeimDateOrder
+  order: RPGDateOrder
   startAt: number
   endAt: number
   limit?: number
@@ -20,9 +20,9 @@ const props = defineProps<{
 
 const emit = defineEmits(['jumpedToDate'])
 
-const { jumpToDate } = useCalendar()
+const { jumpToDate, compareDates } = useCalendar()
 
-function handleJumpToDate(date?: LeimDate) {
+function handleJumpToDate(date?: RPGDate) {
   if (!date) return
 
   jumpToDate(date)
@@ -32,8 +32,8 @@ function handleJumpToDate(date?: LeimDate) {
 // Initial sorting of the results
 const sortedResults = computed(() => {
   return [...props.results].sort((a, b) => {
-    let firstDate: LeimDate
-    let secondDate: LeimDate
+    let firstDate: RPGDate
+    let secondDate: RPGDate
 
     if (isCalendarEvent(a)) {
       firstDate = a.startDate

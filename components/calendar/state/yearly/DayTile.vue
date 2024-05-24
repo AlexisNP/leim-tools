@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { areDatesIdentical, type LeimDate } from '@/models/Date'
+import type { RPGDate } from '@/models/Date'
 import { useCalendar } from '@/stores/CalendarStore'
 import { useCalendarEvents } from '@/stores/EventStore'
 import { storeToRefs } from 'pinia'
@@ -14,7 +14,9 @@ const props = defineProps<{
   dayNumber: number
 }>()
 
-const tileDate: ComputedRef<LeimDate> = computed(() => {
+const { areDatesIdentical } = useCalendar()
+
+const tileDate: ComputedRef<RPGDate> = computed(() => {
   return {
     day: props.dayNumber,
     month: props.monthNumber,

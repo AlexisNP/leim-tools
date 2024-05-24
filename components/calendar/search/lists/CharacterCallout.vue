@@ -1,21 +1,23 @@
 <script lang="ts" setup>
 import type { Character } from '@/models/Characters'
-import type { LeimDate } from '@/models/Date'
+import type { RPGDate } from '@/models/Date'
 import { useCalendar } from '@/stores/CalendarStore'
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { Button } from '@/components/ui/button'
 import { PhArrowSquareOut, PhPlant, PhSkull } from '@phosphor-icons/vue'
 
-defineProps<{
+const props = defineProps<{
   character: Character
 }>()
 
 defineEmits<{
-  (e: 'query:date-jump', payload: LeimDate): void
+  (e: 'query:date-jump', payload: RPGDate): void
 }>()
 
 const { getFormattedDateTitle } = useCalendar()
+
+console.log(props.character.birth)
 </script>
 
 <template>

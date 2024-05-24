@@ -1,17 +1,13 @@
 <script lang="ts" setup>
 import {
-  characterCategories,
   isCharacter,
   type Character,
-  type CharacterCategory
 } from '@/models/Characters'
-import type { LeimDateOrder } from '@/models/Date'
+import type { RPGDateOrder } from '@/models/Date'
 import {
-  calendarEventCategories,
   isCalendarEvent,
   type CalendarEvent,
-  type CalendarEventCategory
-} from '@/models/Events'
+} from '~/models/CalendarEvent'
 import { useCharacters } from '@/stores/CharacterStore'
 import { useCalendarEvents } from '@/stores/EventStore'
 import { capitalize } from '@/utils/Strings'
@@ -29,6 +25,7 @@ import {
 } from 'radix-vue'
 
 import SearchList from './lists/SearchList.vue'
+import type { Category } from '~/models/Category'
 
 const { characters } = storeToRefs(useCharacters())
 const { allEvents } = storeToRefs(useCalendarEvents())
@@ -41,7 +38,7 @@ const searchQuery = ref<string>('')
 const selectedEntity = useStorage('se', 'events' as SearchMode)
 
 // Order
-const selectedOrder = ref<LeimDateOrder>('asc')
+const selectedOrder = ref<RPGDateOrder>('asc')
 function setOrderAsc() {
   selectedOrder.value = 'asc'
   resetPage()
@@ -105,7 +102,7 @@ const searchResults = computed<(Character | CalendarEvent)[]>(() => {
 
       // Handle categories logic
       let hitCategories: boolean = false
-      const allCategories: CalendarEventCategory[] = []
+      const allCategories: Category[] = []
 
       if (item.category) {
         allCategories.push(item.category)
@@ -116,7 +113,7 @@ const searchResults = computed<(Character | CalendarEvent)[]>(() => {
       }
 
       hitCategories = selectedCategories.value.every((selectedCat) => {
-        return allCategories.includes(selectedCat as CalendarEventCategory)
+        return allCategories.includes(selectedCat as Category)
       })
 
       return (hitTitle || hitDesc) && hitCategories
@@ -139,7 +136,7 @@ const searchResults = computed<(Character | CalendarEvent)[]>(() => {
 
       // Handle categories logic
       let hitCategories: boolean = false
-      const allCategories: CharacterCategory[] = []
+      const allCategories: Category[] = []
 
       if (item.category) {
         allCategories.push(item.category)
@@ -150,7 +147,7 @@ const searchResults = computed<(Character | CalendarEvent)[]>(() => {
       }
 
       hitCategories = selectedCategories.value.every((selectedCat) => {
-        return allCategories.includes(selectedCat as CharacterCategory)
+        return allCategories.includes(selectedCat as Category)
       })
 
       return hitTitle && hitCategories
@@ -207,14 +204,10 @@ watch([currentPage, selectedEntity], () => {
 
 // Compute categories based on current selectedEntity
 const currentCategories = computed(() => {
-  if (selectedEntity.value === 'characters') {
-    return [...characterCategories]
-  } else {
-    return [...calendarEventCategories]
-  }
+  return []
 })
 
-const selectedCategories = ref<(CharacterCategory | CalendarEventCategory)[]>([])
+const selectedCategories = ref<(Category)[]>([])
 const categoryFilterOpened = ref<boolean>(false)
 const searchCategory = ref<string>('')
 
@@ -227,7 +220,7 @@ const filteredCategories = computed(() =>
  *
  * @param e Radix Change Event
  */
-function handleCategorySelect(e: (CharacterCategory | CalendarEventCategory)) {
+function handleCategorySelect(e: (Category)) {
   if (typeof e === 'string') {
     searchCategory.value = ''
     selectedCategories.value.push(e)
@@ -290,9 +283,9 @@ function handleCategorySelect(e: (CharacterCategory | CalendarEventCategory)) {
           </div>
 
           <div class="flex items-center gap-1">
-            <UiTagsInput class="px-0 gap-0 w-72" :model-value="selectedCategories">
+            <UiTagsInput class="px-0 gap-0 w-72">
               <div class="flex gap-2 flex-wrap items-center px-3">
-                <UiTagsInputItem v-for="item in selectedCategories" :key="item" :value="item">
+                <UiTagsInputItem v-for="item in selectedCategories" :key="item.id" :value="item.name">
                   <UiTagsInputItemText class="capitalize" />
                   <UiTagsInputItemDelete />
                 </UiTagsInputItem>

@@ -1,14 +1,14 @@
 <script lang="ts" setup>
-import { getRelativeString } from '@/models/Date'
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
 
 import { PhMapPin } from '@phosphor-icons/vue'
 
-const { defaultDate, getFormattedDateTitle } = useCalendar()
+const { defaultDate, getFormattedDateTitle, getRelativeString } = useCalendar()
 const { selectedDate } = storeToRefs(useCalendar())
 
 const mainDateTitle = computed(() => getFormattedDateTitle(selectedDate.value, true))
+// const mainDateTitle = computed(() => convertDateToDays(selectedDate.value))
 
 const dateDifference = computed(() => getRelativeString(defaultDate, selectedDate.value))
 </script>

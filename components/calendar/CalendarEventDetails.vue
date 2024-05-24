@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { getRelativeString, type LeimDate } from '@/models/Date'
-import type { CalendarEvent } from '@/models/Events'
+import type { RPGDate } from '@/models/Date'
+import type { CalendarEvent } from '@/models/CalendarEvent'
 import { useCalendar } from '@/stores/CalendarStore'
 import { useCalendarEvents } from '@/stores/EventStore'
 
@@ -27,12 +27,14 @@ const emit = defineEmits<{
   (e: 'query:close-popover'): void
 }>()
 
+const { getRelativeString } = useCalendar()
+
 const dateDifference: string = getRelativeString(defaultDate, props.event.startDate)
 const dateDuration: string | null = props.event.endDate
   ? getRelativeString(props.event.startDate, props.event.endDate, 'compact')
   : null
 
-function handleJumpToDate(date: LeimDate) {
+function handleJumpToDate(date: RPGDate) {
   jumpToDate(date)
   emit('query:close-popover')
 }
@@ -58,24 +60,24 @@ function handleGotoRelativeEvent(position: 'next' | 'prev' = 'next') {
     :hide-when-detached="true"
     :class="{
       'border-slate-800': !event.category,
-      'border-lime-800': event.category === 'naissance',
-      'border-stone-600': event.category === 'mort',
-      'border-orange-800': event.category === 'catastrophe',
-      'border-pink-800': event.category === 'catastrophe naturelle',
-      'border-sky-800': event.category === 'législation',
-      'border-purple-800': event.category === 'religion',
-      'border-emerald-800': event.category === 'joueurs',
-      'border-amber-800': event.category === 'inauguration',
-      'border-green-800': event.category === 'invention',
-      'border-cyan-800': event.category === 'science',
-      'border-slate-600': event.category === 'bénédiction',
-      'border-purple-700': event.category === 'découverte',
-      'border-indigo-700': event.category === 'exploration',
-      'border-amber-700': event.category === 'construction',
-      'border-violet-700': event.category === 'arcanologie',
-      'border-rose-800': event.category === 'criminalité',
-      'border-stone-700': event.category === 'scandale',
-      'border-yellow-600': event.category === 'commerce'
+      'border-lime-800': event.category?.name === 'naissance',
+      'border-stone-600': event.category?.name === 'mort',
+      'border-orange-800': event.category?.name === 'catastrophe',
+      'border-pink-800': event.category?.name === 'catastrophe naturelle',
+      'border-sky-800': event.category?.name === 'législation',
+      'border-purple-800': event.category?.name === 'religion',
+      'border-emerald-800': event.category?.name === 'joueurs',
+      'border-amber-800': event.category?.name === 'inauguration',
+      'border-green-800': event.category?.name === 'invention',
+      'border-cyan-800': event.category?.name === 'science',
+      'border-slate-600': event.category?.name === 'bénédiction',
+      'border-purple-700': event.category?.name === 'découverte',
+      'border-indigo-700': event.category?.name === 'exploration',
+      'border-amber-700': event.category?.name === 'construction',
+      'border-violet-700': event.category?.name === 'arcanologie',
+      'border-rose-800': event.category?.name === 'criminalité',
+      'border-stone-700': event.category?.name === 'scandale',
+      'border-yellow-600': event.category?.name === 'commerce'
     }"
   >
     <div class="grid gap-1">
@@ -110,13 +112,13 @@ function handleGotoRelativeEvent(position: 'next' | 'prev' = 'next') {
         <ul class="flex gap-1">
           <li v-if="event.category">
             <UiBadge class="mix-blend-luminosity font-bold bg-gray-600" variant="secondary">
-              {{ event.category }}
+              {{ event.category?.name }}
             </UiBadge>
           </li>
 
-          <li v-for="cat in event.secondaryCategories" :key="cat">
+          <li v-for="cat in event.secondaryCategories" :key="cat.id">
             <UiBadge class="mix-blend-luminosity bg-gray-600" variant="secondary">
-              {{ cat }}
+              {{ cat.name }}
             </UiBadge>
           </li>
         </ul>
