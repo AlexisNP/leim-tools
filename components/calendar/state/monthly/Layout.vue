@@ -27,7 +27,7 @@ const moveCalendarRight = useThrottleFn(() => {
   <div class="grid grid-cols-10" @wheel="handleWheel">
     <CalendarStateMonthlyDayTile
       v-for="day in currentMonthData.days"
-      :key="day"
+      :key="`layout-month-grid-${day}`"
       :date="{
         day: day,
         month: currentDate.currentMonth,

@@ -36,6 +36,11 @@ export const useCalendar = defineStore('calendar', () => {
     'century'
   ])
 
+  const calendarId = ref<number>(0)
+
+  function setCalendarId(data: number) {
+    calendarId.value = data
+  }
   /**
    * Month list (queried from API)
    */
@@ -178,7 +183,6 @@ export const useCalendar = defineStore('calendar', () => {
   /**
    * Moves the current date forward one month
    */
-
   function incrementMonth(): void {
     let newValue = Number(params.month) + 1
 
@@ -598,6 +602,8 @@ export const useCalendar = defineStore('calendar', () => {
   }
 
   return {
+    calendarId,
+    setCalendarId,
     months,
     setMonths,
     sortedMonths,

@@ -1,3 +1,5 @@
+import { z } from "zod"
+
 export interface RPGDate {
   day: number
   month: number
@@ -6,23 +8,8 @@ export interface RPGDate {
 
 export type RPGDateOrder = 'asc' | 'desc'
 
-// export function getRelativeDate(baseDate: RPGDate, relativeDate: RPGDate) {
-//   let newDay: number
-//   let newMonth: number
-//   let newYear: number
-//   let newPeriod: RPGPeriod
-
-//   const differenceInDays = getDifferenceInDays(baseDate, relativeDate)
-
-//   // console.log(baseDate, substractionDate)
-//   console.log(getRelativeString(baseDate, relativeDate))
-
-//   return differenceInDays
-
-//   // return {
-//   //   day: newDay,
-//   //   month: newMonth,
-//   //   year: newYear,
-//   //   period: newPeriod
-//   // }
-// }
+export const dateSchema = z.object({
+  day: z.number().int().positive(),
+  month: z.number().int(),
+  year: z.number().int()
+})

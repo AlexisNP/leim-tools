@@ -5,7 +5,8 @@ import { ref, watch, type Ref } from 'vue'
 import { useCalendar } from './CalendarStore'
 
 export const useCalendarEvents = defineStore('calendar-events', () => {
-  const { currentDate, currentConfig, convertDateToDays, compareDates } = useCalendar()
+  const { currentDate, defaultDate, currentConfig, convertDateToDays, compareDates } = useCalendar()
+  const { calendarId } = storeToRefs(useCalendar())
 
   const baseEvents = ref<CalendarEvent[]>([])
 
@@ -97,8 +98,7 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
   }
 
   /**
-   * From a base event, gets the next or previous in the timeline
-   * @todo **This should probably be extracted to function FIRST with dates only, as the initialIsEnd param is only used at the beggining to establish a pivot**
+   * From a base event, gets the next or previous one in the timeline
    *
    * @param event The event at a given position in the data
    * @param position Whether we should get the next or previous event
@@ -120,6 +120,13 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
     return getRelativeEventFromDate(dateToParse, position)
   }
 
+  /**
+   * From a date, gets the next or previous event in the timeline
+   *
+   * @param date The starting date from which to get the next event
+   * @param position Whether we should get the next or previous event
+   * @returns The next event in chronological order
+   */
   function getRelativeEventFromDate(
     date: RPGDate,
     position: 'next' | 'prev' = 'next'
@@ -156,27 +163,6 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
       }
     }
 
-    // // Special case : If we query the first one but it already is
-    // if (position === 'prev' && t[0].distance === 0) {
-    //   const targetDate =
-    //     t[0].targetKey === 'startDate' ? t[0].eventData.startDate : t[0].eventData.endDate!
-    //   return {
-    //     event: t[0].eventData,
-    //     targetDate: targetDate
-    //   }
-    // }
-    // // Special case : If we query the last one but it already is
-    // if (position === 'next' && t[t.length - 1].distance === 0) {
-    //   const targetDate =
-    //     t[t.length - 1].targetKey === 'startDate'
-    //       ? t[t.length - 1].eventData.startDate
-    //       : t[t.length - 1].eventData.endDate!
-    //   return {
-    //     event: t[t.length - 1].eventData,
-    //     targetDate: targetDate
-    //   }
-    // }
-
     // Based on the direction, either ignore negative distance (past) or positive distance (future)
     t = t.filter((i) => {
       return position === 'next' ? i.distance > 0 : i.distance < 0
@@ -199,5 +185,29 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
     }
   }
 
-  return { allEvents, setEvents, currentEvents, getRelativeEventFromDate, getRelativeEventFromEvent }
+  /**
+   * EVENT CREATION FUNCTIONS
+   */
+  /**
+   * Dummy event to hold creation data
+   */
+  const eventSkeleton: Ref<CalendarEvent> = ref<CalendarEvent>({ title: '', startDate: defaultDate })
+
+  /**
+   * Resets the dummy event data
+   */
+  function resetSkeleton() {
+    eventSkeleton.value = { title: '', startDate: defaultDate }
+  }
+
+  /**
+   * Submits the skeleton event and creates a real event from its data
+   *
+   * We assume it's been sanitized by the caller
+   */
+  async function submitSkeleton() {
+    return await $fetch(`/api/calendars/events/create`, { method: 'POST', body: { event : eventSkeleton.value, calendarId: calendarId.value }})
+  }
+
+  return { allEvents, setEvents, currentEvents, getRelativeEventFromDate, getRelativeEventFromEvent, eventSkeleton, resetSkeleton, submitSkeleton }
 })

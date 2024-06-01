@@ -18,7 +18,6 @@ watch(user, (n, _o) => {
 })
 
 const { revealAdvancedSearch } = useCalendar()
-const { isAdvancedSearchOpen } = storeToRefs(useCalendar())
 
 const sidebarMenu: MenuItem[] = [
   {
@@ -34,7 +33,5 @@ const sidebarMenu: MenuItem[] = [
     <Sidebar :menu-items="sidebarMenu" />
 
     <Calendar />
-
-    <CalendarSearch v-model:model-value="isAdvancedSearchOpen" />
   </div>
 </template>
