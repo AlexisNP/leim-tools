@@ -7,7 +7,7 @@ import CenturyLayout from './state/centennially/Layout.vue'
 import DecadeLayout from './state/decennially/Layout.vue'
 import YearLayout from './state/yearly/Layout.vue'
 
-const { isAdvancedSearchOpen } = storeToRefs(useCalendar())
+const { isAdvancedSearchOpen, isEditEventModalOpen } = storeToRefs(useCalendar())
 
 const route = useRoute()
 const worldId = route.params.id
@@ -110,5 +110,6 @@ onMounted(() => {
     </template>
 
     <CalendarSearch v-model:model-value="isAdvancedSearchOpen" />
+    <CalendarFormUpdateEvent v-model:model-value="isEditEventModalOpen" />
   </div>
 </template>

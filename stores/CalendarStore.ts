@@ -294,11 +294,17 @@ export const useCalendar = defineStore('calendar', () => {
    */
   const isAdvancedSearchOpen: Ref<boolean> = ref<boolean>(false)
 
-  /**
-   * Opens the search modal
-   */
   function revealAdvancedSearch() {
     isAdvancedSearchOpen.value = true
+  }
+
+  /**
+   * State for advanced search modal
+   */
+  const isEditEventModalOpen: Ref<boolean> = ref<boolean>(false)
+
+  function revealEditEventModal() {
+    isEditEventModalOpen.value = true
   }
 
   /**
@@ -436,8 +442,16 @@ export const useCalendar = defineStore('calendar', () => {
    * @returns 1 means the first date comes before the second, -1 means the second comes before the first, and 0 if they're identical
    */
   function compareDates(a: RPGDate, b: RPGDate, order: RPGDateOrder = 'desc'): number {
-  // Reverses the order if specified
+    // Reverses the order if specified
     const orderFactor: number = order === 'desc' ? 1 : -1
+
+    // If somehow one of the date isn't available
+    if (!b) {
+      return -1 * orderFactor
+    }
+    if (!a) {
+      return 1 * orderFactor
+    }
 
     // Compare years
     if (a.year < b.year) return -1 * orderFactor
@@ -634,11 +648,13 @@ export const useCalendar = defineStore('calendar', () => {
     getViewTypeTitle,
     isCurrentScreenActive,
     isAdvancedSearchOpen,
+    revealAdvancedSearch,
+    isEditEventModalOpen,
+    revealEditEventModal,
     convertDateToDays,
     getDifferenceInDays,
     areDatesIdentical,
     compareDates,
     getRelativeString,
-    revealAdvancedSearch
   }
 })

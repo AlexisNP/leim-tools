@@ -14,17 +14,19 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
     baseEvents.value = data
   }
 
+  // Order base events by dates
   const allEvents = computed(() => baseEvents.value.sort((a, b) => {
     return compareDates(a.startDate, b.startDate, 'desc')
   }))
 
   // Gets all current event in its default state
-  const currentEvents: Ref<CalendarEvent[]> = ref(computeCurrentEvents())
+  const currentEvents: Ref<CalendarEvent[]> = ref([])
 
-  // Watch for currentDate changes
+  // Watch for currentDate or events' list changes
+  // This is deep because we're watching an array, and changes need to trigger and mutations like .push and .splice
   watch([currentDate, allEvents], () => {
     currentEvents.value = computeCurrentEvents()
-  })
+  }, { deep: true, immediate: true })
 
   /**
    * Determines if the event can appear in the front end
@@ -35,34 +37,12 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
    * @returns Whether the event should appear in the current view
    */
   function shouldEventBeDisplayed(event: CalendarEvent): boolean {
-    // const eventStartDateToDays = convertDateToDays(event.startDate)
-    // const eventEndDateToDays: number = event.endDate ? convertDateToDays(event.endDate) : 0
-
     const isEventOnCurrentScreen =
       (event.startDate.year === currentDate.currentYear &&
         event.startDate.month === currentDate.currentMonth) ||
       (event.endDate &&
         event.endDate.year === currentDate.currentYear &&
         event.endDate.month === currentDate.currentMonth)
-
-    // Check whether the event is on the last 8 tiles
-    // This is to allow leap events from appearing on the last 8 tiles
-    //
-    // This is not used for now
-    //
-    // const firstDayOfCurrentMonth = convertDateToDays({
-    //   day: 1,
-    //   month: currentDate.currentMonth,
-    //   year: currentDate.currentYear
-    // })
-    // const lastDayOfCurrentMonth = firstDayOfCurrentMonth + daysPerMonth
-    // const last8Tiles = lastDayOfCurrentMonth + 8
-
-    // const isEventOnNext8Tiles =
-    //   (eventStartDateToDays <= last8Tiles && eventStartDateToDays >= lastDayOfCurrentMonth) ||
-    //   (Boolean(event.endDate) &&
-    //     eventEndDateToDays <= last8Tiles &&
-    //     eventEndDateToDays >= lastDayOfCurrentMonth)
 
     switch (currentConfig.viewType) {
       case 'month':
@@ -188,6 +168,7 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
   /**
    * EVENT CREATION FUNCTIONS
    */
+  const lastActiveEvent = ref<CalendarEvent | null>()
   /**
    * Dummy event to hold creation data
    */
@@ -206,8 +187,13 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
    * We assume it's been sanitized by the caller
    */
   async function submitSkeleton() {
-    return await $fetch(`/api/calendars/events/create`, { method: 'POST', body: { event : eventSkeleton.value, calendarId: calendarId.value }})
+    try {
+      const res = await $fetch(`/api/calendars/events/create`, { method: 'POST', body: { event : eventSkeleton.value, calendarId: calendarId.value }})
+      baseEvents.value.push(res)
+    } catch (err) {
+      console.log(err)
+    }
   }
 
-  return { allEvents, setEvents, currentEvents, getRelativeEventFromDate, getRelativeEventFromEvent, eventSkeleton, resetSkeleton, submitSkeleton }
+  return { allEvents, setEvents, currentEvents, getRelativeEventFromDate, getRelativeEventFromEvent, eventSkeleton, resetSkeleton, submitSkeleton, lastActiveEvent }
 })

@@ -19,8 +19,18 @@ export default defineEventHandler(async (event) => {
     const { data, error } = await client
       .from('calendar_events')
       .insert({ start_date: bodyData?.event.startDate, end_date: bodyData.event.endDate, title: bodyData?.event.title, description: bodyData.event.description, calendar_id: bodyData?.calendarId } as never)
-      .select()
-      .returns<CalendarEvent>()
+      .select(`
+        id,
+        title,
+        description,
+        hidden,
+        startDate:start_date,
+        endDate:end_date,
+        wiki,
+        category:calendar_event_categories!calendar_events_category_fkey (*),
+        secondaryCategories:calendar_event_categories!calendar_event_categories_links (*)
+      `)
+      .single<CalendarEvent>()
 
     if (error) throw error
 

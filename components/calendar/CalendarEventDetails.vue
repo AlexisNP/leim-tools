@@ -11,7 +11,8 @@ import {
   PhDotsThreeOutlineVertical
 } from '@phosphor-icons/vue'
 
-const { defaultDate, getFormattedDateTitle, jumpToDate } = useCalendar()
+const { defaultDate, getFormattedDateTitle, jumpToDate, revealEditEventModal, getRelativeString } = useCalendar()
+const { lastActiveEvent } = storeToRefs(useCalendarEvents())
 
 const props = defineProps<{
   event: CalendarEvent
@@ -24,8 +25,6 @@ const props = defineProps<{
 const eventDetails = ref<HTMLElement>()
 
 const emit = defineEmits(['query:close-popover'])
-
-const { getRelativeString } = useCalendar()
 
 const dateDifference: string = getRelativeString(defaultDate, props.event.startDate)
 const dateDuration: string | null = props.event.endDate
@@ -41,11 +40,11 @@ function handleJumpToDate(date: RPGDate) {
  * Edit event
  */
 const commandMenuOpened = ref(false)
-const editModelOpened = ref(false)
 
 function deployEditModal() {
+  lastActiveEvent.value = { ...props.event }
+  revealEditEventModal()
   commandMenuOpened.value = false
-  editModelOpened.value = true
 }
 </script>
 
@@ -153,8 +152,6 @@ function deployEditModal() {
         </UiPopoverContent>
       </UiPopover>
     </menu>
-
-    <CalendarFormUpdateEvent v-model:model-value="editModelOpened" :event :anchor="eventDetails" />
 
     <nav v-if="event.startDate && event.endDate" class="mt-2 flex gap-2">
       <UiBadge class="hover:opacity-100 hover:bg-slate-300" as-child>

@@ -17,15 +17,15 @@ const isStartEvent = spansMultipleDays && areDatesIdentical(props.tileDate, prop
 const isEndEvent =
   spansMultipleDays && props.event.endDate && areDatesIdentical(props.tileDate, props.event.endDate)
 
-const isPopoverOpen = ref<boolean>(false)
+const isPopoverDetailsOpen = ref<boolean>(false)
 
 function handleClosePopover() {
-  isPopoverOpen.value = false
+  isPopoverDetailsOpen.value = false
 }
 </script>
 
 <template>
-  <UiPopover v-model:open="isPopoverOpen">
+  <UiPopover v-model:open="isPopoverDetailsOpen">
     <UiPopoverTrigger as-child>
       <button
         class="text-xs px-2 py-1 block w-full text-left rounded-sm whitespace-nowrap overflow-hidden text-ellipsis"
