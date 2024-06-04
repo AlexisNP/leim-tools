@@ -205,5 +205,19 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
     }
   }
 
-  return { allEvents, setEvents, currentEvents, getRelativeEventFromDate, getRelativeEventFromEvent, eventSkeleton, resetSkeleton, submitSkeleton, lastActiveEvent, updateEventFromSkeleton }
+  async function deleteEvent(eventId: number) {
+    if (!eventId) {
+      throw new Error('ID of the event is required')
+    }
+
+    try {
+      await $fetch(`/api/calendars/events/${eventId}`, { method: 'DELETE' })
+      const eventIndex = baseEvents.value.findIndex(e => e.id === eventId)
+      baseEvents.value.splice(eventIndex, 1)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  return { allEvents, setEvents, currentEvents, getRelativeEventFromDate, getRelativeEventFromEvent, eventSkeleton, resetSkeleton, submitSkeleton, lastActiveEvent, updateEventFromSkeleton, deleteEvent }
 })

@@ -24,7 +24,7 @@ export const postEventBodySchema = z.object({
     startDate: dateSchema.required(),
     endDate: dateSchema.optional().nullable()
   }),
-  calendarId: z.number().int().positive()
+  calendarId: z.number({ coerce: true }).int().positive()
 })
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
