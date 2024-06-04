@@ -20,9 +20,9 @@ export interface CalendarEvent {
 export const postEventBodySchema = z.object({
   event: z.object({
     title: z.string(),
-    description: z.string().optional(),
+    description: z.string().optional().nullable(),
     startDate: dateSchema.required(),
-    endDate: dateSchema.optional()
+    endDate: dateSchema.optional().nullable()
   }),
   calendarId: z.number().int().positive()
 })

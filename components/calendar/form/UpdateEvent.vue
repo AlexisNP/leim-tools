@@ -3,7 +3,7 @@ import { PhAlarm } from '@phosphor-icons/vue'
 import { VisuallyHidden } from 'radix-vue'
 
 const isModalOpened = defineModel<boolean>({ default: false })
-const { resetSkeleton } = useCalendarEvents()
+const { resetSkeleton, updateEventFromSkeleton } = useCalendarEvents()
 const { eventSkeleton, lastActiveEvent } = storeToRefs(useCalendarEvents())
 
 const formErrors = reactive<{ message: string | null }>({
@@ -18,6 +18,18 @@ watch(isModalOpened, (hasOpened, _o) => {
     resetSkeleton()
   }
 })
+
+async function handleSubmit() {
+  try {
+    await updateEventFromSkeleton()
+
+    isModalOpened.value = false
+  } catch (err) {
+    if (err instanceof Error) {
+      formErrors.message = err.message
+    }
+  }
+}
 </script>
 
 <template>
@@ -38,7 +50,7 @@ watch(isModalOpened, (hasOpened, _o) => {
         </UiDialogDescription>
       </VisuallyHidden>
 
-      <form>
+      <form @submit.prevent="handleSubmit">
         <div class="grid grid-cols-2 gap-y-4">
           <div class="col-span-2 ml-8">
             <input

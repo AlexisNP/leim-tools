@@ -188,12 +188,22 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
    */
   async function submitSkeleton() {
     try {
-      const res = await $fetch(`/api/calendars/events/create`, { method: 'POST', body: { event : eventSkeleton.value, calendarId: calendarId.value }})
+      const res = await $fetch('/api/calendars/events/create', { method: 'POST', body: { event : eventSkeleton.value, calendarId: calendarId.value }})
       baseEvents.value.push(res)
     } catch (err) {
       console.log(err)
     }
   }
 
-  return { allEvents, setEvents, currentEvents, getRelativeEventFromDate, getRelativeEventFromEvent, eventSkeleton, resetSkeleton, submitSkeleton, lastActiveEvent }
+  async function updateEventFromSkeleton() {
+    try {
+      const res = await $fetch(`/api/calendars/events/${eventSkeleton.value.id}`, { method: 'PATCH', body: { event : eventSkeleton.value, calendarId: calendarId.value }})
+      const eventIndex = baseEvents.value.findIndex(e => e.id === eventSkeleton.value.id)
+      baseEvents.value[eventIndex] = res
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  return { allEvents, setEvents, currentEvents, getRelativeEventFromDate, getRelativeEventFromEvent, eventSkeleton, resetSkeleton, submitSkeleton, lastActiveEvent, updateEventFromSkeleton }
 })
