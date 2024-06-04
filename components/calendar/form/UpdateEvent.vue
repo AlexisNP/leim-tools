@@ -101,7 +101,7 @@ async function handleSubmit() {
           </div>
 
           <div class="text-right">
-            <UiButton size="sm">
+            <UiButton size="sm" type="submit">
               Sauvegarder
             </UiButton>
           </div>

@@ -60,7 +60,6 @@ function handleClosePopover() {
     </UiPopoverTrigger>
 
     <CalendarEventDetails
-      v-once
       :event
       :spans-multiple-days
       :is-start-event

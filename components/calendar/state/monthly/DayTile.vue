@@ -107,9 +107,11 @@ const eventsNotDisplayed: ComputedRef<number>  = computed<number>(() => eventsFo
           'opacity-40': props.faded && !isSelectedDate
         }"
       >
-        <li v-for="event in eventsToDisplay" :key="event.title" class="grid pointer-events-auto">
-          <CalendarEventButton :event :tile-date="date" />
-        </li>
+        <TransitionGroup name="event">
+          <li v-for="event in eventsToDisplay" :key="event.title" class="grid pointer-events-auto">
+            <CalendarEventButton :event :tile-date="date" />
+          </li>
+        </TransitionGroup>
 
         <li v-if="eventsNotDisplayed > 0" class="pointer-events-auto">
           <UiPopover>
@@ -158,5 +160,22 @@ const eventsNotDisplayed: ComputedRef<number>  = computed<number>(() => eventsFo
   &:nth-child(n + 11) {
     border-top-width: 1px;
   }
+}
+
+.event-enter-active {
+  transition: all 120ms ease-in-out;
+}
+.event-leave-active {
+  transition: all 180ms ease-in-out;
+}
+.event-enter-from,
+.event-leave-to {
+  opacity: 0;
+}
+.event-enter-from {
+  transform: translateX(.15rem);
+}
+.event-leave-to {
+  transform: translateX(-.5rem);
 }
 </style>
