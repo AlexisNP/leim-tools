@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-const isModalOpened = defineModel<boolean>({ default: false })
+const { isDeleteEventModalOpen } = storeToRefs(useCalendarEvents())
+
 const { resetSkeleton, deleteEventFromSkeleton } = useCalendarEvents()
 const { eventSkeleton, lastActiveEvent } = storeToRefs(useCalendarEvents())
 
@@ -8,7 +9,7 @@ const formErrors = reactive<{ message: string | null }>({
 })
 
 // Watch the popover state
-watch(isModalOpened, (hasOpened, _o) => {
+watch(isDeleteEventModalOpen, (hasOpened, _o) => {
   if (hasOpened && lastActiveEvent.value) {
     eventSkeleton.value = { ...lastActiveEvent.value }
   } else {
@@ -20,7 +21,7 @@ async function handleSubmit() {
   try {
     await deleteEventFromSkeleton()
 
-    isModalOpened.value = false
+    isDeleteEventModalOpen.value = false
   } catch (err) {
     if (err instanceof Error) {
       formErrors.message = err.message
@@ -30,20 +31,20 @@ async function handleSubmit() {
 </script>
 
 <template>
-  <UiDialog v-model:open="isModalOpened" :modal="true">
-    <UiDialogContent
+  <UiAlertDialog v-model:open="isDeleteEventModalOpen" :modal="true">
+    <UiAlertDialogContent
       :align="'center'"
       :side="'right'"
       :collision-padding="60"
       :disable-outside-pointer-events="true"
       :trap-focus="true"
-      class="pl-3 min-w-96 bg-slate-900 border-slate-800"
+      class="min-w-96 bg-slate-900 border-slate-800"
     >
-      <UiDialogTitle> Supprimer l'évènement</UiDialogTitle>
+      <UiAlertDialogTitle> Supprimer l'évènement</UiAlertDialogTitle>
 
-      <UiDialogDescription>
+      <UiAlertDialogDescription>
         Les données associés à cet évènement seront supprimées et vous ne pourrez plus les récupérer !
-      </UiDialogDescription>
+      </UiAlertDialogDescription>
 
       <form @submit.prevent="handleSubmit">
         <div class="grid grid-cols-2 gap-y-4">
@@ -60,6 +61,6 @@ async function handleSubmit() {
           </div>
         </div>
       </form>
-    </UiDialogContent>
-  </UiDialog>
+    </UiAlertDialogContent>
+  </UiAlertDialog>
 </template>
