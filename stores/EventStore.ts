@@ -166,6 +166,24 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
   }
 
   /**
+   * State for event modal edition
+   */
+  const isEditEventModalOpen: Ref<boolean> = ref<boolean>(false)
+
+  function revealEditEventModal() {
+    isEditEventModalOpen.value = true
+  }
+
+  /**
+   * State for event modal edition
+   */
+  const isDeleteEventModalOpen: Ref<boolean> = ref<boolean>(false)
+
+  function revealDeleteEventModal() {
+    isDeleteEventModalOpen.value = true
+  }
+
+  /**
    * EVENT CREATION FUNCTIONS
    */
   const lastActiveEvent = ref<CalendarEvent | null>()
@@ -219,5 +237,21 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
     }
   }
 
-  return { allEvents, setEvents, currentEvents, getRelativeEventFromDate, getRelativeEventFromEvent, eventSkeleton, resetSkeleton, submitSkeleton, lastActiveEvent, updateEventFromSkeleton, deleteEvent }
+  return {
+    allEvents,
+    setEvents,
+    currentEvents,
+    getRelativeEventFromDate,
+    getRelativeEventFromEvent,
+    eventSkeleton,
+    resetSkeleton,
+    submitSkeleton,
+    lastActiveEvent,
+    updateEventFromSkeleton,
+    deleteEvent,
+    isEditEventModalOpen,
+    revealEditEventModal,
+    isDeleteEventModalOpen,
+    revealDeleteEventModal
+  }
 })

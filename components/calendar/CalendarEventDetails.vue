@@ -11,8 +11,8 @@ import {
   PhDotsThreeOutlineVertical
 } from '@phosphor-icons/vue'
 
-const { defaultDate, getFormattedDateTitle, jumpToDate, revealEditEventModal, getRelativeString } = useCalendar()
-const { deleteEvent } = useCalendarEvents()
+const { defaultDate, getFormattedDateTitle, jumpToDate, getRelativeString } = useCalendar()
+const { deleteEvent, revealEditEventModal } = useCalendarEvents()
 const { lastActiveEvent } = storeToRefs(useCalendarEvents())
 
 const props = defineProps<{
