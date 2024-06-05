@@ -5,7 +5,8 @@ import { ref, watch, type Ref } from 'vue'
 import { useCalendar } from './CalendarStore'
 
 export const useCalendarEvents = defineStore('calendar-events', () => {
-  const { currentDate, currentConfig, convertDateToDays, compareDates } = useCalendar()
+  const { currentDate, defaultDate, currentConfig, convertDateToDays, compareDates } = useCalendar()
+  const { calendarId } = storeToRefs(useCalendar())
 
   const baseEvents = ref<CalendarEvent[]>([])
 
@@ -13,17 +14,19 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
     baseEvents.value = data
   }
 
+  // Order base events by dates
   const allEvents = computed(() => baseEvents.value.sort((a, b) => {
     return compareDates(a.startDate, b.startDate, 'desc')
   }))
 
   // Gets all current event in its default state
-  const currentEvents: Ref<CalendarEvent[]> = ref(computeCurrentEvents())
+  const currentEvents: Ref<CalendarEvent[]> = ref([])
 
-  // Watch for currentDate changes
+  // Watch for currentDate or events' list changes
+  // This is deep because we're watching an array, and changes need to trigger and mutations like .push and .splice
   watch([currentDate, allEvents], () => {
     currentEvents.value = computeCurrentEvents()
-  })
+  }, { deep: true, immediate: true })
 
   /**
    * Determines if the event can appear in the front end
@@ -34,34 +37,12 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
    * @returns Whether the event should appear in the current view
    */
   function shouldEventBeDisplayed(event: CalendarEvent): boolean {
-    // const eventStartDateToDays = convertDateToDays(event.startDate)
-    // const eventEndDateToDays: number = event.endDate ? convertDateToDays(event.endDate) : 0
-
     const isEventOnCurrentScreen =
       (event.startDate.year === currentDate.currentYear &&
         event.startDate.month === currentDate.currentMonth) ||
       (event.endDate &&
         event.endDate.year === currentDate.currentYear &&
         event.endDate.month === currentDate.currentMonth)
-
-    // Check whether the event is on the last 8 tiles
-    // This is to allow leap events from appearing on the last 8 tiles
-    //
-    // This is not used for now
-    //
-    // const firstDayOfCurrentMonth = convertDateToDays({
-    //   day: 1,
-    //   month: currentDate.currentMonth,
-    //   year: currentDate.currentYear
-    // })
-    // const lastDayOfCurrentMonth = firstDayOfCurrentMonth + daysPerMonth
-    // const last8Tiles = lastDayOfCurrentMonth + 8
-
-    // const isEventOnNext8Tiles =
-    //   (eventStartDateToDays <= last8Tiles && eventStartDateToDays >= lastDayOfCurrentMonth) ||
-    //   (Boolean(event.endDate) &&
-    //     eventEndDateToDays <= last8Tiles &&
-    //     eventEndDateToDays >= lastDayOfCurrentMonth)
 
     switch (currentConfig.viewType) {
       case 'month':
@@ -97,8 +78,7 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
   }
 
   /**
-   * From a base event, gets the next or previous in the timeline
-   * @todo **This should probably be extracted to function FIRST with dates only, as the initialIsEnd param is only used at the beggining to establish a pivot**
+   * From a base event, gets the next or previous one in the timeline
    *
    * @param event The event at a given position in the data
    * @param position Whether we should get the next or previous event
@@ -120,6 +100,13 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
     return getRelativeEventFromDate(dateToParse, position)
   }
 
+  /**
+   * From a date, gets the next or previous event in the timeline
+   *
+   * @param date The starting date from which to get the next event
+   * @param position Whether we should get the next or previous event
+   * @returns The next event in chronological order
+   */
   function getRelativeEventFromDate(
     date: RPGDate,
     position: 'next' | 'prev' = 'next'
@@ -156,27 +143,6 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
       }
     }
 
-    // // Special case : If we query the first one but it already is
-    // if (position === 'prev' && t[0].distance === 0) {
-    //   const targetDate =
-    //     t[0].targetKey === 'startDate' ? t[0].eventData.startDate : t[0].eventData.endDate!
-    //   return {
-    //     event: t[0].eventData,
-    //     targetDate: targetDate
-    //   }
-    // }
-    // // Special case : If we query the last one but it already is
-    // if (position === 'next' && t[t.length - 1].distance === 0) {
-    //   const targetDate =
-    //     t[t.length - 1].targetKey === 'startDate'
-    //       ? t[t.length - 1].eventData.startDate
-    //       : t[t.length - 1].eventData.endDate!
-    //   return {
-    //     event: t[t.length - 1].eventData,
-    //     targetDate: targetDate
-    //   }
-    // }
-
     // Based on the direction, either ignore negative distance (past) or positive distance (future)
     t = t.filter((i) => {
       return position === 'next' ? i.distance > 0 : i.distance < 0
@@ -199,5 +165,59 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
     }
   }
 
-  return { allEvents, setEvents, currentEvents, getRelativeEventFromDate, getRelativeEventFromEvent }
+  /**
+   * EVENT CREATION FUNCTIONS
+   */
+  const lastActiveEvent = ref<CalendarEvent | null>()
+  /**
+   * Dummy event to hold creation data
+   */
+  const eventSkeleton: Ref<CalendarEvent> = ref<CalendarEvent>({ title: '', startDate: defaultDate })
+
+  /**
+   * Resets the dummy event data
+   */
+  function resetSkeleton() {
+    eventSkeleton.value = { title: '', startDate: defaultDate }
+  }
+
+  /**
+   * Submits the skeleton event and creates a real event from its data
+   *
+   * We assume it's been sanitized by the caller
+   */
+  async function submitSkeleton() {
+    try {
+      const res = await $fetch('/api/calendars/events/create', { method: 'POST', body: { event : eventSkeleton.value, calendarId: calendarId.value }})
+      baseEvents.value.push(res)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  async function updateEventFromSkeleton() {
+    try {
+      const res = await $fetch(`/api/calendars/events/${eventSkeleton.value.id}`, { method: 'PATCH', body: { event : eventSkeleton.value, calendarId: calendarId.value }})
+      const eventIndex = baseEvents.value.findIndex(e => e.id === eventSkeleton.value.id)
+      baseEvents.value[eventIndex] = res
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  async function deleteEvent(eventId: number) {
+    if (!eventId) {
+      throw new Error('ID of the event is required')
+    }
+
+    try {
+      await $fetch(`/api/calendars/events/${eventId}`, { method: 'DELETE' })
+      const eventIndex = baseEvents.value.findIndex(e => e.id === eventId)
+      baseEvents.value.splice(eventIndex, 1)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  return { allEvents, setEvents, currentEvents, getRelativeEventFromDate, getRelativeEventFromEvent, eventSkeleton, resetSkeleton, submitSkeleton, lastActiveEvent, updateEventFromSkeleton, deleteEvent }
 })

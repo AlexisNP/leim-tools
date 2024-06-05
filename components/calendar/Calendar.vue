@@ -7,10 +7,12 @@ import CenturyLayout from './state/centennially/Layout.vue'
 import DecadeLayout from './state/decennially/Layout.vue'
 import YearLayout from './state/yearly/Layout.vue'
 
+const { isAdvancedSearchOpen, isEditEventModalOpen } = storeToRefs(useCalendar())
+
 const route = useRoute()
 const worldId = route.params.id
 
-const { setMonths, setDefaultDate, currentConfig, selectedDate, jumpToDate } = useCalendar()
+const { setCalendarId, setMonths, setDefaultDate, currentConfig, selectedDate, jumpToDate } = useCalendar()
 const { setEvents } = useCalendarEvents()
 const { setCharacters } = useCharacters()
 
@@ -20,6 +22,12 @@ const { data: characters, pending: charPending, refresh: charRefresh } = await u
 if (!calendar.value) {
   await calRefresh()
 } else {
+  if (calendar.value?.data?.id) {
+    setCalendarId(calendar.value?.data?.id)
+  }
+  if (calendar.value?.data?.months) {
+    setMonths(calendar.value?.data?.months)
+  }
   if (calendar.value?.data?.months) {
     setMonths(calendar.value?.data?.months)
   }
@@ -40,6 +48,9 @@ if (!characters.value) {
 
 watch(calPending, (newStatus) => {
   if (!newStatus) {
+    if (calendar.value?.data?.id) {
+      setCalendarId(calendar.value?.data?.id)
+    }
     if (calendar.value?.data?.months) {
       setMonths(calendar.value?.data?.months)
     }
@@ -97,5 +108,8 @@ onMounted(() => {
         </KeepAlive>
       </div>
     </template>
+
+    <CalendarSearch v-model:model-value="isAdvancedSearchOpen" />
+    <CalendarFormUpdateEvent v-model:model-value="isEditEventModalOpen" />
   </div>
 </template>
