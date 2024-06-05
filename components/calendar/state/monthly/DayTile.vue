@@ -108,7 +108,7 @@ const eventsNotDisplayed: ComputedRef<number>  = computed<number>(() => eventsFo
         }"
       >
         <TransitionGroup name="event">
-          <li v-for="event in eventsToDisplay" :key="event.title" class="grid pointer-events-auto">
+          <li v-for="event in eventsToDisplay" :key="event.id" class="grid w-full pointer-events-auto">
             <CalendarEventButton :event :tile-date="date" />
           </li>
         </TransitionGroup>
@@ -165,8 +165,10 @@ const eventsNotDisplayed: ComputedRef<number>  = computed<number>(() => eventsFo
 .event-enter-active {
   transition: all 120ms ease-in-out;
 }
+.event-move,
 .event-leave-active {
-  transition: all 180ms ease-in-out;
+  position: absolute;
+  transition: all 100ms ease-in-out;
 }
 .event-enter-from,
 .event-leave-to {
