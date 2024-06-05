@@ -32,14 +32,6 @@ function openEventCreatePopover() {
   }
 }
 
-// Watch the popover state
-// And reset the skeleton if it has been dismissed
-watch(popoverOpen, (hasOpened, _o) => {
-  if (!hasOpened) {
-    resetSkeleton()
-  }
-})
-
 async function handleSubmit() {
   try {
     await submitSkeleton()
