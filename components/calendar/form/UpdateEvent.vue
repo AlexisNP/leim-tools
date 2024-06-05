@@ -15,8 +15,6 @@ const formErrors = reactive<{ message: string | null }>({
 watch(isEditEventModalOpen, (hasOpened, _o) => {
   if (hasOpened && lastActiveEvent.value) {
     eventSkeleton.value = { ...lastActiveEvent.value }
-  } else {
-    resetSkeleton()
   }
 })
 
@@ -29,6 +27,8 @@ async function handleAction() {
     if (err instanceof Error) {
       formErrors.message = err.message
     }
+  } finally {
+    resetSkeleton()
   }
 }
 </script>
