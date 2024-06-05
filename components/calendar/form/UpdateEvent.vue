@@ -34,7 +34,7 @@ async function handleAction() {
 </script>
 
 <template>
-  <UiAlertDialog v-model:open="isEditEventModalOpen" :modal="true">
+  <UiAlertDialog v-model:open="isEditEventModalOpen">
     <UiAlertDialogContent
       :align="'center'"
       :side="'right'"
