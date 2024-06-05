@@ -2,7 +2,8 @@
 import { PhAlarm } from '@phosphor-icons/vue'
 import { VisuallyHidden } from 'radix-vue'
 
-const isModalOpened = defineModel<boolean>({ default: false })
+const { isEditEventModalOpen } = storeToRefs(useCalendarEvents())
+
 const { resetSkeleton, updateEventFromSkeleton } = useCalendarEvents()
 const { eventSkeleton, lastActiveEvent } = storeToRefs(useCalendarEvents())
 
@@ -11,30 +12,30 @@ const formErrors = reactive<{ message: string | null }>({
 })
 
 // Watch the popover state
-watch(isModalOpened, (hasOpened, _o) => {
+watch(isEditEventModalOpen, (hasOpened, _o) => {
   if (hasOpened && lastActiveEvent.value) {
     eventSkeleton.value = { ...lastActiveEvent.value }
-  } else {
-    resetSkeleton()
   }
 })
 
-async function handleSubmit() {
+async function handleAction() {
   try {
     await updateEventFromSkeleton()
 
-    isModalOpened.value = false
+    isEditEventModalOpen.value = false
   } catch (err) {
     if (err instanceof Error) {
       formErrors.message = err.message
     }
+  } finally {
+    resetSkeleton()
   }
 }
 </script>
 
 <template>
-  <UiDialog v-model:open="isModalOpened" :modal="true">
-    <UiDialogContent
+  <UiAlertDialog v-model:open="isEditEventModalOpen">
+    <UiAlertDialogContent
       :align="'center'"
       :side="'right'"
       :collision-padding="60"
@@ -43,14 +44,14 @@ async function handleSubmit() {
       class="pl-3 min-w-96 bg-slate-900 border-slate-800"
     >
       <VisuallyHidden>
-        <UiDialogTitle> Modifier l'évènement</UiDialogTitle>
+        <UiAlertDialogTitle> Modifier l'évènement</UiAlertDialogTitle>
 
-        <UiDialogDescription>
+        <UiAlertDialogDescription>
           Mettre à jour les données de l'évènement
-        </UiDialogDescription>
+        </UiAlertDialogDescription>
       </VisuallyHidden>
 
-      <form @submit.prevent="handleSubmit">
+      <form>
         <div class="grid grid-cols-2 gap-y-4">
           <div class="col-span-2 ml-8">
             <input
@@ -99,14 +100,16 @@ async function handleSubmit() {
               {{ formErrors.message }}
             </span>
           </div>
-
-          <div class="text-right">
-            <UiButton size="sm" type="submit">
-              Sauvegarder
-            </UiButton>
-          </div>
         </div>
       </form>
-    </UiDialogContent>
-  </UiDialog>
+      <UiAlertDialogFooter>
+        <UiAlertDialogCancel>
+          Annuler
+        </UiAlertDialogCancel>
+        <UiAlertDialogAction @click="handleAction">
+          Sauvegarder
+        </UiAlertDialogAction>
+      </UiAlertDialogFooter>
+    </UiAlertDialogContent>
+  </UiAlertDialog>
 </template>

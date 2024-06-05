@@ -299,15 +299,6 @@ export const useCalendar = defineStore('calendar', () => {
   }
 
   /**
-   * State for advanced search modal
-   */
-  const isEditEventModalOpen: Ref<boolean> = ref<boolean>(false)
-
-  function revealEditEventModal() {
-    isEditEventModalOpen.value = true
-  }
-
-  /**
    * Switches the active viewType
    *
    * @param viewType Target viewType
@@ -649,8 +640,6 @@ export const useCalendar = defineStore('calendar', () => {
     isCurrentScreenActive,
     isAdvancedSearchOpen,
     revealAdvancedSearch,
-    isEditEventModalOpen,
-    revealEditEventModal,
     convertDateToDays,
     getDifferenceInDays,
     areDatesIdentical,

@@ -166,6 +166,24 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
   }
 
   /**
+   * State for event modal edition
+   */
+  const isEditEventModalOpen: Ref<boolean> = ref<boolean>(false)
+
+  function revealEditEventModal() {
+    isEditEventModalOpen.value = true
+  }
+
+  /**
+   * State for event modal edition
+   */
+  const isDeleteEventModalOpen: Ref<boolean> = ref<boolean>(false)
+
+  function revealDeleteEventModal() {
+    isDeleteEventModalOpen.value = true
+  }
+
+  /**
    * EVENT CREATION FUNCTIONS
    */
   const lastActiveEvent = ref<CalendarEvent | null>()
@@ -205,19 +223,31 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
     }
   }
 
-  async function deleteEvent(eventId: number) {
-    if (!eventId) {
-      throw new Error('ID of the event is required')
-    }
-
+  async function deleteEventFromSkeleton() {
     try {
-      await $fetch(`/api/calendars/events/${eventId}`, { method: 'DELETE' })
-      const eventIndex = baseEvents.value.findIndex(e => e.id === eventId)
+      await $fetch(`/api/calendars/events/${eventSkeleton.value.id}`, { method: 'DELETE' })
+      const eventIndex = baseEvents.value.findIndex(e => e.id === eventSkeleton.value.id)
       baseEvents.value.splice(eventIndex, 1)
     } catch (err) {
       console.log(err)
     }
   }
 
-  return { allEvents, setEvents, currentEvents, getRelativeEventFromDate, getRelativeEventFromEvent, eventSkeleton, resetSkeleton, submitSkeleton, lastActiveEvent, updateEventFromSkeleton, deleteEvent }
+  return {
+    allEvents,
+    setEvents,
+    currentEvents,
+    getRelativeEventFromDate,
+    getRelativeEventFromEvent,
+    eventSkeleton,
+    resetSkeleton,
+    submitSkeleton,
+    lastActiveEvent,
+    updateEventFromSkeleton,
+    deleteEventFromSkeleton,
+    isEditEventModalOpen,
+    revealEditEventModal,
+    isDeleteEventModalOpen,
+    revealDeleteEventModal
+  }
 })

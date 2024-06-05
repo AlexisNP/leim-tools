@@ -27,10 +27,9 @@ import {
 import SearchList from './lists/SearchList.vue'
 import type { Category } from '~/models/Category'
 
-const { characters } = storeToRefs(useCharacters())
+const { isAdvancedSearchOpen } = storeToRefs(useCalendar())
 const { allEvents } = storeToRefs(useCalendarEvents())
-
-const modalOpen = defineModel<boolean>({ default: false })
+const { characters } = storeToRefs(useCharacters())
 
 const searchQuery = ref<string>('')
 // const searchEnough = computed<boolean>(() => searchQuery.value.length >= 2)
@@ -170,14 +169,14 @@ function resetSearch() {
  * Opens the search Uidialog
  */
 function openUiDialog() {
-  modalOpen.value = true
+  isAdvancedSearchOpen.value = true
 }
 
 /**
  * Closes the search Uidialog
  */
 function closeUiDialog() {
-  modalOpen.value = false
+  isAdvancedSearchOpen.value = false
 }
 
 /**
@@ -233,7 +232,7 @@ function handleCategorySelect(e: (Category)) {
 </script>
 
 <template>
-  <UiDialog v-model:open="modalOpen" @update:open="resetSearch()">
+  <UiDialog v-model:open="isAdvancedSearchOpen" @update:open="resetSearch()">
     <UiDialogContent
       class="flex flex-col flex-nowrap top-16 -translate-y-0 data-[state=closed]:slide-out-to-top-[5%] data-[state=open]:slide-in-from-top-[5%]"
       :class="{
