@@ -12,7 +12,7 @@ import {
 } from '@phosphor-icons/vue'
 
 const { defaultDate, getFormattedDateTitle, jumpToDate, getRelativeString } = useCalendar()
-const { deleteEvent, revealEditEventModal } = useCalendarEvents()
+const { revealEditEventModal, revealDeleteEventModal } = useCalendarEvents()
 const { lastActiveEvent } = storeToRefs(useCalendarEvents())
 
 const props = defineProps<{
@@ -45,6 +45,15 @@ const commandMenuOpened = ref(false)
 function deployEditModal() {
   lastActiveEvent.value = { ...props.event }
   revealEditEventModal()
+  commandMenuOpened.value = false
+}
+
+/**
+ * Confirm event deletion
+ */
+function deployDeleteModal() {
+  lastActiveEvent.value = { ...props.event }
+  revealDeleteEventModal()
   commandMenuOpened.value = false
 }
 </script>
@@ -146,7 +155,7 @@ function deployEditModal() {
             <UiCommandList>
               <UiCommandGroup>
                 <UiCommandItem value="edit-event" @select="deployEditModal"> Modifier </UiCommandItem>
-                <UiCommandItem value="delete-event" @select="deleteEvent(event.id!)"> Supprimer </UiCommandItem>
+                <UiCommandItem value="delete-event" @select="deployDeleteModal"> Supprimer </UiCommandItem>
               </UiCommandGroup>
             </UiCommandList>
           </UiCommand>
