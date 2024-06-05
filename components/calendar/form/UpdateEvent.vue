@@ -20,7 +20,7 @@ watch(isEditEventModalOpen, (hasOpened, _o) => {
   }
 })
 
-async function handleSubmit() {
+async function handleAction() {
   try {
     await updateEventFromSkeleton()
 
@@ -51,7 +51,7 @@ async function handleSubmit() {
         </UiAlertDialogDescription>
       </VisuallyHidden>
 
-      <form @submit.prevent="handleSubmit">
+      <form>
         <div class="grid grid-cols-2 gap-y-4">
           <div class="col-span-2 ml-8">
             <input
@@ -100,17 +100,16 @@ async function handleSubmit() {
               {{ formErrors.message }}
             </span>
           </div>
-
-          <div class="flex gap-2 justify-end">
-            <UiButton size="sm" type="button" variant="secondary">
-              Annuler
-            </UiButton>
-            <UiButton size="sm" type="submit">
-              Sauvegarder
-            </UiButton>
-          </div>
         </div>
       </form>
+      <UiAlertDialogFooter>
+        <UiAlertDialogCancel>
+          Annuler
+        </UiAlertDialogCancel>
+        <UiAlertDialogAction @click="handleAction">
+          Sauvegarder
+        </UiAlertDialogAction>
+      </UiAlertDialogFooter>
     </UiAlertDialogContent>
   </UiAlertDialog>
 </template>

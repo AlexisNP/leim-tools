@@ -17,7 +17,7 @@ watch(isDeleteEventModalOpen, (hasOpened, _o) => {
   }
 })
 
-async function handleSubmit() {
+async function handleAction() {
   try {
     await deleteEventFromSkeleton()
 
@@ -46,21 +46,24 @@ async function handleSubmit() {
         Les données associés à cet évènement seront supprimées et vous ne pourrez plus les récupérer !
       </UiAlertDialogDescription>
 
-      <form @submit.prevent="handleSubmit">
+      <form>
         <div class="grid grid-cols-2 gap-y-4">
           <div class="text-red-500 ml-8">
             <span class="text-sm">
               {{ formErrors.message }}
             </span>
           </div>
-
-          <div class="text-right">
-            <UiButton size="sm" type="submit" variant="destructive">
-              Supprimer
-            </UiButton>
-          </div>
         </div>
       </form>
+
+      <UiAlertDialogFooter>
+        <UiAlertDialogCancel>
+          Annuler
+        </UiAlertDialogCancel>
+        <UiAlertDialogAction class="destructive" @click="handleAction">
+          Supprimer
+        </UiAlertDialogAction>
+      </UiAlertDialogFooter>
     </UiAlertDialogContent>
   </UiAlertDialog>
 </template>
