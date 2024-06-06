@@ -12,11 +12,14 @@ const props = defineProps<{
 const { areDatesIdentical } = useCalendar()
 
 const spansMultipleDays = Boolean(props.event.startDate && props.event.endDate)
-
 const isStartEvent = spansMultipleDays && areDatesIdentical(props.tileDate, props.event.startDate)
-const isEndEvent =
-  spansMultipleDays && props.event.endDate && areDatesIdentical(props.tileDate, props.event.endDate)
+const isEndEvent = spansMultipleDays && props.event.endDate && areDatesIdentical(props.tileDate, props.event.endDate)
 
+const titleCharLimit = 50;
+
+const eventTitle = computed<string>(() => props.event.title.length <= titleCharLimit ? props.event.title : `${props.event.title.slice(0, titleCharLimit)}…`)
+
+// Popover code
 const isPopoverDetailsOpen = ref<boolean>(false)
 
 function handleClosePopover() {
@@ -28,7 +31,8 @@ function handleClosePopover() {
   <UiPopover v-model:open="isPopoverDetailsOpen">
     <UiPopoverTrigger as-child>
       <button
-        class="text-xs px-2 py-1 block w-full text-left rounded-sm whitespace-nowrap overflow-hidden text-ellipsis"
+        id="test"
+        class="text-xs px-2 py-1 block w-full text-left rounded-sm"
         :class="
           cn({
             'text-white bg-slate-600 hover:bg-slate-700': !event.category,
@@ -55,7 +59,9 @@ function handleClosePopover() {
           })
         "
       >
-        {{ event.title }}
+        <div class="line-clamp-2">
+          {{ eventTitle }}
+        </div>
       </button>
     </UiPopoverTrigger>
 
