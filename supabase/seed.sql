@@ -208,19 +208,17 @@ insert into public.calendar_events (title, description, start_date, end_date, ca
   'https://alexcreates.fr/leim/index.php/Tivian_Rodhus',
   1
 );
-insert into public.calendar_events (title, description, start_date, end_date, category, hidden, wiki, calendar_id) values (
+insert into public.calendar_events (title, start_date, category, hidden, calendar_id) values (
   'Sulvan et Anastael atteignent Bamast',
-  null,
   '{ "day": 19, "month": 2, "year": 3210 }',
-  null,
   10,
   false,
-  null,
   1
 );
-insert into public.calendar_events (title, description, start_date, end_date, category, hidden, wiki, calendar_id) values (
+insert into public.calendar_events (title, description, location, start_date, end_date, category, hidden, wiki, calendar_id) values (
   'Jugement de Bormis Griloup',
   'Bormis Griloup est jugé coupable d''escroquerie et sabotage aux Cours d''Acier de Tourgrise. Il purgera une peine de 10 ans au sein des prisons royales.',
+  'Tourgrise',
   '{ "day": 4, "month": 8, "year": 3209 }',
   null,
   18,
@@ -229,9 +227,10 @@ insert into public.calendar_events (title, description, start_date, end_date, ca
   1
 );
 
-insert into public.calendar_events (title, description, start_date, end_date, category, hidden, wiki, calendar_id) values (
+insert into public.calendar_events (title, description, location, start_date, end_date, category, hidden, wiki, calendar_id) values (
   'Inauguration de la Cloche du Pilier',
   'Le Moine Premier inaugure la grande cloche d''argent au sommet du Pilier d''Ikami.',
+  'Cantane',
   '{ "day": 29, "month": 5, "year": 3209 }',
   null,
   6,
@@ -239,9 +238,10 @@ insert into public.calendar_events (title, description, start_date, end_date, ca
   null,
   1
 );
-insert into public.calendar_events (title, description, start_date, end_date, category, hidden, wiki, calendar_id) values (
-  '1ère disparation à Cantane',
+insert into public.calendar_events (title, description, location, start_date, end_date, category, hidden, wiki, calendar_id) values (
+  '1ère disparation',
   'Taleb Vaht décède dans une grotte à la suite d''une attaque d''ischiels enragées.',
+  'Cantane',
   '{ "day": 28, "month": 7, "year": 3209 }',
   null,
   2,
@@ -249,9 +249,10 @@ insert into public.calendar_events (title, description, start_date, end_date, ca
   null,
   1
 );
-insert into public.calendar_events (title, description, start_date, end_date, category, hidden, wiki, calendar_id) values (
-  '2ème disparation à Cantane',
+insert into public.calendar_events (title, description, location, start_date, end_date, category, hidden, wiki, calendar_id) values (
+  '2ème disparation',
   'Donovane le mineur kéturien disparait sans laisser de traces.',
+  'Cantane',
   '{ "day": 32, "month": 7, "year": 3209 }',
   null,
   2,
@@ -259,9 +260,10 @@ insert into public.calendar_events (title, description, start_date, end_date, ca
   null,
   1
 );
-insert into public.calendar_events (title, description, start_date, end_date, category, hidden, wiki, calendar_id) values (
-  '3ème disparation à Cantane',
+insert into public.calendar_events (title, description, location, start_date, end_date, category, hidden, wiki, calendar_id) values (
+  '3ème disparation',
   'Disparition de Sébastien, gredin sauride.',
+  'Cantane',
   '{ "day": 10, "month": 8, "year": 3209 }',
   null,
   2,
@@ -269,9 +271,10 @@ insert into public.calendar_events (title, description, start_date, end_date, ca
   null,
   1
 );
-insert into public.calendar_events (title, description, start_date, end_date, category, hidden, wiki, calendar_id) values (
-  '4ème disparation à Cantane',
+insert into public.calendar_events (title, description, location, start_date, end_date, category, hidden, wiki, calendar_id) values (
+  '4ème disparation',
   'Disparition de Thérence, patrouilleur sauride de la Vieille Garde.',
+  'Cantane',
   '{ "day": 19, "month": 8, "year": 3209 }',
   null,
   2,
@@ -279,9 +282,10 @@ insert into public.calendar_events (title, description, start_date, end_date, ca
   null,
   1
 );
-insert into public.calendar_events (title, description, start_date, end_date, category, hidden, wiki, calendar_id) values (
-  '5ème disparation à Cantane',
+insert into public.calendar_events (title, description, location, start_date, end_date, category, hidden, wiki, calendar_id) values (
+  '5ème disparation',
   'Disparition de Mathilda Boulais, vendeuse de pierres.',
+  'Cantane',
   '{ "day": 22, "month": 8, "year": 3209 }',
   null,
   2,
@@ -289,9 +293,10 @@ insert into public.calendar_events (title, description, start_date, end_date, ca
   null,
   1
 );
-insert into public.calendar_events (title, description, start_date, end_date, category, hidden, wiki, calendar_id) values (
-  'Grande Banque Minérale de Cantane',
-  'Les artisans et mineurs de Rougefer se réunissent à Cantane pour vendre le fruit de leur dur labeur.',
+insert into public.calendar_events (title, description, location, start_date, end_date, category, hidden, wiki, calendar_id) values (
+  'Grande Banque Minérale',
+  'Les artisans et mineurs de Rougefer se réunissent pour vendre le fruit de leur dur labeur.',
+  'Cantane',
   '{ "day": 23, "month": 8, "year": 3209 }',
   '{ "day": 26, "month": 8, "year": 3209 }',
   17,

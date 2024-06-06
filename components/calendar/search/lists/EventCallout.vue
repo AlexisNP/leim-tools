@@ -3,7 +3,7 @@ import type { RPGDate } from '@/models/Date'
 import type { CalendarEvent } from '@/models/CalendarEvent'
 import { useCalendar } from '@/stores/CalendarStore'
 
-import { PhArrowSquareOut, PhHourglassMedium, PhAlarm } from '@phosphor-icons/vue'
+import { PhArrowSquareOut, PhHourglassMedium, PhAlarm, PhMapPinArea } from '@phosphor-icons/vue'
 
 const props = defineProps<{
   event: CalendarEvent
@@ -78,6 +78,11 @@ const dateDuration: string | null = props.event.endDate
     </div>
 
     <div class="mb-1 flex gap-x-2 items-center">
+      <template v-if="event.location">
+        <p class="w-fit text-sm italic opacity-75 flex items-center gap-1">
+          <PhMapPinArea size="16" weight="fill" /> {{ event.location }}
+        </p>
+      </template>
       <p class="w-fit text-sm italic opacity-75 flex items-center gap-1">
         <PhAlarm size="16" weight="fill" /> {{ dateDifference }}
       </p>

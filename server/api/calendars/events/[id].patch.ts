@@ -34,12 +34,22 @@ export default defineEventHandler(async (event) => {
   try {
     const { data, error } = await client
       .from('calendar_events')
-      .update({ start_date: bodyData?.event.startDate, end_date: bodyData.event.endDate, title: bodyData?.event.title, description: bodyData.event.description, calendar_id: bodyData?.calendarId } as never)
+      .update(
+        {
+          start_date: bodyData?.event.startDate,
+          end_date: bodyData.event.endDate,
+          title: bodyData?.event.title,
+          description: bodyData.event.description,
+          location: bodyData.event.location,
+          calendar_id: bodyData?.calendarId
+        } as never
+      )
       .eq('id', params.id)
       .select(`
         id,
         title,
         description,
+        location,
         hidden,
         startDate:start_date,
         endDate:end_date,

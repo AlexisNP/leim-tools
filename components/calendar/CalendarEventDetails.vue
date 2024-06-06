@@ -8,6 +8,7 @@ import {
   PhAlarm,
   PhHourglassHigh,
   PhHourglassLow,
+  PhMapPinArea,
   PhDotsThreeOutlineVertical
 } from '@phosphor-icons/vue'
 
@@ -108,6 +109,11 @@ function deployDeleteModal() {
       </header>
 
       <div class="mb-1 space-y-1">
+        <template v-if="event.location">
+          <p class="text-sm italic opacity-75 flex items-center gap-1">
+            <PhMapPinArea size="16" weight="fill" /> {{ event.location }}
+          </p>
+        </template>
         <p class="text-sm italic opacity-75 flex items-center gap-1">
           <PhAlarm size="16" weight="fill" /> {{ dateDifference }}
         </p>
