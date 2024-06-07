@@ -107,7 +107,6 @@ async function handleSubmit() {
                 v-model="eventSkeleton.location"
                 type="text"
                 name="new-event-location"
-                required
                 placeholder="Ajouter un endroit"
                 class="w-full -my-1 py-1 px-2 text-sm border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600">
             </div>

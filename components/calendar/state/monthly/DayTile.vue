@@ -168,7 +168,7 @@ const eventsNotDisplayed: ComputedRef<number>  = computed<number>(() => eventsFo
 .event-move,
 .event-leave-active {
   position: absolute;
-  transition: all 100ms ease-in-out;
+  transition: all 200ms ease-in-out;
 }
 .event-enter-from,
 .event-leave-to {
