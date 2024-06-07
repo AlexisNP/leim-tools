@@ -5,6 +5,7 @@ import { dateSchema, type RPGDate } from './Date'
 export interface CalendarEvent {
   id?: number
   title: string
+  location?: string
   startDate: RPGDate
   endDate?: RPGDate
   description?: string
@@ -21,6 +22,7 @@ export const postEventBodySchema = z.object({
   event: z.object({
     title: z.string(),
     description: z.string().optional().nullable(),
+    location: z.string().optional().nullable(),
     startDate: dateSchema.required(),
     endDate: dateSchema.optional().nullable()
   }),

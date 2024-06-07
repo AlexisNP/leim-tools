@@ -16,6 +16,7 @@ export default defineEventHandler(async (event) => {
       id,
       title,
       description,
+      location,
       world_calendars (id, world_id)
     `)
 

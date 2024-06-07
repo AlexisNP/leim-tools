@@ -1,9 +1,7 @@
 <script lang="ts" setup>
 import type { RPGDate } from '~/models/Date';
 
-import {
-  PhAlarm
-} from '@phosphor-icons/vue'
+import { PhAlarm, PhMapPinArea } from '@phosphor-icons/vue'
 
 const { eventSkeleton } = storeToRefs(useCalendarEvents())
 const { resetSkeleton, submitSkeleton } = useCalendarEvents()
@@ -74,7 +72,7 @@ async function handleSubmit() {
               id="new-event-description"
               v-model="eventSkeleton.description"
               name="new-event-description"
-              placeholder="Description brève de l'évènement"
+              placeholder="Ajouter une description"
               class="w-full -my-1 py-1 -mx-1 px-1 min-h-24 max-h-36 text-sm border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600"
             />
           </div>
@@ -97,6 +95,20 @@ async function handleSubmit() {
                 placeholder="Date de fin"
                 :initial-date="props.date"
               />
+            </div>
+          </div>
+
+          <div class="col-span-2">
+            <div class="flex items-center gap-2">
+              <PhMapPinArea size="18" weight="fill" />
+
+              <input
+                id="new-event-location"
+                v-model="eventSkeleton.location"
+                type="text"
+                name="new-event-location"
+                placeholder="Ajouter un endroit"
+                class="w-full -my-1 py-1 px-2 text-sm border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600">
             </div>
           </div>
 

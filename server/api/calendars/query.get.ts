@@ -21,6 +21,7 @@ export default defineEventHandler(async (event) => {
         id,
         title,
         description,
+        location,
         hidden,
         startDate:start_date,
         endDate:end_date,
