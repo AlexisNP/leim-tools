@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import { PhHouse, PhList } from '@phosphor-icons/vue'
-import type { SidebarProps } from './SidebarProps';
 
-defineProps<SidebarProps>()
+const { currentMenu } = storeToRefs(useUiStore())
 </script>
 
 <template>
@@ -14,7 +13,7 @@ defineProps<SidebarProps>()
         </UiButton>
       </li>
 
-      <li v-if="!isHome">
+      <li>
         <UiTooltipProvider :delay-duration="100">
           <UiTooltip>
             <UiTooltipTrigger as-child>
@@ -31,7 +30,7 @@ defineProps<SidebarProps>()
         </UiTooltipProvider>
       </li>
 
-      <li v-for="(item, i) in menuItems" :key="i">
+      <li v-for="(item, i) in currentMenu" :key="i">
         <UiTooltipProvider :delay-duration="100">
           <UiTooltip>
             <UiTooltipTrigger as-child>
@@ -50,26 +49,6 @@ defineProps<SidebarProps>()
           </UiTooltip>
         </UiTooltipProvider>
       </li>
-
-      <!-- <li>
-        <UiTooltipProvider :delay-duration="100">
-          <UiTooltip>
-            <UiTooltipTrigger as-child>
-              <UiButton
-                variant="ghost"
-                size="icon"
-                class="rounded-full"
-                @click="revealAdvancedSearch()"
-              >
-                <PhMagnifyingGlass size="24" weight="fill" />
-              </UiButton>
-            </UiTooltipTrigger>
-            <UiTooltipContent :side="'right'">
-              <p>Recherche avancée</p>
-            </UiTooltipContent>
-          </UiTooltip>
-        </UiTooltipProvider>
-      </li> -->
     </menu>
 
     <UserCTA />

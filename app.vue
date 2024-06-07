@@ -35,7 +35,11 @@ const useIdFunction = () => useId()
 
     <NuxtLayout>
       <ConfigProvider :use-id="useIdFunction">
-        <NuxtPage/>
+        <div class="h-full grid grid-cols-[auto_1fr]">
+          <Sidebar />
+
+          <NuxtPage/>
+        </div>
       </ConfigProvider>
     </NuxtLayout>
   </div>

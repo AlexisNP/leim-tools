@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import type { MenuItem } from '~/components/global/SidebarProps';
-
 const user = useSupabaseUser()
 
 useHead({
@@ -17,13 +15,11 @@ watch(user, (n, _o) => {
     navigateTo('/')
   }
 })
-const sidebarMenu: MenuItem[] = []
+
+const { setCurrentMenu } = useUiStore()
+setCurrentMenu([])
 </script>
 
 <template>
-  <div class="h-full grid grid-cols-[auto_1fr]">
-    <Sidebar :menu-items="sidebarMenu" />
-
-    <ProfileDashboard />
-  </div>
+  <ProfileDashboard />
 </template>

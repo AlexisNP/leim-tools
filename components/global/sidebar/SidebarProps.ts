@@ -1,4 +1,4 @@
-export interface MenuItem {
+export interface SidebarMenuItem {
   phIcon: Component
   tooltip: string
   clickHandler?: () => void
@@ -6,6 +6,6 @@ export interface MenuItem {
 }
 
 export interface SidebarProps {
-  menuItems: MenuItem[],
+  menuItems: SidebarMenuItem[],
   isHome?: boolean
 }
