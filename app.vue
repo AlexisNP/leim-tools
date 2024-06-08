@@ -5,6 +5,9 @@ useHead({
   titleTemplate: (titleChunk) => {
     return titleChunk ? `${titleChunk} — TTTools` : 'TTTools';
   },
+  htmlAttrs: {
+    lang: 'fr'
+  },
   meta: [
     { name: "charset", content: "UTF-8" },
     { name: "viewport", content: "width=device-width, initial-scale=1.0" },
@@ -35,7 +38,11 @@ const useIdFunction = () => useId()
 
     <NuxtLayout>
       <ConfigProvider :use-id="useIdFunction">
-        <NuxtPage/>
+        <div class="h-full grid grid-cols-[auto_1fr]">
+          <Sidebar />
+
+          <NuxtPage/>
+        </div>
       </ConfigProvider>
     </NuxtLayout>
   </div>

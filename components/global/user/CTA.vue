@@ -44,6 +44,8 @@ async function handleLogout() {
 
 function gotoProfilePage() {
   router.push({ path: '/profile' })
+
+  closeMenu()
 }
 </script>
 

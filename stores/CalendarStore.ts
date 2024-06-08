@@ -31,9 +31,7 @@ export const useCalendar = defineStore('calendar', () => {
   })
   const viewTypeOptions: Set<CalendarViewType> = new Set<CalendarViewType>([
     'month',
-    'year',
-    'decade',
-    'century'
+    'year'
   ])
 
   const calendarId = ref<number>(0)

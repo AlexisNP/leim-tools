@@ -2,6 +2,7 @@
 import { useCalendar } from '@/stores/CalendarStore'
 import { computed, type Component, type ComputedRef } from 'vue'
 
+import { PhMagnifyingGlass } from '@phosphor-icons/vue'
 import MonthlyLayout from './state/monthly/Layout.vue'
 import CenturyLayout from './state/centennially/Layout.vue'
 import DecadeLayout from './state/decennially/Layout.vue'
@@ -85,8 +86,18 @@ const currentViewComponent: ComputedRef<Component> = computed<Component>(() => {
   }
 })
 
+const { setCurrentMenu } = useUiStore()
+
 onMounted(() => {
   jumpToDate(selectedDate)
+
+  setCurrentMenu([
+    {
+      phIcon: PhMagnifyingGlass,
+      tooltip: 'Recherche avancée',
+      action: 'event-search'
+    }
+  ])
 })
 </script>
 
@@ -107,8 +118,8 @@ onMounted(() => {
       </div>
     </template>
 
-    <CalendarSearch />
-    <CalendarFormUpdateEvent />
-    <CalendarFormDeleteEvent />
+    <LazyCalendarSearch />
+    <LazyCalendarFormUpdateEvent />
+    <LazyCalendarFormDeleteEvent />
   </div>
 </template>

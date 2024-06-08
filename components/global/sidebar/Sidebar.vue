@@ -1,8 +1,21 @@
 <script lang="ts" setup>
 import { PhHouse, PhList } from '@phosphor-icons/vue'
-import type { SidebarProps } from './SidebarProps';
+import type { SidebarMenuActionType } from './SidebarProps';
 
-defineProps<SidebarProps>()
+const route = useRoute()
+
+const isHome = computed<boolean>(() => {
+  return route.fullPath === '/'
+})
+
+const { revealAdvancedSearch } = useCalendar()
+const { currentMenu } = storeToRefs(useUiStore())
+
+function handleMenuItemAction(actionType: SidebarMenuActionType) {
+  if (actionType === 'event-search') {
+    revealAdvancedSearch()
+  }
+}
 </script>
 
 <template>
@@ -31,7 +44,7 @@ defineProps<SidebarProps>()
         </UiTooltipProvider>
       </li>
 
-      <li v-for="(item, i) in menuItems" :key="i">
+      <li v-for="(item, i) in currentMenu" :key="i">
         <UiTooltipProvider :delay-duration="100">
           <UiTooltip>
             <UiTooltipTrigger as-child>
@@ -40,7 +53,7 @@ defineProps<SidebarProps>()
                   <component :is="item.phIcon" size="24" weight="fill" />
                 </RouterLink>
               </UiButton>
-              <UiButton v-if="item.clickHandler" variant="ghost" size="icon" class="rounded-full" @click="item.clickHandler">
+              <UiButton v-if="item.action" variant="ghost" size="icon" class="rounded-full" @click="handleMenuItemAction(item.action!)">
                 <component :is="item.phIcon" size="24" weight="fill" />
               </UiButton>
             </UiTooltipTrigger>
@@ -50,26 +63,6 @@ defineProps<SidebarProps>()
           </UiTooltip>
         </UiTooltipProvider>
       </li>
-
-      <!-- <li>
-        <UiTooltipProvider :delay-duration="100">
-          <UiTooltip>
-            <UiTooltipTrigger as-child>
-              <UiButton
-                variant="ghost"
-                size="icon"
-                class="rounded-full"
-                @click="revealAdvancedSearch()"
-              >
-                <PhMagnifyingGlass size="24" weight="fill" />
-              </UiButton>
-            </UiTooltipTrigger>
-            <UiTooltipContent :side="'right'">
-              <p>Recherche avancée</p>
-            </UiTooltipContent>
-          </UiTooltip>
-        </UiTooltipProvider>
-      </li> -->
     </menu>
 
     <UserCTA />

@@ -1,15 +1,14 @@
 <script lang="ts" setup>
-import type { MenuItem } from '~/components/global/SidebarProps';
-
 useHead({
   title: 'Dashboard'
 })
 
-const sidebarMenu: MenuItem[] = []
+const { setCurrentMenu } = useUiStore()
+setCurrentMenu([])
 </script>
 
 <template>
-  <main class="h-full grid grid-cols-[auto_1fr]">
-    <Sidebar :menu-items="sidebarMenu" is-home />
+  <main class="p-8">
+    <Heading>TTTools</Heading>
   </main>
 </template>
