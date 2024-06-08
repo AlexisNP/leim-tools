@@ -59,7 +59,7 @@ function handleClosePopover() {
           })
         "
       >
-        <div class="line-clamp-2">
+        <div class="line-clamp-2 [overflow-wrap:anywhere] hyphens-auto">
           {{ eventTitle }}
         </div>
       </button>

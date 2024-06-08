@@ -8,7 +8,7 @@ setCurrentMenu([])
 </script>
 
 <template>
-  <main class="h-full grid grid-cols-[auto_1fr]">
-    Test
+  <main class="p-8">
+    <Heading>TTTools</Heading>
   </main>
 </template>
