@@ -4,7 +4,7 @@ import type { RPGDate } from '~/models/Date';
 import { PhAlarm, PhCircleNotch, PhMapPinArea } from '@phosphor-icons/vue'
 
 const { eventSkeleton } = storeToRefs(useCalendarEvents())
-const { resetSkeleton, submitSkeleton } = useCalendarEvents()
+const { resetSkeleton, submitSkeleton, cancelLatestRequest } = useCalendarEvents()
 const popoverOpen = ref(false)
 const isLoading = ref(false)
 
@@ -59,6 +59,14 @@ function handleClosing(e: Event) {
   if (isLoading.value) {
     e.preventDefault()
   }
+}
+
+/**
+ * Click on the cancel button
+ */
+function handleCancel() {
+  cancelLatestRequest()
+  isLoading.value = false
 }
 </script>
 
@@ -143,9 +151,17 @@ function handleClosing(e: Event) {
             </span>
           </div>
 
-          <div class="text-right">
+          <div class="flex gap-2 justify-end">
+            <Transition name="fade-cancel">
+              <UiButton v-if="isLoading" type="button" size="sm" variant="destructive" @click.prevent="handleCancel">
+                Annuler
+              </UiButton>
+            </Transition>
+
             <UiButton size="sm" :disabled="isLoading">
-              <PhCircleNotch v-if="isLoading" size="20" class="opacity-50 animate-spin"/>
+              <Transition name="fade-cancel">
+                <PhCircleNotch v-if="isLoading" size="20" class="opacity-50 animate-spin"/>
+              </Transition>
 
               Sauvegarder
             </UiButton>
