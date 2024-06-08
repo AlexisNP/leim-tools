@@ -62,22 +62,22 @@ function handleCancel() {
 </script>
 
 <template>
-  <UiAlertDialog v-model:open="isEditEventModalOpen">
-    <UiAlertDialogContent
+  <UiDialog v-model:open="isEditEventModalOpen">
+    <UiDialogContent
       :disable-outside-pointer-events="true"
       :trap-focus="true"
       class="pl-3 min-w-96 bg-slate-900 border-slate-800"
       @escape-key-down="handleClosing"
       @focus-outside="handleClosing"
       @interact-outside="handleClosing"
-      @pointer-down-outside="handleClosing"
+      @pointer-down-outside="(e) => e.preventDefault()"
     >
       <VisuallyHidden>
-        <UiAlertDialogTitle> Modifier l'évènement</UiAlertDialogTitle>
+        <UiDialogTitle> Modifier l'évènement</UiDialogTitle>
 
-        <UiAlertDialogDescription>
+        <UiDialogDescription>
           Mettre à jour les données de l'évènement
-        </UiAlertDialogDescription>
+        </UiDialogDescription>
       </VisuallyHidden>
 
       <form @submit.prevent="handleAction">
@@ -161,6 +161,6 @@ function handleCancel() {
           </UiButton>
         </footer>
       </form>
-    </UiAlertDialogContent>
-  </UiAlertDialog>
+    </UiDialogContent>
+  </UiDialog>
 </template>
