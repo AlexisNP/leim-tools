@@ -1,11 +1,12 @@
 <script lang="ts" setup>
 import type { RPGDate } from '~/models/Date';
 
-import { PhAlarm, PhMapPinArea } from '@phosphor-icons/vue'
+import { PhAlarm, PhCircleNotch, PhMapPinArea } from '@phosphor-icons/vue'
 
 const { eventSkeleton } = storeToRefs(useCalendarEvents())
 const { resetSkeleton, submitSkeleton } = useCalendarEvents()
 const popoverOpen = ref(false)
+const isLoading = ref(false)
 
 const formErrors = reactive<{ message: string | null }>({
   message: null
@@ -31,6 +32,11 @@ function openEventCreatePopover() {
 }
 
 async function handleSubmit() {
+  // Prevent form submission if already loading
+  if (isLoading.value) return
+
+  isLoading.value = true
+
   try {
     await submitSkeleton()
 
@@ -39,6 +45,8 @@ async function handleSubmit() {
     if (err instanceof Error) {
       formErrors.message = err.message
     }
+  } finally {
+    isLoading.value = false
   }
 }
 </script>
@@ -119,7 +127,9 @@ async function handleSubmit() {
           </div>
 
           <div class="text-right">
-            <UiButton size="sm">
+            <UiButton size="sm" :disabled="isLoading">
+              <PhCircleNotch v-if="isLoading" size="20" class="opacity-50 animate-spin"/>
+
               Sauvegarder
             </UiButton>
           </div>
