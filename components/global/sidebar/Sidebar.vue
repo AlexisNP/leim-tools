@@ -2,6 +2,12 @@
 import { PhHouse, PhList } from '@phosphor-icons/vue'
 import type { SidebarMenuActionType } from './SidebarProps';
 
+const route = useRoute()
+
+const isHome = computed<boolean>(() => {
+  return route.fullPath === '/'
+})
+
 const { revealAdvancedSearch } = useCalendar()
 const { currentMenu } = storeToRefs(useUiStore())
 
@@ -21,7 +27,7 @@ function handleMenuItemAction(actionType: SidebarMenuActionType) {
         </UiButton>
       </li>
 
-      <li>
+      <li v-if="!isHome">
         <UiTooltipProvider :delay-duration="100">
           <UiTooltip>
             <UiTooltipTrigger as-child>
