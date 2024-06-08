@@ -1,11 +1,13 @@
 <script lang="ts" setup>
-import { PhAlarm, PhMapPinArea } from '@phosphor-icons/vue'
+import { PhAlarm, PhCircleNotch, PhMapPinArea } from '@phosphor-icons/vue'
 import { VisuallyHidden } from 'radix-vue'
 
 const { isEditEventModalOpen } = storeToRefs(useCalendarEvents())
 
-const { resetSkeleton, updateEventFromSkeleton } = useCalendarEvents()
+const { resetSkeleton, updateEventFromSkeleton, cancelLatestRequest } = useCalendarEvents()
 const { eventSkeleton, lastActiveEvent } = storeToRefs(useCalendarEvents())
+
+const isLoading = ref(false)
 
 const formErrors = reactive<{ message: string | null }>({
   message: null
@@ -19,6 +21,10 @@ watch(isEditEventModalOpen, (hasOpened, _o) => {
 })
 
 async function handleAction() {
+  if (isLoading.value) return
+
+  isLoading.value = true
+
   try {
     await updateEventFromSkeleton()
 
@@ -29,29 +35,52 @@ async function handleAction() {
     }
   } finally {
     resetSkeleton()
+    isLoading.value = false
   }
+}
+
+/**
+ * Prevents the modal from closing if's still loading
+ *
+ * @param e The closing event (can be keydown or click)
+ */
+function handleClosing(e: Event) {
+  if (isLoading.value) {
+    e.preventDefault()
+  }
+}
+
+/**
+ * Click on the cancel button
+ *
+ * Must cancel the abortController in the store, and stop the loading
+ */
+function handleCancel() {
+  cancelLatestRequest()
+  isLoading.value = false
 }
 </script>
 
 <template>
-  <UiAlertDialog v-model:open="isEditEventModalOpen">
-    <UiAlertDialogContent
-      :align="'center'"
-      :side="'right'"
-      :collision-padding="60"
+  <UiDialog v-model:open="isEditEventModalOpen">
+    <UiDialogContent
       :disable-outside-pointer-events="true"
       :trap-focus="true"
       class="pl-3 min-w-96 bg-slate-900 border-slate-800"
+      @escape-key-down="handleClosing"
+      @focus-outside="handleClosing"
+      @interact-outside="handleClosing"
+      @pointer-down-outside="(e) => e.preventDefault()"
     >
       <VisuallyHidden>
-        <UiAlertDialogTitle> Modifier l'évènement</UiAlertDialogTitle>
+        <UiDialogTitle> Modifier l'évènement</UiDialogTitle>
 
-        <UiAlertDialogDescription>
+        <UiDialogDescription>
           Mettre à jour les données de l'évènement
-        </UiAlertDialogDescription>
+        </UiDialogDescription>
       </VisuallyHidden>
 
-      <form>
+      <form @submit.prevent="handleAction">
         <div class="grid grid-cols-2 gap-y-4">
           <div class="col-span-2 ml-8">
             <input
@@ -115,15 +144,23 @@ async function handleAction() {
             </span>
           </div>
         </div>
+
+        <footer class="flex gap-2 justify-end">
+          <Transition name="fade-delay">
+            <UiButton v-if="isLoading" type="button" size="sm" variant="destructive" @click.prevent="handleCancel">
+              Annuler
+            </UiButton>
+          </Transition>
+
+          <UiButton size="sm" :disabled="isLoading">
+            <Transition name="fade">
+              <PhCircleNotch v-if="isLoading" size="20" class="animate-spin"/>
+            </Transition>
+
+            Enregistrer
+          </UiButton>
+        </footer>
       </form>
-      <UiAlertDialogFooter>
-        <UiAlertDialogCancel>
-          Annuler
-        </UiAlertDialogCancel>
-        <UiAlertDialogAction @click="handleAction">
-          Sauvegarder
-        </UiAlertDialogAction>
-      </UiAlertDialogFooter>
-    </UiAlertDialogContent>
-  </UiAlertDialog>
+    </UiDialogContent>
+  </UiDialog>
 </template>

@@ -187,6 +187,12 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
    * EVENT CREATION FUNCTIONS
    */
   const lastActiveEvent = ref<CalendarEvent | null>()
+  const isCreatingEvent = ref<boolean>(false)
+  const isUpdatingEvent = ref<boolean>(false)
+  const isDeletingEvent = ref<boolean>(false)
+  const operationInProgress = computed(() => isCreatingEvent.value || isUpdatingEvent.value || isDeletingEvent.value)
+  let abortController: AbortController | null = null
+
   /**
    * Dummy event to hold creation data
    */
@@ -205,31 +211,58 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
    * We assume it's been sanitized by the caller
    */
   async function submitSkeleton() {
+    abortController = new AbortController()
+    isCreatingEvent.value = true
+
     try {
-      const res = await $fetch('/api/calendars/events/create', { method: 'POST', body: { event : eventSkeleton.value, calendarId: calendarId.value }})
+      const res = await $fetch('/api/calendars/events/create', { method: 'POST', body: { event : eventSkeleton.value, calendarId: calendarId.value }, signal: abortController.signal })
+
       baseEvents.value.push(res)
     } catch (err) {
       console.log(err)
+    } finally {
+      abortController = null
+      isCreatingEvent.value = false
     }
   }
 
   async function updateEventFromSkeleton() {
+    abortController = new AbortController()
+    isUpdatingEvent.value = true
+
     try {
-      const res = await $fetch(`/api/calendars/events/${eventSkeleton.value.id}`, { method: 'PATCH', body: { event : eventSkeleton.value, calendarId: calendarId.value }})
+      const res = await $fetch(`/api/calendars/events/${eventSkeleton.value.id}`, { method: 'PATCH', body: { event : eventSkeleton.value, calendarId: calendarId.value }, signal: abortController.signal })
+
       const eventIndex = baseEvents.value.findIndex(e => e.id === eventSkeleton.value.id)
       baseEvents.value[eventIndex] = res
     } catch (err) {
       console.log(err)
+    } finally {
+      abortController = null
+      isUpdatingEvent.value = false
     }
   }
 
   async function deleteEventFromSkeleton() {
+    abortController = new AbortController()
+    isDeletingEvent.value = true
+
     try {
-      await $fetch(`/api/calendars/events/${eventSkeleton.value.id}`, { method: 'DELETE' })
+      await $fetch(`/api/calendars/events/${eventSkeleton.value.id}`, { method: 'DELETE', signal: abortController.signal })
+
       const eventIndex = baseEvents.value.findIndex(e => e.id === eventSkeleton.value.id)
       baseEvents.value.splice(eventIndex, 1)
     } catch (err) {
       console.log(err)
+    } finally {
+      abortController = null
+      isDeletingEvent.value = false
+    }
+  }
+
+  function cancelLatestRequest() {
+    if (abortController) {
+      abortController.abort()
     }
   }
 
@@ -239,6 +272,11 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
     currentEvents,
     getRelativeEventFromDate,
     getRelativeEventFromEvent,
+    cancelLatestRequest,
+    isCreatingEvent,
+    isUpdatingEvent,
+    isDeletingEvent,
+    operationInProgress,
     eventSkeleton,
     resetSkeleton,
     submitSkeleton,

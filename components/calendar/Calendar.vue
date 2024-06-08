@@ -93,7 +93,7 @@ onMounted(() => {
 
   setCurrentMenu([
     {
-      phIcon: PhMagnifyingGlass,
+      phIcon: shallowRef(PhMagnifyingGlass),
       tooltip: 'Recherche avancée',
       action: 'event-search'
     }
@@ -116,10 +116,10 @@ onMounted(() => {
           <component :is="currentViewComponent"/>
         </KeepAlive>
       </div>
-    </template>
 
-    <LazyCalendarSearch />
-    <LazyCalendarFormUpdateEvent />
-    <LazyCalendarFormDeleteEvent />
+      <LazyCalendarSearch />
+      <LazyCalendarFormUpdateEvent />
+      <LazyCalendarFormDeleteEvent />
+    </template>
   </div>
 </template>

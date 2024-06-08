@@ -1,11 +1,12 @@
 <script lang="ts" setup>
 import type { RPGDate } from '~/models/Date';
 
-import { PhAlarm, PhMapPinArea } from '@phosphor-icons/vue'
+import { PhAlarm, PhCircleNotch, PhMapPinArea } from '@phosphor-icons/vue'
 
-const { eventSkeleton } = storeToRefs(useCalendarEvents())
-const { resetSkeleton, submitSkeleton } = useCalendarEvents()
+const { eventSkeleton, operationInProgress } = storeToRefs(useCalendarEvents())
+const { resetSkeleton, submitSkeleton, cancelLatestRequest } = useCalendarEvents()
 const popoverOpen = ref(false)
+const isLoading = ref(false)
 
 const formErrors = reactive<{ message: string | null }>({
   message: null
@@ -20,6 +21,12 @@ const props = defineProps<{
  * Opens event creation's popover
  */
 function openEventCreatePopover() {
+  // If another operation is in progress, whether it's another create popup or a modal, don't bother opening it
+  if (operationInProgress.value) {
+    popoverOpen.value = false
+    return
+  }
+
   resetSkeleton()
 
   popoverOpen.value = true
@@ -31,6 +38,11 @@ function openEventCreatePopover() {
 }
 
 async function handleSubmit() {
+  // Prevent form submission if already loading
+  if (isLoading.value) return
+
+  isLoading.value = true
+
   try {
     await submitSkeleton()
 
@@ -39,7 +51,30 @@ async function handleSubmit() {
     if (err instanceof Error) {
       formErrors.message = err.message
     }
+  } finally {
+    isLoading.value = false
   }
+}
+
+/**
+ * Prevents the modal from closing if's still loading
+ *
+ * @param e The closing event (can be keydown or click)
+ */
+function handleClosing(e: Event) {
+  if (isLoading.value) {
+    e.preventDefault()
+  }
+}
+
+/**
+ * Click on the cancel button
+ *
+ * Must cancel the abortController in the store, and stop the loading
+ */
+function handleCancel() {
+  cancelLatestRequest()
+  isLoading.value = false
 }
 </script>
 
@@ -52,7 +87,13 @@ async function handleSubmit() {
       :align="'center'"
       :side="'right'"
       :collision-padding="60"
+      :disable-outside-pointer-events="true"
+      :trap-focus="true"
       class="pl-3 min-w-96 bg-slate-900 border-slate-800"
+      @escape-key-down="handleClosing"
+      @focus-outside="handleClosing"
+      @interact-outside="handleClosing"
+      @pointer-down-outside="handleClosing"
     >
       <form @submit.prevent="handleSubmit">
         <div class="grid grid-cols-2 gap-y-4">
@@ -118,8 +159,18 @@ async function handleSubmit() {
             </span>
           </div>
 
-          <div class="text-right">
-            <UiButton size="sm">
+          <div class="flex gap-2 justify-end">
+            <Transition name="fade-delay">
+              <UiButton v-if="isLoading" type="button" size="sm" variant="destructive" @click.prevent="handleCancel">
+                Annuler
+              </UiButton>
+            </Transition>
+
+            <UiButton size="sm" :disabled="isLoading">
+              <Transition name="fade">
+                <PhCircleNotch v-if="isLoading" size="20" class="opacity-50 animate-spin"/>
+              </Transition>
+
               Sauvegarder
             </UiButton>
           </div>
