@@ -148,7 +148,7 @@ function handleCancel() {
           </div>
         </div>
 
-        <div class="flex gap-2 justify-end">
+        <footer class="flex gap-2 justify-end">
           <Transition name="fade-delay">
             <UiButton v-if="isLoading" type="button" size="sm" variant="destructive" @click.prevent="handleCancel">
               Annuler
@@ -160,9 +160,9 @@ function handleCancel() {
               <PhCircleNotch v-if="isLoading" size="20" class="animate-spin"/>
             </Transition>
 
-            Sauvegarder
+            Enregistrer
           </UiButton>
-        </div>
+        </footer>
       </form>
     </UiAlertDialogContent>
   </UiAlertDialog>
