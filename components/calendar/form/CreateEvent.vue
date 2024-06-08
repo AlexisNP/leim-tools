@@ -21,13 +21,11 @@ const props = defineProps<{
  * Opens event creation's popover
  */
 function openEventCreatePopover() {
-  console.log(operationInProgress.value)
+  // If another operation is in progress, whether it's another create popup or a modal, don't bother opening it
   if (operationInProgress.value) {
     popoverOpen.value = false
     return
   }
-
-  console.log('open still what ?')
 
   resetSkeleton()
 
@@ -59,6 +57,7 @@ async function handleSubmit() {
 }
 
 /**
+ * Prevents the modal from closing if's still loading
  *
  * @param e The closing event (can be keydown or click)
  */
@@ -70,6 +69,8 @@ function handleClosing(e: Event) {
 
 /**
  * Click on the cancel button
+ *
+ * Must cancel the abortController in the store, and stop the loading
  */
 function handleCancel() {
   cancelLatestRequest()
@@ -159,14 +160,14 @@ function handleCancel() {
           </div>
 
           <div class="flex gap-2 justify-end">
-            <Transition name="fade-cancel">
+            <Transition name="fade-delay">
               <UiButton v-if="isLoading" type="button" size="sm" variant="destructive" @click.prevent="handleCancel">
                 Annuler
               </UiButton>
             </Transition>
 
             <UiButton size="sm" :disabled="isLoading">
-              <Transition name="fade-cancel">
+              <Transition name="fade">
                 <PhCircleNotch v-if="isLoading" size="20" class="opacity-50 animate-spin"/>
               </Transition>
 

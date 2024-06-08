@@ -75,13 +75,19 @@
   }
 }
 
-.fade-cancel-enter-active,
-.fade-cancel-leave-active {
+.fade-enter-active,
+.fade-leave-active {
+  transition: all .5s ease;
+}
+.fade-delay-enter-active,
+.fade-delay-leave-active {
   transition: all .5s ease 1s;
 }
 
-.fade-cancel-enter-from,
-.fade-cancel-leave-to {
+.fade-enter-from,
+.fade-leave-to,
+.fade-delay-enter-from,
+.fade-delay-leave-to {
   opacity: 0;
   visibility: hidden;
 }
