@@ -93,7 +93,7 @@ onMounted(() => {
 
   setCurrentMenu([
     {
-      phIcon: PhMagnifyingGlass,
+      phIcon: shallowRef(PhMagnifyingGlass),
       tooltip: 'Recherche avancée',
       action: 'event-search'
     }
