@@ -3,7 +3,7 @@ import type { RPGDate } from '~/models/Date';
 
 import { PhAlarm, PhCircleNotch, PhMapPinArea } from '@phosphor-icons/vue'
 
-const { eventSkeleton } = storeToRefs(useCalendarEvents())
+const { eventSkeleton, operationInProgress } = storeToRefs(useCalendarEvents())
 const { resetSkeleton, submitSkeleton, cancelLatestRequest } = useCalendarEvents()
 const popoverOpen = ref(false)
 const isLoading = ref(false)
@@ -21,6 +21,14 @@ const props = defineProps<{
  * Opens event creation's popover
  */
 function openEventCreatePopover() {
+  console.log(operationInProgress.value)
+  if (operationInProgress.value) {
+    popoverOpen.value = false
+    return
+  }
+
+  console.log('open still what ?')
+
   resetSkeleton()
 
   popoverOpen.value = true
@@ -55,7 +63,6 @@ async function handleSubmit() {
  * @param e The closing event (can be keydown or click)
  */
 function handleClosing(e: Event) {
-  console.log(e)
   if (isLoading.value) {
     e.preventDefault()
   }
