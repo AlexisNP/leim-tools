@@ -1,7 +1,15 @@
 <script lang="ts" setup>
 import { PhHouse, PhList } from '@phosphor-icons/vue'
+import type { SidebarMenuActionType } from './SidebarProps';
 
+const { revealAdvancedSearch } = useCalendar()
 const { currentMenu } = storeToRefs(useUiStore())
+
+function handleMenuItemAction(actionType: SidebarMenuActionType) {
+  if (actionType === 'event-search') {
+    revealAdvancedSearch()
+  }
+}
 </script>
 
 <template>
@@ -39,7 +47,7 @@ const { currentMenu } = storeToRefs(useUiStore())
                   <component :is="item.phIcon" size="24" weight="fill" />
                 </RouterLink>
               </UiButton>
-              <UiButton v-if="item.clickHandler" variant="ghost" size="icon" class="rounded-full" @click="item.clickHandler">
+              <UiButton v-if="item.action" variant="ghost" size="icon" class="rounded-full" @click="handleMenuItemAction(item.action!)">
                 <component :is="item.phIcon" size="24" weight="fill" />
               </UiButton>
             </UiTooltipTrigger>

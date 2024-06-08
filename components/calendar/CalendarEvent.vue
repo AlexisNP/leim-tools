@@ -65,7 +65,7 @@ function handleClosePopover() {
       </button>
     </UiPopoverTrigger>
 
-    <CalendarEventDetails
+    <LazyCalendarEventDetails
       :event
       :spans-multiple-days
       :is-start-event

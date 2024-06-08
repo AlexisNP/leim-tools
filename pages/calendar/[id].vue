@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { PhMagnifyingGlass } from '@phosphor-icons/vue';
-
 useHead({
   title: 'Calendrier'
 })
@@ -15,17 +13,6 @@ watch(user, (n, _o) => {
     navigateTo('/')
   }
 })
-
-const { setCurrentMenu } = useUiStore()
-const { revealAdvancedSearch } = useCalendar()
-
-setCurrentMenu([
-  {
-    phIcon: PhMagnifyingGlass,
-    tooltip: 'Recherche avancée',
-    clickHandler: revealAdvancedSearch
-  }
-])
 </script>
 
 <template>

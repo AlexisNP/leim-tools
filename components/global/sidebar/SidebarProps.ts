@@ -1,7 +1,9 @@
+export type SidebarMenuActionType = "event-search"
+
 export interface SidebarMenuItem {
   phIcon: Component
   tooltip: string
-  clickHandler?: () => void
+  action?: SidebarMenuActionType
   to?: string
 }
 
