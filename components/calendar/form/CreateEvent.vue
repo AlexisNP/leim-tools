@@ -49,6 +49,17 @@ async function handleSubmit() {
     isLoading.value = false
   }
 }
+
+/**
+ *
+ * @param e The closing event (can be keydown or click)
+ */
+function handleClosing(e: Event) {
+  console.log(e)
+  if (isLoading.value) {
+    e.preventDefault()
+  }
+}
 </script>
 
 <template>
@@ -60,7 +71,13 @@ async function handleSubmit() {
       :align="'center'"
       :side="'right'"
       :collision-padding="60"
+      :disable-outside-pointer-events="true"
+      :trap-focus="true"
       class="pl-3 min-w-96 bg-slate-900 border-slate-800"
+      @escape-key-down="handleClosing"
+      @focus-outside="handleClosing"
+      @interact-outside="handleClosing"
+      @pointer-down-outside="handleClosing"
     >
       <form @submit.prevent="handleSubmit">
         <div class="grid grid-cols-2 gap-y-4">
