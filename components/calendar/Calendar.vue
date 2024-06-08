@@ -116,10 +116,10 @@ onMounted(() => {
           <component :is="currentViewComponent"/>
         </KeepAlive>
       </div>
-    </template>
 
-    <LazyCalendarSearch />
-    <LazyCalendarFormUpdateEvent />
-    <LazyCalendarFormDeleteEvent />
+      <LazyCalendarSearch />
+      <LazyCalendarFormUpdateEvent />
+      <LazyCalendarFormDeleteEvent />
+    </template>
   </div>
 </template>

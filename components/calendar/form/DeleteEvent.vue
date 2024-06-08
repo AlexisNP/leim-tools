@@ -63,9 +63,6 @@ function handleCancel() {
 <template>
   <UiAlertDialog v-model:open="isDeleteEventModalOpen">
     <UiAlertDialogContent
-      :align="'center'"
-      :side="'right'"
-      :collision-padding="60"
       :disable-outside-pointer-events="true"
       :trap-focus="true"
       class="min-w-96 bg-slate-900 border-slate-800"
