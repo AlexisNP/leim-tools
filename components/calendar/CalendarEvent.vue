@@ -18,7 +18,6 @@ const isStartEvent = spansMultipleDays && areDatesIdentical(props.tileDate, prop
 const isEndEvent = spansMultipleDays && props.event.endDate && areDatesIdentical(props.tileDate, props.event.endDate)
 
 const titleCharLimit = 50;
-
 const eventTitle = computed<string>(() => props.event.title.length <= titleCharLimit ? props.event.title : `${props.event.title.slice(0, titleCharLimit)}…`)
 
 // Popover code
@@ -39,6 +38,19 @@ function handleDelete() {
 function handleClosePopover() {
   isPopoverDetailsOpen.value = false
 }
+
+onMounted(() => {
+  // Listen for keydown events
+  window.addEventListener('keydown', (e: KeyboardEvent) => {
+    // If the popover isn't opened, this is not the event we're trying to delete, so return
+    if (!isPopoverDetailsOpen.value) return
+
+    // If the key isn't the delete one, return
+    if (e.key !== 'Delete') return
+
+    handleDelete()
+  })
+})
 </script>
 
 <template>
