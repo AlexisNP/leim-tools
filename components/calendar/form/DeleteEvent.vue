@@ -93,7 +93,7 @@ function handleCancel() {
             </UiButton>
           </Transition>
 
-          <UiButton size="sm" :disabled="isLoading">
+          <UiButton size="sm" variant="destructive" :disabled="isLoading">
             <Transition name="fade">
               <PhCircleNotch v-if="isLoading" size="20" class="animate-spin"/>
             </Transition>
