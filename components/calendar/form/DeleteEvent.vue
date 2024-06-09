@@ -86,20 +86,26 @@ function handleCancel() {
           </div>
         </div>
 
-        <footer class="flex gap-2 justify-end">
-          <Transition name="fade-delay">
-            <UiButton v-if="isLoading" type="button" size="sm" variant="destructive" @click.prevent="handleCancel">
-              Annuler
-            </UiButton>
-          </Transition>
+        <footer class="flex gap-2 justify-between">
+          <UiButton type="button" size="sm" variant="ghost" @click="() => isDeleteEventModalOpen = false">
+            Retour
+          </UiButton>
 
-          <UiButton size="sm" variant="destructive" :disabled="isLoading">
-            <Transition name="fade">
-              <PhCircleNotch v-if="isLoading" size="20" class="animate-spin"/>
+          <div class="flex gap-2 justify-end">
+            <Transition name="fade-delay">
+              <UiButton v-if="isLoading" type="button" size="sm" variant="destructive" @click.prevent="handleCancel">
+                Annuler
+              </UiButton>
             </Transition>
 
-            Supprimer
-          </UiButton>
+            <UiButton size="sm" variant="destructive" :disabled="isLoading">
+              <Transition name="fade">
+                <PhCircleNotch v-if="isLoading" size="20" class="animate-spin"/>
+              </Transition>
+
+              Supprimer
+            </UiButton>
+          </div>
         </footer>
       </form>
     </UiAlertDialogContent>
