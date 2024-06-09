@@ -60,6 +60,7 @@ onMounted(() => {
         class="text-xs px-2 py-1 block w-full text-left rounded-sm focus-visible:bg-red-200"
         :class="
           cn({
+            'italic': event.hidden,
             'text-white bg-slate-600 hover:bg-slate-700': !event.category,
             'text-white bg-lime-600 hover:bg-lime-700': event.category?.name === 'naissance',
             'text-white bg-stone-500 hover:bg-stone-700': event.category?.name === 'mort',
