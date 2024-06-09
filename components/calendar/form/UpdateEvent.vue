@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { PhAlarm, PhCircleNotch, PhMapPinArea } from '@phosphor-icons/vue'
+import { PhAlarm, PhCircleNotch, PhMapPinArea, PhPencilSimpleLine } from '@phosphor-icons/vue'
 import { VisuallyHidden } from 'radix-vue'
 
 const { isEditEventModalOpen } = storeToRefs(useCalendarEvents())
@@ -82,15 +82,20 @@ function handleCancel() {
 
       <form @submit.prevent="handleAction">
         <div class="grid grid-cols-2 gap-y-4">
-          <div class="col-span-2 ml-8">
-            <input
-              id="new-event-title"
-              v-model="eventSkeleton.title"
-              type="text"
-              name="new-event-title"
-              required
-              placeholder="Titre de l'évènement"
-              class="w-full -my-1 py-1 -mx-1 px-1 text-lg border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600">
+          <div class="col-span-2">
+            <div class="flex items-center gap-2">
+              <PhPencilSimpleLine size="20" weight="fill" />
+
+              <input
+                id="new-event-title"
+                v-model="eventSkeleton.title"
+                type="text"
+                name="new-event-title"
+                required
+                placeholder="Titre de l'évènement"
+                class="w-full -my-1 py-1 -mx-1 px-1 text-lg border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600"
+              >
+            </div>
           </div>
 
           <div class="col-span-2 ml-8">

@@ -294,7 +294,7 @@ insert into public.calendar_events (title, description, location, start_date, en
   1
 );
 insert into public.calendar_events (title, description, location, start_date, end_date, category, hidden, wiki, calendar_id) values (
-  'Grande Banque Minérale',
+  'Grande Bourse Minérale',
   'Les artisans et mineurs de Rougefer se réunissent pour vendre le fruit de leur dur labeur.',
   'Cantane',
   '{ "day": 23, "month": 8, "year": 3209 }',

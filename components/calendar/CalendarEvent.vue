@@ -10,29 +10,54 @@ const props = defineProps<{
 }>()
 
 const { areDatesIdentical } = useCalendar()
+const { revealEditEventModal, revealDeleteEventModal } = useCalendarEvents()
+const { lastActiveEvent } = storeToRefs(useCalendarEvents())
 
 const spansMultipleDays = Boolean(props.event.startDate && props.event.endDate)
 const isStartEvent = spansMultipleDays && areDatesIdentical(props.tileDate, props.event.startDate)
 const isEndEvent = spansMultipleDays && props.event.endDate && areDatesIdentical(props.tileDate, props.event.endDate)
 
 const titleCharLimit = 50;
-
 const eventTitle = computed<string>(() => props.event.title.length <= titleCharLimit ? props.event.title : `${props.event.title.slice(0, titleCharLimit)}…`)
 
 // Popover code
 const isPopoverDetailsOpen = ref<boolean>(false)
 
+function handleDoubleClick() {
+  isPopoverDetailsOpen.value = false
+  lastActiveEvent.value = { ...props.event }
+  revealEditEventModal()
+}
+
+function handleDelete() {
+  isPopoverDetailsOpen.value = false
+  lastActiveEvent.value = { ...props.event }
+  revealDeleteEventModal()
+}
+
 function handleClosePopover() {
   isPopoverDetailsOpen.value = false
 }
+
+onMounted(() => {
+  // Listen for keydown events
+  window.addEventListener('keydown', (e: KeyboardEvent) => {
+    // If the popover isn't opened, this is not the event we're trying to delete, so return
+    if (!isPopoverDetailsOpen.value) return
+
+    // If the key isn't the delete one, return
+    if (e.key !== 'Delete') return
+
+    handleDelete()
+  })
+})
 </script>
 
 <template>
   <UiPopover v-model:open="isPopoverDetailsOpen">
     <UiPopoverTrigger as-child>
       <button
-        id="test"
-        class="text-xs px-2 py-1 block w-full text-left rounded-sm"
+        class="text-xs px-2 py-1 block w-full text-left rounded-sm focus-visible:bg-red-200"
         :class="
           cn({
             'text-white bg-slate-600 hover:bg-slate-700': !event.category,
@@ -58,6 +83,8 @@ function handleClosePopover() {
             'rounded-l-none': isEndEvent
           })
         "
+        @dblclick="handleDoubleClick"
+        @keydown.delete="handleDelete"
       >
         <div class="line-clamp-2 [overflow-wrap:anywhere] hyphens-auto">
           {{ eventTitle }}
