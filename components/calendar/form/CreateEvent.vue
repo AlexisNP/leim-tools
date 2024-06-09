@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { RPGDate } from '~/models/Date';
 
-import { PhAlarm, PhCircleNotch, PhMapPinArea } from '@phosphor-icons/vue'
+import { PhAlarm, PhCircleNotch, PhEye, PhEyeClosed, PhMapPinArea } from '@phosphor-icons/vue'
 
 const { eventSkeleton, operationInProgress } = storeToRefs(useCalendarEvents())
 const { resetSkeleton, submitSkeleton, cancelLatestRequest } = useCalendarEvents()
@@ -96,7 +96,7 @@ function handleCancel() {
       @pointer-down-outside="handleClosing"
     >
       <form @submit.prevent="handleSubmit">
-        <div class="grid grid-cols-2 gap-y-4">
+        <div class="grid grid-cols-2 gap-y-6">
           <div class="col-span-2 pl-8">
             <input
               id="new-event-title"
@@ -119,7 +119,7 @@ function handleCancel() {
           </div>
 
           <div class="col-span-2">
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-4">
               <PhAlarm size="18" weight="fill" />
 
               <CalendarInputRPGDate
@@ -140,7 +140,7 @@ function handleCancel() {
           </div>
 
           <div class="col-span-2">
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-4">
               <PhMapPinArea size="18" weight="fill" />
 
               <input
@@ -150,6 +150,25 @@ function handleCancel() {
                 name="new-event-location"
                 placeholder="Ajouter un endroit"
                 class="w-full -my-1 py-1 px-2 text-sm border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600">
+            </div>
+          </div>
+
+          <div class="col-span-2">
+            <div class="flex items-center gap-4">
+              <PhEye v-if="!eventSkeleton.hidden" size="18" weight="fill" />
+              <PhEyeClosed v-else size="18" />
+
+              <div class="flex items-center gap-x-2">
+                <UiSwitch id="new-event-visibility" v-model:checked="eventSkeleton.hidden" />
+                <UiLabel for="new-event-visibility">
+                  <template v-if="!eventSkeleton.hidden">
+                    Évènement visible
+                  </template>
+                  <template v-else>
+                    Évènement caché
+                  </template>
+                </UiLabel>
+              </div>
             </div>
           </div>
 

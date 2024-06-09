@@ -24,7 +24,8 @@ export const postEventBodySchema = z.object({
     description: z.string().optional().nullable(),
     location: z.string().optional().nullable(),
     startDate: dateSchema.required(),
-    endDate: dateSchema.optional().nullable()
+    endDate: dateSchema.optional().nullable(),
+    hidden: z.boolean().optional().nullable()
   }),
   calendarId: z.number({ coerce: true }).int().positive()
 })
