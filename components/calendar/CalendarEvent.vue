@@ -10,7 +10,7 @@ const props = defineProps<{
 }>()
 
 const { areDatesIdentical } = useCalendar()
-const { revealEditEventModal } = useCalendarEvents()
+const { revealEditEventModal, revealDeleteEventModal } = useCalendarEvents()
 const { lastActiveEvent } = storeToRefs(useCalendarEvents())
 
 const spansMultipleDays = Boolean(props.event.startDate && props.event.endDate)
@@ -30,6 +30,12 @@ function handleDoubleClick() {
   revealEditEventModal()
 }
 
+function handleDelete() {
+  isPopoverDetailsOpen.value = false
+  lastActiveEvent.value = { ...props.event }
+  revealDeleteEventModal()
+}
+
 function handleClosePopover() {
   isPopoverDetailsOpen.value = false
 }
@@ -39,8 +45,7 @@ function handleClosePopover() {
   <UiPopover v-model:open="isPopoverDetailsOpen">
     <UiPopoverTrigger as-child>
       <button
-        id="test"
-        class="text-xs px-2 py-1 block w-full text-left rounded-sm"
+        class="text-xs px-2 py-1 block w-full text-left rounded-sm focus-visible:bg-red-200"
         :class="
           cn({
             'text-white bg-slate-600 hover:bg-slate-700': !event.category,
@@ -67,6 +72,7 @@ function handleClosePopover() {
           })
         "
         @dblclick="handleDoubleClick"
+        @keydown.delete="handleDelete"
       >
         <div class="line-clamp-2 [overflow-wrap:anywhere] hyphens-auto">
           {{ eventTitle }}
