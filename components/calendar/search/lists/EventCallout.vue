@@ -3,7 +3,7 @@ import type { RPGDate } from '@/models/Date'
 import type { CalendarEvent } from '@/models/CalendarEvent'
 import { useCalendar } from '@/stores/CalendarStore'
 
-import { PhArrowSquareOut, PhHourglassMedium, PhAlarm, PhMapPinArea } from '@phosphor-icons/vue'
+import { PhArrowSquareOut, PhHourglassMedium, PhAlarm, PhMapPinArea, PhEye } from '@phosphor-icons/vue'
 
 const props = defineProps<{
   event: CalendarEvent
@@ -27,6 +27,7 @@ const dateDuration: string | null = props.event.endDate
   <button
     class="relative block w-full text-left py-3 px-4 rounded-sm transition-colors"
     :class="{
+      'pt-4': event.hidden,
       'text-white bg-slate-600 hover:bg-slate-700': !event.category,
       'text-white bg-lime-600 hover:bg-lime-700': event.category?.name === 'naissance',
       'text-white bg-stone-500 hover:bg-stone-700': event.category?.name === 'mort',
@@ -49,8 +50,8 @@ const dateDuration: string | null = props.event.endDate
     }"
     @click="$emit('query:date-jump', event.startDate)"
   >
-    <div class="flex gap-2 items-center">
-      <h2 class="font-bold">
+    <div class="flex gap-2 items-center mb-1">
+      <h2 class="font-bold text-lg">
         {{ event.title }}
       </h2>
       <div v-if="event.wiki">
@@ -115,5 +116,18 @@ const dateDuration: string | null = props.event.endDate
         {{ event.description }}
       </span>
     </div>
+
+    <UiTooltipProvider v-if="event.hidden" :delay-duration="250">
+      <UiTooltip>
+        <UiTooltipTrigger as-child>
+          <UiBadge class="absolute -top-2 left-2 flex gap-1 border-[1px] border-slate-900 hover:bg-slate-300 hover:opacity-100">
+            <PhEye size="16" weight="fill" /> Évènement privé
+          </UiBadge>
+        </UiTooltipTrigger>
+        <UiTooltipContent>
+          <p>Cet évènement est uniquement visible pour vous</p>
+        </UiTooltipContent>
+      </UiTooltip>
+    </UiTooltipProvider>
   </button>
 </template>

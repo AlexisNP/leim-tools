@@ -9,7 +9,8 @@ import {
   PhHourglassHigh,
   PhHourglassLow,
   PhMapPinArea,
-  PhDotsThreeOutlineVertical
+  PhDotsThreeOutlineVertical,
+  PhEye
 } from '@phosphor-icons/vue'
 
 const { defaultDate, getFormattedDateTitle, jumpToDate, getRelativeString } = useCalendar()
@@ -189,6 +190,19 @@ function deployDeleteModal() {
         </button>
       </UiBadge>
     </nav>
+
+    <UiTooltipProvider v-if="event.hidden" :delay-duration="250">
+      <UiTooltip>
+        <UiTooltipTrigger as-child>
+          <UiBadge class="absolute -top-2 right-2 flex gap-1 hover:bg-slate-300 hover:opacity-100">
+            <PhEye size="16" weight="fill" /> Évènement privé
+          </UiBadge>
+        </UiTooltipTrigger>
+        <UiTooltipContent>
+          <p>Cet évènement est uniquement visible pour vous</p>
+        </UiTooltipContent>
+      </UiTooltip>
+    </UiTooltipProvider>
   </UiPopoverContent>
 </template>
 
