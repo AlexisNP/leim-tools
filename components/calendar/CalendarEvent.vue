@@ -10,6 +10,8 @@ const props = defineProps<{
 }>()
 
 const { areDatesIdentical } = useCalendar()
+const { revealEditEventModal } = useCalendarEvents()
+const { lastActiveEvent } = storeToRefs(useCalendarEvents())
 
 const spansMultipleDays = Boolean(props.event.startDate && props.event.endDate)
 const isStartEvent = spansMultipleDays && areDatesIdentical(props.tileDate, props.event.startDate)
@@ -21,6 +23,12 @@ const eventTitle = computed<string>(() => props.event.title.length <= titleCharL
 
 // Popover code
 const isPopoverDetailsOpen = ref<boolean>(false)
+
+function handleDoubleClick() {
+  isPopoverDetailsOpen.value = false
+  lastActiveEvent.value = { ...props.event }
+  revealEditEventModal()
+}
 
 function handleClosePopover() {
   isPopoverDetailsOpen.value = false
@@ -58,6 +66,7 @@ function handleClosePopover() {
             'rounded-l-none': isEndEvent
           })
         "
+        @dblclick="handleDoubleClick"
       >
         <div class="line-clamp-2 [overflow-wrap:anywhere] hyphens-auto">
           {{ eventTitle }}

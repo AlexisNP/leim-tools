@@ -67,6 +67,7 @@ function deployDeleteModal() {
     :side="'left'"
     :collision-padding="60"
     :hide-when-detached="true"
+    :disable-outside-pointer-events="true"
     :class="{
       'border-slate-800': !event.category,
       'border-lime-800': event.category?.name === 'naissance',
