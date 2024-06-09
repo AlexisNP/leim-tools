@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { RPGDate } from '~/models/Date';
-
+import { PopoverAnchor } from 'radix-vue';
 import { PhAlarm, PhCircleNotch, PhEye, PhEyeClosed, PhMapPinArea } from '@phosphor-icons/vue'
 
 const { eventSkeleton, operationInProgress } = storeToRefs(useCalendarEvents())
@@ -80,9 +80,9 @@ function handleCancel() {
 
 <template>
   <UiPopover v-model:open="popoverOpen">
-    <UiPopoverTrigger as-child>
-      <button :class="btnClass" @click="openEventCreatePopover()" />
-    </UiPopoverTrigger>
+    <PopoverAnchor as-child>
+      <button :class="btnClass" @dblclick="openEventCreatePopover()" />
+    </PopoverAnchor>
     <UiPopoverContent
       :align="'center'"
       :side="'right'"
