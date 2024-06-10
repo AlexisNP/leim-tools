@@ -62,9 +62,7 @@ const computedTextValue = computed(() => {
               :value="category"
               @select="handleCatSelect"
             >
-              <span class="capitalize">
-                {{ category.name }}
-              </span>
+              {{ category.name }}
             </UiCommandItem>
           </UiCommandGroup>
         </UiCommandList>

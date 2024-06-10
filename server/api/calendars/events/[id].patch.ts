@@ -64,6 +64,7 @@ export default defineEventHandler(async (event) => {
 
     return data
   } catch (err) {
+    console.log(err)
     throw createError({
       cause: 'Serveur',
       status: 500,
