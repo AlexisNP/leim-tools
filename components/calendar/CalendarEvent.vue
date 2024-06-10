@@ -12,9 +12,9 @@ const { areDatesIdentical } = useCalendar()
 const { revealEditEventModal, revealDeleteEventModal } = useCalendarEvents()
 const { lastActiveEvent } = storeToRefs(useCalendarEvents())
 
-const spansMultipleDays = Boolean(props.event.startDate && props.event.endDate)
-const isStartEvent = spansMultipleDays && areDatesIdentical(props.tileDate, props.event.startDate)
-const isEndEvent = spansMultipleDays && props.event.endDate && areDatesIdentical(props.tileDate, props.event.endDate)
+const spansMultipleDays = computed(() => Boolean(props.event.startDate && props.event.endDate))
+const isStartEvent = computed(() => spansMultipleDays.value && areDatesIdentical(props.tileDate, props.event.startDate))
+const isEndEvent = computed(() => spansMultipleDays.value && props.event.endDate && areDatesIdentical(props.tileDate, props.event.endDate))
 
 const titleCharLimit = 50;
 const eventTitle = computed<string>(() => props.event.title.length <= titleCharLimit ? props.event.title : `${props.event.title.slice(0, titleCharLimit)}…`)
