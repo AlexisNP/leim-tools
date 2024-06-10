@@ -41,7 +41,7 @@ export default defineEventHandler(async (event) => {
           description: bodyData.event.description,
           location: bodyData.event.location,
           hidden: bodyData.event.hidden,
-          category: bodyData.event.category.id,
+          category: bodyData.event.category?.id,
           calendar_id: bodyData?.calendarId
         } as never
       )
