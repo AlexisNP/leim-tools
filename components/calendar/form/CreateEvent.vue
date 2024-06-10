@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { RPGDate } from '~/models/Date';
 import { PopoverAnchor } from 'radix-vue';
-import { PhAlarm, PhCircleNotch, PhEye, PhEyeClosed, PhMapPinArea } from '@phosphor-icons/vue'
+import { PhAlarm, PhCircleNotch, PhEye, PhEyeClosed, PhMapPinArea, PhTag } from '@phosphor-icons/vue'
 
 const { eventSkeleton, operationInProgress } = storeToRefs(useCalendarEvents())
 const { resetSkeleton, submitSkeleton, cancelLatestRequest } = useCalendarEvents()
@@ -96,7 +96,7 @@ function handleCancel() {
       @pointer-down-outside="handleClosing"
     >
       <form @submit.prevent="handleSubmit">
-        <div class="grid grid-cols-2 gap-y-6">
+        <div class="grid grid-cols-2 gap-y-3">
           <div class="col-span-2 pl-8">
             <input
               id="new-event-title"
@@ -141,6 +141,14 @@ function handleCancel() {
 
           <div class="col-span-2">
             <div class="flex items-center gap-4">
+              <PhTag size="18" weight="fill" />
+
+              <CalendarInputEventCategories v-model="eventSkeleton.category" placeholder="Ajouter une catégorie principale" />
+            </div>
+          </div>
+
+          <div class="col-span-2 mb-4">
+            <div class="flex items-center gap-4">
               <PhMapPinArea size="18" weight="fill" />
 
               <input
@@ -149,7 +157,7 @@ function handleCancel() {
                 type="text"
                 name="new-event-location"
                 placeholder="Ajouter un endroit"
-                class="w-full -my-1 py-1 px-2 text-sm border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600">
+                class="w-full -my-1 py-2 px-2 text-sm border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600">
             </div>
           </div>
 
