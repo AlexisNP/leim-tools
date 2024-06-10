@@ -38,7 +38,7 @@ const computedTextValue = computed(() => {
       <UiButton
         variant="outline"
         role="combobox"
-        class="w-fit max-w-full justify-between capitalize"
+        class="w-fit max-w-full justify-between"
       >
         {{ computedTextValue }}
 
@@ -46,8 +46,10 @@ const computedTextValue = computed(() => {
       </UiButton>
     </UiPopoverTrigger>
     <UiPopoverContent
-      :align="'start'"
-      class="w-fit p-0"
+      align="start"
+      side="bottom"
+      :collision-padding="50"
+      class="w-fit h-[33vh] p-0"
     >
       <UiCommand v-model="model" :multiple>
         <UiCommandInput placeholder="Rechercher les catégories" />
