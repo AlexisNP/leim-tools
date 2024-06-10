@@ -114,13 +114,13 @@ function deployDeleteModal() {
       <template v-if="event.category || event.secondaryCategories">
         <ul class="flex gap-1">
           <li v-if="event.category">
-            <UiBadge class="mix-blend-luminosity font-bold bg-gray-600" variant="secondary">
+            <UiBadge class="mix-blend-luminosity font-bold bg-gray-600 lowercase" variant="secondary">
               {{ event.category?.name }}
             </UiBadge>
           </li>
 
           <li v-for="cat in event.secondaryCategories" :key="cat.id">
-            <UiBadge class="mix-blend-luminosity bg-gray-600" variant="secondary">
+            <UiBadge class="mix-blend-luminosity bg-gray-600 lowercase" variant="secondary">
               {{ cat.name }}
             </UiBadge>
           </li>
