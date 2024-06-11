@@ -1,8 +1,6 @@
 <script lang="ts" setup>
-import { cn } from '@/lib/utils'
+import { PhCaretDown } from '@phosphor-icons/vue';
 import type { Category } from '~/models/Category';
-
-import { PhCaretDown, PhCheck } from '@phosphor-icons/vue';
 
 const isPopoverOpen = ref<boolean>(false)
 
@@ -10,16 +8,15 @@ const props = defineProps<{
   placeholder?: string
 }>()
 
-const model = defineModel<Category[]>({ default: [] })
-const modelBuffer = ref<Category[]>([])
-
-watch(modelBuffer.value, () => {
-  model.value = [ ...modelBuffer.value ]
-})
+const model = defineModel<Category>()
 
 const { categories: availableCategories } = useCalendarEvents()
 
 const searchTerm = ref<string>('')
+
+function handleCatSelect() {
+  isPopoverOpen.value = false
+}
 
 const filteredCategories = computed(() =>
   searchTerm.value === ''
@@ -36,19 +33,13 @@ const filteredCategories = computed(() =>
       <UiButton
         variant="outline"
         role="combobox"
-        class="relative w-full max-w-full h-fit justify-between"
+        class="w-full max-w-full justify-between"
       >
-        <template v-if="!model.length">
+        <template v-if="!model">
           {{ props.placeholder }}
         </template>
         <template v-else>
-          <ul class="flex flex-wrap gap-1">
-            <li v-for="category in model" :key="`selected-cat-${category.id}`">
-              <UiBadge class="lowercase" variant="secondary">
-                {{ category.name }}
-              </UiBadge>
-            </li>
-          </ul>
+          {{ model.name }}
         </template>
 
         <PhCaretDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -60,7 +51,7 @@ const filteredCategories = computed(() =>
       :collision-padding="50"
       class="w-fit h-[33vh] p-0"
     >
-      <UiCommand v-model="modelBuffer" v-model:searchTerm="searchTerm" :multiple="true">
+      <UiCommand v-model="model" v-model:searchTerm="searchTerm">
         <UiCommandInput placeholder="Rechercher les catégories" />
         <UiCommandEmpty>Aucune catégorie trouvée.</UiCommandEmpty>
         <UiCommandList>
@@ -69,16 +60,10 @@ const filteredCategories = computed(() =>
               v-for="category in filteredCategories"
               :key="category.id"
               :value="category"
-              class="cursor-pointer flex justify-between items-center"
-              :class="cn({
-
-              })"
+              class="cursor-pointer"
+              @select="handleCatSelect"
             >
-              <span>
-                {{ category.name }}
-              </span>
-
-              <PhCheck v-if="model.find(cat => cat.id === category.id)" />
+              {{ category.name }}
             </UiCommandItem>
           </UiCommandGroup>
         </UiCommandList>

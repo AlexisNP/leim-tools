@@ -133,9 +133,21 @@ function handleCancel() {
             <div class="flex items-center gap-4">
               <PhTag size="18" weight="fill" />
 
-              <CalendarInputEventCategories v-model="eventSkeleton.category" placeholder="Ajouter une catégorie principale" />
+              <div class="w-1/2">
+                <CalendarInputEventCategory v-model="eventSkeleton.category" placeholder="Ajouter une catégorie principale" />
+              </div>
             </div>
           </div>
+
+          <!-- <div class="col-span-2">
+            <div class="flex items-center gap-4">
+              <PhTag size="18" weight="fill" />
+
+              <div class="w-1/2">
+                <CalendarInputEventCategories v-model="eventSkeleton.secondaryCategories" placeholder="Ajouter des catégories secondaires" />
+              </div>
+            </div>
+          </div> -->
 
           <div class="col-span-2 mb-2">
             <div class="flex items-center gap-4">
