@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import type { Category } from './Category'
+import { categorySchema, type Category } from './Category'
 import { dateSchema, type RPGDate } from './Date'
 
 export interface CalendarEvent {
@@ -25,7 +25,8 @@ export const postEventBodySchema = z.object({
     location: z.string().optional().nullable(),
     startDate: dateSchema.required(),
     endDate: dateSchema.optional().nullable(),
-    hidden: z.boolean().optional().nullable()
+    hidden: z.boolean().optional().nullable(),
+    category: categorySchema.optional().nullable(),
   }),
   calendarId: z.number({ coerce: true }).int().positive()
 })

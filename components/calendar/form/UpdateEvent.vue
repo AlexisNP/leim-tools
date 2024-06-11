@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { PhAlarm, PhCircleNotch, PhEye, PhEyeClosed, PhMapPinArea, PhPencilSimpleLine } from '@phosphor-icons/vue'
+import { PhAlarm, PhCircleNotch, PhEye, PhEyeClosed, PhMapPinArea, PhPencilSimpleLine, PhTag } from '@phosphor-icons/vue'
 import { VisuallyHidden } from 'radix-vue'
 
 const { isEditEventModalOpen } = storeToRefs(useCalendarEvents())
@@ -81,7 +81,7 @@ function handleCancel() {
       </VisuallyHidden>
 
       <form @submit.prevent="handleAction">
-        <div class="grid grid-cols-2 gap-y-6">
+        <div class="grid grid-cols-2 gap-y-3">
           <div class="col-span-2">
             <div class="flex items-center gap-4">
               <PhPencilSimpleLine size="20" weight="fill" />
@@ -98,7 +98,7 @@ function handleCancel() {
             </div>
           </div>
 
-          <div class="col-span-2 ml-8">
+          <div class="col-span-2 my-2 ml-8">
             <textarea
               id="new-event-description"
               v-model="eventSkeleton.description"
@@ -131,6 +131,26 @@ function handleCancel() {
 
           <div class="col-span-2">
             <div class="flex items-center gap-4">
+              <PhTag size="18" weight="fill" />
+
+              <div class="w-1/2">
+                <CalendarInputEventCategory v-model="eventSkeleton.category" placeholder="Ajouter une catégorie principale" />
+              </div>
+            </div>
+          </div>
+
+          <!-- <div class="col-span-2">
+            <div class="flex items-center gap-4">
+              <PhTag size="18" weight="fill" />
+
+              <div class="w-1/2">
+                <CalendarInputEventCategories v-model="eventSkeleton.secondaryCategories" placeholder="Ajouter des catégories secondaires" />
+              </div>
+            </div>
+          </div> -->
+
+          <div class="col-span-2 mb-2">
+            <div class="flex items-center gap-4">
               <PhMapPinArea size="18" weight="fill" />
 
               <input
@@ -139,7 +159,7 @@ function handleCancel() {
                 type="text"
                 name="new-event-location"
                 placeholder="Ajouter un endroit"
-                class="w-full -my-1 py-1 px-2 text-sm border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600">
+                class="w-full -my-1 py-2 px-2 text-sm border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600">
             </div>
           </div>
 

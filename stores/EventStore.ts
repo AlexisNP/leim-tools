@@ -1,7 +1,8 @@
-import type { RPGDate } from '@/models/Date'
 import type { CalendarEvent } from '@/models/CalendarEvent'
+import type { RPGDate } from '@/models/Date'
 import { defineStore } from 'pinia'
 import { ref, watch, type Ref } from 'vue'
+import type { Category } from '~/models/Category'
 import { useCalendar } from './CalendarStore'
 
 export const useCalendarEvents = defineStore('calendar-events', () => {
@@ -12,6 +13,12 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
 
   function setEvents(data: CalendarEvent[]) {
     baseEvents.value = data
+  }
+
+  const categories = ref<Category[]>([])
+
+  function setCategories(data: Category[]) {
+    categories.value = data
   }
 
   // Order base events by dates
@@ -269,6 +276,8 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
   return {
     allEvents,
     setEvents,
+    categories,
+    setCategories,
     currentEvents,
     getRelativeEventFromDate,
     getRelativeEventFromEvent,

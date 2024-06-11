@@ -2,38 +2,38 @@ insert into public.role_permissions (role, permission) values ('sa', 'events.see
 insert into public.role_permissions (role, permission) values ('sa', 'users.ban');
 
 -- Event categories
-insert into public.calendar_event_categories (name) values ('naissance');
-insert into public.calendar_event_categories (name) values ('mort');
-insert into public.calendar_event_categories (name) values ('catastrophe');
-insert into public.calendar_event_categories (name) values ('catastrophe naturelle');
-insert into public.calendar_event_categories (name) values ('inauguration');
-insert into public.calendar_event_categories (name) values ('religion');
-insert into public.calendar_event_categories (name) values ('invention');
-insert into public.calendar_event_categories (name) values ('science');
-insert into public.calendar_event_categories (name) values ('bénédiction');
-insert into public.calendar_event_categories (name) values ('joueurs');
-insert into public.calendar_event_categories (name) values ('découverte');
-insert into public.calendar_event_categories (name) values ('exploration');
-insert into public.calendar_event_categories (name) values ('construction');
-insert into public.calendar_event_categories (name) values ('arcanologie');
-insert into public.calendar_event_categories (name) values ('criminalité');
-insert into public.calendar_event_categories (name) values ('scandale');
-insert into public.calendar_event_categories (name) values ('commerce');
-insert into public.calendar_event_categories (name) values ('législation');
+insert into public.calendar_event_categories (name, color) values ('Naissance', 'white');
+insert into public.calendar_event_categories (name, color) values ('Mort', 'black');
+insert into public.calendar_event_categories (name, color) values ('Catastrophe', 'orange');
+insert into public.calendar_event_categories (name, color) values ('Catastrophe naturelle', 'red');
+insert into public.calendar_event_categories (name, color) values ('Inauguration', 'green');
+insert into public.calendar_event_categories (name, color) values ('Religion', 'violet');
+insert into public.calendar_event_categories (name, color) values ('Invention', 'teal');
+insert into public.calendar_event_categories (name, color) values ('Science', 'indigo');
+insert into public.calendar_event_categories (name, color) values ('Bénédiction', 'white');
+insert into public.calendar_event_categories (name, color) values ('Joueurs', 'white');
+insert into public.calendar_event_categories (name, color) values ('Découverte', 'purple');
+insert into public.calendar_event_categories (name, color) values ('Exploration', 'lime');
+insert into public.calendar_event_categories (name, color) values ('Construction', 'blue');
+insert into public.calendar_event_categories (name, color) values ('Arcanologie', 'cyan');
+insert into public.calendar_event_categories (name, color) values ('Criminalité', 'rose');
+insert into public.calendar_event_categories (name, color) values ('Scandale', 'pink');
+insert into public.calendar_event_categories (name, color) values ('Commerce', 'amber');
+insert into public.calendar_event_categories (name, color) values ('Législation', 'blue');
 
 -- Character categories
-insert into public.character_categories (name) values ('joueur');
-insert into public.character_categories (name) values ('comte');
-insert into public.character_categories (name) values ('scientifique');
-insert into public.character_categories (name) values ('mage');
-insert into public.character_categories (name) values ('professeur');
-insert into public.character_categories (name) values ('criminel');
-insert into public.character_categories (name) values ('étincelle');
-insert into public.character_categories (name) values ('buse blanche');
-insert into public.character_categories (name) values ('ecclésiastique');
-insert into public.character_categories (name) values ('militaire');
-insert into public.character_categories (name) values ('activiste');
-insert into public.character_categories (name) values ('commerçant');
+insert into public.character_categories (name, color) values ('Joueur', 'white');
+insert into public.character_categories (name, color) values ('Comte', 'emerald');
+insert into public.character_categories (name, color) values ('Scientifique', 'indigo');
+insert into public.character_categories (name, color) values ('Mage', 'cyan');
+insert into public.character_categories (name, color) values ('Professeur', 'teal');
+insert into public.character_categories (name, color) values ('Criminel', 'rose');
+insert into public.character_categories (name, color) values ('Étincelle', 'lime');
+insert into public.character_categories (name, color) values ('Buse blanche', 'yellow');
+insert into public.character_categories (name, color) values ('Ecclésiastique', 'violet');
+insert into public.character_categories (name, color) values ('Militaire', 'orange');
+insert into public.character_categories (name, color) values ('Activiste', 'sky');
+insert into public.character_categories (name, color) values ('Commerçant', 'amber');
 
 -- Worlds
 insert into public.worlds (name, description, color) values ('Léïm', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aliquet congue aliquet. Curabitur eu iaculis diam. Nunc iaculis nibh orci, eu semper nunc congue congue. Praesent euismod tortor eget metus tristique lobortis vel in risus. In volutpat ligula orci, id pharetra lectus egestas at.', 'black');
@@ -239,7 +239,7 @@ insert into public.calendar_events (title, description, location, start_date, en
   1
 );
 insert into public.calendar_events (title, description, location, start_date, end_date, category, hidden, wiki, calendar_id) values (
-  '1ère disparation',
+  '1ère disparition',
   'Taleb Vaht décède dans une grotte à la suite d''une attaque d''ischiels enragées.',
   'Cantane',
   '{ "day": 28, "month": 7, "year": 3209 }',
@@ -250,7 +250,7 @@ insert into public.calendar_events (title, description, location, start_date, en
   1
 );
 insert into public.calendar_events (title, description, location, start_date, end_date, category, hidden, wiki, calendar_id) values (
-  '2ème disparation',
+  '2ème disparition',
   'Donovane le mineur kéturien disparait sans laisser de traces.',
   'Cantane',
   '{ "day": 32, "month": 7, "year": 3209 }',
@@ -261,7 +261,7 @@ insert into public.calendar_events (title, description, location, start_date, en
   1
 );
 insert into public.calendar_events (title, description, location, start_date, end_date, category, hidden, wiki, calendar_id) values (
-  '3ème disparation',
+  '3ème disparition',
   'Disparition de Sébastien, gredin sauride.',
   'Cantane',
   '{ "day": 10, "month": 8, "year": 3209 }',
@@ -272,7 +272,7 @@ insert into public.calendar_events (title, description, location, start_date, en
   1
 );
 insert into public.calendar_events (title, description, location, start_date, end_date, category, hidden, wiki, calendar_id) values (
-  '4ème disparation',
+  '4ème disparition',
   'Disparition de Thérence, patrouilleur sauride de la Vieille Garde.',
   'Cantane',
   '{ "day": 19, "month": 8, "year": 3209 }',
@@ -283,7 +283,7 @@ insert into public.calendar_events (title, description, location, start_date, en
   1
 );
 insert into public.calendar_events (title, description, location, start_date, end_date, category, hidden, wiki, calendar_id) values (
-  '5ème disparation',
+  '5ème disparition',
   'Disparition de Mathilda Boulais, vendeuse de pierres.',
   'Cantane',
   '{ "day": 22, "month": 8, "year": 3209 }',

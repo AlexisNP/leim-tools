@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { cn } from '@/lib/utils'
 import type { RPGDate } from '@/models/Date'
 import type { CalendarEvent } from '@/models/CalendarEvent'
 import { useCalendar } from '@/stores/CalendarStore'
@@ -62,33 +63,18 @@ function deployDeleteModal() {
 
 <template>
   <UiPopoverContent
-    class="event-details w-96 bg-slate-900"
+    class=" w-96 bg-slate-900 border-slate-800"
     :align="'center'"
     :align-offset="50"
     :side="'left'"
     :collision-padding="60"
     :hide-when-detached="true"
-    :class="{
-      'border-slate-800': !event.category,
-      'border-lime-800': event.category?.name === 'naissance',
-      'border-stone-600': event.category?.name === 'mort',
-      'border-orange-800': event.category?.name === 'catastrophe',
-      'border-pink-800': event.category?.name === 'catastrophe naturelle',
-      'border-sky-800': event.category?.name === 'législation',
-      'border-purple-800': event.category?.name === 'religion',
-      'border-emerald-800': event.category?.name === 'joueurs',
-      'border-amber-800': event.category?.name === 'inauguration',
-      'border-green-800': event.category?.name === 'invention',
-      'border-cyan-800': event.category?.name === 'science',
-      'border-slate-600': event.category?.name === 'bénédiction',
-      'border-purple-700': event.category?.name === 'découverte',
-      'border-indigo-700': event.category?.name === 'exploration',
-      'border-amber-700': event.category?.name === 'construction',
-      'border-violet-700': event.category?.name === 'arcanologie',
-      'border-rose-800': event.category?.name === 'criminalité',
-      'border-stone-700': event.category?.name === 'scandale',
-      'border-yellow-600': event.category?.name === 'commerce'
-    }"
+    :class="cn(
+      event.category ? `event-details-${event.category.color}` : '',
+      {
+        'event-details': event.category
+      }
+    )"
   >
     <div ref="eventDetails" class="grid gap-1">
       <header class="pr-12">
@@ -128,13 +114,13 @@ function deployDeleteModal() {
       <template v-if="event.category || event.secondaryCategories">
         <ul class="flex gap-1">
           <li v-if="event.category">
-            <UiBadge class="mix-blend-luminosity font-bold bg-gray-600" variant="secondary">
+            <UiBadge class="mix-blend-luminosity font-bold bg-gray-600 lowercase" variant="secondary">
               {{ event.category?.name }}
             </UiBadge>
           </li>
 
           <li v-for="cat in event.secondaryCategories" :key="cat.id">
-            <UiBadge class="mix-blend-luminosity bg-gray-600" variant="secondary">
+            <UiBadge class="mix-blend-luminosity bg-gray-600 lowercase" variant="secondary">
               {{ cat.name }}
             </UiBadge>
           </li>
@@ -205,72 +191,3 @@ function deployDeleteModal() {
     </UiTooltipProvider>
   </UiPopoverContent>
 </template>
-
-<style lang="scss">
-.border-slate-800 {
-  --base-color: var(--color-slate-800);
-}
-.border-lime-800 {
-  --base-color: var(--color-lime-800);
-}
-.border-stone-600 {
-  --base-color: var(--color-stone-600);
-}
-.border-orange-800 {
-  --base-color: var(--color-orange-800);
-}
-.border-pink-800 {
-  --base-color: var(--color-pink-800);
-}
-.border-sky-800 {
-  --base-color: var(--color-sky-800);
-}
-.border-purple-800 {
-  --base-color: var(--color-purple-800);
-}
-.border-emerald-800 {
-  --base-color: var(--color-emerald-800);
-}
-.border-amber-800 {
-  --base-color: var(--color-amber-800);
-}
-.border-green-800 {
-  --base-color: var(--color-green-800);
-}
-.border-cyan-800 {
-  --base-color: var(--color-cyan-800);
-}
-.border-slate-600 {
-  --base-color: var(--color-slate-600);
-}
-.border-purple-700 {
-  --base-color: var(--color-purple-700);
-}
-.border-indigo-700 {
-  --base-color: var(--color-indigo-700);
-}
-.border-amber-700 {
-  --base-color: var(--color-amber-700);
-}
-.border-violet-700 {
-  --base-color: var(--color-violet-700);
-}
-.border-rose-800 {
-  --base-color: var(--color-rose-800);
-}
-.border-stone-700 {
-  --base-color: var(--color-stone-700);
-}
-.border-yellow-600 {
-  --base-color: var(--color-yellow-600);
-}
-
-.event-details {
-  --bg-color: color-mix(in srgb, var(--base-color), var(--color-slate-950) 85%);
-  background-color: var(--bg-color);
-
-  hr {
-    border-color: var(--base-color);
-  }
-}
-</style>

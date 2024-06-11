@@ -12,11 +12,12 @@ const route = useRoute()
 const worldId = route.params.id
 
 const { setCalendarId, setMonths, setDefaultDate, currentConfig, selectedDate, jumpToDate } = useCalendar()
-const { setEvents } = useCalendarEvents()
+const { setEvents, setCategories } = useCalendarEvents()
 const { setCharacters } = useCharacters()
 
 const { data: calendar, pending: calPending, refresh: calRefresh } = await useLazyFetch(`/api/calendars/query?world_id=${worldId}`)
 const { data: characters, pending: charPending, refresh: charRefresh } = await useLazyFetch(`/api/characters/query?world_id=${worldId}`)
+const { data: categories, pending: categoryPending, refresh: categoryRefresh } = await useLazyFetch(`/api/calendars/categories/query`)
 
 if (!calendar.value) {
   await calRefresh()
@@ -37,6 +38,15 @@ if (!calendar.value) {
     setEvents(calendar.value?.data?.events)
   }
 }
+
+if (!categories.value) {
+  await categoryRefresh()
+} else {
+  if (categories.value?.data) {
+    setCategories(categories.value?.data)
+  }
+}
+
 if (!characters.value) {
   await charRefresh()
 } else {
@@ -58,6 +68,13 @@ watch(calPending, (newStatus) => {
     }
     if (calendar.value?.data?.events) {
       setEvents(calendar.value?.data?.events)
+    }
+  }
+})
+watch(categoryPending, (newStatus) => {
+  if (!newStatus) {
+    if (categories.value?.data) {
+      setCategories(categories.value?.data)
     }
   }
 })
@@ -103,7 +120,7 @@ onMounted(() => {
 
 <template>
   <div class="h-full">
-    <template v-if="calPending || charPending">
+    <template v-if="calPending || charPending || categoryPending">
       <div class="h-full grid place-items-center">
         Loading notamment
       </div>

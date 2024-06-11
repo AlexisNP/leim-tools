@@ -77,6 +77,134 @@
   }
 }
 
+/* Colors */
+.event-red {
+  @apply text-slate-900 bg-red-500 hover:bg-red-600
+}
+.event-orange {
+  @apply text-slate-900 bg-orange-500 hover:bg-orange-600
+}
+.event-amber {
+  @apply text-slate-900 bg-amber-500 hover:bg-amber-600
+}
+.event-yellow {
+  @apply text-slate-900 bg-yellow-600 hover:bg-yellow-700
+}
+.event-lime {
+  @apply text-slate-900 bg-lime-500 hover:bg-lime-600
+}
+.event-green {
+  @apply text-white bg-green-600 hover:bg-green-700
+}
+.event-emerald {
+  @apply text-white bg-emerald-600 hover:bg-emerald-700
+}
+.event-teal {
+  @apply text-white bg-teal-600 hover:bg-teal-700
+}
+.event-cyan {
+  @apply text-white bg-cyan-600 hover:bg-cyan-700
+}
+.event-sky {
+  @apply text-white bg-sky-600 hover:bg-sky-700
+}
+.event-blue {
+  @apply text-white bg-blue-600 hover:bg-blue-700
+}
+.event-indigo {
+  @apply text-white bg-indigo-600 hover:bg-indigo-700
+}
+.event-violet {
+  @apply text-white bg-violet-600 hover:bg-violet-700
+}
+.event-purple {
+  @apply text-white bg-purple-600 hover:bg-purple-700
+}
+.event-fuchsia {
+  @apply text-white bg-fuchsia-600 hover:bg-fuchsia-700
+}
+.event-pink {
+  @apply text-white bg-pink-700 hover:bg-pink-800
+}
+.event-rose {
+  @apply text-white bg-rose-700 hover:bg-rose-800
+}
+.event-black {
+  @apply text-white bg-stone-500 hover:bg-stone-700
+}
+.event-white {
+  @apply text-slate-900 bg-white hover:bg-yellow-200
+}
+
+.event-details-red {
+  --base-color: var(--color-red-800);
+}
+.event-details-orange {
+  --base-color: var(--color-orange-800);
+}
+.event-details-amber {
+  --base-color: var(--color-amber-800);
+}
+.event-details-yellow {
+  --base-color: var(--color-yellow-800);
+}
+.event-details-lime {
+  --base-color: var(--color-lime-800);
+}
+.event-details-green {
+  --base-color: var(--color-green-800);
+}
+.event-details-emerald {
+  --base-color: var(--color-emerald-800);
+}
+.event-details-teal {
+  --base-color: var(--color-teal-800);
+}
+.event-details-cyan {
+  --base-color: var(--color-cyan-800);
+}
+.event-details-sky {
+  --base-color: var(--color-sky-800);
+}
+.event-details-blue {
+  --base-color: var(--color-blue-800);
+}
+.event-details-indigo {
+  --base-color: var(--color-indigo-800);
+}
+.event-details-violet {
+  --base-color: var(--color-violet-800);
+}
+.event-details-purple {
+  --base-color: var(--color-purple-800);
+}
+.event-details-fuchsia {
+  --base-color: var(--color-fuchsia-800);
+}
+.event-details-pink {
+  --base-color: var(--color-pink-800);
+}
+.event-details-rose {
+  --base-color: var(--color-rose-800);
+}
+.event-details-black {
+  --base-color: var(--color-stone-800);
+}
+.event-details-white {
+  --base-color: var(--color-white);
+}
+
+.event-details {
+  --bg-color: color-mix(in srgb, var(--base-color), var(--color-slate-950) 80%);
+  --border-color: color-mix(in srgb, var(--base-color), var(--color-slate-800) 50%);
+  background-color: var(--bg-color);
+  border-color: var(--border-color);
+
+  hr {
+    border-color: var(--border-color);
+  }
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition: all .5s ease;
