@@ -2,22 +2,12 @@
 import { PhCaretDown } from '@phosphor-icons/vue';
 import type { Category } from '~/models/Category';
 
+const isPopoverOpen = ref<boolean>(false)
+
 const props = defineProps<{
   placeholder?: string
   multiple?: boolean
 }>()
-
-const model = defineModel<Category[] | Category>()
-
-const { categories: availableCategories } = useCalendarEvents()
-
-const isPopoverOpen = ref<boolean>(false)
-
-function handleCatSelect() {
-  if (!props.multiple) {
-    isPopoverOpen.value = false
-  }
-}
 
 const computedTextValue = computed(() => {
   if (model.value) {
@@ -30,6 +20,26 @@ const computedTextValue = computed(() => {
     return props.placeholder
   }
 })
+
+const model = defineModel<Category[] | Category>()
+
+const { categories: availableCategories } = useCalendarEvents()
+
+const searchTerm = ref<string>('')
+
+function handleCatSelect() {
+  if (!props.multiple) {
+    isPopoverOpen.value = false
+  }
+}
+
+const filteredCategories = computed(() =>
+  searchTerm.value === ''
+    ? availableCategories
+    : availableCategories.filter((category) => {
+      return category.name.toLowerCase().includes(searchTerm.value.toLowerCase())
+    })
+)
 </script>
 
 <template>
@@ -51,15 +61,16 @@ const computedTextValue = computed(() => {
       :collision-padding="50"
       class="w-fit h-[33vh] p-0"
     >
-      <UiCommand v-model="model" :multiple>
+      <UiCommand v-model="model" v-model:searchTerm="searchTerm" :multiple>
         <UiCommandInput placeholder="Rechercher les catégories" />
         <UiCommandEmpty>Aucune catégorie trouvée.</UiCommandEmpty>
         <UiCommandList>
           <UiCommandGroup>
             <UiCommandItem
-              v-for="category in availableCategories"
+              v-for="category in filteredCategories"
               :key="category.id"
               :value="category"
+              class="cursor-pointer"
               @select="handleCatSelect"
             >
               {{ category.name }}
