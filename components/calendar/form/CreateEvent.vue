@@ -107,7 +107,7 @@ function handleCancel() {
               class="w-full -my-1 py-1 -mx-1 px-1 text-lg border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600">
           </div>
 
-          <div class="col-span-2 pl-8">
+          <div class="col-span-2 my-2 pl-8">
             <textarea
               id="new-event-description"
               v-model="eventSkeleton.description"
@@ -146,7 +146,7 @@ function handleCancel() {
             </div>
           </div>
 
-          <div class="col-span-2 mb-4">
+          <div class="col-span-2 mb-2">
             <div class="flex items-center gap-4">
               <PhMapPinArea size="18" weight="fill" />
 

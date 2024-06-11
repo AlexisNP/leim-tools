@@ -98,7 +98,7 @@ function handleCancel() {
             </div>
           </div>
 
-          <div class="col-span-2 ml-8">
+          <div class="col-span-2 my-2 ml-8">
             <textarea
               id="new-event-description"
               v-model="eventSkeleton.description"
@@ -137,7 +137,7 @@ function handleCancel() {
             </div>
           </div>
 
-          <div class="col-span-2 mb-4">
+          <div class="col-span-2 mb-2">
             <div class="flex items-center gap-4">
               <PhMapPinArea size="18" weight="fill" />
 
