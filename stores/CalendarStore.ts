@@ -22,6 +22,9 @@ type CalendarCurrentDate = {
 }
 
 export const useCalendar = defineStore('calendar', () => {
+  const route = useRoute()
+  const isCalendarView: boolean = route.name === 'i-world-id-calendar'
+
   /**
    * Static calendar config
    * This shouldn't change
@@ -70,14 +73,22 @@ export const useCalendar = defineStore('calendar', () => {
     }
   })
 
-  // Get date from URL params
-  const params = useUrlSearchParams('history', {
-    write: false,
-    initialValue: {
+  // Set initial value for url search params
+  // The route needs to be check because it should proc the params on anything BUT the calendar route
+  let initialParams: { day?: string, month?: string, year?: string } = {}
+
+  if (isCalendarView) {
+    initialParams = {
       day: defaultDate.value.day.toString(),
       month: defaultDate.value.month.toString(),
       year: defaultDate.value.year.toString()
     }
+  }
+
+  // Get date from URL params
+  const params = useUrlSearchParams('history', {
+    write: false,
+    initialValue: initialParams,
   })
 
   /**
@@ -156,6 +167,13 @@ export const useCalendar = defineStore('calendar', () => {
   })
 
   const selectedDate = useLocalStorage<RPGDate>('selected-date', currentRPGDate.value, { deep: true })
+
+  // Same check as above, for selectedDate history
+  if (isCalendarView) {
+    params.day = selectedDate.value.day.toString()
+    params.month = selectedDate.value.month.toString()
+    params.year = selectedDate.value.year.toString()
+  }
 
   /**
    * Check whether the current viewType is active

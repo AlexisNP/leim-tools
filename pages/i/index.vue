@@ -1,23 +1,44 @@
 <script lang="ts" setup>
+import type { World } from '~/models/World';
+
+const { data: res } = await useFetch('/api/worlds/query')
+
+const worlds = res.value?.data as World[]
+
+useHead({
+  title: 'Profil'
+})
+definePageMeta({
+  middleware: ['auth-guard']
+})
+
 const user = useSupabaseUser()
 
-const { data: worlds } = await useLazyFetch('/api/worlds')
+// Redirect user back home when they log out on the page
+watch(user, (n, _o) => {
+  if (!n) {
+    navigateTo('/')
+  }
+})
+
+const { setCurrentMenu } = useUiStore()
+setCurrentMenu([])
 </script>
 
 <template>
-  <main class="p-8">
+    <main class="p-8">
     <Heading>{{ user?.user_metadata.full_name }}</Heading>
 
-    <section v-if="worlds?.data" class="mt-4">
+    <section v-if="worlds" class="mt-4">
       <h2 class="mb-4 text-lg font-bold">
         Mondes
       </h2>
 
       <ul class="grid md:grid-cols-3 gap-2">
-        <li v-for="(world, i) in worlds.data" :key="i">
+        <li v-for="world in worlds" :key="world.id">
           <UiCard
             class="w-full transition-all"
-            :link="`/calendar/${world.id}`"
+            :link="`/i/world/${world.id}`"
             :class="{
               'hover:bg-slate-50 dark:hover:bg-sky-950 dark:focus-within:outline-sky-900': !world.color,
               'bg-red-100 dark:bg-red-950 border-red-200 hover:bg-red-50 dark:hover:bg-red-900 dark:border-red-900 dark:focus-within:outline-red-900': world.color === 'red',

@@ -43,7 +43,7 @@ async function handleLogout() {
 }
 
 function gotoProfilePage() {
-  router.push({ path: '/profile' })
+  router.push({ path: '/i' })
 
   closeMenu()
 }

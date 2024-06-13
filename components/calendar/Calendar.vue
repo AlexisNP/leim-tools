@@ -2,7 +2,7 @@
 import { useCalendar } from '@/stores/CalendarStore'
 import { computed, type Component, type ComputedRef } from 'vue'
 
-import { PhMagnifyingGlass } from '@phosphor-icons/vue'
+import { PhCircleNotch, PhMagnifyingGlass } from '@phosphor-icons/vue'
 import MonthlyLayout from './state/monthly/Layout.vue'
 import CenturyLayout from './state/centennially/Layout.vue'
 import DecadeLayout from './state/decennially/Layout.vue'
@@ -15,9 +15,11 @@ const { setCalendarId, setMonths, setDefaultDate, currentConfig, selectedDate, j
 const { setEvents, setCategories } = useCalendarEvents()
 const { setCharacters } = useCharacters()
 
-const { data: calendar, pending: calPending, refresh: calRefresh } = await useLazyFetch(`/api/calendars/query?world_id=${worldId}`)
-const { data: characters, pending: charPending, refresh: charRefresh } = await useLazyFetch(`/api/characters/query?world_id=${worldId}`)
-const { data: categories, pending: categoryPending, refresh: categoryRefresh } = await useLazyFetch(`/api/calendars/categories/query`)
+const { months } = storeToRefs(useCalendar())
+
+const { data: calendar, pending: calPending, refresh: calRefresh } = useFetch(`/api/calendars/query?world_id=${worldId}`)
+const { data: characters, pending: charPending, refresh: charRefresh } = useFetch(`/api/characters/query?world_id=${worldId}`)
+const { data: categories, pending: categoryPending, refresh: categoryRefresh } = useFetch(`/api/calendars/categories/query`)
 
 if (!calendar.value) {
   await calRefresh()
@@ -119,24 +121,44 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="h-full">
-    <template v-if="calPending || charPending || categoryPending">
-      <div class="h-full grid place-items-center">
-        Loading notamment
+  <div class="h-full w-full relative">
+    <TransitionGroup name="screen">
+      <div v-if="calPending || charPending || categoryPending" class="h-full w-full grid place-items-center">
+        <div class="flex flex-col items-center">
+          <PhCircleNotch size="42" class="animate-spin" />
+          <p class="text-lg mt-2">Chargement en cours…</p>
+        </div>
       </div>
-    </template>
-    <template v-else>
-      <div class="h-full grid grid-rows-[auto,1fr]">
+      <div v-else-if="months.length > 0" class="h-full grid grid-rows-[auto,1fr]">
         <CalendarMenu />
 
         <KeepAlive>
           <component :is="currentViewComponent"/>
         </KeepAlive>
-      </div>
 
-      <LazyCalendarSearch />
-      <LazyCalendarFormUpdateEvent />
-      <LazyCalendarFormDeleteEvent />
-    </template>
+        <LazyCalendarSearch />
+        <LazyCalendarFormUpdateEvent />
+        <LazyCalendarFormDeleteEvent />
+      </div>
+    </TransitionGroup>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.screen-move, /* apply transition to moving elements */
+.screen-enter-active,
+.screen-leave-active {
+  transition: all .4s ease-out;
+}
+
+.screen-enter-from,
+.screen-leave-to {
+  opacity: 0;
+}
+
+/* ensure leaving items are taken out of layout flow so that moving
+   animations can be calculated correctly. */
+.screen-leave-active {
+  position: absolute;
+}
+</style>

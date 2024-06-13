@@ -1,5 +1,5 @@
-import { serverSupabaseClient } from "#supabase/server";
 import { z } from 'zod'
+import { serverSupabaseClient } from "#supabase/server";
 import type { Character } from "~/models/Characters";
 
 const querySchema = z.object({
