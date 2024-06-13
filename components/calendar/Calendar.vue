@@ -17,9 +17,9 @@ const { setCharacters } = useCharacters()
 
 const { months } = storeToRefs(useCalendar())
 
-const { data: calendar, pending: calPending, refresh: calRefresh } = useFetch(`/api/calendars/query?world_id=${worldId}`)
-const { data: characters, pending: charPending, refresh: charRefresh } = useFetch(`/api/characters/query?world_id=${worldId}`)
-const { data: categories, pending: categoryPending, refresh: categoryRefresh } = useFetch(`/api/calendars/categories/query`)
+const { data: calendar, pending: calPending, refresh: calRefresh } = await useLazyFetch(`/api/calendars/query?world_id=${worldId}`)
+const { data: characters, pending: charPending, refresh: charRefresh } = await useLazyFetch(`/api/characters/query?world_id=${worldId}`)
+const { data: categories, pending: categoryPending, refresh: categoryRefresh } = await useLazyFetch(`/api/calendars/categories/query`)
 
 if (!calendar.value) {
   await calRefresh()
