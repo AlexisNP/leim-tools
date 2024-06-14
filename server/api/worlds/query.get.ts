@@ -23,6 +23,8 @@ export default defineEventHandler(async (event) => {
   }
 
   if (query.id) {
+    // const eventNb = await client.from('worlds').select('events:calendars(calendar_events(id))').order('events_count')
+
     return output.eq('id', query.id).single<World>()
   }
 

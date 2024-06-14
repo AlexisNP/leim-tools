@@ -2,7 +2,7 @@
 import { useCalendar } from '@/stores/CalendarStore'
 import { computed, type Component, type ComputedRef } from 'vue'
 
-import { PhCircleNotch, PhMagnifyingGlass } from '@phosphor-icons/vue'
+import { PhMagnifyingGlass } from '@phosphor-icons/vue'
 import MonthlyLayout from './state/monthly/Layout.vue'
 import CenturyLayout from './state/centennially/Layout.vue'
 import DecadeLayout from './state/decennially/Layout.vue'
@@ -88,6 +88,8 @@ watch(charPending, (newStatus) => {
   }
 })
 
+const progressPercent = computed(() => 100 / [charPending.value, calPending.value, categoryPending.value].filter(Boolean).length)
+
 const currentViewComponent: ComputedRef<Component> = computed<Component>(() => {
   switch (currentConfig.viewType) {
     case 'month':
@@ -124,8 +126,8 @@ onMounted(() => {
   <div class="h-full w-full relative">
     <TransitionGroup name="screen">
       <div v-if="calPending || charPending || categoryPending" class="h-full w-full grid place-items-center">
-        <div class="flex flex-col items-center">
-          <PhCircleNotch size="42" class="animate-spin" />
+        <div class="flex flex-col items-center w-1/2">
+          <UiProgress :model-value="progressPercent" />
           <p class="text-lg mt-2">Chargement en cours…</p>
         </div>
       </div>

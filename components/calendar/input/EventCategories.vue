@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { cn } from '@/lib/utils'
 import type { Category } from '~/models/Category';
 
 import { PhCaretDown, PhCheck } from '@phosphor-icons/vue';
@@ -70,9 +69,6 @@ const filteredCategories = computed(() =>
               :key="category.id"
               :value="category"
               class="cursor-pointer flex justify-between items-center"
-              :class="cn({
-
-              })"
             >
               <span>
                 {{ category.name }}

@@ -34,7 +34,7 @@ setCurrentMenu([])
         Mondes
       </h2>
 
-      <ul class="grid md:grid-cols-3 gap-2">
+      <ul class="grid lg:grid-cols-2 gap-2">
         <li v-for="world in worlds" :key="world.id">
           <UiCard
             class="w-full transition-all"

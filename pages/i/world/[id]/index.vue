@@ -42,23 +42,29 @@ setCurrentMenu([])
         </Spacing>
       </header>
 
-      <ul v-if="world.calendars && world.calendars?.length > 0" class="grid md:grid-cols-3 gap-2">
-        <li v-for="calendar in world.calendars" :key="calendar.id">
-          <UiCard
-            v-if="calendar"
-            class="w-full transition-all"
-            :link="`/i/world/${world.id}/calendar`"
-          >
-            <UiCardHeader>
-              <UiCardTitle>{{ calendar.name }}</UiCardTitle>
+      <section v-if="world.calendars && world.calendars?.length > 0">
+        <Spacing size="lg">
+          <Heading>Calendriers</Heading>
 
-              <UiCardContent>
-                <p class="italic">{{ calendar.events }}</p>
-              </UiCardContent>
-            </UiCardHeader>
-          </UiCard>
-        </li>
-      </ul>
+          <ul class="grid md:grid-cols-3 gap-2">
+            <li v-for="calendar in world.calendars" :key="calendar.id">
+              <UiCard
+                v-if="calendar"
+                class="w-full transition-all text-slate-100 bg-slate-900 border-slate-700 hover:bg-slate-700 dark:hover:bg-slate-800 dark:border-slate-900 dark:focus-within:outline-slate-900"
+                :link="`/i/world/${world.id}/calendar`"
+              >
+                <UiCardHeader>
+                  <UiCardTitle>{{ calendar.name }}</UiCardTitle>
+                </UiCardHeader>
+
+                <UiCardContent>
+                  <p class="italic">Description future (ou alors des informations sur le nb d'évènements)</p>
+                </UiCardContent>
+              </UiCard>
+            </li>
+          </ul>
+        </Spacing>
+      </section>
     </template>
   </main>
 </template>
