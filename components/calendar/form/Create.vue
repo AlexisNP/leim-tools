@@ -1,9 +1,7 @@
 <script lang="ts" setup>
 import type { Calendar } from '~/models/CalendarConfig';
-import type { CalendarMonth } from '~/models/CalendarMonth';
-import { useSortable } from '@vueuse/integrations/useSortable'
 
-import { PhAlarm, PhCalendarBlank, PhCalendarDots, PhLeaf, PhList, PhPlus, PhTrash, PhWrench } from '@phosphor-icons/vue';
+import { PhAlarm, PhCalendarBlank, PhCalendarDots, PhLeaf, PhWrench } from '@phosphor-icons/vue';
 
 const defaultSkeleton: Calendar = { name: '', today: { day: 1, month: 1, year: 0 }, months: [], events: []}
 
@@ -23,60 +21,6 @@ const activeTab = ref<FormTabs>('months')
 /**
  * === Months list handling ===
  */
-
-/**
- * Input value for new month's name
- */
-const monthName: Ref<string | undefined> = ref<string>()
-const monthNameRef = ref<HTMLInputElement>()
-const { focused: monthNameFocused } = useFocus(monthNameRef)
-const validMonthNameDatatypes = ['string']
-const validMonthName = computed(() => validMonthNameDatatypes.includes(typeof monthName.value))
-
-/**
- * Input value for new month's number of days
- */
-const monthDays: Ref<number | undefined> = ref<number>()
-const monthDaysRef = ref<HTMLInputElement>()
-const validMonthDaysDatatypes = ['number']
-const validMonthDays = computed(() => validMonthDaysDatatypes.includes(typeof monthDays.value))
-
-const validNewMonth = computed(() => validMonthDays.value && validMonthName.value)
-
-function addMonthToCalendar() {
-  console.log(monthDays.value, monthName.value)
-  if (!monthDays.value || !monthName.value) return
-
-  const monthToInsert: CalendarMonth = {
-    name: monthName.value,
-    days: monthDays.value,
-    position: calendarSkeleton.value.months.length
-  }
-
-  calendarSkeleton.value.months.push(monthToInsert)
-
-  monthName.value = ''
-  monthNameFocused.value = true
-}
-
-function removeMonthFromCalendar(index: number) {
-  if (isNaN(index)) return
-
-  calendarSkeleton.value.months.splice(index, 1)
-}
-
-// Sortable
-const monthSortableList = ref<HTMLElement | null>(null)
-const { start, stop } = useSortable(monthSortableList, calendarSkeleton.value.months, { animation: 150 })
-
-// Refresh the sortable list when the tabs is re-rendered
-watch(activeTab, (n, _o) => {
-  if (n === 'months') {
-    start()
-  } else {
-    stop()
-  }
-})
 
 /**
  * === Current date ===
@@ -129,68 +73,8 @@ function setTodayMonth(e: string) {
         </UiTabsContent>
         <UiTabsContent value="months">
           <p class="text-lg mb-2 font-semibold">Liste des mois disponibles</p>
-          <div class="grid md:grid-cols-12 gap-4 items-center">
-            <div class="md:col-start-2 md:col-span-5">
-              <UiInput id="new-month-name" ref="monthNameRef" v-model="monthName" type="text" name="newMonthName" placeholder="Nom du mois" />
-            </div>
-            <div class="md:col-span-5">
-              <UiInput id="new-month-days" ref="monthDaysRef" v-model="monthDays" type="number" name="newMonthName" placeholder="Nombre de jours" min="0" step="1" class="invalid:border-red-600" />
-            </div>
-            <div class="md:col-span-1">
-              <UiButton size="icon" class="rounded-full h-8 w-8" :disabled="!validNewMonth" @click.prevent="addMonthToCalendar">
-                <PhPlus size="17"/>
-              </UiButton>
-            </div>
-            <div class="md:col-span-full">
-              <div class="md:grid md:grid-cols-12 md:gap-4 md:items-center">
-                <div class="hidden md:block col-span-1">
-                  <ul class="grid gap-y-4 justify-center">
-                    <li v-for="(m, i) in calendarSkeleton.months" :key="`num-${m.name}`">
-                      <UiButton size="icon" variant="secondary" class="h-8 w-8 rounded-full">
-                        <span class="font-bold text-sm">{{ i + 1 }}</span>
-                      </UiButton>
-                    </li>
-                  </ul>
-                </div>
-                <div class="md:col-span-11">
-                  <ul ref="monthSortableList" class="grid gap-y-2">
-                    <li v-for="(m, i) in calendarSkeleton.months" :key="m.name" class="grid md:grid-cols-12 gap-4 md:items-center text-slate-900 bg-slate-200 rounded-md">
-                      <div class="md:col-span-1 text-right duration-200 ease-out transition transform origin-top-right">
-                        <UiButton type="button" variant="ghost" size="icon" class="handle rounded-full h-8 w-8">
-                          <PhList size="17" />
-                        </UiButton>
-                      </div>
-                      <div class="md:col-span-3">
-                        <div class="font-bold md:pl-2">
-                          {{ m.name }}
-                        </div>
-                      </div>
-                      <div class="md:col-span-2">
-                        <UiInput :id="`month-days-n${i}`" v-model="m.days" class="bg-transparent border-none" type="number" :name="`monthDays-n${i}`" placeholder="Nombre de jours" min="0" />
-                      </div>
-                      <div class="md:col-span-1">
-                        jour(s)
-                      </div>
-                      <div class="md:col-start-12">
-                        <UiTooltipProvider>
-                          <UiTooltip>
-                            <UiTooltipTrigger as-child>
-                              <UiButton type="button" variant="ghost" size="icon" class="rounded-full h-8 w-8" @click="removeMonthFromCalendar(i)">
-                                <PhTrash size="17" />
-                              </UiButton>
-                            </UiTooltipTrigger>
-                            <UiTooltipContent>
-                              <p>Supprimer {{ m.name }} du calendrier</p>
-                            </UiTooltipContent>
-                          </UiTooltip>
-                        </UiTooltipProvider>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
+
+          <CalendarInputMonthList v-model:model-value="calendarSkeleton.months" />
         </UiTabsContent>
         <UiTabsContent value="today">
           <p class="text-lg mb-2 font-semibold">Date d'aujourd'hui</p>
