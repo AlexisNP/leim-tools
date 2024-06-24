@@ -104,7 +104,8 @@ function handleCancel() {
               name="new-event-title"
               required
               placeholder="Titre de l'évènement"
-              class="w-full -my-1 py-1 -mx-1 px-1 text-lg border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600">
+              class="w-full -my-1 py-1 -mx-1 px-1 text-lg border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600"
+            >
           </div>
 
           <div class="col-span-2 my-2 pl-8">

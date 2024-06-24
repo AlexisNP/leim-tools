@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { PhPlus } from '@phosphor-icons/vue';
 import type { World } from '~/models/World';
 
 const route = useRoute()
@@ -26,6 +27,8 @@ watch(user, (n, _o) => {
 
 const { setCurrentMenu } = useUiStore()
 setCurrentMenu([])
+
+const modalOpened = ref<boolean>(false)
 </script>
 
 <template>
@@ -42,11 +45,26 @@ setCurrentMenu([])
         </Spacing>
       </header>
 
-      <section v-if="world.calendars && world.calendars?.length > 0">
+      <section>
         <Spacing size="lg">
-          <Heading>Calendriers</Heading>
+          <div class="flex items-center gap-3">
+            <Heading>Calendriers</Heading>
 
-          <ul class="grid md:grid-cols-3 gap-2">
+            <UiTooltipProvider :delay-duration="250">
+              <UiTooltip>
+                <UiTooltipTrigger as-child>
+                  <UiButton size="icon" class="rounded-full h-8 w-8" @click="() => modalOpened = true">
+                    <PhPlus size="17"/>
+                  </UiButton>
+                </UiTooltipTrigger>
+                <UiTooltipContent>
+                  <p>Ajouter un calendrier</p>
+                </UiTooltipContent>
+              </UiTooltip>
+            </UiTooltipProvider>
+          </div>
+
+          <ul v-if="world.calendars && world.calendars?.length > 0" class="grid md:grid-cols-3 gap-2">
             <li v-for="calendar in world.calendars" :key="calendar.id">
               <UiCard
                 v-if="calendar"
@@ -63,8 +81,25 @@ setCurrentMenu([])
               </UiCard>
             </li>
           </ul>
+          <template v-else>
+            <p class="pl-6 opacity-75 italic">
+              Aucun calendrier pour ce monde
+            </p>
+          </template>
         </Spacing>
       </section>
+
+      <UiAlertDialog v-model:open="modalOpened">
+        <UiAlertDialogContent class="grid grid-rows-[auto_1fr_auto] items-start min-h-[66vh] max-w-4xl">
+          <UiAlertDialogTitle>
+            <span class="text-2xl">
+              Créer un calendrier
+            </span>
+          </UiAlertDialogTitle>
+
+          <CalendarFormCreate />
+        </UiAlertDialogContent>
+      </UiAlertDialog>
     </template>
   </main>
 </template>
