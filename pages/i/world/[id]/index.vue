@@ -90,10 +90,10 @@ const modalOpened = ref<boolean>(false)
       </section>
 
       <UiAlertDialog v-model:open="modalOpened">
-        <UiAlertDialogContent class="grid grid-rows-[auto_1fr_auto] items-start min-h-[66vh] max-w-4xl">
+        <UiAlertDialogContent class="grid grid-rows-[auto_1fr_auto] items-start min-h-[66vh] max-w-4xl gap-6">
           <UiAlertDialogTitle>
             <span class="text-2xl">
-              Créer un calendrier
+              <strong class="font-bold">{{ world.name }}</strong> — Nouveau calendrier
             </span>
           </UiAlertDialogTitle>
 

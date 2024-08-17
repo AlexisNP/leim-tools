@@ -10,5 +10,6 @@ export interface CalendarMonth {
 export const calendarMonthSchema = z.object({
   name: z.string().max(64),
   days: z.number().int().min(12),
-  calendarId: z.number().int()
+  position: z.number().int().optional().nullable(),
+  calendar_id: z.number().int().optional().nullable()
 })

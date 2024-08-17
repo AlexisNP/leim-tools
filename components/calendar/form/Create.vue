@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import type { Calendar } from '~/models/CalendarConfig';
 
-import { PhAlarm, PhCalendarBlank, PhCalendarDots, PhLeaf, PhWrench } from '@phosphor-icons/vue';
+import { PhAlarm, PhCalendarDots, PhWrench } from '@phosphor-icons/vue';
 
-const defaultSkeleton: Calendar = { name: '', today: { day: 1, month: 1, year: 0 }, months: [], events: []}
+const defaultSkeleton: Calendar = { name: '', today: { day: 1, month: 0, year: 0 }, months: [], events: []}
 
 const calendarSkeleton = ref<Calendar>({ ...defaultSkeleton })
 
@@ -16,7 +16,7 @@ onMounted(() => {
 })
 
 type FormTabs = 'global' | 'months' | 'today' | 'seasons'
-const activeTab = ref<FormTabs>('months')
+const activeTab = ref<FormTabs>('global')
 
 /**
  * === Months list handling ===
@@ -25,16 +25,37 @@ const activeTab = ref<FormTabs>('months')
 /**
  * === Current date ===
  */
-function setTodayMonth(e: string) {
-  calendarSkeleton.value.today.month = e
-}
+// If the months data change, just reset today's month
+// This is a failsafe mainly because of 1) month positions and 2) month names
+watch(calendarSkeleton.value.months, () => {
+  calendarSkeleton.value.today.month = 0
+}, { deep: true })
+
+/**
+ * === Form Validation ===
+ */
+
+/**
+ * Whether the skeleton has valid month data
+ */
+const validSkeletonMonths = computed(() => calendarSkeleton.value.months.length > 0)
+
+/**
+ * Whether the skeleton has a valid name
+ */
+const validSkeletonGeneral = computed(() => calendarSkeleton.value.name)
+
+/**
+ * Whether all the data checks above are a-ok
+ */
+const validSkeleton = computed(() => validSkeletonGeneral.value && validSkeletonMonths.value)
 </script>
 
 <template>
   <template v-if="calendarSkeleton">
-    <form class="h-full grid grid-rows-[auto_1fr_auto]" @submit.prevent="handleSubmit">
+    <form class="h-full grid grid-rows-[1fr_auto]" @submit.prevent="handleSubmit">
       <UiTabs v-model:model-value="activeTab">
-        <UiTabsList class="grid w-full grid-cols-4">
+        <UiTabsList class="grid w-full grid-cols-3 mb-4">
           <UiTabsTrigger value="global" class="font-bold">
             <div class="flex items-center gap-1">
               <PhWrench size="18" weight="fill" />
@@ -53,12 +74,12 @@ function setTodayMonth(e: string) {
               Aujourd'hui
             </div>
           </UiTabsTrigger>
-          <UiTabsTrigger value="seasons" class="font-bold">
+          <!-- <UiTabsTrigger value="seasons" class="font-bold">
             <div class="flex items-center gap-1">
               <PhLeaf size="18" weight="fill" />
               Saisons
             </div>
-          </UiTabsTrigger>
+          </UiTabsTrigger> -->
         </UiTabsList>
         <UiTabsContent value="global">
           <input
@@ -68,58 +89,20 @@ function setTodayMonth(e: string) {
             name="new-calendar-name"
             required
             placeholder="Titre"
-            class="w-full -my-1 py-1 -mx-1 px-1 text-lg border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600"
+            class="w-full -my-1 py-2 -mx-1 px-1 text-xl border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600"
           >
         </UiTabsContent>
         <UiTabsContent value="months">
-          <p class="text-lg mb-2 font-semibold">Liste des mois disponibles</p>
-
           <CalendarInputMonthList v-model:model-value="calendarSkeleton.months" />
         </UiTabsContent>
         <UiTabsContent value="today">
-          <p class="text-lg mb-2 font-semibold">Date d'aujourd'hui</p>
-
-          <div class="grid grid-cols-12 gap-2">
-            <div class="col-span-2">
-              <UiInput id="new-month-current-day" v-model="calendarSkeleton.today.day" type="number" name="newMonthCurrentDay" placeholder="Jour" min="1" step="1" class="invalid:border-red-600" />
-            </div>
-            <div class="col-span-4">
-              <UiDropdownMenu>
-                <UiDropdownMenuTrigger as-child :disabled="calendarSkeleton.months.length < 1">
-                  <UiButton size="sm" variant="secondary" class="w-full h-full">
-                    <PhCalendarBlank size="18" weight="fill" />
-
-                    <template v-if="calendarSkeleton.months.length < 1">
-                      Aucun mois disponible
-                    </template>
-                    <template v-else>
-                      Choisir le mois
-                    </template>
-                  </UiButton>
-                </UiDropdownMenuTrigger>
-                <UiDropdownMenuContent :side="'bottom'" :collision-padding="30">
-                  <UiDropdownMenuLabel>Mois disponibles</UiDropdownMenuLabel>
-                  <UiDropdownMenuSeparator />
-                  <UiDropdownMenuItem
-                    v-for="m in calendarSkeleton.months"
-                    :key="m.name"
-                    @click="setTodayMonth(m.name)"
-                  >
-                    {{ m.name }}
-                  </UiDropdownMenuItem>
-                </UiDropdownMenuContent>
-              </UiDropdownMenu>
-            </div>
-            <div class="col-span-2">
-              <UiInput id="new-month-current-day" v-model="calendarSkeleton.today.year" type="number" name="newMonthCurrentYear" placeholder="Année" step="1" class="invalid:border-red-600" />
-            </div>
-          </div>
+          <CalendarInputTodaySelect v-model:model-value="calendarSkeleton.today" :available-months="calendarSkeleton.months"/>
         </UiTabsContent>
         <UiTabsContent value="seasons" />
       </UiTabs>
 
       <footer class="text-right mt-6">
-        <UiButton type="submit">
+        <UiButton type="submit" :disabled="!validSkeleton">
           Créer
         </UiButton>
       </footer>
