@@ -26,7 +26,7 @@ type CalendarCurrentDate = {
 
 export const useCalendar = defineStore('calendar', () => {
   const route = useRoute()
-  const isCalendarView: boolean = route.name === 'i-world-id-calendar'
+  const isCalendarView: boolean = route.name === 'i-calendar-id'
 
   /**
    * Static calendar config
@@ -60,8 +60,6 @@ export const useCalendar = defineStore('calendar', () => {
         today: calendarData.today
       }
 
-      setDefaultDate(activeCalendar.value.today)
-
       months.value = calendarData.months
 
       baseEvents.value = calendarData.events
@@ -79,16 +77,16 @@ export const useCalendar = defineStore('calendar', () => {
 
   // Default date settings (current day in the world)
   // The base setting is the first day / month of year 0
-  const defaultDay: Ref<number> = ref<number>(1)
-  const defaultMonth: Ref<number> = ref<number>(0)
-  const defaultYear: Ref<number> = ref<number>(0)
+  // const defaultDay: Ref<number> = ref<number>(1)
+  // const defaultMonth: Ref<number> = ref<number>(0)
+  // const defaultYear: Ref<number> = ref<number>(0)
 
   // Object representation
   const defaultDate: ComputedRef<RPGDate> = computed(() => {
     return {
-      day: defaultDay.value,
-      month: defaultMonth.value,
-      year: defaultYear.value
+      day: activeCalendar.value?.today.day || 1,
+      month: activeCalendar.value?.today.month || 0,
+      year: activeCalendar.value?.today.year || 0
     }
   })
 
@@ -109,17 +107,6 @@ export const useCalendar = defineStore('calendar', () => {
     write: false,
     initialValue: initialParams,
   })
-
-  /**
-   * Sets the new defaultDate (aka the "today" value from the calendar)
-   *
-   * @param date The new data to set as defaultDate
-   */
-  function setDefaultDate(date: RPGDate) {
-    defaultDay.value = date.day
-    defaultMonth.value = date.month as number
-    defaultYear.value = date.year
-  }
 
   // Everytime the defaultDate changes / is set, we should update the params in the URL
   watch(defaultDate, () => {
@@ -924,7 +911,6 @@ export const useCalendar = defineStore('calendar', () => {
     currentRPGDate,
     currentMonthData,
     defaultDate,
-    setDefaultDate,
     selectedDate: skipHydrate(selectedDate),
     selectDate,
     params,
