@@ -632,30 +632,13 @@ export const useCalendar = defineStore('calendar', () => {
   }
 
   const baseEvents = ref<CalendarEvent[]>([])
-
-  async function fetchCalendarEvents(calendarId: number) {
-    try {
-      const res = await $fetch('/api/calendars/events/query', { query: { calendarId } })
-
-      const eventData = res.data as CalendarEvent[]
-
-      if (!eventData.length) return
-
-      baseEvents.value = eventData
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
   const categories = ref<Category[]>([])
 
   // Order base events by dates
-  const allEvents = computed(() => baseEvents.value.sort((a, b) => {
-    return compareDates(a.startDate, b.startDate, 'desc')
-  }))
+  const allEvents = computed(() => [...baseEvents.value].sort((a, b) => compareDates(a.startDate, b.startDate, 'desc')))
 
   // Gets all current event in its default state
-  const currentEvents: Ref<CalendarEvent[]> = ref([])
+  const currentEvents = ref<CalendarEvent[]>([])
 
   // Watch for currentDate or events' list changes
   // This is deep because we're watching an array, and changes need to trigger and mutations like .push and .splice
@@ -673,15 +656,17 @@ export const useCalendar = defineStore('calendar', () => {
    */
   function shouldEventBeDisplayed(event: CalendarEvent): boolean {
     const isEventOnCurrentScreen =
-      (event.startDate.year === currentRPGDate.value.day &&
+      (event.startDate.year === currentRPGDate.value.year &&
         event.startDate.month === currentRPGDate.value.month) ||
       (event.endDate &&
         event.endDate.year === currentRPGDate.value.year &&
         event.endDate.month === currentRPGDate.value.month)
 
+    console.log(event.startDate, isEventOnCurrentScreen, currentRPGDate.value)
+
     switch (currentConfig.value.viewType) {
       case 'month':
-        return isEventOnCurrentScreen!
+        return !!isEventOnCurrentScreen
 
       case 'year':
         return event.startDate.year === currentRPGDate.value.year
@@ -940,7 +925,6 @@ export const useCalendar = defineStore('calendar', () => {
     getRelativeString,
     baseEvents,
     allEvents,
-    fetchCalendarEvents,
     categories,
     currentEvents,
     getRelativeEventFromDate,
