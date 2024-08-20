@@ -662,8 +662,6 @@ export const useCalendar = defineStore('calendar', () => {
         event.endDate.year === currentRPGDate.value.year &&
         event.endDate.month === currentRPGDate.value.month)
 
-    console.log(event.startDate, isEventOnCurrentScreen, currentRPGDate.value)
-
     switch (currentConfig.value.viewType) {
       case 'month':
         return !!isEventOnCurrentScreen
