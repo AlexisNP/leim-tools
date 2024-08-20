@@ -205,14 +205,14 @@ export const useCalendar = defineStore('calendar', () => {
   /**
    * Moves the current date forward one month
    */
-  function incrementMonth(): void {
+  function incrementViewMonth(): void {
     let newValue = Number(params.month) + 1
 
     // If the new value would exceed the max number of month per year
     if (newValue >= monthsPerYear.value) {
       newValue = 0
       // Increment the year
-      incrementYear()
+      incrementViewYear()
     }
 
     params.month = newValue.toString()
@@ -221,26 +221,26 @@ export const useCalendar = defineStore('calendar', () => {
   /**
    * Moves the current date backward one month
    */
-  function decrementMonth(): void {
+  function decrementViewMonth(): void {
     let newValue = Number(params.month) - 1
 
     // If the new value would go below 0
     if (newValue < 0) {
       newValue = monthsPerYear.value - 1
       // Decrement the year
-      decrementYear()
+      decrementViewYear()
     }
 
     params.month = newValue.toString()
   }
 
   /**
-   * Get the previous month number
+   * Get the previous month number of the calendar view
    *
    * @param monthNumber Initial month
    * @returns The previous month number in the year
    */
-  function getPreviousMonth(monthNumber: number): number {
+  function getPreviousViewMonth(monthNumber: number): number {
     const target: number = monthNumber - 1
 
     if (target < 0) {
@@ -251,12 +251,12 @@ export const useCalendar = defineStore('calendar', () => {
   }
 
   /**
-   * Get the following month number
+   * Get the following month number of the calendar view
    *
    * @param monthNumber Initial month
    * @returns The next month number in the year
    */
-  function getNextMonth(monthNumber: number): number {
+  function getNextViewMonth(monthNumber: number): number {
     const target: number = monthNumber + 1
 
     if (target + 1 > monthsPerYear.value) {
@@ -267,9 +267,9 @@ export const useCalendar = defineStore('calendar', () => {
   }
 
   /**
-   * Moves the current date to a particular month
+   * Moves the current view to a particular month
    */
-  function setMonth(target: number): void {
+  function setViewMonth(target: number): void {
     // If the target is outside the month bounds
     if (target < 0 || target >= monthsPerYear.value) {
       return
@@ -279,18 +279,18 @@ export const useCalendar = defineStore('calendar', () => {
   }
 
   /**
-   * Moves the current date forward one year
+   * Moves the current view forward one year
    */
-  function incrementYear(inc: number = 1): void {
+  function incrementViewYear(inc: number = 1): void {
     const newValue = Number(params.year) + inc
 
     params.year = newValue.toString()
   }
 
   /**
-   * Moves the current date backward one year
+   * Moves the current view backward one year
    */
-  function decrementYear(inc: number = 1): void {
+  function decrementViewYear(inc: number = 1): void {
     const newValue = Number(params.year) - inc
 
     params.year = newValue.toString()
@@ -583,9 +583,9 @@ export const useCalendar = defineStore('calendar', () => {
       const currentMonth = sortedMonths.value[datePivot.month]
       dateAcc.day = currentMonth.days - datePivot.day
       if (direction === 'future') {
-        datePivot.month = getNextMonth(datePivot.month)
+        datePivot.month = getNextViewMonth(datePivot.month)
       } else {
-        datePivot.month = getPreviousMonth(datePivot.month)
+        datePivot.month = getPreviousViewMonth(datePivot.month)
       }
       datePivot.day = 1
 
@@ -914,13 +914,13 @@ export const useCalendar = defineStore('calendar', () => {
     selectedDate: skipHydrate(selectedDate),
     selectDate,
     params,
-    incrementMonth,
-    decrementMonth,
-    setMonth,
-    getPreviousMonth,
-    getNextMonth,
-    incrementYear,
-    decrementYear,
+    incrementViewMonth,
+    decrementViewMonth,
+    setViewMonth,
+    getPreviousViewMonth,
+    getNextViewMonth,
+    incrementViewYear,
+    decrementViewYear,
     jumpToDate,
     jumpToDefaultDate,
     getFormattedDateTitle,

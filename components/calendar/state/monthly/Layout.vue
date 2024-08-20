@@ -2,7 +2,7 @@
 import { useCalendar } from '@/stores/CalendarStore'
 import { useThrottleFn } from '@vueuse/core'
 
-const { currentDate, decrementMonth, incrementMonth } = useCalendar()
+const { currentDate, decrementViewMonth, incrementViewMonth } = useCalendar()
 const { currentMonthData } = storeToRefs(useCalendar())
 
 function handleWheel(e: WheelEvent) {
@@ -15,11 +15,11 @@ function handleWheel(e: WheelEvent) {
 }
 
 const moveCalendarLeft = useThrottleFn(() => {
-  decrementMonth()
+  decrementViewMonth()
 }, 100)
 
 const moveCalendarRight = useThrottleFn(() => {
-  incrementMonth()
+  incrementViewMonth()
 }, 100)
 </script>
 
