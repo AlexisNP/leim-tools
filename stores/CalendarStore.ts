@@ -49,8 +49,10 @@ export const useCalendar = defineStore('calendar', () => {
   async function fetchCalendar(id: number) {
     try {
       const res = await $fetch('/api/calendars/query', { query: { id, full: true } })
+      const categoryRes = await $fetch('/api/calendars/categories/query')
 
       const calendarData = res.data as Calendar
+      const categoryData = categoryRes.data as Category[]
 
       if (!calendarData.id) return
 
@@ -63,6 +65,7 @@ export const useCalendar = defineStore('calendar', () => {
       months.value = calendarData.months
 
       baseEvents.value = calendarData.events
+      categories.value = categoryData
     } catch (err) {
       console.log(err)
     }
