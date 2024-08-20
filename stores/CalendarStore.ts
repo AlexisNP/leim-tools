@@ -60,6 +60,8 @@ export const useCalendar = defineStore('calendar', () => {
         today: calendarData.today
       }
 
+      setDefaultDate(activeCalendar.value.today)
+
       months.value = calendarData.months
 
       baseEvents.value = calendarData.events
