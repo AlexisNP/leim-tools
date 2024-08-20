@@ -2,9 +2,6 @@
 useHead({
   title: 'Dashboard'
 })
-
-const { setCurrentMenu } = useUiStore()
-setCurrentMenu([])
 </script>
 
 <template>

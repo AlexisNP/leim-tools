@@ -14,9 +14,8 @@ import {
   PhEye
 } from '@phosphor-icons/vue'
 
-const { defaultDate, getFormattedDateTitle, jumpToDate, getRelativeString } = useCalendar()
-const { revealEditEventModal, revealDeleteEventModal } = useCalendarEvents()
-const { lastActiveEvent } = storeToRefs(useCalendarEvents())
+const { defaultDate, getFormattedDateTitle, jumpToDate, getRelativeString, revealEditEventModal, revealDeleteEventModal } = useCalendar()
+const { lastActiveEvent } = storeToRefs(useCalendar())
 
 const props = defineProps<{
   event: CalendarEvent

@@ -20,9 +20,6 @@ watch(user, (n, _o) => {
     navigateTo('/')
   }
 })
-
-const { setCurrentMenu } = useUiStore()
-setCurrentMenu([])
 </script>
 
 <template>

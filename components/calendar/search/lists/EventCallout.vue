@@ -2,7 +2,6 @@
 import { cn } from '@/lib/utils'
 import type { RPGDate } from '@/models/Date'
 import type { CalendarEvent } from '@/models/CalendarEvent'
-import { useCalendar } from '@/stores/CalendarStore'
 
 import { PhArrowSquareOut, PhHourglassMedium, PhAlarm, PhMapPinArea, PhEye } from '@phosphor-icons/vue'
 
@@ -14,9 +13,7 @@ defineEmits<{
   (e: 'query:date-jump', payload: RPGDate): void
 }>()
 
-const { getRelativeString } = useCalendar()
-
-const { defaultDate, getFormattedDateTitle } = useCalendar()
+const { getRelativeString, defaultDate, getFormattedDateTitle } = useCalendar()
 
 const dateDifference: string = getRelativeString(defaultDate, props.event.startDate)
 const dateDuration: string | null = props.event.endDate

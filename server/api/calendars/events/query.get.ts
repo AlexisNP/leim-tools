@@ -3,7 +3,7 @@ import { z } from 'zod'
 import type { CalendarEvent } from "~/models/CalendarEvent";
 
 const querySchema = z.object({
-  world_id: z.number({ coerce: true }).positive().int()
+  calendarId: z.number({ coerce: true }).positive().int()
 })
 
 export default defineEventHandler(async (event) => {
@@ -17,11 +17,15 @@ export default defineEventHandler(async (event) => {
       title,
       description,
       location,
-      world_calendars (id, world_id)
+      startDate:start_date,
+      endDate:end_date,
+      wiki,
+      category:calendar_event_categories!calendar_events_category_fkey (*),
+      secondaryCategories:calendar_event_categories!calendar_event_categories_links (*)
     `)
 
-  if (query.world_id) {
-    output.eq('world_calendars.world_id', query.world_id)
+  if (query.calendarId) {
+    output.eq('calendar_id', query.calendarId)
   }
 
   return output.returns<CalendarEvent[]>()

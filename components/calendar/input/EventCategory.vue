@@ -10,7 +10,7 @@ const props = defineProps<{
 
 const model = defineModel<Category>()
 
-const { categories: availableCategories } = useCalendarEvents()
+const { categories: availableCategories } = useCalendar()
 
 const searchTerm = ref<string>('')
 

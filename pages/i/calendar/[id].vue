@@ -13,8 +13,14 @@ watch(user, (n, _o) => {
     navigateTo('/')
   }
 })
+
+const route = useRoute()
+const id = route.params.id
+const calendarStore = useCalendar()
+
+const { pending: calendarPending } = await useAsyncData('calendar', () => calendarStore.fetchCalendar(Number(id)).then(() => true))
 </script>
 
 <template>
-  <Calendar />
+  <Calendar v-if="!calendarPending" />
 </template>

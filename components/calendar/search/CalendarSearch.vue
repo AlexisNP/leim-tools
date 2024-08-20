@@ -8,8 +8,6 @@ import {
   isCalendarEvent,
   type CalendarEvent,
 } from '~/models/CalendarEvent'
-import { useCharacters } from '@/stores/CharacterStore'
-import { useCalendarEvents } from '@/stores/EventStore'
 import { capitalize } from '@/utils/Strings'
 import { useMagicKeys, useScroll, useStorage, whenever } from '@vueuse/core'
 import { computed, ref, watch } from 'vue'
@@ -27,8 +25,7 @@ import {
 import SearchList from './lists/SearchList.vue'
 import type { Category } from '~/models/Category'
 
-const { isAdvancedSearchOpen } = storeToRefs(useCalendar())
-const { allEvents } = storeToRefs(useCalendarEvents())
+const { isAdvancedSearchOpen, allEvents } = storeToRefs(useCalendar())
 const { characters } = storeToRefs(useCharacters())
 
 const searchQuery = ref<string>('')

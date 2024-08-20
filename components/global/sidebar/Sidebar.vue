@@ -2,14 +2,10 @@
 import { PhHouse, PhList } from '@phosphor-icons/vue'
 import type { SidebarMenuActionType } from './SidebarProps';
 
-const route = useRoute()
-
-const isHome = computed<boolean>(() => {
-  return route.fullPath === '/'
-})
-
 const { revealAdvancedSearch } = useCalendar()
 const { currentMenu } = storeToRefs(useUiStore())
+
+const user = useSupabaseUser()
 
 function handleMenuItemAction(actionType: SidebarMenuActionType) {
   if (actionType === 'event-search') {
@@ -27,8 +23,8 @@ function handleMenuItemAction(actionType: SidebarMenuActionType) {
         </UiButton>
       </li>
 
-      <li v-if="!isHome">
-        <UiTooltipProvider :delay-duration="100">
+      <template v-if="!user">
+        <UiTooltipProvider :delay-duration="50">
           <UiTooltip>
             <UiTooltipTrigger as-child>
               <UiButton variant="ghost" size="icon" class="rounded-full" as-child>
@@ -37,15 +33,15 @@ function handleMenuItemAction(actionType: SidebarMenuActionType) {
                 </RouterLink>
               </UiButton>
             </UiTooltipTrigger>
-            <UiTooltipContent :side="'right'">
+            <UiTooltipContent :side="'right'" :side-offset="6">
               <p>Retourner aux outils</p>
             </UiTooltipContent>
           </UiTooltip>
         </UiTooltipProvider>
-      </li>
+      </template>
 
       <li v-for="(item, i) in currentMenu" :key="i">
-        <UiTooltipProvider :delay-duration="100">
+        <UiTooltipProvider :delay-duration="50">
           <UiTooltip>
             <UiTooltipTrigger as-child>
               <UiButton v-if="item.to" variant="ghost" size="icon" class="rounded-full" as-child>
@@ -57,7 +53,7 @@ function handleMenuItemAction(actionType: SidebarMenuActionType) {
                 <component :is="item.phIcon" size="24" weight="fill" />
               </UiButton>
             </UiTooltipTrigger>
-            <UiTooltipContent :side="'right'">
+            <UiTooltipContent :side="'right'" :side-offset="6">
               <p>{{ item.tooltip }}</p>
             </UiTooltipContent>
           </UiTooltip>

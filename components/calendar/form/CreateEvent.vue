@@ -2,8 +2,8 @@
 import type { RPGDate } from '~/models/Date';
 import { PhAlarm, PhCircleNotch, PhEye, PhEyeClosed, PhMapPinArea, PhTag } from '@phosphor-icons/vue'
 
-const { eventSkeleton, operationInProgress } = storeToRefs(useCalendarEvents())
-const { resetSkeleton, submitSkeleton, cancelLatestRequest } = useCalendarEvents()
+const { eventSkeleton, operationInProgress } = storeToRefs(useCalendar())
+const { resetSkeleton, submitSkeleton, cancelLatestRequest } = useCalendar()
 const popoverOpen = ref(false)
 const isLoading = ref(false)
 

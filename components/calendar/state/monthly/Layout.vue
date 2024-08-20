@@ -2,8 +2,7 @@
 import { useCalendar } from '@/stores/CalendarStore'
 import { useThrottleFn } from '@vueuse/core'
 
-const { currentDate, decrementMonth, incrementMonth } = useCalendar()
-const { currentMonthData } = storeToRefs(useCalendar())
+const { currentDate, decrementMonth, incrementMonth, currentMonthData } = useCalendar()
 
 function handleWheel(e: WheelEvent) {
   const isMovingUp = e.deltaY < 0
@@ -26,7 +25,7 @@ const moveCalendarRight = useThrottleFn(() => {
 <template>
   <div class="grid grid-cols-10" @wheel="handleWheel">
     <CalendarStateMonthlyDayTile
-      v-for="day in currentMonthData.days"
+      v-for="day in currentMonthData?.days"
       :key="`layout-month-grid-${day}`"
       :date="{
         day: day,

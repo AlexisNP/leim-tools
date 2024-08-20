@@ -25,9 +25,6 @@ watch(user, (n, _o) => {
   }
 })
 
-const { setCurrentMenu } = useUiStore()
-setCurrentMenu([])
-
 const modalOpened = ref<boolean>(false)
 </script>
 
@@ -69,7 +66,7 @@ const modalOpened = ref<boolean>(false)
               <UiCard
                 v-if="calendar"
                 class="w-full transition-all text-slate-100 bg-slate-900 border-slate-700 hover:bg-slate-700 dark:hover:bg-slate-800 dark:border-slate-900 dark:focus-within:outline-slate-900"
-                :link="`/i/world/${world.id}/calendar`"
+                :link="`/i/calendar/${calendar.id}`"
               >
                 <UiCardHeader>
                   <UiCardTitle>{{ calendar.name }}</UiCardTitle>

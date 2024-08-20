@@ -1,20 +1,15 @@
 <script lang="ts" setup>
 import type { RPGDate } from '@/models/Date'
-import { useCalendar } from '@/stores/CalendarStore'
-import { useCalendarEvents } from '@/stores/EventStore'
 import { storeToRefs } from 'pinia'
 import { computed, type ComputedRef } from 'vue'
 
-const { currentDate, defaultDate, selectDate } = useCalendar()
-const { selectedDate } = storeToRefs(useCalendar())
-const { currentEvents } = storeToRefs(useCalendarEvents())
+const { currentDate, defaultDate, selectDate, areDatesIdentical } = useCalendar()
+const { selectedDate, currentEvents } = storeToRefs(useCalendar())
 
 const props = defineProps<{
   monthNumber: number
   dayNumber: number
 }>()
-
-const { areDatesIdentical } = useCalendar()
 
 const tileDate: ComputedRef<RPGDate> = computed(() => {
   return {
