@@ -4,7 +4,7 @@ import {
 } from '@/models/Date'
 import { useUrlSearchParams } from '@vueuse/core'
 import { defineStore } from 'pinia'
-import { computed, ref, type ComputedRef, type Ref } from 'vue'
+import { computed, ref, type ComputedRef } from 'vue'
 import type { Calendar } from '~/models/CalendarConfig'
 import type { CalendarEvent } from '~/models/CalendarEvent'
 import type { CalendarMonth } from '~/models/CalendarMonth'
@@ -32,10 +32,10 @@ export const useCalendar = defineStore('calendar', () => {
   /**
    * Static calendar config
    */
-  const currentConfig: Ref<CalendarCurrentConfig> = ref({
+  const currentConfig = ref<CalendarCurrentConfig>({
     viewType: 'month'
   })
-  const viewTypeOptions: Set<CalendarViewType> = new Set<CalendarViewType>([
+  const viewTypeOptions = new Set<CalendarViewType>([
     'month',
     'year'
   ])
@@ -45,7 +45,7 @@ export const useCalendar = defineStore('calendar', () => {
   /**
    * Month list (queried from API)
    */
-  const months: Ref<CalendarMonth[]> = ref<CalendarMonth[]>([])
+  const months = ref<CalendarMonth[]>([])
 
   async function fetchCalendar(id: number) {
     try {
@@ -89,14 +89,14 @@ export const useCalendar = defineStore('calendar', () => {
    * Sorted month data using the raw months
    */
   const sortedMonths = computed<CalendarMonth[]>(() => months.value.sort((a, b) => a.position - b.position))
-  const monthsPerYear = computed(() => months.value.length)
-  const daysPerYear = computed(() => months.value.reduce((acc, o) => acc + o.days, 0))
+  const monthsPerYear = computed<number>(() => months.value.length)
+  const daysPerYear = computed<number>(() => months.value.reduce((acc, o) => acc + o.days, 0))
 
   // Default date settings (current day in the world)
   // The base setting is the first day / month of year 0
-  const defaultDay: Ref<number> = ref<number>(1)
-  const defaultMonth: Ref<number> = ref<number>(0)
-  const defaultYear: Ref<number> = ref<number>(0)
+  const defaultDay = ref<number>(1)
+  const defaultMonth = ref<number>(0)
+  const defaultYear = ref<number>(0)
 
   // Object representation
   const defaultDate = computed<RPGDate>(() => {
@@ -305,7 +305,7 @@ export const useCalendar = defineStore('calendar', () => {
   /**
    * State for advanced search modal
    */
-  const isAdvancedSearchOpen: Ref<boolean> = ref<boolean>(false)
+  const isAdvancedSearchOpen = ref<boolean>(false)
 
   function revealAdvancedSearch() {
     isAdvancedSearchOpen.value = true
@@ -623,7 +623,7 @@ export const useCalendar = defineStore('calendar', () => {
   const categories = ref<Category[]>([])
 
   // Order base events by dates
-  const allEvents = computed(() => [...baseEvents.value].sort((a, b) => compareDates(a.startDate, b.startDate, 'desc')))
+  const allEvents = computed<CalendarEvent[]>(() => [...baseEvents.value].sort((a, b) => compareDates(a.startDate, b.startDate, 'desc')))
 
   // Gets all current event in its default state
   const currentEvents = ref<CalendarEvent[]>([])
@@ -774,7 +774,7 @@ export const useCalendar = defineStore('calendar', () => {
   /**
    * State for event modal edition
    */
-  const isEditEventModalOpen: Ref<boolean> = ref<boolean>(false)
+  const isEditEventModalOpen = ref<boolean>(false)
 
   function revealEditEventModal() {
     isEditEventModalOpen.value = true
@@ -783,7 +783,7 @@ export const useCalendar = defineStore('calendar', () => {
   /**
    * State for event modal edition
    */
-  const isDeleteEventModalOpen: Ref<boolean> = ref<boolean>(false)
+  const isDeleteEventModalOpen = ref<boolean>(false)
 
   function revealDeleteEventModal() {
     isDeleteEventModalOpen.value = true
@@ -796,13 +796,13 @@ export const useCalendar = defineStore('calendar', () => {
   const isCreatingEvent = ref<boolean>(false)
   const isUpdatingEvent = ref<boolean>(false)
   const isDeletingEvent = ref<boolean>(false)
-  const operationInProgress = computed(() => isCreatingEvent.value || isUpdatingEvent.value || isDeletingEvent.value)
+  const operationInProgress = computed<boolean>(() => isCreatingEvent.value || isUpdatingEvent.value || isDeletingEvent.value)
   let abortController: AbortController | null = null
 
   /**
    * Dummy event to hold creation data
    */
-  const eventSkeleton: Ref<CalendarEvent> = ref<CalendarEvent>({ title: '', startDate: defaultDate.value })
+  const eventSkeleton = ref<CalendarEvent>({ title: '', startDate: defaultDate.value })
 
   /**
    * Resets the dummy event data

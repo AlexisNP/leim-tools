@@ -8,6 +8,12 @@ import CenturyLayout from './state/centennially/Layout.vue'
 import DecadeLayout from './state/decennially/Layout.vue'
 import YearLayout from './state/yearly/Layout.vue'
 
+const route = useRoute()
+const id = route.params.id
+const calendarStore = useCalendar()
+
+await calendarStore.fetchCalendar(Number(id))
+
 const { currentConfig, jumpToDate, selectedDate } = useCalendar()
 
 // const { setCharacters } = useCharacters()
@@ -41,9 +47,9 @@ onMounted(() => {
 
       <component :is="currentViewComponent" />
 
-      <LazyCalendarSearch />
-      <LazyCalendarFormUpdateEvent />
-      <LazyCalendarFormDeleteEvent />
+      <CalendarSearch />
+      <CalendarFormUpdateEvent />
+      <CalendarFormDeleteEvent />
     </div>
   </div>
 </template>
