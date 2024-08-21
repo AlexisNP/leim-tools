@@ -2,8 +2,8 @@ import {
   type RPGDate,
   type RPGDateOrder,
 } from '@/models/Date'
-import { useLocalStorage, useUrlSearchParams } from '@vueuse/core'
-import { defineStore, skipHydrate } from 'pinia'
+import { useUrlSearchParams } from '@vueuse/core'
+import { defineStore } from 'pinia'
 import { computed, ref, type ComputedRef, type Ref } from 'vue'
 import type { Calendar } from '~/models/CalendarConfig'
 import type { CalendarEvent } from '~/models/CalendarEvent'
@@ -25,8 +25,9 @@ type CalendarCurrentDate = {
 }
 
 export const useCalendar = defineStore('calendar', () => {
-  const route = useRoute()
-  const isCalendarView: boolean = route.name === 'i-calendar-id'
+  const params = useUrlSearchParams('history', {
+    write: false
+  })
 
   /**
    * Static calendar config
@@ -62,6 +63,19 @@ export const useCalendar = defineStore('calendar', () => {
         today: calendarData.today
       }
 
+      setDefaultDate(activeCalendar.value.today)
+      selectDate(activeCalendar.value.today)
+
+      if (!params.day) {
+        params.day = defaultDate.value.day.toString()
+      }
+      if (!params.month) {
+        params.month = defaultDate.value.month.toString()
+      }
+      if (!params.year) {
+        params.year = defaultDate.value.year.toString()
+      }
+
       months.value = calendarData.months
 
       baseEvents.value = calendarData.events
@@ -80,43 +94,24 @@ export const useCalendar = defineStore('calendar', () => {
 
   // Default date settings (current day in the world)
   // The base setting is the first day / month of year 0
-  // const defaultDay: Ref<number> = ref<number>(1)
-  // const defaultMonth: Ref<number> = ref<number>(0)
-  // const defaultYear: Ref<number> = ref<number>(0)
+  const defaultDay: Ref<number> = ref<number>(1)
+  const defaultMonth: Ref<number> = ref<number>(0)
+  const defaultYear: Ref<number> = ref<number>(0)
 
   // Object representation
-  const defaultDate: ComputedRef<RPGDate> = computed(() => {
+  const defaultDate = computed<RPGDate>(() => {
     return {
-      day: activeCalendar.value?.today.day || 1,
-      month: activeCalendar.value?.today.month || 0,
-      year: activeCalendar.value?.today.year || 0
+      day: defaultDay.value,
+      month: defaultMonth.value,
+      year: defaultYear.value
     }
   })
 
-  // Set initial value for url search params
-  // The route needs to be check because it should proc the params on anything BUT the calendar route
-  let initialParams: { day?: string, month?: string, year?: string } = {}
-
-  if (isCalendarView) {
-    initialParams = {
-      day: defaultDate.value.day.toString(),
-      month: defaultDate.value.month.toString(),
-      year: defaultDate.value.year.toString()
-    }
+  function setDefaultDate(date: RPGDate): void {
+    defaultDay.value = date.day
+    defaultMonth.value = date.month
+    defaultYear.value = date.year
   }
-
-  // Get date from URL params
-  const params = useUrlSearchParams('history', {
-    write: false,
-    initialValue: initialParams,
-  })
-
-  // Everytime the defaultDate changes / is set, we should update the params in the URL
-  watch(defaultDate, () => {
-    params.day = String(defaultDate.value.day)
-    params.month = String(defaultDate.value.month)
-    params.year = String(defaultDate.value.year)
-  })
 
   const currentDay = computed<number>(() => {
     return Number(params.day)
@@ -175,14 +170,7 @@ export const useCalendar = defineStore('calendar', () => {
     }
   })
 
-  const selectedDate = useLocalStorage<RPGDate>('selected-date', currentRPGDate.value, { deep: true })
-
-  // Same check as above, for selectedDate history
-  if (isCalendarView) {
-    params.day = selectedDate.value.day.toString()
-    params.month = selectedDate.value.month.toString()
-    params.year = selectedDate.value.year.toString()
-  }
+  const selectedDate = ref<RPGDate>({...defaultDate.value})
 
   /**
    * Check whether the current viewType is active
@@ -896,8 +884,8 @@ export const useCalendar = defineStore('calendar', () => {
     currentDate,
     currentRPGDate,
     currentMonthData,
-    defaultDate,
-    selectedDate: skipHydrate(selectedDate),
+    defaultDate: defaultDate,
+    selectedDate: selectedDate,
     selectDate,
     params,
     incrementViewMonth,

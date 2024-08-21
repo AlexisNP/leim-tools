@@ -18,7 +18,7 @@ const route = useRoute()
 const id = route.params.id
 const calendarStore = useCalendar()
 
-const { pending: calendarPending } = await useAsyncData('calendar', () => calendarStore.fetchCalendar(Number(id)).then(() => true))
+const { pending: calendarPending } = await useAsyncData('calendar', async () => await calendarStore.fetchCalendar(Number(id)))
 </script>
 
 <template>

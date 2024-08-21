@@ -8,7 +8,7 @@ import CenturyLayout from './state/centennially/Layout.vue'
 import DecadeLayout from './state/decennially/Layout.vue'
 import YearLayout from './state/yearly/Layout.vue'
 
-const { currentConfig, selectedDate, jumpToDate } = useCalendar()
+const { currentConfig, jumpToDate, selectedDate } = useCalendar()
 
 // const { setCharacters } = useCharacters()
 
