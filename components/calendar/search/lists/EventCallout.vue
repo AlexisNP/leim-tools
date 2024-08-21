@@ -45,18 +45,32 @@ const dateDuration: string | null = props.event.endDate
       </div>
     </div>
 
-    <div class="mb-1">
+    <div class="flex gap-2 items-center justify-between mb-1">
       <template v-if="!event.endDate">
-        <p class="col-span-2 font-semibold text-sm opacity-75">
+        <p class="font-semibold text-sm opacity-75">
           {{ getFormattedDateTitle(event.startDate, true) }}
         </p>
       </template>
       <template v-else>
-        <p class="col-span-2 font-semibold text-sm opacity-75">
+        <p class="font-semibold text-sm opacity-75">
           Du {{ getFormattedDateTitle(event.startDate, true) }} au
           {{ getFormattedDateTitle(event.endDate, true) }}
         </p>
       </template>
+      <div v-if="event.hidden" class="flex justify-end">
+        <UiTooltipProvider :delay-duration="250">
+          <UiTooltip>
+            <UiTooltipTrigger as-child>
+              <UiBadge class="flex gap-1 border-[1px] border-slate-900 hover:bg-slate-300 hover:opacity-100">
+                <PhEye size="16" weight="fill" /> Évènement privé
+              </UiBadge>
+            </UiTooltipTrigger>
+            <UiTooltipContent>
+              <p>Cet évènement est uniquement visible pour vous</p>
+            </UiTooltipContent>
+          </UiTooltip>
+        </UiTooltipProvider>
+      </div>
     </div>
 
     <div class="mb-1 flex gap-x-2 items-center">
@@ -97,18 +111,5 @@ const dateDuration: string | null = props.event.endDate
         {{ event.description }}
       </span>
     </div>
-
-    <UiTooltipProvider v-if="event.hidden" :delay-duration="250">
-      <UiTooltip>
-        <UiTooltipTrigger as-child>
-          <UiBadge class="absolute -top-2 left-2 flex gap-1 border-[1px] border-slate-900 hover:bg-slate-300 hover:opacity-100">
-            <PhEye size="16" weight="fill" /> Évènement privé
-          </UiBadge>
-        </UiTooltipTrigger>
-        <UiTooltipContent>
-          <p>Cet évènement est uniquement visible pour vous</p>
-        </UiTooltipContent>
-      </UiTooltip>
-    </UiTooltipProvider>
   </button>
 </template>

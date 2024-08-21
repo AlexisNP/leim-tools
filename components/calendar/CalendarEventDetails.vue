@@ -135,7 +135,7 @@ function deployDeleteModal() {
       </template>
     </div>
 
-    <menu class="absolute top-4 right-4">
+    <menu class="absolute top-4 right-4" :class="cn({ 'top-6': event.hidden })">
       <UiPopover v-model:open="commandMenuOpened">
         <UiPopoverTrigger as-child>
           <UiButton size="icon" variant="ghost">

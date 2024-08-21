@@ -18,9 +18,9 @@ const route = useRoute()
 const id = route.params.id
 const calendarStore = useCalendar()
 
-const { pending: calendarPending } = await useAsyncData('calendar', async () => await calendarStore.fetchCalendar(Number(id)))
+await useAsyncData('calendar', async () => await calendarStore.fetchCalendar(Number(id)))
 </script>
 
 <template>
-  <Calendar v-if="!calendarPending" />
+  <LazyCalendar />
 </template>
