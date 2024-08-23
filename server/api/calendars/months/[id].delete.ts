@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { serverSupabaseClient } from "#supabase/server"
-import type { CalendarEvent } from "~/models/CalendarEvent"
+import type { CalendarMonth } from "~/models/CalendarMonth"
 
 const paramsSchema = z.object({
   id: z.number({ coerce: true }).positive().int()
@@ -22,10 +22,10 @@ export default defineEventHandler(async (event) => {
 
   try {
     const { data, error } = await client
-      .from('calendar_events')
+      .from('calendar_months')
       .delete()
       .eq('id', params.id)
-      .maybeSingle<CalendarEvent>()
+      .maybeSingle<CalendarMonth>()
 
     if (error) throw error
 
