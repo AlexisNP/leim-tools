@@ -16,7 +16,7 @@ watch(modelBuffer.value, () => {
   model.value = [ ...modelBuffer.value ]
 })
 
-const { categories: availableCategories } = useCalendarEvents()
+const { categories: availableCategories } = useCalendar()
 
 const searchTerm = ref<string>('')
 

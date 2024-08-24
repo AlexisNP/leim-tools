@@ -14,9 +14,8 @@ import {
   PhEye
 } from '@phosphor-icons/vue'
 
-const { defaultDate, getFormattedDateTitle, jumpToDate, getRelativeString } = useCalendar()
-const { revealEditEventModal, revealDeleteEventModal } = useCalendarEvents()
-const { lastActiveEvent } = storeToRefs(useCalendarEvents())
+const { defaultDate, getFormattedDateTitle, jumpToDate, getRelativeString, revealEditEventModal, revealDeleteEventModal } = useCalendar()
+const { lastActiveEvent } = storeToRefs(useCalendar())
 
 const props = defineProps<{
   event: CalendarEvent
@@ -136,7 +135,7 @@ function deployDeleteModal() {
       </template>
     </div>
 
-    <menu class="absolute top-4 right-4">
+    <menu class="absolute top-4 right-4" :class="cn({ 'top-6': event.hidden })">
       <UiPopover v-model:open="commandMenuOpened">
         <UiPopoverTrigger as-child>
           <UiButton size="icon" variant="ghost">

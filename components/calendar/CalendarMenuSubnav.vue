@@ -1,12 +1,9 @@
 <script lang="ts" setup>
 import { type RPGDate } from '@/models/Date'
-import { useCalendar } from '@/stores/CalendarStore'
-import { useCalendarEvents } from '@/stores/EventStore'
 
 import { PhArrowLineLeft, PhArrowLineRight } from '@phosphor-icons/vue'
 
-const { currentDate, currentConfig, jumpToDate } = useCalendar()
-const { getRelativeEventFromDate } = useCalendarEvents()
+const { currentDate, currentConfig, jumpToDate, getRelativeEventFromDate } = useCalendar()
 
 function handleGotoPreviousEventPage(position: 'next' | 'prev' = 'next') {
   let fromDate: RPGDate

@@ -2,7 +2,7 @@ import { z } from "zod"
 
 export interface RPGDate {
   day: number
-  month: number | string
+  month: number
   year: number
 }
 

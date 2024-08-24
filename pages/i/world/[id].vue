@@ -1,13 +1,16 @@
 <script lang="ts" setup>
+import type { RealtimeChannel } from '@supabase/supabase-js'
 import { PhPlus } from '@phosphor-icons/vue';
 import type { World } from '~/models/World';
+import type { Calendar } from '~/models/CalendarConfig';
 
+const supabase = useSupabaseClient()
 const route = useRoute()
 const id = route.params.id
 
-const { data: res, pending } = await useFetch(`/api/worlds/query`, { query: { id, full: true } })
+const { data: res, pending } = await useFetch('/api/worlds/query', { query: { id, full: true } })
 
-const world = res.value?.data as World
+const world = ref<World>(res.value?.data as World)
 
 useHead({
   title: 'Profil'
@@ -25,10 +28,65 @@ watch(user, (n, _o) => {
   }
 })
 
-const { setCurrentMenu } = useUiStore()
-setCurrentMenu([])
+const alertModalOpened = ref<boolean>(false)
 
-const modalOpened = ref<boolean>(false)
+function handleDialogClose() {
+  alertModalOpened.value = false
+}
+
+/**
+ * === Calendar subscriptions ===
+ */
+
+/** Active calendar channel */
+let calendarChannel: RealtimeChannel
+
+/** Handles calendar insertion realtime events */
+function handleInsertedCalendar(newCalendar: Calendar) {
+  try {
+    world.value.calendars?.push(newCalendar)
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+/** Handles calendar deletion realtime events */
+function handleDeletedCalendar(id: number) {
+  try {
+    world.value.calendars?.splice(world.value.calendars.findIndex(c => c.id === id))
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+onMounted(() => {
+  calendarChannel = supabase.channel('custom-insert-channel')
+    .on(
+      'postgres_changes',
+      { event: '*', schema: 'public', table: 'calendars' },
+      (payload) => {
+        switch (payload.eventType) {
+          case 'INSERT':
+            handleInsertedCalendar(payload.new as Calendar)
+            break
+
+          case 'DELETE':
+            handleDeletedCalendar(payload.old.id)
+            break
+
+          default:
+            console.log('Unknown event has been triggered. This should not happen unless Supabase added one somehow.')
+            break
+        }
+      }
+    )
+    .subscribe()
+})
+
+onUnmounted(() => {
+  // Unsubscribe from realtime
+  supabase.removeChannel(calendarChannel)
+})
 </script>
 
 <template>
@@ -53,11 +111,11 @@ const modalOpened = ref<boolean>(false)
             <UiTooltipProvider :delay-duration="250">
               <UiTooltip>
                 <UiTooltipTrigger as-child>
-                  <UiButton size="icon" class="rounded-full h-8 w-8" @click="() => modalOpened = true">
+                  <UiButton size="icon" class="rounded-full h-8 w-8" @click="() => alertModalOpened = true">
                     <PhPlus size="17"/>
                   </UiButton>
                 </UiTooltipTrigger>
-                <UiTooltipContent>
+                <UiTooltipContent :side-offset="10">
                   <p>Ajouter un calendrier</p>
                 </UiTooltipContent>
               </UiTooltip>
@@ -69,7 +127,7 @@ const modalOpened = ref<boolean>(false)
               <UiCard
                 v-if="calendar"
                 class="w-full transition-all text-slate-100 bg-slate-900 border-slate-700 hover:bg-slate-700 dark:hover:bg-slate-800 dark:border-slate-900 dark:focus-within:outline-slate-900"
-                :link="`/i/world/${world.id}/calendar`"
+                :link="`/i/calendar/${calendar.id}`"
               >
                 <UiCardHeader>
                   <UiCardTitle>{{ calendar.name }}</UiCardTitle>
@@ -88,18 +146,8 @@ const modalOpened = ref<boolean>(false)
           </template>
         </Spacing>
       </section>
-
-      <UiAlertDialog v-model:open="modalOpened">
-        <UiAlertDialogContent class="grid grid-rows-[auto_1fr_auto] items-start min-h-[66vh] max-w-4xl gap-6">
-          <UiAlertDialogTitle>
-            <span class="text-2xl">
-              <strong class="font-bold">{{ world.name }}</strong> — Nouveau calendrier
-            </span>
-          </UiAlertDialogTitle>
-
-          <CalendarFormCreate />
-        </UiAlertDialogContent>
-      </UiAlertDialog>
     </template>
+
+    <CalendarDialogCreate :world :modal-state="alertModalOpened" @on-close="handleDialogClose" />
   </main>
 </template>

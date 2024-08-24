@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 import type { RPGDate } from '@/models/Date'
 import type { CalendarEvent } from '@/models/CalendarEvent'
-import { useCalendar } from '@/stores/CalendarStore'
-import { useCalendarEvents } from '@/stores/EventStore'
 import { useElementBounding } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 import { computed, ref, type ComputedRef } from 'vue'
@@ -18,8 +16,7 @@ const calendarTile = ref()
 const calendarEventsList = ref()
 
 const { defaultDate, selectDate, areDatesIdentical } = useCalendar()
-const { selectedDate } = storeToRefs(useCalendar())
-const { currentEvents } = storeToRefs(useCalendarEvents())
+const { selectedDate, currentEvents } = storeToRefs(useCalendar())
 
 /**
  * All events with a startDate / endDate that starts or ends on the tile

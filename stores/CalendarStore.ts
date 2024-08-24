@@ -1,11 +1,14 @@
-import {
-  type RPGDate,
-  type RPGDateOrder,
+import type {
+  RPGDate,
+  RPGDateOrder,
 } from '@/models/Date'
-import { useLocalStorage, useUrlSearchParams } from '@vueuse/core'
-import { defineStore, skipHydrate } from 'pinia'
-import { computed, ref, type ComputedRef, type Ref } from 'vue'
+import { useUrlSearchParams } from '@vueuse/core'
+import { defineStore } from 'pinia'
+import { computed, ref, type ComputedRef } from 'vue'
+import type { Calendar } from '~/models/CalendarConfig'
+import type { CalendarEvent } from '~/models/CalendarEvent'
 import type { CalendarMonth } from '~/models/CalendarMonth'
+import type { Category } from '~/models/Category'
 
 type CalendarViewType = 'month' | 'year' | 'decade' | 'century'
 
@@ -22,50 +25,75 @@ type CalendarCurrentDate = {
 }
 
 export const useCalendar = defineStore('calendar', () => {
-  const route = useRoute()
-  const isCalendarView: boolean = route.name === 'i-world-id-calendar'
-
   /**
    * Static calendar config
-   * This shouldn't change
    */
-  const currentConfig: Ref<CalendarCurrentConfig> = ref({
+  const currentConfig = ref<CalendarCurrentConfig>({
     viewType: 'month'
   })
-  const viewTypeOptions: Set<CalendarViewType> = new Set<CalendarViewType>([
+  const viewTypeOptions = new Set<CalendarViewType>([
     'month',
     'year'
   ])
 
-  const calendarId = ref<number>(0)
+  const activeCalendar = ref<{ id: number; name: string; today: RPGDate} | null>(null)
 
-  function setCalendarId(data: number) {
-    calendarId.value = data
-  }
   /**
    * Month list (queried from API)
    */
-  const months: Ref<CalendarMonth[]> = ref<CalendarMonth[]>([])
+  const months = ref<CalendarMonth[]>([])
 
-  function setMonths(data: CalendarMonth[]) {
-    months.value = data
+  function setActiveCalendar(calendarData: Calendar, categoryData: Category[]) {
+    try {
+      if (!calendarData.id) return
+
+      activeCalendar.value = {
+        id: calendarData.id,
+        name: calendarData.name,
+        today: calendarData.today
+      }
+
+      setDefaultDate(activeCalendar.value.today)
+      selectDate(activeCalendar.value.today)
+
+      if (!params.day) {
+        params.day = defaultDate.value.day.toString()
+      }
+      if (!params.month) {
+        params.month = defaultDate.value.month.toString()
+      }
+      if (!params.year) {
+        params.year = defaultDate.value.year.toString()
+      }
+
+      months.value = calendarData.months
+
+      baseEvents.value = calendarData.events
+      categories.value = categoryData
+    } catch (err) {
+      console.log(err)
+    }
   }
+
+  const params = useUrlSearchParams('history', {
+    write: false
+  })
 
   /**
    * Sorted month data using the raw months
    */
   const sortedMonths = computed<CalendarMonth[]>(() => months.value.sort((a, b) => a.position - b.position))
-  const monthsPerYear = computed(() => months.value.length)
-  const daysPerYear = computed(() => months.value.reduce((acc, o) => acc + o.days, 0))
+  const monthsPerYear = computed<number>(() => months.value.length)
+  const daysPerYear = computed<number>(() => months.value.reduce((acc, o) => acc + o.days, 0))
 
   // Default date settings (current day in the world)
   // The base setting is the first day / month of year 0
-  const defaultDay: Ref<number> = ref<number>(1)
-  const defaultMonth: Ref<number> = ref<number>(0)
-  const defaultYear: Ref<number> = ref<number>(0)
+  const defaultDay = ref<number>(1)
+  const defaultMonth = ref<number>(0)
+  const defaultYear = ref<number>(0)
 
   // Object representation
-  const defaultDate: ComputedRef<RPGDate> = computed(() => {
+  const defaultDate = computed<RPGDate>(() => {
     return {
       day: defaultDay.value,
       month: defaultMonth.value,
@@ -73,41 +101,11 @@ export const useCalendar = defineStore('calendar', () => {
     }
   })
 
-  // Set initial value for url search params
-  // The route needs to be check because it should proc the params on anything BUT the calendar route
-  let initialParams: { day?: string, month?: string, year?: string } = {}
-
-  if (isCalendarView) {
-    initialParams = {
-      day: defaultDate.value.day.toString(),
-      month: defaultDate.value.month.toString(),
-      year: defaultDate.value.year.toString()
-    }
-  }
-
-  // Get date from URL params
-  const params = useUrlSearchParams('history', {
-    write: false,
-    initialValue: initialParams,
-  })
-
-  /**
-   * Sets the new defaultDate (aka the "today" value from the calendar)
-   *
-   * @param date The new data to set as defaultDate
-   */
-  function setDefaultDate(date: RPGDate) {
+  function setDefaultDate(date: RPGDate): void {
     defaultDay.value = date.day
     defaultMonth.value = date.month
     defaultYear.value = date.year
   }
-
-  // Everytime the defaultDate changes / is set, we should update the params in the URL
-  watch(defaultDate, () => {
-    params.day = String(defaultDate.value.day)
-    params.month = String(defaultDate.value.month)
-    params.year = String(defaultDate.value.year)
-  })
 
   const currentDay = computed<number>(() => {
     return Number(params.day)
@@ -160,20 +158,13 @@ export const useCalendar = defineStore('calendar', () => {
 
   const currentRPGDate = computed<RPGDate>(() => {
     return {
-      day: currentDate.currentDay.value,
-      month: currentDate.currentMonth.value,
-      year: currentDate.currentYear.value,
+      day: currentDay.value,
+      month: currentMonth.value,
+      year: currentYear.value,
     }
   })
 
-  const selectedDate = useLocalStorage<RPGDate>('selected-date', currentRPGDate.value, { deep: true })
-
-  // Same check as above, for selectedDate history
-  if (isCalendarView) {
-    params.day = selectedDate.value.day.toString()
-    params.month = selectedDate.value.month.toString()
-    params.year = selectedDate.value.year.toString()
-  }
+  const selectedDate = ref<RPGDate>({...defaultDate.value})
 
   /**
    * Check whether the current viewType is active
@@ -199,14 +190,14 @@ export const useCalendar = defineStore('calendar', () => {
   /**
    * Moves the current date forward one month
    */
-  function incrementMonth(): void {
+  function incrementViewMonth(): void {
     let newValue = Number(params.month) + 1
 
     // If the new value would exceed the max number of month per year
     if (newValue >= monthsPerYear.value) {
       newValue = 0
       // Increment the year
-      incrementYear()
+      incrementViewYear()
     }
 
     params.month = newValue.toString()
@@ -215,26 +206,26 @@ export const useCalendar = defineStore('calendar', () => {
   /**
    * Moves the current date backward one month
    */
-  function decrementMonth(): void {
+  function decrementViewMonth(): void {
     let newValue = Number(params.month) - 1
 
     // If the new value would go below 0
     if (newValue < 0) {
       newValue = monthsPerYear.value - 1
       // Decrement the year
-      decrementYear()
+      decrementViewYear()
     }
 
     params.month = newValue.toString()
   }
 
   /**
-   * Get the previous month number
+   * Get the previous month number of the calendar view
    *
    * @param monthNumber Initial month
    * @returns The previous month number in the year
    */
-  function getPreviousMonth(monthNumber: number): number {
+  function getPreviousViewMonth(monthNumber: number): number {
     const target: number = monthNumber - 1
 
     if (target < 0) {
@@ -245,12 +236,12 @@ export const useCalendar = defineStore('calendar', () => {
   }
 
   /**
-   * Get the following month number
+   * Get the following month number of the calendar view
    *
    * @param monthNumber Initial month
    * @returns The next month number in the year
    */
-  function getNextMonth(monthNumber: number): number {
+  function getNextViewMonth(monthNumber: number): number {
     const target: number = monthNumber + 1
 
     if (target + 1 > monthsPerYear.value) {
@@ -261,9 +252,9 @@ export const useCalendar = defineStore('calendar', () => {
   }
 
   /**
-   * Moves the current date to a particular month
+   * Moves the current view to a particular month
    */
-  function setMonth(target: number): void {
+  function setViewMonth(target: number): void {
     // If the target is outside the month bounds
     if (target < 0 || target >= monthsPerYear.value) {
       return
@@ -273,18 +264,18 @@ export const useCalendar = defineStore('calendar', () => {
   }
 
   /**
-   * Moves the current date forward one year
+   * Moves the current view forward one year
    */
-  function incrementYear(inc: number = 1): void {
+  function incrementViewYear(inc: number = 1): void {
     const newValue = Number(params.year) + inc
 
     params.year = newValue.toString()
   }
 
   /**
-   * Moves the current date backward one year
+   * Moves the current view backward one year
    */
-  function decrementYear(inc: number = 1): void {
+  function decrementViewYear(inc: number = 1): void {
     const newValue = Number(params.year) - inc
 
     params.year = newValue.toString()
@@ -308,7 +299,7 @@ export const useCalendar = defineStore('calendar', () => {
   /**
    * State for advanced search modal
    */
-  const isAdvancedSearchOpen: Ref<boolean> = ref<boolean>(false)
+  const isAdvancedSearchOpen = ref<boolean>(false)
 
   function revealAdvancedSearch() {
     isAdvancedSearchOpen.value = true
@@ -577,9 +568,9 @@ export const useCalendar = defineStore('calendar', () => {
       const currentMonth = sortedMonths.value[datePivot.month]
       dateAcc.day = currentMonth.days - datePivot.day
       if (direction === 'future') {
-        datePivot.month = getNextMonth(datePivot.month)
+        datePivot.month = getNextViewMonth(datePivot.month)
       } else {
-        datePivot.month = getPreviousMonth(datePivot.month)
+        datePivot.month = getPreviousViewMonth(datePivot.month)
       }
       datePivot.day = 1
 
@@ -622,11 +613,263 @@ export const useCalendar = defineStore('calendar', () => {
     }
   }
 
+  const baseEvents = ref<CalendarEvent[]>([])
+  const categories = ref<Category[]>([])
+
+  // Order base events by dates
+  const allEvents = computed<CalendarEvent[]>(() => [...baseEvents.value].sort((a, b) => compareDates(a.startDate, b.startDate, 'desc')))
+
+  // Gets all current event in its default state
+  const currentEvents = ref<CalendarEvent[]>([])
+
+  // Watch for currentDate or events' list changes
+  // This is deep because we're watching an array, and changes need to trigger and mutations like .push and .splice
+  watch([currentRPGDate, allEvents], () => {
+    currentEvents.value = computeCurrentEvents()
+  }, { deep: true, immediate: true })
+
+  /**
+   * Determines if the event can appear in the front end
+   *
+   * This function takes into consideration the viewType of the calendar config
+   *
+   * @param event The event to analyze
+   * @returns Whether the event should appear in the current view
+   */
+  function shouldEventBeDisplayed(event: CalendarEvent): boolean {
+    const isEventOnCurrentScreen =
+      (event.startDate.year === currentRPGDate.value.year &&
+        event.startDate.month === currentRPGDate.value.month) ||
+      (event.endDate &&
+        event.endDate.year === currentRPGDate.value.year &&
+        event.endDate.month === currentRPGDate.value.month)
+
+    switch (currentConfig.value.viewType) {
+      case 'month':
+        return !!isEventOnCurrentScreen
+
+      case 'year':
+        return event.startDate.year === currentRPGDate.value.year
+
+      case 'decade':
+        return (
+          event.startDate.year >= currentRPGDate.value.year &&
+          event.startDate.year <= currentRPGDate.value.year + 10
+        )
+
+      case 'century':
+        return (
+          event.startDate.year >= currentRPGDate.value.year &&
+          event.startDate.year <= currentRPGDate.value.year + 100
+        )
+
+      default:
+        return false
+    }
+  }
+
+  /**
+   * Fetches all the current events for the current view
+   *
+   * @returns A list of events that can appear in the current view
+   */
+  function computeCurrentEvents(): CalendarEvent[] {
+    return [...allEvents.value].filter((event) => shouldEventBeDisplayed(event))
+  }
+
+  /**
+   * From a base event, gets the next or previous one in the timeline
+   *
+   * @param event The event at a given position in the data
+   * @param position Whether we should get the next or previous event
+   * @returns The next event in chronological order
+   */
+  function getRelativeEventFromEvent(
+    event: CalendarEvent,
+    position: 'next' | 'prev' = 'next',
+    initialIsEnd: boolean = false
+  ): { event: CalendarEvent; targetDate: RPGDate } {
+    let dateToParse: RPGDate // Day value of the date that the user interacted with
+
+    if (initialIsEnd && event.endDate) {
+      dateToParse = event.endDate
+    } else {
+      dateToParse = event.startDate
+    }
+
+    return getRelativeEventFromDate(dateToParse, position)
+  }
+
+  /**
+   * From a date, gets the next or previous event in the timeline
+   *
+   * @param date The starting date from which to get the next event
+   * @param position Whether we should get the next or previous event
+   * @returns The next event in chronological order
+   */
+  function getRelativeEventFromDate(
+    date: RPGDate,
+    position: 'next' | 'prev' = 'next'
+  ): { event: CalendarEvent; targetDate: RPGDate } {
+    const pivotValue = convertDateToDays(date)
+    let t: { eventData: CalendarEvent; distance: number; targetKey: 'startDate' | 'endDate' }[] = []
+
+    // Loop over all event once to convert the structure to a usable one
+    for (let i = 0; i < allEvents.value.length; i++) {
+      const e: CalendarEvent = allEvents.value[i]
+
+      // Estimate distance from pivot
+      const startDateDays: number = convertDateToDays(e.startDate)
+      const startDistance: number = startDateDays - pivotValue
+
+      // Push startDate to comparator array
+      t.push({
+        eventData: e,
+        distance: startDistance,
+        targetKey: 'startDate'
+      })
+
+      // Check the same things for endDate
+      if (e.endDate) {
+        const endDateDays: number = convertDateToDays(e.endDate)
+        const endDistance: number = endDateDays - pivotValue
+
+        // Push optional endDate to comparator array
+        t.push({
+          eventData: e,
+          distance: endDistance,
+          targetKey: 'endDate'
+        })
+      }
+    }
+
+    // Based on the direction, either ignore negative distance (past) or positive distance (future)
+    t = t.filter((i) => {
+      return position === 'next' ? i.distance > 0 : i.distance < 0
+    })
+
+    if (!t.length) {
+      throw new Error(
+        "Aucun évènement suivant ou précédent trouvé ; Peut-être l'évènement se situe au début ou à la fin du calendrier ?"
+      )
+    }
+
+    // Get event with remaining minimum distance
+    const closestEvent = t.reduce((a, b) => {
+      return Math.abs(b.distance) < Math.abs(a.distance) ? b : a
+    })
+
+    return {
+      event: closestEvent.eventData,
+      targetDate: closestEvent.eventData[closestEvent.targetKey]!
+    }
+  }
+
+  /**
+   * State for event modal edition
+   */
+  const isEditEventModalOpen = ref<boolean>(false)
+
+  function revealEditEventModal() {
+    isEditEventModalOpen.value = true
+  }
+
+  /**
+   * State for event modal edition
+   */
+  const isDeleteEventModalOpen = ref<boolean>(false)
+
+  function revealDeleteEventModal() {
+    isDeleteEventModalOpen.value = true
+  }
+
+  /**
+   * EVENT CREATION FUNCTIONS
+   */
+  const lastActiveEvent = ref<CalendarEvent | null>()
+  const isCreatingEvent = ref<boolean>(false)
+  const isUpdatingEvent = ref<boolean>(false)
+  const isDeletingEvent = ref<boolean>(false)
+  const operationInProgress = computed<boolean>(() => isCreatingEvent.value || isUpdatingEvent.value || isDeletingEvent.value)
+  let abortController: AbortController | null = null
+
+  /**
+   * Dummy event to hold creation data
+   */
+  const eventSkeleton = ref<CalendarEvent>({ title: '', startDate: defaultDate.value })
+
+  /**
+   * Resets the dummy event data
+   */
+  function resetSkeleton() {
+    eventSkeleton.value = { title: '', startDate: defaultDate.value }
+  }
+
+  /**
+   * Submits the skeleton event and creates a real event from its data
+   *
+   * We assume it's been sanitized by the caller
+   */
+  async function submitSkeleton() {
+    abortController = new AbortController()
+    isCreatingEvent.value = true
+
+    try {
+      const res = await $fetch('/api/calendars/events/create', { method: 'POST', body: { event : eventSkeleton.value, calendarId: activeCalendar.value?.id }, signal: abortController.signal })
+
+      baseEvents.value.push(res)
+    } catch (err) {
+      console.log(err)
+    } finally {
+      abortController = null
+      isCreatingEvent.value = false
+    }
+  }
+
+  async function updateEventFromSkeleton() {
+    abortController = new AbortController()
+    isUpdatingEvent.value = true
+
+    try {
+      const res = await $fetch(`/api/calendars/events/${eventSkeleton.value.id}`, { method: 'PATCH', body: { event : eventSkeleton.value, calendarId: activeCalendar.value?.id }, signal: abortController.signal })
+
+      const eventIndex = baseEvents.value.findIndex(e => e.id === eventSkeleton.value.id)
+      baseEvents.value[eventIndex] = res
+    } catch (err) {
+      console.log(err)
+    } finally {
+      abortController = null
+      isUpdatingEvent.value = false
+    }
+  }
+
+  async function deleteEventFromSkeleton() {
+    abortController = new AbortController()
+    isDeletingEvent.value = true
+
+    try {
+      await $fetch(`/api/calendars/events/${eventSkeleton.value.id}`, { method: 'DELETE', signal: abortController.signal })
+
+      const eventIndex = baseEvents.value.findIndex(e => e.id === eventSkeleton.value.id)
+      baseEvents.value.splice(eventIndex, 1)
+    } catch (err) {
+      console.log(err)
+    } finally {
+      abortController = null
+      isDeletingEvent.value = false
+    }
+  }
+
+  function cancelLatestRequest() {
+    if (abortController) {
+      abortController.abort()
+    }
+  }
+
   return {
-    calendarId,
-    setCalendarId,
+    setActiveCalendar,
+    activeCalendar,
     months,
-    setMonths,
     sortedMonths,
     daysPerYear,
     monthsPerYear,
@@ -635,18 +878,17 @@ export const useCalendar = defineStore('calendar', () => {
     currentDate,
     currentRPGDate,
     currentMonthData,
-    defaultDate,
-    setDefaultDate,
-    selectedDate: skipHydrate(selectedDate),
+    defaultDate: defaultDate,
+    selectedDate: selectedDate,
     selectDate,
     params,
-    incrementMonth,
-    decrementMonth,
-    setMonth,
-    getPreviousMonth,
-    getNextMonth,
-    incrementYear,
-    decrementYear,
+    incrementViewMonth,
+    decrementViewMonth,
+    setViewMonth,
+    getPreviousViewMonth,
+    getNextViewMonth,
+    incrementViewYear,
+    decrementViewYear,
     jumpToDate,
     jumpToDefaultDate,
     getFormattedDateTitle,
@@ -661,5 +903,26 @@ export const useCalendar = defineStore('calendar', () => {
     areDatesIdentical,
     compareDates,
     getRelativeString,
+    baseEvents,
+    allEvents,
+    categories,
+    currentEvents,
+    getRelativeEventFromDate,
+    getRelativeEventFromEvent,
+    cancelLatestRequest,
+    isCreatingEvent,
+    isUpdatingEvent,
+    isDeletingEvent,
+    operationInProgress,
+    eventSkeleton,
+    resetSkeleton,
+    submitSkeleton,
+    lastActiveEvent,
+    updateEventFromSkeleton,
+    deleteEventFromSkeleton,
+    isEditEventModalOpen,
+    revealEditEventModal,
+    isDeleteEventModalOpen,
+    revealDeleteEventModal
   }
 })

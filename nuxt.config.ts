@@ -13,6 +13,10 @@ export default defineNuxtConfig({
   ],
   css: ['~/assets/main.css'],
 
+  supabase: {
+    redirect: false
+  },
+
   postcss: {
     plugins: {
       tailwindcss: {},
@@ -27,9 +31,6 @@ export default defineNuxtConfig({
     classSuffix: '',
     preference: 'dark',
     fallback: 'dark',
-  },
-  supabase: {
-    redirect: false
   },
   eslint: {}
 })

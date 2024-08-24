@@ -2,10 +2,8 @@
 import { PhAlarm, PhCircleNotch, PhEye, PhEyeClosed, PhMapPinArea, PhPencilSimpleLine, PhTag } from '@phosphor-icons/vue'
 import { VisuallyHidden } from 'radix-vue'
 
-const { isEditEventModalOpen } = storeToRefs(useCalendarEvents())
-
-const { resetSkeleton, updateEventFromSkeleton, cancelLatestRequest } = useCalendarEvents()
-const { eventSkeleton, lastActiveEvent } = storeToRefs(useCalendarEvents())
+const { resetSkeleton, updateEventFromSkeleton, cancelLatestRequest } = useCalendar()
+const { eventSkeleton, lastActiveEvent, isEditEventModalOpen } = storeToRefs(useCalendar())
 
 const isLoading = ref(false)
 

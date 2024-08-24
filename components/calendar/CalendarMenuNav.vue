@@ -16,7 +16,7 @@ interface DirectionLabels {
   futureFar: string
 }
 
-const { currentConfig, decrementMonth, incrementMonth, decrementYear, incrementYear } =
+const { currentConfig, decrementViewMonth, incrementViewMonth, decrementViewYear, incrementViewYear } =
   useCalendar()
 
 const activeDirectionLabels: ComputedRef<DirectionLabels> = computed(() => {
@@ -59,20 +59,20 @@ const activeDirectionLabels: ComputedRef<DirectionLabels> = computed(() => {
 function toPastFar(): void {
   switch (currentConfig.viewType) {
     case 'month':
-      decrementYear()
+      decrementViewYear()
       break
 
     case 'year':
-      decrementYear(10)
+      decrementViewYear(10)
       break
 
     case 'decade':
-      decrementYear(100)
+      decrementViewYear(100)
       break
 
     case 'century':
     default:
-      decrementYear(1000)
+      decrementViewYear(1000)
       break
   }
 }
@@ -80,20 +80,20 @@ function toPastFar(): void {
 function toPastNear(): void {
   switch (currentConfig.viewType) {
     case 'month':
-      decrementMonth()
+      decrementViewMonth()
       break
 
     case 'year':
-      decrementYear()
+      decrementViewYear()
       break
 
     case 'decade':
-      decrementYear(10)
+      decrementViewYear(10)
       break
 
     case 'century':
     default:
-      decrementYear(100)
+      decrementViewYear(100)
       break
   }
 }
@@ -101,20 +101,20 @@ function toPastNear(): void {
 function toFutureNear(): void {
   switch (currentConfig.viewType) {
     case 'month':
-      incrementMonth()
+      incrementViewMonth()
       break
 
     case 'year':
-      incrementYear()
+      incrementViewYear()
       break
 
     case 'decade':
-      incrementYear(10)
+      incrementViewYear(10)
       break
 
     case 'century':
     default:
-      incrementYear(100)
+      incrementViewYear(100)
       break
   }
 }
@@ -122,20 +122,20 @@ function toFutureNear(): void {
 function toFutureFar(): void {
   switch (currentConfig.viewType) {
     case 'month':
-      incrementYear()
+      incrementViewYear()
       break
 
     case 'year':
-      incrementYear(10)
+      incrementViewYear(10)
       break
 
     case 'decade':
-      incrementYear(100)
+      incrementViewYear(100)
       break
 
     case 'century':
     default:
-      incrementYear(1000)
+      incrementViewYear(1000)
       break
   }
 }

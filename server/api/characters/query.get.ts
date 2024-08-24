@@ -3,7 +3,7 @@ import { serverSupabaseClient } from "#supabase/server";
 import type { Character } from "~/models/Characters";
 
 const querySchema = z.object({
-  world_id: z.number({ coerce: true }).positive().int()
+  worldId: z.number({ coerce: true }).positive().int()
 })
 
 export default defineEventHandler(async (event) => {
@@ -23,8 +23,8 @@ export default defineEventHandler(async (event) => {
       secondaryCategories:character_categories!character_categories_links (*)
     `)
 
-  if (query.world_id) {
-    output.eq('world_id', query.world_id)
+  if (query.worldId) {
+    output.eq('world_id', query.worldId)
   }
 
   return output.returns<Character[]>()

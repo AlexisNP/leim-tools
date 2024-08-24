@@ -8,9 +8,8 @@ const props = defineProps<{
   tileDate: RPGDate
 }>()
 
-const { areDatesIdentical } = useCalendar()
-const { revealEditEventModal, revealDeleteEventModal } = useCalendarEvents()
-const { lastActiveEvent } = storeToRefs(useCalendarEvents())
+const { areDatesIdentical, revealEditEventModal, revealDeleteEventModal } = useCalendar()
+const { lastActiveEvent } = storeToRefs(useCalendar())
 
 const spansMultipleDays = computed(() => Boolean(props.event.startDate && props.event.endDate))
 const isStartEvent = computed(() => spansMultipleDays.value && areDatesIdentical(props.tileDate, props.event.startDate))

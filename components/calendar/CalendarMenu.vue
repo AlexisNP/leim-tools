@@ -29,7 +29,9 @@ const { revealAdvancedSearch } = useCalendar()
           </UiButton>
         </li>
         <li>
-          <CalendarSwitch />
+          <ClientOnly>
+            <CalendarSwitch />
+          </ClientOnly>
         </li>
       </menu>
     </div>

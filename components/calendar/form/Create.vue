@@ -1,26 +1,16 @@
 <script lang="ts" setup>
 import type { Calendar } from '~/models/CalendarConfig';
-
-import { PhAlarm, PhCalendarDots, PhWrench } from '@phosphor-icons/vue';
+import { PhAlarm, PhCalendarDots, PhCircleNotch, PhWrench } from '@phosphor-icons/vue';
 
 const defaultSkeleton: Calendar = { name: '', today: { day: 1, month: 0, year: 0 }, months: [], events: []}
-
 const calendarSkeleton = ref<Calendar>({ ...defaultSkeleton })
-
-async function handleSubmit() {
-  await $fetch(`/api/calendars/create`, { method: 'POST', body: {...calendarSkeleton.value, worldId: 1 } })
-}
 
 onMounted(() => {
   calendarSkeleton.value = { ...defaultSkeleton }
 })
 
-type FormTabs = 'global' | 'months' | 'today' | 'seasons'
+type FormTabs = 'global' | 'months' | 'today'
 const activeTab = ref<FormTabs>('global')
-
-/**
- * === Months list handling ===
- */
 
 /**
  * === Current date ===
@@ -35,20 +25,49 @@ watch(calendarSkeleton.value.months, () => {
  * === Form Validation ===
  */
 
-/**
- * Whether the skeleton has valid month data
- */
+/** Whether the skeleton has valid month data */
 const validSkeletonMonths = computed(() => calendarSkeleton.value.months.length > 0)
 
-/**
- * Whether the skeleton has a valid name
- */
+/** Whether the skeleton has a valid name */
 const validSkeletonGeneral = computed(() => calendarSkeleton.value.name)
 
-/**
- * Whether all the data checks above are a-ok
- */
+/** Whether all the data checks above are a-ok */
 const validSkeleton = computed(() => validSkeletonGeneral.value && validSkeletonMonths.value)
+
+/** Send the data to the store for validation */
+const isCreatingCalendar = ref<boolean>(false)
+
+async function handleSubmit() {
+  try {
+    isCreatingCalendar.value = true
+    await $fetch(`/api/calendars/create`, { method: 'POST', body: {...calendarSkeleton.value, worldId: 1 } })
+
+    emit('on-close')
+  } catch (err) {
+    console.log(err)
+  } finally {
+    isCreatingCalendar.value = false
+  }
+}
+
+/**
+ * === Watch for name changes to display above ===
+ */
+const emit = defineEmits<{
+  // eslint-disable-next-line no-unused-vars
+  (e: 'on-changed-name', calendarName: string): void
+    // eslint-disable-next-line no-unused-vars
+  (e: 'on-close'): void
+}>()
+
+/** Hook to emit a debounced event for the changed skeleton name */
+const handleNameChange = useDebounceFn(() => {
+  emit('on-changed-name', calendarSkeleton.value.name)
+}, 400)
+
+function handleFormCancel() {
+  emit('on-close')
+}
 </script>
 
 <template>
@@ -74,12 +93,6 @@ const validSkeleton = computed(() => validSkeletonGeneral.value && validSkeleton
               Aujourd'hui
             </div>
           </UiTabsTrigger>
-          <!-- <UiTabsTrigger value="seasons" class="font-bold">
-            <div class="flex items-center gap-1">
-              <PhLeaf size="18" weight="fill" />
-              Saisons
-            </div>
-          </UiTabsTrigger> -->
         </UiTabsList>
         <UiTabsContent value="global">
           <input
@@ -90,6 +103,7 @@ const validSkeleton = computed(() => validSkeletonGeneral.value && validSkeleton
             required
             placeholder="Titre"
             class="w-full -my-1 py-2 -mx-1 px-1 text-xl border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600"
+            @input="handleNameChange"
           >
         </UiTabsContent>
         <UiTabsContent value="months">
@@ -98,11 +112,18 @@ const validSkeleton = computed(() => validSkeletonGeneral.value && validSkeleton
         <UiTabsContent value="today">
           <CalendarInputTodaySelect v-model:model-value="calendarSkeleton.today" :available-months="calendarSkeleton.months"/>
         </UiTabsContent>
-        <UiTabsContent value="seasons" />
       </UiTabs>
 
-      <footer class="text-right mt-6">
-        <UiButton type="submit" :disabled="!validSkeleton">
+      <footer class="flex justify-end gap-2 mt-6">
+        <UiButton type="button" variant="destructive" @click="handleFormCancel">
+          Annuler
+        </UiButton>
+
+        <UiButton type="submit" :disabled="!validSkeleton || isCreatingCalendar">
+          <Transition name="fade">
+            <PhCircleNotch v-if="isCreatingCalendar" size="20" class="opacity-50 animate-spin"/>
+          </Transition>
+
           Créer
         </UiButton>
       </footer>
