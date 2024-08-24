@@ -11,7 +11,6 @@ export default defineNuxtConfig({
     '@nuxt/eslint',
     'shadcn-nuxt'
   ],
-
   css: ['~/assets/main.css'],
 
   postcss: {
@@ -20,22 +19,17 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
-
   shadcn: {
     prefix: 'Ui',
     componentDir: './components/ui'
   },
-
   colorMode: {
     classSuffix: '',
     preference: 'dark',
     fallback: 'dark',
   },
-
   supabase: {
     redirect: false
   },
-
-  eslint: {},
-  compatibilityDate: '2024-08-23'
+  eslint: {}
 })
