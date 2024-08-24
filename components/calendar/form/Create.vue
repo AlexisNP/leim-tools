@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { Calendar } from '~/models/CalendarConfig';
-import { PhAlarm, PhCalendarDots, PhWrench } from '@phosphor-icons/vue';
+import { PhAlarm, PhCalendarDots, PhCircleNotch, PhWrench } from '@phosphor-icons/vue';
 
 const defaultSkeleton: Calendar = { name: '', today: { day: 1, month: 0, year: 0 }, months: [], events: []}
 const calendarSkeleton = ref<Calendar>({ ...defaultSkeleton })
@@ -35,8 +35,19 @@ const validSkeletonGeneral = computed(() => calendarSkeleton.value.name)
 const validSkeleton = computed(() => validSkeletonGeneral.value && validSkeletonMonths.value)
 
 /** Send the data to the store for validation */
+const isCreatingCalendar = ref<boolean>(false)
+
 async function handleSubmit() {
-  await $fetch(`/api/calendars/create`, { method: 'POST', body: {...calendarSkeleton.value, worldId: 1 } })
+  try {
+    isCreatingCalendar.value = true
+    await $fetch(`/api/calendars/create`, { method: 'POST', body: {...calendarSkeleton.value, worldId: 1 } })
+
+    emit('on-close')
+  } catch (err) {
+    console.log(err)
+  } finally {
+    isCreatingCalendar.value = false
+  }
 }
 
 /**
@@ -46,7 +57,7 @@ const emit = defineEmits<{
   // eslint-disable-next-line no-unused-vars
   (e: 'on-changed-name', calendarName: string): void
     // eslint-disable-next-line no-unused-vars
-  (e: 'on-cancel'): void
+  (e: 'on-close'): void
 }>()
 
 /** Hook to emit a debounced event for the changed skeleton name */
@@ -55,7 +66,7 @@ const handleNameChange = useDebounceFn(() => {
 }, 400)
 
 function handleFormCancel() {
-  emit('on-cancel')
+  emit('on-close')
 }
 </script>
 
@@ -107,7 +118,12 @@ function handleFormCancel() {
         <UiButton type="button" variant="destructive" @click="handleFormCancel">
           Annuler
         </UiButton>
-        <UiButton type="submit" :disabled="!validSkeleton">
+
+        <UiButton type="submit" :disabled="!validSkeleton || isCreatingCalendar">
+          <Transition name="fade">
+            <PhCircleNotch v-if="isCreatingCalendar" size="20" class="opacity-50 animate-spin"/>
+          </Transition>
+
           Créer
         </UiButton>
       </footer>

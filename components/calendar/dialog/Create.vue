@@ -15,7 +15,7 @@ function onChangedName(newName: string) {
 
 const emit = defineEmits(['on-close'])
 
-function handleCancel() {
+function handleClose() {
   emit('on-close')
 }
 </script>
@@ -34,11 +34,11 @@ function handleCancel() {
         </span>
       </UiAlertDialogTitle>
 
-      <UiButton size="icon" variant="ghost" class="absolute top-4 right-4" title="Fermer la fenêtre" @click="handleCancel">
+      <UiButton size="icon" variant="ghost" class="absolute top-4 right-4" title="Fermer la fenêtre" @click="handleClose">
         <PhX size="20" />
       </UiButton>
 
-      <CalendarFormCreate @on-changed-name="onChangedName" @on-cancel="handleCancel" />
+      <CalendarFormCreate @on-changed-name="onChangedName" @on-close="handleClose" />
     </UiAlertDialogContent>
   </UiAlertDialog>
 </template>
