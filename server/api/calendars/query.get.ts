@@ -11,6 +11,8 @@ export default defineEventHandler(async (event) => {
   const client = await serverSupabaseClient(event)
   const query = await getValidatedQuery(event, querySchema.parse)
 
+  setHeader(event, 'Cache-Control', 'public, max-age=3600, s-maxage=7200')
+
   const partialFields = `
     id,
     name,
