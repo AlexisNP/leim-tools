@@ -25,7 +25,7 @@ watch(user, (n, _o) => {
   }
 })
 
-const modalOpened = ref<boolean>(false)
+const alertModalOpened = ref<boolean>(false)
 </script>
 
 <template>
@@ -50,7 +50,7 @@ const modalOpened = ref<boolean>(false)
             <UiTooltipProvider :delay-duration="250">
               <UiTooltip>
                 <UiTooltipTrigger as-child>
-                  <UiButton size="icon" class="rounded-full h-8 w-8" @click="() => modalOpened = true">
+                  <UiButton size="icon" class="rounded-full h-8 w-8" @click="() => alertModalOpened = true">
                     <PhPlus size="17"/>
                   </UiButton>
                 </UiTooltipTrigger>
@@ -85,18 +85,8 @@ const modalOpened = ref<boolean>(false)
           </template>
         </Spacing>
       </section>
-
-      <UiAlertDialog v-model:open="modalOpened">
-        <UiAlertDialogContent class="grid grid-rows-[auto_1fr_auto] items-start min-h-[66vh] max-w-4xl gap-6">
-          <UiAlertDialogTitle>
-            <span class="text-2xl">
-              <strong class="font-bold">{{ world.name }}</strong> — Nouveau calendrier
-            </span>
-          </UiAlertDialogTitle>
-
-          <CalendarFormCreate />
-        </UiAlertDialogContent>
-      </UiAlertDialog>
     </template>
+
+    <CalendarDialogCreate :world :modal-state="alertModalOpened" />
   </main>
 </template>
