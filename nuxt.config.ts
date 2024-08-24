@@ -13,6 +13,10 @@ export default defineNuxtConfig({
   ],
   css: ['~/assets/main.css'],
 
+  supabase: {
+    redirect: false
+  },
+
   postcss: {
     plugins: {
       tailwindcss: {},
