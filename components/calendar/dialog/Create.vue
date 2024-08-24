@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { PhX } from '@phosphor-icons/vue';
 import type { World } from '~/models/World';
 
 defineProps<{
@@ -11,6 +12,12 @@ const calendarSkeletonName = ref<string>('')
 function onChangedName(newName: string) {
   calendarSkeletonName.value = newName
 }
+
+const emit = defineEmits(['on-close'])
+
+function handleCancel() {
+  emit('on-close')
+}
 </script>
 
 <template>
@@ -18,7 +25,8 @@ function onChangedName(newName: string) {
     <UiAlertDialogContent class="grid grid-rows-[auto_1fr_auto] items-start min-h-[66vh] max-w-4xl gap-6">
       <UiAlertDialogTitle>
         <span class="text-2xl">
-          <strong class="font-bold">{{ world.name }}</strong> —
+          <strong class="font-bold">{{ world.name }}</strong>
+          <span class="opacity-30"> — </span>
           <span v-if="calendarSkeletonName">
             {{ calendarSkeletonName }}
           </span>
@@ -26,7 +34,11 @@ function onChangedName(newName: string) {
         </span>
       </UiAlertDialogTitle>
 
-      <CalendarFormCreate @changed-name="onChangedName" />
+      <UiButton size="icon" variant="ghost" class="absolute top-4 right-4" title="Fermer la fenêtre" @click="handleCancel">
+        <PhX size="20" />
+      </UiButton>
+
+      <CalendarFormCreate @on-changed-name="onChangedName" @on-cancel="handleCancel" />
     </UiAlertDialogContent>
   </UiAlertDialog>
 </template>

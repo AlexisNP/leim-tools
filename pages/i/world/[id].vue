@@ -26,6 +26,10 @@ watch(user, (n, _o) => {
 })
 
 const alertModalOpened = ref<boolean>(false)
+
+function handleDialogClose() {
+  alertModalOpened.value = false
+}
 </script>
 
 <template>
@@ -54,7 +58,7 @@ const alertModalOpened = ref<boolean>(false)
                     <PhPlus size="17"/>
                   </UiButton>
                 </UiTooltipTrigger>
-                <UiTooltipContent>
+                <UiTooltipContent :side-offset="10">
                   <p>Ajouter un calendrier</p>
                 </UiTooltipContent>
               </UiTooltip>
@@ -87,6 +91,6 @@ const alertModalOpened = ref<boolean>(false)
       </section>
     </template>
 
-    <CalendarDialogCreate :world :modal-state="alertModalOpened" />
+    <CalendarDialogCreate :world :modal-state="alertModalOpened" @on-close="handleDialogClose" />
   </main>
 </template>

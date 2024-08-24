@@ -13,10 +13,6 @@ type FormTabs = 'global' | 'months' | 'today'
 const activeTab = ref<FormTabs>('global')
 
 /**
- * === Months list handling ===
- */
-
-/**
  * === Current date ===
  */
 // If the months data change, just reset today's month
@@ -48,13 +44,19 @@ async function handleSubmit() {
  */
 const emit = defineEmits<{
   // eslint-disable-next-line no-unused-vars
-  (e: 'changed-name', calendarName: string): void
+  (e: 'on-changed-name', calendarName: string): void
+    // eslint-disable-next-line no-unused-vars
+  (e: 'on-cancel'): void
 }>()
 
 /** Hook to emit a debounced event for the changed skeleton name */
 const handleNameChange = useDebounceFn(() => {
-  emit('changed-name', calendarSkeleton.value.name)
+  emit('on-changed-name', calendarSkeleton.value.name)
 }, 400)
+
+function handleFormCancel() {
+  emit('on-cancel')
+}
 </script>
 
 <template>
@@ -101,7 +103,10 @@ const handleNameChange = useDebounceFn(() => {
         </UiTabsContent>
       </UiTabs>
 
-      <footer class="text-right mt-6">
+      <footer class="flex justify-end gap-2 mt-6">
+        <UiButton type="button" variant="destructive" @click="handleFormCancel">
+          Annuler
+        </UiButton>
         <UiButton type="submit" :disabled="!validSkeleton">
           Créer
         </UiButton>
