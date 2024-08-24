@@ -160,6 +160,9 @@ alter table public.calendar_events enable row level security;
 alter table public.calendar_event_categories enable row level security;
 alter table public.calendar_event_categories_links enable row level security;
 
+-- Add realtime
+alter publication supabase_realtime add table calendars;
+
 -- User policies
 create policy "Allow logged-in read access" on public.users for select using ( auth.role() = 'authenticated' );
 create policy "Allow individual insert access" on public.users for insert with check ( auth.uid() = id );
