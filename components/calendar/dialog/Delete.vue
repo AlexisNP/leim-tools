@@ -1,37 +1,31 @@
 <script lang="ts" setup>
 import { PhCircleNotch } from '@phosphor-icons/vue';
+import type { Calendar } from '~/models/CalendarConfig';
 
-const { resetSkeleton, deleteEventFromSkeleton, cancelLatestRequest } = useCalendar()
-const { isDeleteEventModalOpen, eventSkeleton, lastActiveEvent } = storeToRefs(useCalendar())
+const props = defineProps<{
+  modalState: boolean,
+  calendar: Calendar | null
+}>()
 
 const isLoading = ref<boolean>(false)
 
-const formErrors = reactive<{ message: string | null }>({
-  message: null
-})
-
-// Watch the popover state
-watch(isDeleteEventModalOpen, (hasOpened, _o) => {
-  if (hasOpened && lastActiveEvent.value) {
-    eventSkeleton.value = { ...lastActiveEvent.value }
-  }
-})
+const emit = defineEmits(['on-close'])
 
 async function handleAction(): Promise<void> {
   if (isLoading.value) return
+  if (!props.calendar) return
 
   isLoading.value = true
 
   try {
-    await deleteEventFromSkeleton()
+    await $fetch(`/api/calendars/${props.calendar.id}`, { method: 'DELETE' })
 
-    isDeleteEventModalOpen.value = false
+    // isDeleteEventModalOpen.value = false
   } catch (err) {
     if (err instanceof Error) {
-      formErrors.message = err.message
+      // formErrors.message = err.message
     }
   } finally {
-    resetSkeleton()
     isLoading.value = false
   }
 }
@@ -41,25 +35,15 @@ async function handleAction(): Promise<void> {
  *
  * @param e The closing event (can be keydown or click)
  */
-function handleClosing(e: Event): void {
-  if (isLoading.value) {
-    e.preventDefault()
+function handleClosing() {
+  if (!isLoading.value) {
+    emit('on-close')
   }
-}
-
-/**
- * Click on the cancel button
- *
- * Must cancel the abortController in the store, and stop the loading
- */
-function handleCancel(): void {
-  cancelLatestRequest()
-  isLoading.value = false
 }
 </script>
 
 <template>
-  <UiAlertDialog v-model:open="isDeleteEventModalOpen">
+  <UiAlertDialog :open="modalState">
     <UiAlertDialogContent
       :disable-outside-pointer-events="true"
       :trap-focus="true"
@@ -69,39 +53,39 @@ function handleCancel(): void {
       @interact-outside="handleClosing"
       @pointer-down-outside="handleClosing"
     >
-      <UiAlertDialogTitle> Supprimer l'évènement</UiAlertDialogTitle>
+      <UiAlertDialogTitle> Êtes-vous sûr de supprimer ce calendrier ?</UiAlertDialogTitle>
 
       <UiAlertDialogDescription>
-        Les données associés à cet évènement seront supprimées et vous ne pourrez plus les récupérer !
+        Les évènements ne seront plus accessibles et vous ne pourrez plus récupérer les données !
       </UiAlertDialogDescription>
 
       <form @submit.prevent="handleAction">
         <div class="grid grid-cols-2 gap-y-4">
           <div class="text-red-500 ml-8">
             <span class="text-sm">
-              {{ formErrors.message }}
+              <!-- {{ formErrors.message }} -->
             </span>
           </div>
         </div>
 
         <footer class="flex gap-2 justify-between">
-          <UiButton type="button" size="sm" variant="ghost" @click="() => isDeleteEventModalOpen = false">
+          <UiButton type="button" size="sm" variant="ghost" @click="handleClosing">
             Retour
           </UiButton>
 
           <div class="flex gap-2 justify-end">
             <Transition name="fade-delay">
-              <UiButton v-if="isLoading" type="button" size="sm" variant="destructive" @click.prevent="handleCancel">
+              <UiButton v-if="isLoading" type="button" size="sm" variant="destructive">
                 Annuler
               </UiButton>
             </Transition>
 
-            <UiButton size="sm" variant="destructive" :disabled="isLoading">
+            <UiButton v-if="calendar" size="sm" variant="destructive" :disabled="isLoading">
               <Transition name="fade">
                 <PhCircleNotch v-if="isLoading" size="20" class="animate-spin"/>
               </Transition>
 
-              Supprimer
+              Supprimer "{{ calendar?.name }}"
             </UiButton>
           </div>
         </footer>

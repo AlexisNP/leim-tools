@@ -175,19 +175,25 @@ create policy "Allow individual insert access for GMs" on public.worlds for inse
 create policy "Allow individual update access for GMs" on public.worlds for update using ( auth.uid() = gm_id );
 
 -- Calendar policies
-create policy "Allow individual read access for GMs" on public.calendars for select using (
+create policy "Allow GMs to see their calendars" on public.calendars for select using (
     exists (
         select 1 from worlds
         where worlds.id = calendars.world_id
     )
 );
-create policy "Allow individual insert access for GMs" on public.calendars for insert with check (
+create policy "Allow GMs to add calendars to their worldd" on public.calendars for insert with check (
     exists (
         select 1 from worlds
         where worlds.id = calendars.world_id
     )
 );
-create policy "Allow individual update access for GMs" on public.calendars for update with check (
+create policy "Allow GMs to edit their calendars" on public.calendars for update with check (
+    exists (
+        select 1 from worlds
+        where worlds.id = calendars.world_id
+    )
+);
+create policy "Allow GMs to delete their calendars" on public.calendars for delete using (
     exists (
         select 1 from worlds
         where worlds.id = calendars.world_id

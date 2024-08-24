@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { RealtimeChannel } from '@supabase/supabase-js'
-import { PhPlus } from '@phosphor-icons/vue';
+import { PhPlus, PhTrash } from '@phosphor-icons/vue';
 import type { World } from '~/models/World';
 import type { Calendar } from '~/models/CalendarConfig';
 
@@ -28,10 +28,10 @@ watch(user, (n, _o) => {
   }
 })
 
-const alertModalOpened = ref<boolean>(false)
+const isCreateEventModalOpen = ref<boolean>(false)
 
-function handleDialogClose() {
-  alertModalOpened.value = false
+function hideCreateDialog() {
+  isCreateEventModalOpen.value = false
 }
 
 /**
@@ -87,6 +87,19 @@ onUnmounted(() => {
   // Unsubscribe from realtime
   supabase.removeChannel(calendarChannel)
 })
+
+const markedCalendar = ref<Calendar | null>(null)
+const isDeleteEventModalOpen = ref<boolean>(false)
+
+function deployDeleteModal(calendar: Calendar) {
+  isDeleteEventModalOpen.value = true
+  markedCalendar.value = calendar
+}
+
+function hideDeleteModal() {
+  isDeleteEventModalOpen.value = false
+  markedCalendar.value = null
+}
 </script>
 
 <template>
@@ -111,7 +124,7 @@ onUnmounted(() => {
             <UiTooltipProvider :delay-duration="250">
               <UiTooltip>
                 <UiTooltipTrigger as-child>
-                  <UiButton size="icon" class="rounded-full h-8 w-8" @click="() => alertModalOpened = true">
+                  <UiButton size="icon" class="rounded-full h-8 w-8" @click="() => isCreateEventModalOpen = true">
                     <PhPlus size="17"/>
                   </UiButton>
                 </UiTooltipTrigger>
@@ -130,11 +143,15 @@ onUnmounted(() => {
                 :link="`/i/calendar/${calendar.id}`"
               >
                 <UiCardHeader>
-                  <UiCardTitle>{{ calendar.name }}</UiCardTitle>
+                  <UiCardTitle class="text-xl pr-12">{{ calendar.name }}</UiCardTitle>
                 </UiCardHeader>
 
                 <UiCardContent>
                   <p class="italic">Description future (ou alors des informations sur le nb d'évènements)</p>
+
+                  <UiButton size="icon" variant="ghost" class="absolute top-2 right-2 z-20 hover:bg-slate-600" @click="deployDeleteModal(calendar)">
+                    <PhTrash size="16" />
+                  </UiButton>
                 </UiCardContent>
               </UiCard>
             </li>
@@ -148,6 +165,7 @@ onUnmounted(() => {
       </section>
     </template>
 
-    <CalendarDialogCreate :world :modal-state="alertModalOpened" @on-close="handleDialogClose" />
+    <CalendarDialogCreate :world :modal-state="isCreateEventModalOpen" @on-close="hideCreateDialog" />
+    <CalendarDialogDelete :calendar="markedCalendar" :modal-state="isDeleteEventModalOpen" @on-close="hideDeleteModal" />
   </main>
 </template>
