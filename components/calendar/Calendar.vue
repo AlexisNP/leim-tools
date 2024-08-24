@@ -8,11 +8,16 @@ import CenturyLayout from './state/centennially/Layout.vue'
 import DecadeLayout from './state/decennially/Layout.vue'
 import YearLayout from './state/yearly/Layout.vue'
 
-const route = useRoute()
-const id = route.params.id
-const calendarStore = useCalendar()
+import type { Calendar } from '~/models/CalendarConfig'
+import type { Category } from '~/models/Category'
 
-await calendarStore.fetchCalendar(Number(id))
+const props = defineProps<{
+  calendarData: Calendar,
+  categories: Category[]
+}>()
+
+const { setActiveCalendar } = useCalendar()
+setActiveCalendar(props.calendarData, props.categories)
 
 const { currentConfig, jumpToDate, selectedDate } = useCalendar()
 

@@ -1,6 +1,6 @@
-import {
-  type RPGDate,
-  type RPGDateOrder,
+import type {
+  RPGDate,
+  RPGDateOrder,
 } from '@/models/Date'
 import { useUrlSearchParams } from '@vueuse/core'
 import { defineStore } from 'pinia'
@@ -25,10 +25,6 @@ type CalendarCurrentDate = {
 }
 
 export const useCalendar = defineStore('calendar', () => {
-  const params = useUrlSearchParams('history', {
-    write: false
-  })
-
   /**
    * Static calendar config
    */
@@ -47,14 +43,8 @@ export const useCalendar = defineStore('calendar', () => {
    */
   const months = ref<CalendarMonth[]>([])
 
-  async function fetchCalendar(id: number) {
+  function setActiveCalendar(calendarData: Calendar, categoryData: Category[]) {
     try {
-      const res = await $fetch('/api/calendars/query', { query: { id, full: true } })
-      const categoryRes = await $fetch('/api/calendars/categories/query')
-
-      const calendarData = res.data as Calendar
-      const categoryData = categoryRes.data as Category[]
-
       if (!calendarData.id) return
 
       activeCalendar.value = {
@@ -84,6 +74,10 @@ export const useCalendar = defineStore('calendar', () => {
       console.log(err)
     }
   }
+
+  const params = useUrlSearchParams('history', {
+    write: false
+  })
 
   /**
    * Sorted month data using the raw months
@@ -873,7 +867,7 @@ export const useCalendar = defineStore('calendar', () => {
   }
 
   return {
-    fetchCalendar,
+    setActiveCalendar,
     activeCalendar,
     months,
     sortedMonths,

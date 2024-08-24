@@ -1,5 +1,7 @@
 <script lang="ts" setup>
 import { PhCircleNotch } from '@phosphor-icons/vue';
+import type { Calendar } from '~/models/CalendarConfig';
+import type { Category } from '~/models/Category';
 
 useHead({
   title: 'Calendrier'
@@ -15,11 +17,32 @@ watch(user, (n, _o) => {
     navigateTo('/')
   }
 })
+
+const route = useRoute()
+const id = route.params.id
+
+const { data: calendarData, pending: calPending } = useLazyFetch('/api/calendars/query', { query: { id, full: true } })
+const { data: catData, pending: catPending } = useLazyFetch('/api/calendars/categories/query')
+
+const cal = computed<Calendar>(() => calendarData?.value?.data as Calendar)
+const categories = computed<Category[]>(() => catData?.value?.data as Category[])
 </script>
 
 <template>
-  <Suspense>
-    <LazyCalendar />
+  <div v-if="calPending || catPending" class="h-full w-full grid place-items-center">
+    <div class="grid gap-2 justify-items-center opacity-50">
+      <p>Chargement du calendrier</p>
+      <PhCircleNotch size="50" class="animate-spin"/>
+    </div>
+  </div>
+
+  <Calendar v-else-if="cal && categories" :calendar-data="cal" :categories />
+
+  <!-- <span v-if="calendarData && categories">
+    <Calendar :calendar-data :categories />
+  </span> -->
+  <!-- <Suspense>
+    <Calendar :calendar="calendar?.data" :categories />
 
     <template #fallback>
       <div class="h-full w-full grid place-items-center">
@@ -29,5 +52,5 @@ watch(user, (n, _o) => {
         </div>
       </div>
     </template>
-  </Suspense>
+  </Suspense> -->
 </template>

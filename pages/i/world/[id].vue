@@ -5,7 +5,7 @@ import type { World } from '~/models/World';
 const route = useRoute()
 const id = route.params.id
 
-const { data: res, pending } = await useFetch(`/api/worlds/query`, { query: { id, full: true } })
+const { data: res, pending } = await useFetch('/api/worlds/query', { query: { id, full: true } })
 
 const world = res.value?.data as World
 

@@ -46,7 +46,7 @@ export default defineEventHandler(async (event) => {
   }
 
   if (query.id) {
-    return output.eq('id', query.id).single<Calendar>()
+    return output.eq('id', query.id).limit(1).single<Calendar>()
   }
 
   return output.returns<Calendar[]>()

@@ -28,8 +28,5 @@ export default defineNuxtConfig({
     preference: 'dark',
     fallback: 'dark',
   },
-  supabase: {
-    redirect: false
-  },
   eslint: {}
 })
