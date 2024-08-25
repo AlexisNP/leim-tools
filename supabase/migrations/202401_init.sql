@@ -161,6 +161,8 @@ alter table public.calendar_event_categories enable row level security;
 alter table public.calendar_event_categories_links enable row level security;
 
 -- Add realtime
+alter publication supabase_realtime add table users;
+alter publication supabase_realtime add table worlds;
 alter publication supabase_realtime add table calendars;
 
 -- User policies

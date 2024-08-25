@@ -1,15 +1,18 @@
 <script lang="ts" setup>
-import type { World } from '~/models/World';
+import type { RealtimeChannel } from "@supabase/supabase-js"
+import type { World } from "~/models/World";
 
-const { data: res } = await useFetch('/api/worlds/query')
+const supabase = useSupabaseClient()
 
-const worlds = res.value?.data as World[]
+const { data: res } = await useFetch("/api/worlds/query")
+
+const worlds = ref<World[]>(res.value?.data as World[])
 
 useHead({
-  title: 'Profil'
+  title: "Profil"
 })
 definePageMeta({
-  middleware: ['auth-guard']
+  middleware: ["auth-guard"]
 })
 
 const user = useSupabaseUser()
@@ -17,8 +20,66 @@ const user = useSupabaseUser()
 // Redirect user back home when they log out on the page
 watch(user, (n, _o) => {
   if (!n) {
-    navigateTo('/')
+    navigateTo("/")
   }
+})
+
+/**
+ * === World subscriptions ===
+ */
+/** Active world channel */
+let worldChannel: RealtimeChannel
+
+/** Handles world insertion realtime events */
+function handleInsertedWorld(newWorld: World) {
+  try {
+    worlds.value.push(newWorld)
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+/** Handles world deletion realtime events */
+function handleDeletedWorld(id: number) {
+  try {
+    worlds.value.splice(worlds.value.findIndex(w => w.id === id))
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+onMounted(() => {
+  worldChannel = supabase.channel("custom-insert-channel")
+    .on(
+      "postgres_changes",
+      { event: "*", schema: "public", table: "worlds" },
+      async (payload) => {
+        switch (payload.eventType) {
+          case "INSERT":
+            handleInsertedWorld(payload.new as World)
+            break
+
+          case "DELETE":
+            handleDeletedWorld(payload.old.id)
+            break
+
+          case "UPDATE":
+            worlds.value = (await $fetch("/api/worlds/query")).data as World[]
+            break
+
+          default:
+            console.log("Unknown event has been triggered. This should not happen unless Supabase added one somehow.")
+            console.log(payload)
+            break
+        }
+      }
+    )
+    .subscribe()
+})
+
+onUnmounted(() => {
+  // Unsubscribe from realtime
+  supabase.removeChannel(worldChannel)
 })
 </script>
 
