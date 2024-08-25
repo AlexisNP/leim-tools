@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import { cn } from '~/lib/utils';
+import { cn } from "~/lib/utils";
 
-import { useSortable } from '@vueuse/integrations/useSortable';
-import type { CalendarMonth } from '~/models/CalendarMonth';
+import { useSortable } from "@vueuse/integrations/useSortable";
+import type { CalendarMonth } from "~/models/CalendarMonth";
 
-import { PhList, PhPlus, PhTrash } from '@phosphor-icons/vue';
+import { PhList, PhPlus, PhTrash } from "@phosphor-icons/vue";
 
 const model = defineModel<CalendarMonth[]>({ required: true })
 
@@ -14,7 +14,7 @@ const model = defineModel<CalendarMonth[]>({ required: true })
 const monthName: Ref<string | undefined> = ref<string>()
 const monthNameRef = ref<HTMLInputElement>()
 const { focused: monthNameFocused } = useFocus(monthNameRef)
-const validMonthNameDatatypes = ['string']
+const validMonthNameDatatypes = ["string"]
 const monthNameIsTaken = computed(() => model.value.find(m => m.name === monthName.value))
 const validMonthName = computed(() => validMonthNameDatatypes.includes(typeof monthName.value) && !monthNameIsTaken.value)
 
@@ -23,7 +23,7 @@ const validMonthName = computed(() => validMonthNameDatatypes.includes(typeof mo
  */
 const monthDays: Ref<number | undefined> = ref<number>()
 const monthDaysRef = ref<HTMLInputElement>()
-const validMonthDaysDatatypes = ['number']
+const validMonthDaysDatatypes = ["number"]
 const validMonthDays = computed(() => validMonthDaysDatatypes.includes(typeof monthDays.value) && monthDays.value && monthDays.value >= 12)
 
 const validNewMonth = computed(() => validMonthDays.value && validMonthName.value)
@@ -44,7 +44,7 @@ function addMonthToModel(): void {
   model.value.push(monthToInsert)
 
   // Reset form state
-  monthName.value = ''
+  monthName.value = ""
   monthNameFocused.value = true
 }
 

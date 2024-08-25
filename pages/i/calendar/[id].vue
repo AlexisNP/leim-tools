@@ -1,28 +1,28 @@
 <script lang="ts" setup>
-import { PhCircleNotch } from '@phosphor-icons/vue';
-import type { Calendar } from '~/models/CalendarConfig';
-import type { Category } from '~/models/Category';
+import { PhCircleNotch } from "@phosphor-icons/vue";
+import type { Calendar } from "~/models/CalendarConfig";
+import type { Category } from "~/models/Category";
 
 useHead({
-  title: 'Calendrier'
+  title: "Calendrier"
 })
 definePageMeta({
-  middleware: ['auth-guard']
+  middleware: ["auth-guard"]
 })
 
 const user = useSupabaseUser()
 // Redirect user back home when they log out on the page
 watch(user, (n, _o) => {
   if (!n) {
-    navigateTo('/')
+    navigateTo("/")
   }
 })
 
 const route = useRoute()
 const id = route.params.id
 
-const { data: calendarData, pending: calPending } = useLazyFetch('/api/calendars/query', { key: `calendar-${id}`, query: { id, full: true } })
-const { data: catData, pending: catPending } = useLazyFetch('/api/calendars/categories/query', { key: `categories-${id}` })
+const { data: calendarData, pending: calPending } = useLazyFetch("/api/calendars/query", { key: `calendar-${id}`, query: { id, full: true } })
+const { data: catData, pending: catPending } = useLazyFetch("/api/calendars/categories/query", { key: `categories-${id}` })
 
 const cal = computed<Calendar>(() => calendarData?.value?.data as Calendar)
 const categories = computed<Category[]>(() => catData?.value?.data as Category[])

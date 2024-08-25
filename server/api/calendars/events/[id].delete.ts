@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from "zod"
 import { serverSupabaseClient } from "#supabase/server"
 import type { CalendarEvent } from "~/models/CalendarEvent"
 
@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
 
   if (paramsError) {
     throw createError({
-      cause: 'Utilisateur',
+      cause: "Utilisateur",
       fatal: false,
       message: "L'identifiant de l'évènement est manquant ou mal renseigné.",
       status: 401,
@@ -22,9 +22,9 @@ export default defineEventHandler(async (event) => {
 
   try {
     const { data, error } = await client
-      .from('calendar_events')
+      .from("calendar_events")
       .delete()
-      .eq('id', params.id)
+      .eq("id", params.id)
       .maybeSingle<CalendarEvent>()
 
     if (error) throw error
@@ -32,10 +32,10 @@ export default defineEventHandler(async (event) => {
     return data
   } catch (err) {
     throw createError({
-      cause: 'Serveur',
+      cause: "Serveur",
       status: 500,
       fatal: false,
-      message: 'Une erreur inconnue est survenue.'
+      message: "Une erreur inconnue est survenue."
     })
   }
 })

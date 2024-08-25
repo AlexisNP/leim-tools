@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import type { RPGDate } from '~/models/Date';
+import type { RPGDate } from "~/models/Date";
 
 import {
   PhXCircle
-} from '@phosphor-icons/vue'
+} from "@phosphor-icons/vue"
 
 const model = defineModel<RPGDate | null>()
 
@@ -27,7 +27,7 @@ const inputPlaceholder = computed<string>(() => {
     return props.placeholder
   }
 
-  return ''
+  return ""
 })
 
 const initialDateValue = props.initialDate ? { ...props.initialDate } : null
@@ -37,7 +37,7 @@ const monthTitle = computed<string>(() => {
     return getMonthName(model.value.month)
   }
 
-  return ''
+  return ""
 })
 
 const hasValue = computed<boolean>(() => !!model.value)

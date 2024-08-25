@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import type { RPGDate } from '@/models/Date'
-import { storeToRefs } from 'pinia'
-import { computed, type ComputedRef } from 'vue'
+import type { RPGDate } from "@/models/Date"
+import { storeToRefs } from "pinia"
+import { computed, type ComputedRef } from "vue"
 
 const { currentDate, defaultDate, selectDate, areDatesIdentical } = useCalendar()
 const { selectedDate, currentEvents } = storeToRefs(useCalendar())

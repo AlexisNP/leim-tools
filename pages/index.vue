@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 useHead({
-  title: 'Dashboard'
+  title: "Dashboard"
 })
 </script>
 

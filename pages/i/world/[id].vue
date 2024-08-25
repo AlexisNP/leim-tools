@@ -1,22 +1,22 @@
 <script lang="ts" setup>
-import type { RealtimeChannel } from '@supabase/supabase-js'
-import { PhPlus, PhTrash } from '@phosphor-icons/vue';
-import type { World } from '~/models/World';
-import type { Calendar } from '~/models/CalendarConfig';
+import type { RealtimeChannel } from "@supabase/supabase-js"
+import type { World } from "~/models/World";
+import type { Calendar } from "~/models/CalendarConfig";
+import { PhPlus, PhTrash } from "@phosphor-icons/vue";
 
 const supabase = useSupabaseClient()
 const route = useRoute()
 const id = route.params.id
 
-const { data: res, pending } = await useFetch('/api/worlds/query', { query: { id, full: true } })
+const { data: res, pending } = await useFetch("/api/worlds/query", { query: { id, full: true } })
 
 const world = ref<World>(res.value?.data as World)
 
 useHead({
-  title: 'Profil'
+  title: "Profil"
 })
 definePageMeta({
-  middleware: ['auth-guard']
+  middleware: ["auth-guard"]
 })
 
 const user = useSupabaseUser()
@@ -24,7 +24,7 @@ const user = useSupabaseUser()
 // Redirect user back home when they log out on the page
 watch(user, (n, _o) => {
   if (!n) {
-    navigateTo('/')
+    navigateTo("/")
   }
 })
 
@@ -60,22 +60,22 @@ function handleDeletedCalendar(id: number) {
 }
 
 onMounted(() => {
-  calendarChannel = supabase.channel('custom-insert-channel')
+  calendarChannel = supabase.channel("custom-insert-channel")
     .on(
-      'postgres_changes',
-      { event: '*', schema: 'public', table: 'calendars' },
+      "postgres_changes",
+      { event: "*", schema: "public", table: "calendars" },
       (payload) => {
         switch (payload.eventType) {
-          case 'INSERT':
+          case "INSERT":
             handleInsertedCalendar(payload.new as Calendar)
             break
 
-          case 'DELETE':
+          case "DELETE":
             handleDeletedCalendar(payload.old.id)
             break
 
           default:
-            console.log('Unknown event has been triggered. This should not happen unless Supabase added one somehow.')
+            console.log("Unknown event has been triggered. This should not happen unless Supabase added one somehow.")
             break
         }
       }

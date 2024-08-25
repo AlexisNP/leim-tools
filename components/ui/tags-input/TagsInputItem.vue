@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from 'vue'
-import { TagsInputItem, type TagsInputItemProps, useForwardProps } from 'radix-vue'
+import { type HTMLAttributes, computed } from "vue"
+import { TagsInputItem, type TagsInputItemProps, useForwardProps } from "radix-vue"
 
-import { cn } from '@/lib/utils'
+import { cn } from "@/lib/utils"
 
-const props = defineProps<TagsInputItemProps & { class?: HTMLAttributes['class'] }>()
+const props = defineProps<TagsInputItemProps & { class?: HTMLAttributes["class"] }>()
 
 const delegatedProps = computed(() => {
   const { class: _, ...delegated } = props

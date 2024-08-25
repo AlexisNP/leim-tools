@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { useCalendar } from '@/stores/CalendarStore'
-import { useThrottleFn } from '@vueuse/core'
+import { useCalendar } from "@/stores/CalendarStore"
+import { useThrottleFn } from "@vueuse/core"
 
 const { currentDate, decrementViewMonth, incrementViewMonth } = useCalendar()
 const { currentMonthData } = storeToRefs(useCalendar())

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { cn } from '@/lib/utils'
-import type { RPGDate } from '@/models/Date'
-import type { CalendarEvent } from '~/models/CalendarEvent'
+import { cn } from "@/lib/utils"
+import type { RPGDate } from "@/models/Date"
+import type { CalendarEvent } from "~/models/CalendarEvent"
 
 const props = defineProps<{
   event: CalendarEvent
@@ -39,12 +39,12 @@ function handleClosePopover() {
 
 onMounted(() => {
   // Listen for keydown events
-  window.addEventListener('keydown', (e: KeyboardEvent) => {
+  window.addEventListener("keydown", (e: KeyboardEvent) => {
     // If the popover isn't opened, this is not the event we're trying to delete, so return
     if (!isPopoverDetailsOpen.value) return
 
     // If the key isn't the delete one, return
-    if (e.key !== 'Delete') return
+    if (e.key !== "Delete") return
 
     handleDelete()
   })

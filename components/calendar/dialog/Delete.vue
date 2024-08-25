@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { PhCircleNotch } from '@phosphor-icons/vue';
-import type { Calendar } from '~/models/CalendarConfig';
+import { PhCircleNotch } from "@phosphor-icons/vue";
+import type { Calendar } from "~/models/CalendarConfig";
 
 const props = defineProps<{
   modalState: boolean,
@@ -9,7 +9,7 @@ const props = defineProps<{
 
 const isLoading = ref<boolean>(false)
 
-const emit = defineEmits(['on-close'])
+const emit = defineEmits(["on-close"])
 
 async function handleAction(): Promise<void> {
   if (isLoading.value) return
@@ -18,7 +18,7 @@ async function handleAction(): Promise<void> {
   isLoading.value = true
 
   try {
-    await $fetch(`/api/calendars/${props.calendar.id}`, { method: 'DELETE' })
+    await $fetch(`/api/calendars/${props.calendar.id}`, { method: "DELETE" })
 
     // isDeleteEventModalOpen.value = false
   } catch (err) {
@@ -37,7 +37,7 @@ async function handleAction(): Promise<void> {
  */
 function handleClosing() {
   if (!isLoading.value) {
-    emit('on-close')
+    emit("on-close")
   }
 }
 </script>

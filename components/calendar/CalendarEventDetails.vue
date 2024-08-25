@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { cn } from '@/lib/utils'
-import type { RPGDate } from '@/models/Date'
-import type { CalendarEvent } from '@/models/CalendarEvent'
-import { useCalendar } from '@/stores/CalendarStore'
+import { cn } from "@/lib/utils"
+import type { RPGDate } from "@/models/Date"
+import type { CalendarEvent } from "@/models/CalendarEvent"
+import { useCalendar } from "@/stores/CalendarStore"
 
 import {
   PhHourglassMedium,
@@ -12,7 +12,7 @@ import {
   PhMapPinArea,
   PhDotsThreeOutlineVertical,
   PhEye
-} from '@phosphor-icons/vue'
+} from "@phosphor-icons/vue"
 
 const { defaultDate, getFormattedDateTitle, jumpToDate, getRelativeString, revealEditEventModal, revealDeleteEventModal } = useCalendar()
 const { lastActiveEvent } = storeToRefs(useCalendar())
@@ -27,16 +27,16 @@ const props = defineProps<{
 // Ref for the popover
 const eventDetails = ref<HTMLElement>()
 
-const emit = defineEmits(['query:close-popover'])
+const emit = defineEmits(["query:close-popover"])
 
 const dateDifference: string = getRelativeString(defaultDate, props.event.startDate)
 const dateDuration: string | null = props.event.endDate
-  ? getRelativeString(props.event.startDate, props.event.endDate, 'compact')
+  ? getRelativeString(props.event.startDate, props.event.endDate, "compact")
   : null
 
 function handleJumpToDate(date: RPGDate) {
   jumpToDate(date)
-  emit('query:close-popover')
+  emit("query:close-popover")
 }
 
 /**

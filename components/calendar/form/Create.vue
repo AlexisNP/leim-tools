@@ -1,16 +1,16 @@
 <script lang="ts" setup>
-import type { Calendar } from '~/models/CalendarConfig';
-import { PhAlarm, PhCalendarDots, PhCircleNotch, PhWrench } from '@phosphor-icons/vue';
+import type { Calendar } from "~/models/CalendarConfig";
+import { PhAlarm, PhCalendarDots, PhCircleNotch, PhWrench } from "@phosphor-icons/vue";
 
-const defaultSkeleton: Calendar = { name: '', today: { day: 1, month: 0, year: 0 }, months: [], events: []}
+const defaultSkeleton: Calendar = { name: "", today: { day: 1, month: 0, year: 0 }, months: [], events: []}
 const calendarSkeleton = ref<Calendar>({ ...defaultSkeleton })
 
 onMounted(() => {
   calendarSkeleton.value = { ...defaultSkeleton }
 })
 
-type FormTabs = 'global' | 'months' | 'today'
-const activeTab = ref<FormTabs>('global')
+type FormTabs = "global" | "months" | "today"
+const activeTab = ref<FormTabs>("global")
 
 /**
  * === Current date ===
@@ -40,9 +40,9 @@ const isCreatingCalendar = ref<boolean>(false)
 async function handleSubmit() {
   try {
     isCreatingCalendar.value = true
-    await $fetch(`/api/calendars/create`, { method: 'POST', body: {...calendarSkeleton.value, worldId: 1 } })
+    await $fetch("/api/calendars/create", { method: "POST", body: {...calendarSkeleton.value, worldId: 1 } })
 
-    emit('on-close')
+    emit("on-close")
   } catch (err) {
     console.log(err)
   } finally {
@@ -55,18 +55,18 @@ async function handleSubmit() {
  */
 const emit = defineEmits<{
   // eslint-disable-next-line no-unused-vars
-  (e: 'on-changed-name', calendarName: string): void
+  (e: "on-changed-name", calendarName: string): void
     // eslint-disable-next-line no-unused-vars
-  (e: 'on-close'): void
+  (e: "on-close"): void
 }>()
 
 /** Hook to emit a debounced event for the changed skeleton name */
 const handleNameChange = useDebounceFn(() => {
-  emit('on-changed-name', calendarSkeleton.value.name)
+  emit("on-changed-name", calendarSkeleton.value.name)
 }, 400)
 
 function handleFormCancel() {
-  emit('on-close')
+  emit("on-close")
 }
 </script>
 

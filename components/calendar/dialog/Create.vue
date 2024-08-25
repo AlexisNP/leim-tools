@@ -1,22 +1,22 @@
 <script lang="ts" setup>
-import { PhX } from '@phosphor-icons/vue';
-import type { World } from '~/models/World';
+import { PhX } from "@phosphor-icons/vue";
+import type { World } from "~/models/World";
 
 defineProps<{
   world: World,
   modalState?: boolean
 }>()
 
-const calendarSkeletonName = ref<string>('')
+const calendarSkeletonName = ref<string>("")
 
 function onChangedName(newName: string) {
   calendarSkeletonName.value = newName
 }
 
-const emit = defineEmits(['on-close'])
+const emit = defineEmits(["on-close"])
 
 function handleClose() {
-  emit('on-close')
+  emit("on-close")
 }
 </script>
 

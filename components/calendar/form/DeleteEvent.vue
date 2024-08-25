@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { PhCircleNotch } from '@phosphor-icons/vue';
+import { PhCircleNotch } from "@phosphor-icons/vue";
 
 const { resetSkeleton, deleteEventFromSkeleton, cancelLatestRequest } = useCalendar()
 const { isDeleteEventModalOpen, eventSkeleton, lastActiveEvent } = storeToRefs(useCalendar())

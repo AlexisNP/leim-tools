@@ -1,5 +1,5 @@
 import { serverSupabaseClient } from "#supabase/server";
-import { z } from 'zod'
+import { z } from "zod"
 import type { Calendar } from "~/models/CalendarConfig";
 
 const querySchema = z.object({
@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
   const client = await serverSupabaseClient(event)
   const query = await getValidatedQuery(event, querySchema.parse)
 
-  setHeader(event, 'Cache-Control', 'public, max-age=3600, s-maxage=7200')
+  setHeader(event, "Cache-Control", "public, max-age=3600, s-maxage=7200")
 
   const partialFields = `
     id,
@@ -42,13 +42,13 @@ export default defineEventHandler(async (event) => {
   let output
 
   if (query.full) {
-    output = client.from('calendars').select(fullFields)
+    output = client.from("calendars").select(fullFields)
   } else {
-    output = client.from('calendars').select(partialFields)
+    output = client.from("calendars").select(partialFields)
   }
 
   if (query.id) {
-    return output.eq('id', query.id).limit(1).single<Calendar>()
+    return output.eq("id", query.id).limit(1).single<Calendar>()
   }
 
   return output.returns<Calendar[]>()

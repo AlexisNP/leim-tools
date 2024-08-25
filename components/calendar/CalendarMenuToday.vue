@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { storeToRefs } from 'pinia'
-import { computed } from 'vue'
+import { storeToRefs } from "pinia"
+import { computed } from "vue"
 
 const { defaultDate, areDatesIdentical, jumpToDefaultDate, getFormattedDateTitle } = useCalendar()
 const { selectedDate } = storeToRefs(useCalendar())

@@ -1,11 +1,11 @@
-import type { CalendarEvent } from '@/models/CalendarEvent'
-import type { RPGDate } from '@/models/Date'
-import { defineStore } from 'pinia'
-import { ref, watch, type Ref } from 'vue'
-import type { Category } from '~/models/Category'
-import { useCalendar } from './CalendarStore'
+import type { CalendarEvent } from "@/models/CalendarEvent"
+import type { RPGDate } from "@/models/Date"
+import { defineStore } from "pinia"
+import { ref, watch, type Ref } from "vue"
+import type { Category } from "~/models/Category"
+import { useCalendar } from "./CalendarStore"
 
-export const useCalendarEvents = defineStore('calendar-events', () => {
+export const useCalendarEvents = defineStore("calendar-events", () => {
   const { activeCalendar, defaultDate, currentConfig, convertDateToDays, compareDates } = useCalendar()
   const { currentRPGDate } = storeToRefs(useCalendar())
 
@@ -13,7 +13,7 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
 
   async function fetchCalendarEvents(calendarId: number) {
     try {
-      const res = await $fetch('/api/calendars/events/query', { query: { calendarId } })
+      const res = await $fetch("/api/calendars/events/query", { query: { calendarId } })
 
       const eventData = res.data as CalendarEvent[]
 
@@ -33,7 +33,7 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
 
   // Order base events by dates
   const allEvents = computed(() => baseEvents.value.sort((a, b) => {
-    return compareDates(a.startDate, b.startDate, 'desc')
+    return compareDates(a.startDate, b.startDate, "desc")
   }))
 
   // Gets all current event in its default state
@@ -62,19 +62,19 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
         event.endDate.month === currentRPGDate.value.month)
 
     switch (currentConfig.viewType) {
-      case 'month':
+      case "month":
         return isEventOnCurrentScreen!
 
-      case 'year':
+      case "year":
         return event.startDate.year === currentRPGDate.value.year
 
-      case 'decade':
+      case "decade":
         return (
           event.startDate.year >= currentRPGDate.value.year &&
           event.startDate.year <= currentRPGDate.value.year + 10
         )
 
-      case 'century':
+      case "century":
         return (
           event.startDate.year >= currentRPGDate.value.year &&
           event.startDate.year <= currentRPGDate.value.year + 100
@@ -103,7 +103,7 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
    */
   function getRelativeEventFromEvent(
     event: CalendarEvent,
-    position: 'next' | 'prev' = 'next',
+    position: "next" | "prev" = "next",
     initialIsEnd: boolean = false
   ): { event: CalendarEvent; targetDate: RPGDate } {
     let dateToParse: RPGDate // Day value of the date that the user interacted with
@@ -126,10 +126,10 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
    */
   function getRelativeEventFromDate(
     date: RPGDate,
-    position: 'next' | 'prev' = 'next'
+    position: "next" | "prev" = "next"
   ): { event: CalendarEvent; targetDate: RPGDate } {
     const pivotValue = convertDateToDays(date)
-    let t: { eventData: CalendarEvent; distance: number; targetKey: 'startDate' | 'endDate' }[] = []
+    let t: { eventData: CalendarEvent; distance: number; targetKey: "startDate" | "endDate" }[] = []
 
     // Loop over all event once to convert the structure to a usable one
     for (let i = 0; i < allEvents.value.length; i++) {
@@ -143,7 +143,7 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
       t.push({
         eventData: e,
         distance: startDistance,
-        targetKey: 'startDate'
+        targetKey: "startDate"
       })
 
       // Check the same things for endDate
@@ -155,14 +155,14 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
         t.push({
           eventData: e,
           distance: endDistance,
-          targetKey: 'endDate'
+          targetKey: "endDate"
         })
       }
     }
 
     // Based on the direction, either ignore negative distance (past) or positive distance (future)
     t = t.filter((i) => {
-      return position === 'next' ? i.distance > 0 : i.distance < 0
+      return position === "next" ? i.distance > 0 : i.distance < 0
     })
 
     if (!t.length) {
@@ -213,13 +213,13 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
   /**
    * Dummy event to hold creation data
    */
-  const eventSkeleton: Ref<CalendarEvent> = ref<CalendarEvent>({ title: '', startDate: defaultDate })
+  const eventSkeleton: Ref<CalendarEvent> = ref<CalendarEvent>({ title: "", startDate: defaultDate })
 
   /**
    * Resets the dummy event data
    */
   function resetSkeleton() {
-    eventSkeleton.value = { title: '', startDate: defaultDate }
+    eventSkeleton.value = { title: "", startDate: defaultDate }
   }
 
   /**
@@ -232,7 +232,7 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
     isCreatingEvent.value = true
 
     try {
-      const res = await $fetch('/api/calendars/events/create', { method: 'POST', body: { event : eventSkeleton.value, calendarId: activeCalendar?.id }, signal: abortController.signal })
+      const res = await $fetch("/api/calendars/events/create", { method: "POST", body: { event : eventSkeleton.value, calendarId: activeCalendar?.id }, signal: abortController.signal })
 
       baseEvents.value.push(res)
     } catch (err) {
@@ -248,7 +248,7 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
     isUpdatingEvent.value = true
 
     try {
-      const res = await $fetch(`/api/calendars/events/${eventSkeleton.value.id}`, { method: 'PATCH', body: { event : eventSkeleton.value, calendarId: activeCalendar?.id }, signal: abortController.signal })
+      const res = await $fetch(`/api/calendars/events/${eventSkeleton.value.id}`, { method: "PATCH", body: { event : eventSkeleton.value, calendarId: activeCalendar?.id }, signal: abortController.signal })
 
       const eventIndex = baseEvents.value.findIndex(e => e.id === eventSkeleton.value.id)
       baseEvents.value[eventIndex] = res
@@ -265,7 +265,7 @@ export const useCalendarEvents = defineStore('calendar-events', () => {
     isDeletingEvent.value = true
 
     try {
-      await $fetch(`/api/calendars/events/${eventSkeleton.value.id}`, { method: 'DELETE', signal: abortController.signal })
+      await $fetch(`/api/calendars/events/${eventSkeleton.value.id}`, { method: "DELETE", signal: abortController.signal })
 
       const eventIndex = baseEvents.value.findIndex(e => e.id === eventSkeleton.value.id)
       baseEvents.value.splice(eventIndex, 1)

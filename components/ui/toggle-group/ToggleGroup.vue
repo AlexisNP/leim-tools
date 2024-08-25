@@ -1,27 +1,27 @@
 <script setup lang="ts">
-import type { VariantProps } from 'class-variance-authority'
-import { type HTMLAttributes, computed, provide } from 'vue'
+import type { VariantProps } from "class-variance-authority"
+import { type HTMLAttributes, computed, provide } from "vue"
 import {
   ToggleGroupRoot,
   type ToggleGroupRootEmits,
   type ToggleGroupRootProps,
   useForwardPropsEmits
-} from 'radix-vue'
-import type { toggleVariants } from '@/components/ui/toggle'
-import { cn } from '@/lib/utils'
+} from "radix-vue"
+import type { toggleVariants } from "@/components/ui/toggle"
+import { cn } from "@/lib/utils"
 
 type ToggleGroupVariants = VariantProps<typeof toggleVariants>
 
 const props = defineProps<
   ToggleGroupRootProps & {
-    class?: HTMLAttributes['class']
-    variant?: ToggleGroupVariants['variant']
-    size?: ToggleGroupVariants['size']
+    class?: HTMLAttributes["class"]
+    variant?: ToggleGroupVariants["variant"]
+    size?: ToggleGroupVariants["size"]
   }
 >()
 const emits = defineEmits<ToggleGroupRootEmits>()
 
-provide('toggleGroup', {
+provide("toggleGroup", {
   variant: props.variant,
   size: props.size
 })

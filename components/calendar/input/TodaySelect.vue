@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import type { CalendarMonth } from '~/models/CalendarMonth';
-import type { RPGDate } from '~/models/Date';
+import type { CalendarMonth } from "~/models/CalendarMonth";
+import type { RPGDate } from "~/models/Date";
 
-import { PhCalendarBlank } from '@phosphor-icons/vue';
+import { PhCalendarBlank } from "@phosphor-icons/vue";
 
 const model = defineModel<RPGDate>({ required: true })
 

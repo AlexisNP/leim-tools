@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { CalendarMonth } from '~/models/CalendarMonth';
+import type { CalendarMonth } from "~/models/CalendarMonth";
 
 defineProps<{
   month: CalendarMonth

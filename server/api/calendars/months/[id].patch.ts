@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from "zod"
 import { serverSupabaseClient } from "#supabase/server"
 import { calendarMonthSchema, type CalendarMonth } from "~/models/CalendarMonth"
 
@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
   if (paramsError) {
     console.log(paramsError)
     throw createError({
-      cause: 'Utilisateur',
+      cause: "Utilisateur",
       fatal: false,
       message: "L'identifiant du mois est manquant ou mal renseigné.",
       status: 401,
@@ -25,7 +25,7 @@ export default defineEventHandler(async (event) => {
   if (bodyError) {
     console.log(bodyData)
     throw createError({
-      cause: 'Utilisateur',
+      cause: "Utilisateur",
       fatal: false,
       message: "Le schéma de la requête n'est pas complet ou mal renseigné.",
       status: 401,
@@ -34,7 +34,7 @@ export default defineEventHandler(async (event) => {
 
   try {
     const { data, error } = await client
-      .from('calendar_months')
+      .from("calendar_months")
       .update(
         {
           name: bodyData?.name,
@@ -43,7 +43,7 @@ export default defineEventHandler(async (event) => {
           calendar_id: bodyData.calendar_id,
         } as never
       )
-      .eq('id', params.id)
+      .eq("id", params.id)
       .select(`
         id,
         name,
@@ -59,10 +59,10 @@ export default defineEventHandler(async (event) => {
   } catch (err) {
     console.log(err)
     throw createError({
-      cause: 'Serveur',
+      cause: "Serveur",
       status: 500,
       fatal: false,
-      message: 'Une erreur inconnue est survenue.'
+      message: "Une erreur inconnue est survenue."
     })
   }
 })

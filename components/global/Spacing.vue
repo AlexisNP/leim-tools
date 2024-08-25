@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { cn } from '~/lib/utils';
+import { cn } from "~/lib/utils";
 
 interface SpacingProps {
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xlg' | '2xl' | '3xl'
+  size?: "xs" | "sm" | "md" | "lg" | "xlg" | "2xl" | "3xl"
 }
 
 const props = defineProps<SpacingProps>()
@@ -10,11 +10,11 @@ const props = defineProps<SpacingProps>()
 let spacingClass: string
 
 switch (props.size) {
-  case 'lg':
+  case "lg":
     spacingClass = "space-y-4"
     break;
 
-  case 'md':
+  case "md":
   default:
     spacingClass = "space-y-2"
     break;

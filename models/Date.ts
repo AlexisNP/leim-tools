@@ -6,7 +6,7 @@ export interface RPGDate {
   year: number
 }
 
-export type RPGDateOrder = 'asc' | 'desc'
+export type RPGDateOrder = "asc" | "desc"
 
 export const dateSchema = z.object({
   day: z.number().int().positive(),

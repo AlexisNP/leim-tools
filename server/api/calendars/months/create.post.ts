@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
   if (schemaError) {
     console.log(schemaError)
     throw createError({
-      cause: 'Utilisateur',
+      cause: "Utilisateur",
       fatal: false,
       message: "Le schéma de la requête n'est pas complet ou mal renseigné.",
       status: 401,
@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
 
   try {
     const { data, error } = await client
-      .from('calendar_months')
+      .from("calendar_months")
       .insert(
         {
           name: bodyData?.name,
@@ -41,10 +41,10 @@ export default defineEventHandler(async (event) => {
   } catch (err) {
     console.log(err)
     throw createError({
-      cause: 'Serveur',
+      cause: "Serveur",
       status: 500,
       fatal: false,
-      message: 'Une erreur inconnue est survenue.'
+      message: "Une erreur inconnue est survenue."
     })
   }
 })

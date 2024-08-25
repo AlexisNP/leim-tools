@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
   if (schemaError) {
     console.log(schemaError)
     throw createError({
-      cause: 'Utilisateur',
+      cause: "Utilisateur",
       fatal: false,
       message: "Le schéma de la requête n'est pas complet ou mal renseigné.",
       status: 401,
@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
   // First insert the calendar
   try {
     const { data, error } = await client
-      .from('calendars')
+      .from("calendars")
       .insert(
         {
           name: bodyData.name,
@@ -32,7 +32,7 @@ export default defineEventHandler(async (event) => {
           world_id: bodyData.worldId
         } as never
       )
-      .select(`id`)
+      .select("id")
       .single()
 
     if (data?.id) {
@@ -43,7 +43,7 @@ export default defineEventHandler(async (event) => {
   } catch (err) {
     console.log(err)
     throw createError({
-      cause: 'Serveur',
+      cause: "Serveur",
       fatal: false,
       message: "Une erreur inconnue s'est produite pendant la création du calendrier.",
       status: 500,
@@ -59,7 +59,7 @@ export default defineEventHandler(async (event) => {
   // Bulk insert the months
   try {
     const { error } = await client
-      .from('calendar_months')
+      .from("calendar_months")
       .insert(bodyData.months as never)
 
     if (error) throw error
@@ -67,14 +67,14 @@ export default defineEventHandler(async (event) => {
     // If we found an error, rollback the calendar
     if (calendarId) {
       await client
-        .from('calendars')
+        .from("calendars")
         .delete()
-        .eq('id', calendarId)
+        .eq("id", calendarId)
         .single()
     }
 
     throw createError({
-      cause: 'Serveur',
+      cause: "Serveur",
       fatal: false,
       message: "Une erreur inconnue s'est produite pendant la création des mois du calendrier.",
       status: 500,
@@ -84,14 +84,14 @@ export default defineEventHandler(async (event) => {
   if (calendarId) {
     try {
       return client
-        .from('calendars')
+        .from("calendars")
         .select("*")
-        .eq('id', calendarId)
+        .eq("id", calendarId)
         .limit(1)
         .single<Calendar>()
     } catch (err) {
       throw createError({
-        cause: 'Serveur',
+        cause: "Serveur",
         fatal: false,
         message: "Impossible de récupérer les données du calendrier créé.",
         status: 500,

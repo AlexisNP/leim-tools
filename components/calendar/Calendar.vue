@@ -1,15 +1,15 @@
 <script lang="ts" setup>
-import { useCalendar } from '@/stores/CalendarStore'
-import { computed, type Component, type ComputedRef } from 'vue'
+import { useCalendar } from "@/stores/CalendarStore"
+import { computed, type Component, type ComputedRef } from "vue"
 
 // import { PhMagnifyingGlass } from '@phosphor-icons/vue'
-import MonthlyLayout from './state/monthly/Layout.vue'
-import CenturyLayout from './state/centennially/Layout.vue'
-import DecadeLayout from './state/decennially/Layout.vue'
-import YearLayout from './state/yearly/Layout.vue'
+import MonthlyLayout from "./state/monthly/Layout.vue"
+import CenturyLayout from "./state/centennially/Layout.vue"
+import DecadeLayout from "./state/decennially/Layout.vue"
+import YearLayout from "./state/yearly/Layout.vue"
 
-import type { Calendar } from '~/models/CalendarConfig'
-import type { Category } from '~/models/Category'
+import type { Calendar } from "~/models/CalendarConfig"
+import type { Category } from "~/models/Category"
 
 const props = defineProps<{
   calendarData: Calendar,
@@ -25,16 +25,16 @@ const { currentConfig, jumpToDate, selectedDate } = useCalendar()
 
 const currentViewComponent: ComputedRef<Component> = computed<Component>(() => {
   switch (currentConfig.viewType) {
-    case 'month':
+    case "month":
       return MonthlyLayout
 
-    case 'year':
+    case "year":
       return YearLayout
 
-    case 'decade':
+    case "decade":
       return DecadeLayout
 
-    case 'century':
+    case "century":
     default:
       return CenturyLayout
   }

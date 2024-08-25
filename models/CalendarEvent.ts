@@ -1,6 +1,6 @@
-import { z } from 'zod'
-import { categorySchema, type Category } from './Category'
-import { dateSchema, type RPGDate } from './Date'
+import { z } from "zod"
+import { categorySchema, type Category } from "./Category"
+import { dateSchema, type RPGDate } from "./Date"
 
 export interface CalendarEvent {
   id?: number
@@ -33,5 +33,5 @@ export const postEventBodySchema = z.object({
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function isCalendarEvent(object: any): object is CalendarEvent {
-  return 'startDate' in object
+  return "startDate" in object
 }

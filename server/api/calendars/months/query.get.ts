@@ -1,5 +1,5 @@
 import { serverSupabaseClient } from "#supabase/server";
-import { z } from 'zod'
+import { z } from "zod"
 import type { CalendarMonth } from "~/models/CalendarMonth";
 
 const querySchema = z.object({
@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
   const query = await getValidatedQuery(event, querySchema.parse)
 
   const output = client
-    .from('calendar_months')
+    .from("calendar_months")
     .select(`
       id,
       name,
@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
     `)
 
   if (query.calendarId) {
-    output.eq('calendar_id', query.calendarId)
+    output.eq("calendar_id", query.calendarId)
   }
 
   return output.returns<CalendarMonth[]>()

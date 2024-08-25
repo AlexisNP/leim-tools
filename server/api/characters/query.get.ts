@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from "zod"
 import { serverSupabaseClient } from "#supabase/server";
 import type { Character } from "~/models/Characters";
 
@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
   const query = await getValidatedQuery(event, querySchema.parse)
 
   const output = client
-    .from('characters')
+    .from("characters")
     .select(`
       id,
       name,
@@ -24,7 +24,7 @@ export default defineEventHandler(async (event) => {
     `)
 
   if (query.worldId) {
-    output.eq('world_id', query.worldId)
+    output.eq("world_id", query.worldId)
   }
 
   return output.returns<Character[]>()

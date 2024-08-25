@@ -1,16 +1,16 @@
 import type {
   RPGDate,
   RPGDateOrder,
-} from '@/models/Date'
-import { useUrlSearchParams } from '@vueuse/core'
-import { defineStore } from 'pinia'
-import { computed, ref, type ComputedRef } from 'vue'
-import type { Calendar } from '~/models/CalendarConfig'
-import type { CalendarEvent } from '~/models/CalendarEvent'
-import type { CalendarMonth } from '~/models/CalendarMonth'
-import type { Category } from '~/models/Category'
+} from "@/models/Date"
+import { useUrlSearchParams } from "@vueuse/core"
+import { defineStore } from "pinia"
+import { computed, ref, type ComputedRef } from "vue"
+import type { Calendar } from "~/models/CalendarConfig"
+import type { CalendarEvent } from "~/models/CalendarEvent"
+import type { CalendarMonth } from "~/models/CalendarMonth"
+import type { Category } from "~/models/Category"
 
-type CalendarViewType = 'month' | 'year' | 'decade' | 'century'
+type CalendarViewType = "month" | "year" | "decade" | "century"
 
 type CalendarCurrentConfig = {
   viewType: CalendarViewType
@@ -24,16 +24,16 @@ type CalendarCurrentDate = {
   currentDateTitle: ComputedRef<string>
 }
 
-export const useCalendar = defineStore('calendar', () => {
+export const useCalendar = defineStore("calendar", () => {
   /**
    * Static calendar config
    */
   const currentConfig = ref<CalendarCurrentConfig>({
-    viewType: 'month'
+    viewType: "month"
   })
   const viewTypeOptions = new Set<CalendarViewType>([
-    'month',
-    'year'
+    "month",
+    "year"
   ])
 
   const activeCalendar = ref<{ id: number; name: string; today: RPGDate} | null>(null)
@@ -75,7 +75,7 @@ export const useCalendar = defineStore('calendar', () => {
     }
   }
 
-  const params = useUrlSearchParams('history', {
+  const params = useUrlSearchParams("history", {
     write: false
   })
 
@@ -126,24 +126,24 @@ export const useCalendar = defineStore('calendar', () => {
 
   const currentDateTitle = computed<string>(() => {
     switch (currentConfig.value.viewType) {
-      case 'month':
+      case "month":
         return getFormattedDateTitle({
           day: currentDate.currentDay.value,
           month: currentDate.currentMonth.value,
           year: currentDate.currentYear.value,
         })
 
-      case 'year':
+      case "year":
         return `Année ${currentYear.value}`
 
-      case 'decade':
+      case "decade":
         return `Années ${currentYear.value} - ${currentYear.value + 10}`
 
-      case 'century':
+      case "century":
         return `Années ${currentYear.value} - ${currentYear.value + 100}`
 
       default:
-        return 'Date inconnue'
+        return "Date inconnue"
     }
   })
 
@@ -171,15 +171,15 @@ export const useCalendar = defineStore('calendar', () => {
    */
   const isCurrentScreenActive = computed<boolean>(() => {
     switch (currentConfig.value.viewType) {
-      case 'month':
+      case "month":
         return (
           defaultDate.value.month === currentDate.currentMonth.value &&
           defaultDate.value.year === currentDate.currentYear.value
         )
 
-      case 'year':
-      case 'decade':
-      case 'century':
+      case "year":
+      case "decade":
+      case "century":
         return defaultDate.value.year === currentDate.currentYear.value
 
       default:
@@ -293,7 +293,7 @@ export const useCalendar = defineStore('calendar', () => {
       return sortedMonths.value[index].name
     }
 
-    return ''
+    return ""
   }
 
   /**
@@ -325,18 +325,18 @@ export const useCalendar = defineStore('calendar', () => {
    */
   function getViewTypeTitle(viewType: CalendarViewType): string {
     switch (viewType) {
-      case 'year':
-        return 'Année'
+      case "year":
+        return "Année"
 
-      case 'decade':
-        return 'Décennie'
+      case "decade":
+        return "Décennie"
 
-      case 'century':
-        return 'Siècle'
+      case "century":
+        return "Siècle"
 
-      case 'month':
+      case "month":
       default:
-        return 'Mois'
+        return "Mois"
     }
   }
 
@@ -439,9 +439,9 @@ export const useCalendar = defineStore('calendar', () => {
    * @param date2 Second date
    * @returns 1 means the first date comes before the second, -1 means the second comes before the first, and 0 if they're identical
    */
-  function compareDates(a: RPGDate, b: RPGDate, order: RPGDateOrder = 'desc'): number {
+  function compareDates(a: RPGDate, b: RPGDate, order: RPGDateOrder = "desc"): number {
     // Reverses the order if specified
-    const orderFactor: number = order === 'desc' ? 1 : -1
+    const orderFactor: number = order === "desc" ? 1 : -1
 
     // If somehow one of the date isn't available
     if (!b) {
@@ -476,43 +476,43 @@ export const useCalendar = defineStore('calendar', () => {
   function getRelativeString(
     baseDate: RPGDate,
     relativeDate: RPGDate,
-    formatting: 'compact' | 'complex' = 'complex'
+    formatting: "compact" | "complex" = "complex"
   ): string {
     const differenceInDays: number = getDifferenceInDays(baseDate, relativeDate)
-    let output: string = ''
-    let direction: 'past' | 'present' | 'future' = 'present'
-    let directionPrefix: string = ''
+    let output: string = ""
+    let direction: "past" | "present" | "future" = "present"
+    let directionPrefix: string = ""
 
     // Check whether it's a past or future date
     if (differenceInDays > 0) {
-      direction = 'future'
+      direction = "future"
     } else if (differenceInDays < 0) {
-      direction = 'past'
+      direction = "past"
     }
 
-    if (formatting === 'complex') {
+    if (formatting === "complex") {
     // Handle if it's the same date
-      if (direction === 'present') {
+      if (direction === "present") {
         return "Aujourd'hui"
       }
       if (differenceInDays === -2) {
-        return 'Avant-hier'
+        return "Avant-hier"
       }
       if (differenceInDays === -1) {
-        return 'Hier'
+        return "Hier"
       }
       if (differenceInDays === 1) {
-        return 'Demain'
+        return "Demain"
       }
       if (differenceInDays === 2) {
-        return 'Après-demain'
+        return "Après-demain"
       }
 
       // Get relevant prefix for the string
-      if (direction === 'future') {
-        directionPrefix = 'Dans '
-      } else if (direction === 'past') {
-        directionPrefix = 'Il y a '
+      if (direction === "future") {
+        directionPrefix = "Dans "
+      } else if (direction === "past") {
+        directionPrefix = "Il y a "
       }
 
       output += directionPrefix
@@ -567,7 +567,7 @@ export const useCalendar = defineStore('calendar', () => {
       // First, get all the remaining days in the current month
       const currentMonth = sortedMonths.value[datePivot.month]
       dateAcc.day = currentMonth.days - datePivot.day
-      if (direction === 'future') {
+      if (direction === "future") {
         datePivot.month = getNextViewMonth(datePivot.month)
       } else {
         datePivot.month = getPreviousViewMonth(datePivot.month)
@@ -576,7 +576,7 @@ export const useCalendar = defineStore('calendar', () => {
 
       // Then, get the remaining months in the year
       const remainingMonthsStart = sortedMonths.value.filter((m) => datePivot.month < m.position )
-      if (direction === 'future') {
+      if (direction === "future") {
         dateAcc.month = remainingMonthsStart.length + 1
       } else {
         dateAcc.month = remainingMonthsStart.length - 1
@@ -617,7 +617,7 @@ export const useCalendar = defineStore('calendar', () => {
   const categories = ref<Category[]>([])
 
   // Order base events by dates
-  const allEvents = computed<CalendarEvent[]>(() => [...baseEvents.value].sort((a, b) => compareDates(a.startDate, b.startDate, 'desc')))
+  const allEvents = computed<CalendarEvent[]>(() => [...baseEvents.value].sort((a, b) => compareDates(a.startDate, b.startDate, "desc")))
 
   // Gets all current event in its default state
   const currentEvents = ref<CalendarEvent[]>([])
@@ -645,19 +645,19 @@ export const useCalendar = defineStore('calendar', () => {
         event.endDate.month === currentRPGDate.value.month)
 
     switch (currentConfig.value.viewType) {
-      case 'month':
+      case "month":
         return !!isEventOnCurrentScreen
 
-      case 'year':
+      case "year":
         return event.startDate.year === currentRPGDate.value.year
 
-      case 'decade':
+      case "decade":
         return (
           event.startDate.year >= currentRPGDate.value.year &&
           event.startDate.year <= currentRPGDate.value.year + 10
         )
 
-      case 'century':
+      case "century":
         return (
           event.startDate.year >= currentRPGDate.value.year &&
           event.startDate.year <= currentRPGDate.value.year + 100
@@ -686,7 +686,7 @@ export const useCalendar = defineStore('calendar', () => {
    */
   function getRelativeEventFromEvent(
     event: CalendarEvent,
-    position: 'next' | 'prev' = 'next',
+    position: "next" | "prev" = "next",
     initialIsEnd: boolean = false
   ): { event: CalendarEvent; targetDate: RPGDate } {
     let dateToParse: RPGDate // Day value of the date that the user interacted with
@@ -709,10 +709,10 @@ export const useCalendar = defineStore('calendar', () => {
    */
   function getRelativeEventFromDate(
     date: RPGDate,
-    position: 'next' | 'prev' = 'next'
+    position: "next" | "prev" = "next"
   ): { event: CalendarEvent; targetDate: RPGDate } {
     const pivotValue = convertDateToDays(date)
-    let t: { eventData: CalendarEvent; distance: number; targetKey: 'startDate' | 'endDate' }[] = []
+    let t: { eventData: CalendarEvent; distance: number; targetKey: "startDate" | "endDate" }[] = []
 
     // Loop over all event once to convert the structure to a usable one
     for (let i = 0; i < allEvents.value.length; i++) {
@@ -726,7 +726,7 @@ export const useCalendar = defineStore('calendar', () => {
       t.push({
         eventData: e,
         distance: startDistance,
-        targetKey: 'startDate'
+        targetKey: "startDate"
       })
 
       // Check the same things for endDate
@@ -738,14 +738,14 @@ export const useCalendar = defineStore('calendar', () => {
         t.push({
           eventData: e,
           distance: endDistance,
-          targetKey: 'endDate'
+          targetKey: "endDate"
         })
       }
     }
 
     // Based on the direction, either ignore negative distance (past) or positive distance (future)
     t = t.filter((i) => {
-      return position === 'next' ? i.distance > 0 : i.distance < 0
+      return position === "next" ? i.distance > 0 : i.distance < 0
     })
 
     if (!t.length) {
@@ -796,13 +796,13 @@ export const useCalendar = defineStore('calendar', () => {
   /**
    * Dummy event to hold creation data
    */
-  const eventSkeleton = ref<CalendarEvent>({ title: '', startDate: defaultDate.value })
+  const eventSkeleton = ref<CalendarEvent>({ title: "", startDate: defaultDate.value })
 
   /**
    * Resets the dummy event data
    */
   function resetSkeleton() {
-    eventSkeleton.value = { title: '', startDate: defaultDate.value }
+    eventSkeleton.value = { title: "", startDate: defaultDate.value }
   }
 
   /**
@@ -815,7 +815,7 @@ export const useCalendar = defineStore('calendar', () => {
     isCreatingEvent.value = true
 
     try {
-      const res = await $fetch('/api/calendars/events/create', { method: 'POST', body: { event : eventSkeleton.value, calendarId: activeCalendar.value?.id }, signal: abortController.signal })
+      const res = await $fetch("/api/calendars/events/create", { method: "POST", body: { event : eventSkeleton.value, calendarId: activeCalendar.value?.id }, signal: abortController.signal })
 
       baseEvents.value.push(res)
     } catch (err) {
@@ -831,7 +831,7 @@ export const useCalendar = defineStore('calendar', () => {
     isUpdatingEvent.value = true
 
     try {
-      const res = await $fetch(`/api/calendars/events/${eventSkeleton.value.id}`, { method: 'PATCH', body: { event : eventSkeleton.value, calendarId: activeCalendar.value?.id }, signal: abortController.signal })
+      const res = await $fetch(`/api/calendars/events/${eventSkeleton.value.id}`, { method: "PATCH", body: { event : eventSkeleton.value, calendarId: activeCalendar.value?.id }, signal: abortController.signal })
 
       const eventIndex = baseEvents.value.findIndex(e => e.id === eventSkeleton.value.id)
       baseEvents.value[eventIndex] = res
@@ -848,7 +848,7 @@ export const useCalendar = defineStore('calendar', () => {
     isDeletingEvent.value = true
 
     try {
-      await $fetch(`/api/calendars/events/${eventSkeleton.value.id}`, { method: 'DELETE', signal: abortController.signal })
+      await $fetch(`/api/calendars/events/${eventSkeleton.value.id}`, { method: "DELETE", signal: abortController.signal })
 
       const eventIndex = baseEvents.value.findIndex(e => e.id === eventSkeleton.value.id)
       baseEvents.value.splice(eventIndex, 1)

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { useCalendar } from '@/stores/CalendarStore'
+import { useCalendar } from "@/stores/CalendarStore"
 
-import { PhMagnifyingGlass } from '@phosphor-icons/vue'
+import { PhMagnifyingGlass } from "@phosphor-icons/vue"
 
 const { revealAdvancedSearch } = useCalendar()
 </script>

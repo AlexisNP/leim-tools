@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { computed } from 'vue'
+import { computed } from "vue"
 
-import { PhUserCircle } from '@phosphor-icons/vue'
+import { PhUserCircle } from "@phosphor-icons/vue"
 
 const router = useRouter()
 
@@ -19,11 +19,11 @@ watch(user, closeMenu)
 async function handleGoogleLogin() {
   try {
     auth.signInWithOAuth({
-      provider: 'google',
+      provider: "google",
       options: {
         queryParams: {
-          access_type: 'offline',
-          prompt: 'consent'
+          access_type: "offline",
+          prompt: "consent"
         }
       }
     })
@@ -43,7 +43,7 @@ async function handleLogout() {
 }
 
 function gotoProfilePage() {
-  router.push({ path: '/i' })
+  router.push({ path: "/i" })
 
   closeMenu()
 }

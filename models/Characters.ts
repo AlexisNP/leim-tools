@@ -1,5 +1,5 @@
-import type { Category } from './Category'
-import type { RPGDate } from './Date'
+import type { Category } from "./Category"
+import type { RPGDate } from "./Date"
 
 export interface Character {
   name: string
@@ -15,5 +15,5 @@ export interface Character {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function isCharacter(object: any): object is Character {
-  return 'birth' in object
+  return "birth" in object
 }

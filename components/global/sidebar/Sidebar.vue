@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { PhHouse, PhList } from '@phosphor-icons/vue'
-import type { SidebarMenuActionType } from './SidebarProps';
+import { PhHouse, PhList } from "@phosphor-icons/vue"
+import type { SidebarMenuActionType } from "./SidebarProps";
 
 const { revealAdvancedSearch } = useCalendar()
 const { currentMenu } = storeToRefs(useUiStore())
@@ -8,7 +8,7 @@ const { currentMenu } = storeToRefs(useUiStore())
 const user = useSupabaseUser()
 
 function handleMenuItemAction(actionType: SidebarMenuActionType) {
-  if (actionType === 'event-search') {
+  if (actionType === "event-search") {
     revealAdvancedSearch()
   }
 }

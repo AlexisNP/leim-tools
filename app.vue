@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { ConfigProvider } from 'radix-vue'
+import { ConfigProvider } from "radix-vue"
 
 useHead({
   titleTemplate: (titleChunk) => {
-    return titleChunk ? `${titleChunk} — TTTools` : 'TTTools';
+    return titleChunk ? `${titleChunk} — TTTools` : "TTTools";
   },
   htmlAttrs: {
-    lang: 'fr'
+    lang: "fr"
   },
   meta: [
     { name: "charset", content: "UTF-8" },
@@ -18,14 +18,14 @@ useHead({
     { name: "theme-color", content: "00aba9" },
     { name: "og:type", content: "tabletop-tools" },
     { name: "og:url", content: "ttt.alexcreates.fr" },
-    { name: 'robots', content: 'noindex, nofollow'}
+    { name: "robots", content: "noindex, nofollow"}
   ],
   link: [
-    { rel: 'apple-touch-icon', sizes: "76x76", href: '/apple-touch-icon.png' },
-    { rel: 'icon', sizes: "32x32", type: 'image/png', href: '/favicon-32x32.png' },
-    { rel: 'icon', sizes: "16x16", type: 'image/png', href: '/favicon-16x16.png' },
-    { rel: 'manifest', href: '/site.webmanifest' },
-    { rel: 'mask-icon', href: '/safari-pinned-tab.svg', color: '#6595b4' },
+    { rel: "apple-touch-icon", sizes: "76x76", href: "/apple-touch-icon.png" },
+    { rel: "icon", sizes: "32x32", type: "image/png", href: "/favicon-32x32.png" },
+    { rel: "icon", sizes: "16x16", type: "image/png", href: "/favicon-16x16.png" },
+    { rel: "manifest", href: "/site.webmanifest" },
+    { rel: "mask-icon", href: "/safari-pinned-tab.svg", color: "#6595b4" },
   ]
 })
 

@@ -1,23 +1,23 @@
 <script lang="ts" setup>
-import { cn } from '@/lib/utils'
-import type { RPGDate } from '@/models/Date'
-import type { CalendarEvent } from '@/models/CalendarEvent'
+import { cn } from "@/lib/utils"
+import type { RPGDate } from "@/models/Date"
+import type { CalendarEvent } from "@/models/CalendarEvent"
 
-import { PhArrowSquareOut, PhHourglassMedium, PhAlarm, PhMapPinArea, PhEye } from '@phosphor-icons/vue'
+import { PhArrowSquareOut, PhHourglassMedium, PhAlarm, PhMapPinArea, PhEye } from "@phosphor-icons/vue"
 
 const props = defineProps<{
   event: CalendarEvent
 }>()
 
 defineEmits<{
-  (e: 'query:date-jump', payload: RPGDate): void
+  (e: "query:date-jump", payload: RPGDate): void
 }>()
 
 const { getRelativeString, defaultDate, getFormattedDateTitle } = useCalendar()
 
 const dateDifference: string = getRelativeString(defaultDate, props.event.startDate)
 const dateDuration: string | null = props.event.endDate
-  ? getRelativeString(props.event.startDate, props.event.endDate, 'compact')
+  ? getRelativeString(props.event.startDate, props.event.endDate, "compact")
   : null
 </script>
 

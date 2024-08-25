@@ -1,22 +1,22 @@
 <script lang="ts" setup>
-import { type RPGDate } from '@/models/Date'
+import { type RPGDate } from "@/models/Date"
 
-import { PhArrowLineLeft, PhArrowLineRight } from '@phosphor-icons/vue'
+import { PhArrowLineLeft, PhArrowLineRight } from "@phosphor-icons/vue"
 
 const { currentDate, currentConfig, jumpToDate, getRelativeEventFromDate } = useCalendar()
 
-function handleGotoPreviousEventPage(position: 'next' | 'prev' = 'next') {
+function handleGotoPreviousEventPage(position: "next" | "prev" = "next") {
   let fromDate: RPGDate
 
   // To modify, obviously
   const daysPerMonth = 32
   const monthsPerYear = 10
 
-  const toDay = position === 'next' ? daysPerMonth : 1
-  const toMonth = position === 'next' ? monthsPerYear : 0
+  const toDay = position === "next" ? daysPerMonth : 1
+  const toMonth = position === "next" ? monthsPerYear : 0
 
   switch (currentConfig.viewType) {
-    case 'month':
+    case "month":
       fromDate = {
         day: toDay,
         month: currentDate.currentMonth,
@@ -24,7 +24,7 @@ function handleGotoPreviousEventPage(position: 'next' | 'prev' = 'next') {
       }
       break
 
-    case 'year':
+    case "year":
       fromDate = {
         day: toDay,
         month: toMonth,
@@ -32,7 +32,7 @@ function handleGotoPreviousEventPage(position: 'next' | 'prev' = 'next') {
       }
       break
 
-    case 'decade':
+    case "decade":
       fromDate = {
         day: toDay,
         month: currentDate.currentMonth,
@@ -40,7 +40,7 @@ function handleGotoPreviousEventPage(position: 'next' | 'prev' = 'next') {
       }
       break
 
-    case 'century':
+    case "century":
     default:
       fromDate = {
         day: toDay,

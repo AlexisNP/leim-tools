@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import type { RPGDate } from '~/models/Date';
-import { PhAlarm, PhCircleNotch, PhEye, PhEyeClosed, PhMapPinArea, PhTag } from '@phosphor-icons/vue'
+import type { RPGDate } from "~/models/Date";
+import { PhAlarm, PhCircleNotch, PhEye, PhEyeClosed, PhMapPinArea, PhTag } from "@phosphor-icons/vue"
 
 const { eventSkeleton, operationInProgress } = storeToRefs(useCalendar())
 const { resetSkeleton, submitSkeleton, cancelLatestRequest } = useCalendar()

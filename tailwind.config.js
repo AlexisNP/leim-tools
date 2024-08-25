@@ -75,10 +75,10 @@ module.exports = {
         },
         "collapsible-down": {
           from: { height: 0 },
-          to: { height: 'var(--radix-collapsible-content-height)' },
+          to: { height: "var(--radix-collapsible-content-height)" },
         },
         "collapsible-up": {
-          from: { height: 'var(--radix-collapsible-content-height)' },
+          from: { height: "var(--radix-collapsible-content-height)" },
           to: { height: 0 },
         },
       },
@@ -93,12 +93,12 @@ module.exports = {
   plugins: [
     animate,
     function ({ addBase, theme }) {
-      function extractColorVars(colorObj, colorGroup = '') {
+      function extractColorVars(colorObj, colorGroup = "") {
         return Object.keys(colorObj).reduce((vars, colorKey) => {
           const value = colorObj[colorKey]
 
           const newVars =
-            typeof value === 'string'
+            typeof value === "string"
               ? { [`--color${colorGroup}-${colorKey}`]: value }
               : extractColorVars(value, `-${colorKey}`)
 
@@ -107,7 +107,7 @@ module.exports = {
       }
 
       addBase({
-        ':root': extractColorVars(theme('colors'))
+        ":root": extractColorVars(theme("colors"))
       })
     }
   ]
