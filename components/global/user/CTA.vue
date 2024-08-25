@@ -8,6 +8,7 @@ const router = useRouter()
 const { auth } = useSupabaseClient()
 const user = useSupabaseUser()
 const userMeta = computed(() => user.value?.user_metadata)
+const profileUrl: string = `${useRequestURL().origin}/i/`
 
 const menuOpened = ref<boolean>(false)
 
@@ -24,7 +25,8 @@ async function handleGoogleLogin() {
         queryParams: {
           access_type: "offline",
           prompt: "consent"
-        }
+        },
+        redirectTo: profileUrl
       }
     })
   } catch (err) {
