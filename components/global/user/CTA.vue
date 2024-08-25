@@ -1,14 +1,14 @@
 <script lang="ts" setup>
 import { computed } from "vue"
 
-import { PhUserCircle } from "@phosphor-icons/vue"
+import { PhFaders, PhSignOut, PhUserCircle } from "@phosphor-icons/vue"
 
 const router = useRouter()
 
 const { auth } = useSupabaseClient()
 const user = useSupabaseUser()
 const userMeta = computed(() => user.value?.user_metadata)
-const profileUrl: string = `${useRequestURL().origin}/me/`
+const profileUrl: string = `${useRequestURL().origin}/my/`
 
 const menuOpened = ref<boolean>(false)
 
@@ -44,8 +44,8 @@ async function handleLogout() {
   }
 }
 
-function gotoProfilePage() {
-  router.push({ path: "/me" })
+function gotoPreferencesPage() {
+  // router.push({ path: "/my/preferences" })
 
   closeMenu()
 }
@@ -71,8 +71,17 @@ function gotoProfilePage() {
         <UiCommand>
           <UiCommandList v-if="user">
             <UiCommandGroup :heading="`Connecté en tant que ${user?.email}`">
-              <UiCommandItem value="profile" @select="gotoProfilePage"> Profil </UiCommandItem>
-              <UiCommandItem value="logout" @select="handleLogout"> Déconnexion </UiCommandItem>
+              <UiCommandItem value="preferences" class="flex gap-[.5ch] items-center" @select="gotoPreferencesPage">
+                <PhFaders size="20" />
+                <span>Préférences</span>
+              </UiCommandItem>
+            </UiCommandGroup>
+            <UiCommandSeparator />
+            <UiCommandGroup>
+              <UiCommandItem value="logout" class="flex gap-[.5ch] items-center" @select="handleLogout">
+                <PhSignOut size="20" weight="fill" />
+                <span>Déconnexion</span>
+              </UiCommandItem>
             </UiCommandGroup>
           </UiCommandList>
           <UiCommandList v-else>
