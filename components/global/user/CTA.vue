@@ -1,9 +1,10 @@
 <script lang="ts" setup>
 import { computed } from "vue"
 
-import { PhFaders, PhSignOut, PhUserCircle } from "@phosphor-icons/vue"
+import { PhGear, PhGlobeHemisphereWest, PhLaptop, PhMoon, PhPalette, PhSignOut, PhSun, PhTranslate, PhUserCircle } from "@phosphor-icons/vue"
 
 const router = useRouter()
+const { preference } = useColorMode()
 
 const { auth } = useSupabaseClient()
 const user = useSupabaseUser()
@@ -44,8 +45,14 @@ async function handleLogout() {
   }
 }
 
-function gotoPreferencesPage() {
-  // router.push({ path: "/my/preferences" })
+function gotoProfilePage() {
+  router.push({ path: "/my/preferences" })
+
+  closeMenu()
+}
+
+function gotoSettingsPage() {
+  router.push({ path: "/my/settings" })
 
   closeMenu()
 }
@@ -53,8 +60,8 @@ function gotoPreferencesPage() {
 
 <template>
   <ClientOnly>
-    <UiPopover v-model:open="menuOpened">
-      <UiPopoverTrigger>
+    <UiDropdownMenu v-model:open="menuOpened">
+      <UiDropdownMenuTrigger>
         <UiAvatar v-if="user" class="cursor-pointer">
           <UiAvatarImage
             :src="userMeta?.avatar_url"
@@ -66,29 +73,84 @@ function gotoPreferencesPage() {
         <UiButton v-else variant="outline" size="icon">
           <PhUserCircle size="18" />
         </UiButton>
-      </UiPopoverTrigger>
-      <UiPopoverContent class="w-fit p-0" :align="'start'" :side="'top'" :collision-padding="20">
-        <UiCommand>
-          <UiCommandList v-if="user">
-            <UiCommandGroup :heading="`Connecté en tant que ${user?.email}`">
-              <UiCommandItem value="preferences" class="flex gap-[.5ch] items-center" @select="gotoPreferencesPage">
-                <PhFaders size="20" />
-                <span>Préférences</span>
-              </UiCommandItem>
-            </UiCommandGroup>
-            <UiCommandSeparator />
-            <UiCommandGroup>
-              <UiCommandItem value="logout" class="flex gap-[.5ch] items-center" @select="handleLogout">
-                <PhSignOut size="20" weight="fill" />
-                <span>Déconnexion</span>
-              </UiCommandItem>
-            </UiCommandGroup>
-          </UiCommandList>
-          <UiCommandList v-else>
-            <UiCommandItem value="logout" @select="handleGoogleLogin"> Connexion </UiCommandItem>
-          </UiCommandList>
-        </UiCommand>
-      </UiPopoverContent>
-    </UiPopover>
+      </UiDropdownMenuTrigger>
+      <UiDropdownMenuContent class="w-fit p-0" :align="'start'" :side="'top'" :side-offset="10" :align-offset="25" :collision-padding="40">
+
+        <template v-if="user">
+          <p class="p-2 text-xs opacity-75">Connecté en tant que {{ user?.email }}</p>
+
+          <UiDropdownMenuItem class="flex gap-[.5ch] items-center rounded-none" @click="gotoProfilePage">
+            <PhGlobeHemisphereWest size="20" weight="fill" />
+            <span>Mondes</span>
+          </UiDropdownMenuItem>
+
+          <UiDropdownMenuSeparator />
+
+          <UiDropdownMenuSub>
+            <UiDropdownMenuSubTrigger class="p-0">
+              <UiDropdownMenuItem class="flex gap-[.5ch] items-center rounded-none">
+                <PhPalette size="20" weight="fill" />
+                <span>Apparence</span>
+              </UiDropdownMenuItem>
+            </UiDropdownMenuSubTrigger>
+            <UiDropdownMenuPortal>
+              <UiDropdownMenuSubContent>
+                <UiDropdownMenuItem class="flex gap-[.5ch] items-center rounded-none">
+                  <PhMoon size="20" />
+                  <span>Sombre</span>
+                </UiDropdownMenuItem>
+                <UiDropdownMenuItem class="flex gap-[.5ch] items-center rounded-none">
+                  <PhSun size="20" />
+                  <span>Clair</span>
+                </UiDropdownMenuItem>
+                <UiDropdownMenuItem class="flex gap-[.5ch] items-center rounded-none">
+                  <PhLaptop size="20" />
+                  <span>Système</span>
+                </UiDropdownMenuItem>
+              </UiDropdownMenuSubContent>
+            </UiDropdownMenuPortal>
+          </UiDropdownMenuSub>
+
+          <UiDropdownMenuSub>
+            <UiDropdownMenuSubTrigger class="p-0">
+              <UiDropdownMenuItem class="flex gap-[.5ch] items-center rounded-none">
+                <PhTranslate size="20" />
+                <span>Langage</span>
+              </UiDropdownMenuItem>
+            </UiDropdownMenuSubTrigger>
+            <UiDropdownMenuPortal>
+              <UiDropdownMenuSubContent>
+                <UiDropdownMenuSubContent>
+                  <UiDropdownMenuItem class="flex gap-[.5ch] items-center rounded-none">
+                    <span>Français</span>
+                  </UiDropdownMenuItem>
+                  <UiDropdownMenuItem class="flex gap-[.5ch] items-center rounded-none">
+                    <span>English</span>
+                  </UiDropdownMenuItem>
+                </UiDropdownMenuSubContent>
+              </UiDropdownMenuSubContent>
+            </UiDropdownMenuPortal>
+          </UiDropdownMenuSub>
+
+          <UiDropdownMenuSeparator />
+
+          <UiDropdownMenuItem class="flex gap-[.5ch] items-center rounded-none" @click="gotoSettingsPage">
+            <PhGear size="20" weight="fill" />
+            <span>Compte</span>
+          </UiDropdownMenuItem>
+          <UiDropdownMenuItem class="flex gap-[.5ch] items-center rounded-none" @click="handleLogout">
+            <PhSignOut size="20" weight="fill" />
+            <span>Déconnexion</span>
+          </UiDropdownMenuItem>
+        </template>
+
+        <template v-else>
+          <UiDropdownMenuItem class="flex gap-[.5ch] items-center rounded-none" @click="handleGoogleLogin">
+            <PhGear size="20" weight="fill" />
+            <span>Connexion</span>
+          </UiDropdownMenuItem>
+        </template>
+      </UiDropdownMenuContent>
+    </UiDropdownMenu>
   </ClientOnly>
 </template>

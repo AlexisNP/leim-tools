@@ -2,15 +2,16 @@
 import type { RealtimeChannel } from "@supabase/supabase-js"
 import type { World } from "~/models/World";
 
+useHead({
+  title: "Mondes"
+})
+
 const supabase = useSupabaseClient()
 
 const { data: res } = await useFetch("/api/worlds/query")
 
 const worlds = ref<World[]>(res.value?.data as World[])
 
-useHead({
-  title: "Profil"
-})
 definePageMeta({
   middleware: ["auth-guard"]
 })
@@ -18,7 +19,7 @@ definePageMeta({
 const user = useSupabaseUser()
 
 // Redirect user back home when they log out on the page
-watch(user, (n, _o) => {
+watch(user, (n) => {
   if (!n) {
     navigateTo("/")
   }

@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 useHead({
-  title: "Dashboard"
+  title: "TTTools — Calendriers de JDR",
+  titleTemplate: null
 })
 </script>
 

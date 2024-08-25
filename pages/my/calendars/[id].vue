@@ -3,9 +3,6 @@ import { PhCircleNotch } from "@phosphor-icons/vue";
 import type { Calendar } from "~/models/CalendarConfig";
 import type { Category } from "~/models/Category";
 
-useHead({
-  title: "Calendrier"
-})
 definePageMeta({
   middleware: ["auth-guard"]
 })
@@ -21,11 +18,15 @@ watch(user, (n) => {
 const route = useRoute()
 const id = route.params.id
 
-const { data: calendarData, pending: calPending } = useLazyFetch("/api/calendars/query", { key: `calendar-${id}`, query: { id, full: true } })
-const { data: catData, pending: catPending } = useLazyFetch("/api/calendars/categories/query", { key: `categories-${id}` })
+const { data: calendarData, pending: calPending } = await useLazyFetch("/api/calendars/query", { key: `calendar-${id}`, query: { id, full: true } })
+const { data: catData, pending: catPending } = await useLazyFetch("/api/calendars/categories/query", { key: `categories-${id}` })
 
 const cal = computed<Calendar>(() => calendarData?.value?.data as Calendar)
 const categories = computed<Category[]>(() => catData?.value?.data as Category[])
+
+useHead({
+  title: cal.value.name
+})
 </script>
 
 <template>
