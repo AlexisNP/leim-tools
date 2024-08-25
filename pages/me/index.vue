@@ -96,7 +96,7 @@ onUnmounted(() => {
         <li v-for="world in worlds" :key="world.id">
           <UiCard
             class="w-full transition-all"
-            :link="`/i/world/${world.id}`"
+            :link="`/me/world/${world.id}`"
             :class="{
               'hover:bg-slate-50 dark:hover:bg-sky-950 dark:focus-within:outline-sky-900': !world.color,
               'bg-red-100 dark:bg-red-950 border-red-200 hover:bg-red-50 dark:hover:bg-red-900 dark:border-red-900 dark:focus-within:outline-red-900': world.color === 'red',

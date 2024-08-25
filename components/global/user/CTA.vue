@@ -8,7 +8,7 @@ const router = useRouter()
 const { auth } = useSupabaseClient()
 const user = useSupabaseUser()
 const userMeta = computed(() => user.value?.user_metadata)
-const profileUrl: string = `${useRequestURL().origin}/i/`
+const profileUrl: string = `${useRequestURL().origin}/me/`
 
 const menuOpened = ref<boolean>(false)
 
@@ -45,7 +45,7 @@ async function handleLogout() {
 }
 
 function gotoProfilePage() {
-  router.push({ path: "/i" })
+  router.push({ path: "/me" })
 
   closeMenu()
 }

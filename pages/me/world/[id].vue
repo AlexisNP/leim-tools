@@ -140,7 +140,7 @@ function hideDeleteModal() {
               <UiCard
                 v-if="calendar"
                 class="w-full transition-all text-slate-100 bg-slate-900 border-slate-700 hover:bg-slate-700 dark:hover:bg-slate-800 dark:border-slate-900 dark:focus-within:outline-slate-900"
-                :link="`/i/calendar/${calendar.id}`"
+                :link="`/me/calendar/${calendar.id}`"
               >
                 <UiCardHeader>
                   <UiCardTitle class="text-xl pr-12">{{ calendar.name }}</UiCardTitle>

@@ -40,6 +40,8 @@ function handleMenuItemAction(actionType: SidebarMenuActionType) {
         </UiTooltipProvider>
       </template>
 
+      <template v-else/>
+
       <li v-for="(item, i) in currentMenu" :key="i">
         <UiTooltipProvider :delay-duration="50">
           <UiTooltip>
