@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { PhCaretDown } from '@phosphor-icons/vue';
-import type { Category } from '~/models/Category';
+import { PhCaretDown } from "@phosphor-icons/vue";
+import type { Category } from "~/models/Category";
 
 const isPopoverOpen = ref<boolean>(false)
 
@@ -10,16 +10,16 @@ const props = defineProps<{
 
 const model = defineModel<Category>()
 
-const { categories: availableCategories } = useCalendarEvents()
+const { categories: availableCategories } = useCalendar()
 
-const searchTerm = ref<string>('')
+const searchTerm = ref<string>("")
 
 function handleCatSelect() {
   isPopoverOpen.value = false
 }
 
 const filteredCategories = computed(() =>
-  searchTerm.value === ''
+  searchTerm.value === ""
     ? availableCategories
     : availableCategories.filter((category) => {
       return category.name.toLowerCase().includes(searchTerm.value.toLowerCase())

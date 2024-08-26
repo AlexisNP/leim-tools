@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from 'vue'
-import { TabsContent, type TabsContentProps } from 'radix-vue'
-import { cn } from '@/lib/utils'
+import { type HTMLAttributes, computed } from "vue"
+import { TabsContent, type TabsContentProps } from "radix-vue"
+import { cn } from "@/lib/utils"
 
-const props = defineProps<TabsContentProps & { class?: HTMLAttributes['class'] }>()
+const props = defineProps<TabsContentProps & { class?: HTMLAttributes["class"] }>()
 
 const delegatedProps = computed(() => {
   const { class: _, ...delegated } = props

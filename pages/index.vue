@@ -1,10 +1,8 @@
 <script lang="ts" setup>
 useHead({
-  title: 'Dashboard'
+  title: "TTTools — Calendriers de JDR",
+  titleTemplate: null
 })
-
-const { setCurrentMenu } = useUiStore()
-setCurrentMenu([])
 </script>
 
 <template>

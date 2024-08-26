@@ -160,6 +160,11 @@ alter table public.calendar_events enable row level security;
 alter table public.calendar_event_categories enable row level security;
 alter table public.calendar_event_categories_links enable row level security;
 
+-- Add realtime
+alter publication supabase_realtime add table users;
+alter publication supabase_realtime add table worlds;
+alter publication supabase_realtime add table calendars;
+
 -- User policies
 create policy "Allow logged-in read access" on public.users for select using ( auth.role() = 'authenticated' );
 create policy "Allow individual insert access" on public.users for insert with check ( auth.uid() = id );
@@ -172,19 +177,25 @@ create policy "Allow individual insert access for GMs" on public.worlds for inse
 create policy "Allow individual update access for GMs" on public.worlds for update using ( auth.uid() = gm_id );
 
 -- Calendar policies
-create policy "Allow individual read access for GMs" on public.calendars for select using (
+create policy "Allow GMs to see their calendars" on public.calendars for select using (
     exists (
         select 1 from worlds
         where worlds.id = calendars.world_id
     )
 );
-create policy "Allow individual insert access for GMs" on public.calendars for insert with check (
+create policy "Allow GMs to add calendars to their worldd" on public.calendars for insert with check (
     exists (
         select 1 from worlds
         where worlds.id = calendars.world_id
     )
 );
-create policy "Allow individual update access for GMs" on public.calendars for update with check (
+create policy "Allow GMs to edit their calendars" on public.calendars for update with check (
+    exists (
+        select 1 from worlds
+        where worlds.id = calendars.world_id
+    )
+);
+create policy "Allow GMs to delete their calendars" on public.calendars for delete using (
     exists (
         select 1 from worlds
         where worlds.id = calendars.world_id
@@ -192,42 +203,110 @@ create policy "Allow individual update access for GMs" on public.calendars for u
 );
 
 -- Month policies
-create policy "Allow individual read access for GMs" on public.calendar_months for select using (
+create policy "Allow GMs to see their calendar's months"
+  on public.calendar_months
+  for select
+  using (
     exists (
-        select 1 from calendars
-        where calendars.id = calendar_months.calendar_id
+      select 1
+      from public.calendars c
+      join public.worlds w on w.id = c.world_id
+      where
+        c.id = calendar_months.calendar_id
+        and w.gm_id = auth.uid()
     )
 );
-create policy "Allow individual insert access for GMs" on public.calendar_months for insert with check (
+create policy "Allow GMs to add months on their calendars"
+  on public.calendar_months
+  for insert
+  with check (
     exists (
-        select 1 from calendars
-        where calendars.id = calendar_months.calendar_id
+      select 1
+      from public.calendars c
+      join public.worlds w on w.id = c.world_id
+      where
+        c.id = calendar_months.calendar_id
+        and w.gm_id = auth.uid()
     )
 );
-create policy "Allow individual update access for GMs" on public.calendar_months for update with check (
+create policy "Allow GMs to update their calendar's months"
+  on public.calendar_months
+  for update
+  using (
     exists (
-        select 1 from calendars
-        where calendars.id = calendar_months.calendar_id
+      select 1
+      from public.calendars c
+      join public.worlds w on w.id = c.world_id
+      where
+        c.id = calendar_months.calendar_id
+        and w.gm_id = auth.uid()
+    )
+);
+create policy "Allow GMs to delete their calendar's months"
+  on public.calendar_months
+  for delete
+  using (
+    exists (
+      select 1
+      from public.calendars c
+      join public.worlds w on w.id = c.world_id
+      where
+        c.id = calendar_months.calendar_id
+        and w.gm_id = auth.uid()
     )
 );
 
 -- Event policies
-create policy "Allow individual read access for GMs" on public.calendar_events for select using (
+create policy "Allow GMs to see their events"
+  on public.calendar_events
+  for select
+  using (
     exists (
-        select 1 from calendars
-        where calendars.id = calendar_events.calendar_id
+      select 1
+      from public.calendars c
+      join public.worlds w on w.id = c.world_id
+      where
+        c.id = calendar_events.calendar_id
+        and w.gm_id = auth.uid()
     )
 );
-create policy "Allow individual insert access for GMs" on public.calendar_events for insert with check (
+create policy "Allow GMs to add their events"
+  on public.calendar_events
+  for insert
+  with check (
     exists (
-        select 1 from calendars
-        where calendars.id = calendar_events.calendar_id
+      select 1
+      from public.calendars c
+      join public.worlds w on w.id = c.world_id
+      where
+        c.id = calendar_events.calendar_id
+        and w.gm_id = auth.uid()
     )
 );
-create policy "Allow individual update access for GMs" on public.calendar_events for update with check (
+create policy "Allow GMs to update their events"
+  on public.calendar_events
+  for update
+  using (
     exists (
-        select 1 from calendars
-        where calendars.id = calendar_events.calendar_id
+      select 1
+      from public.calendars c
+      join public.worlds w on w.id = c.world_id
+      where
+        c.id = calendar_events.calendar_id
+        and w.gm_id = auth.uid()
+    )
+);
+create policy "Allow GMs to delete their events"
+  on public.calendar_events
+  for delete
+  using (
+    exists (
+      select 1
+      from public.calendars c
+      join public.worlds w on w.id = c.world_id
+      where
+        c.id = calendar_events.calendar_id
+        and w.gm_id = auth.uid()
     )
 );
 

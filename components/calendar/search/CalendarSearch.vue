@@ -2,49 +2,46 @@
 import {
   isCharacter,
   type Character,
-} from '@/models/Characters'
-import type { RPGDateOrder } from '@/models/Date'
+} from "@/models/Characters"
+import type { RPGDateOrder } from "@/models/Date"
 import {
   isCalendarEvent,
   type CalendarEvent,
-} from '~/models/CalendarEvent'
-import { useCharacters } from '@/stores/CharacterStore'
-import { useCalendarEvents } from '@/stores/EventStore'
-import { capitalize } from '@/utils/Strings'
-import { useMagicKeys, useScroll, useStorage, whenever } from '@vueuse/core'
-import { computed, ref, watch } from 'vue'
-import { searchUnifier, type SearchMode } from '../SearchMode'
+} from "~/models/CalendarEvent"
+import { capitalize } from "@/utils/Strings"
+import { useMagicKeys, useScroll, useStorage, whenever } from "@vueuse/core"
+import { computed, ref, watch } from "vue"
+import { searchUnifier, type SearchMode } from "../SearchMode"
 
-import { PhClockClockwise, PhClockCounterClockwise, PhMagnifyingGlass } from '@phosphor-icons/vue'
+import { PhClockClockwise, PhClockCounterClockwise, PhMagnifyingGlass } from "@phosphor-icons/vue"
 import {
   ComboboxAnchor,
   ComboboxInput,
   ComboboxPortal,
   ComboboxRoot,
   VisuallyHidden
-} from 'radix-vue'
+} from "radix-vue"
 
-import SearchList from './lists/SearchList.vue'
-import type { Category } from '~/models/Category'
+import SearchList from "./lists/SearchList.vue"
+import type { Category } from "~/models/Category"
 
-const { isAdvancedSearchOpen } = storeToRefs(useCalendar())
-const { allEvents } = storeToRefs(useCalendarEvents())
+const { isAdvancedSearchOpen, allEvents } = storeToRefs(useCalendar())
 const { characters } = storeToRefs(useCharacters())
 
-const searchQuery = ref<string>('')
+const searchQuery = ref<string>("")
 // const searchEnough = computed<boolean>(() => searchQuery.value.length >= 2)
 
-const selectedEntity = useStorage('se', 'events' as SearchMode)
+const selectedEntity = useStorage("se", "events" as SearchMode)
 
 // Order
-const selectedOrder = ref<RPGDateOrder>('asc')
+const selectedOrder = ref<RPGDateOrder>("asc")
 function setOrderAsc() {
-  selectedOrder.value = 'asc'
+  selectedOrder.value = "asc"
   resetPage()
 }
 
 function setOrderDesc() {
-  selectedOrder.value = 'desc'
+  selectedOrder.value = "desc"
   resetPage()
 }
 
@@ -68,9 +65,9 @@ const searchResults = computed<(Character | CalendarEvent)[]>(() => {
 
   // Assign data to loop over and filter
   // They are assigned this way for readability
-  if (selectedEntity.value === 'events') {
+  if (selectedEntity.value === "events") {
     dataToFilter = allEvents.value
-  } else if (selectedEntity.value === 'characters') {
+  } else if (selectedEntity.value === "characters") {
     dataToFilter = characters.value
   } else {
     dataToFilter = [...allEvents.value, ...characters.value]
@@ -83,15 +80,15 @@ const searchResults = computed<(Character | CalendarEvent)[]>(() => {
     // Filter calendar events
     if (isCalendarEvent(item)) {
       const queryString = new String(searchQuery.value)
-        .replace(searchUnifier, '')
+        .replace(searchUnifier, "")
         .toLocaleLowerCase()
 
       const hitTitle = item.title
-        .replace(searchUnifier, '')
+        .replace(searchUnifier, "")
         .toLocaleLowerCase()
         .includes(queryString)
       const hitDesc = item.description
-        ?.replace(searchUnifier, '')
+        ?.replace(searchUnifier, "")
         .toLocaleLowerCase()
         .includes(queryString)
 
@@ -121,11 +118,11 @@ const searchResults = computed<(Character | CalendarEvent)[]>(() => {
     // Filter characters
     if (isCharacter(item)) {
       const queryString = new String(searchQuery.value)
-        .replace(searchUnifier, '')
+        .replace(searchUnifier, "")
         .toLocaleLowerCase()
 
       const hitTitle = item.name
-        .replace(searchUnifier, '')
+        .replace(searchUnifier, "")
         .toLocaleLowerCase()
         .includes(queryString)
 
@@ -160,7 +157,7 @@ const searchResults = computed<(Character | CalendarEvent)[]>(() => {
  * Removes the search query, resets the pagination and removes all selected categories
  */
 function resetSearch() {
-  searchQuery.value = ''
+  searchQuery.value = ""
   resetPage()
   selectedCategories.value = []
 }
@@ -208,7 +205,7 @@ const currentCategories = computed(() => {
 
 const selectedCategories = ref<(Category)[]>([])
 const categoryFilterOpened = ref<boolean>(false)
-const searchCategory = ref<string>('')
+const searchCategory = ref<string>("")
 
 const filteredCategories = computed(() =>
   currentCategories.value.filter((i) => !selectedCategories.value.includes(i))
@@ -220,8 +217,8 @@ const filteredCategories = computed(() =>
  * @param e Radix Change Event
  */
 function handleCategorySelect(e: (Category)) {
-  if (typeof e === 'string') {
-    searchCategory.value = ''
+  if (typeof e === "string") {
+    searchCategory.value = ""
     selectedCategories.value.push(e)
   }
 

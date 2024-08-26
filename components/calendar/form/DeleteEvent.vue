@@ -1,12 +1,10 @@
 <script lang="ts" setup>
-import { PhCircleNotch } from '@phosphor-icons/vue';
+import { PhCircleNotch } from "@phosphor-icons/vue";
 
-const { isDeleteEventModalOpen } = storeToRefs(useCalendarEvents())
+const { resetSkeleton, deleteEventFromSkeleton, cancelLatestRequest } = useCalendar()
+const { isDeleteEventModalOpen, eventSkeleton, lastActiveEvent } = storeToRefs(useCalendar())
 
-const { resetSkeleton, deleteEventFromSkeleton, cancelLatestRequest } = useCalendarEvents()
-const { eventSkeleton, lastActiveEvent } = storeToRefs(useCalendarEvents())
-
-const isLoading = ref(false)
+const isLoading = ref<boolean>(false)
 
 const formErrors = reactive<{ message: string | null }>({
   message: null
@@ -19,7 +17,7 @@ watch(isDeleteEventModalOpen, (hasOpened, _o) => {
   }
 })
 
-async function handleAction() {
+async function handleAction(): Promise<void> {
   if (isLoading.value) return
 
   isLoading.value = true
@@ -43,7 +41,7 @@ async function handleAction() {
  *
  * @param e The closing event (can be keydown or click)
  */
-function handleClosing(e: Event) {
+function handleClosing(e: Event): void {
   if (isLoading.value) {
     e.preventDefault()
   }
@@ -54,7 +52,7 @@ function handleClosing(e: Event) {
  *
  * Must cancel the abortController in the store, and stop the loading
  */
-function handleCancel() {
+function handleCancel(): void {
   cancelLatestRequest()
   isLoading.value = false
 }

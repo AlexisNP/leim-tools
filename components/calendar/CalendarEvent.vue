@@ -1,16 +1,15 @@
 <script lang="ts" setup>
-import { cn } from '@/lib/utils'
-import type { RPGDate } from '@/models/Date'
-import type { CalendarEvent } from '~/models/CalendarEvent'
+import { cn } from "@/lib/utils"
+import type { RPGDate } from "@/models/Date"
+import type { CalendarEvent } from "~/models/CalendarEvent"
 
 const props = defineProps<{
   event: CalendarEvent
   tileDate: RPGDate
 }>()
 
-const { areDatesIdentical } = useCalendar()
-const { revealEditEventModal, revealDeleteEventModal } = useCalendarEvents()
-const { lastActiveEvent } = storeToRefs(useCalendarEvents())
+const { areDatesIdentical, revealEditEventModal, revealDeleteEventModal } = useCalendar()
+const { lastActiveEvent } = storeToRefs(useCalendar())
 
 const spansMultipleDays = computed(() => Boolean(props.event.startDate && props.event.endDate))
 const isStartEvent = computed(() => spansMultipleDays.value && areDatesIdentical(props.tileDate, props.event.startDate))
@@ -40,12 +39,12 @@ function handleClosePopover() {
 
 onMounted(() => {
   // Listen for keydown events
-  window.addEventListener('keydown', (e: KeyboardEvent) => {
+  window.addEventListener("keydown", (e: KeyboardEvent) => {
     // If the popover isn't opened, this is not the event we're trying to delete, so return
     if (!isPopoverDetailsOpen.value) return
 
     // If the key isn't the delete one, return
-    if (e.key !== 'Delete') return
+    if (e.key !== "Delete") return
 
     handleDelete()
   })

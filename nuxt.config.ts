@@ -3,15 +3,22 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   modules: [
-    '@nuxtjs/supabase',
-    '@pinia/nuxt',
-    '@vueuse/nuxt',
-    '@nuxtjs/tailwindcss',
-    '@nuxtjs/color-mode',
-    '@nuxt/eslint',
-    'shadcn-nuxt'
+    "@nuxtjs/supabase",
+    "@pinia/nuxt",
+    "@vueuse/nuxt",
+    "@nuxtjs/tailwindcss",
+    "@nuxtjs/color-mode",
+    "@nuxt/eslint",
+    "shadcn-nuxt"
   ],
-  css: ['~/assets/main.css'],
+  css: ["~/assets/main.css"],
+
+  supabase: {
+    redirectOptions: {
+      login: "/",
+      callback: "/my/"
+    }
+  },
 
   postcss: {
     plugins: {
@@ -20,16 +27,13 @@ export default defineNuxtConfig({
     },
   },
   shadcn: {
-    prefix: 'Ui',
-    componentDir: './components/ui'
+    prefix: "Ui",
+    componentDir: "./components/ui"
   },
   colorMode: {
-    classSuffix: '',
-    preference: 'dark',
-    fallback: 'dark',
-  },
-  supabase: {
-    redirect: false
+    classSuffix: "",
+    preference: "dark",
+    fallback: "dark",
   },
   eslint: {}
 })

@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import type { RPGDate } from '~/models/Date';
-import { PhAlarm, PhCircleNotch, PhEye, PhEyeClosed, PhMapPinArea, PhTag } from '@phosphor-icons/vue'
+import type { RPGDate } from "~/models/Date";
+import { PhAlarm, PhCircleNotch, PhEye, PhEyeClosed, PhMapPinArea, PhTag } from "@phosphor-icons/vue"
 
-const { eventSkeleton, operationInProgress } = storeToRefs(useCalendarEvents())
-const { resetSkeleton, submitSkeleton, cancelLatestRequest } = useCalendarEvents()
+const { eventSkeleton, operationInProgress } = storeToRefs(useCalendar())
+const { resetSkeleton, submitSkeleton, cancelLatestRequest } = useCalendar()
 const popoverOpen = ref(false)
 const isLoading = ref(false)
 
@@ -104,7 +104,8 @@ function handleCancel() {
               name="new-event-title"
               required
               placeholder="Titre de l'évènement"
-              class="w-full -my-1 py-1 -mx-1 px-1 text-lg border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600">
+              class="w-full -my-1 py-1 -mx-1 px-1 text-lg border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600"
+            >
           </div>
 
           <div class="col-span-2 my-2 pl-8">

@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { useCalendar } from '@/stores/CalendarStore'
-import { useThrottleFn } from '@vueuse/core'
+import { useCalendar } from "@/stores/CalendarStore"
+import { useThrottleFn } from "@vueuse/core"
 
-const { decrementYear, incrementYear } = useCalendar()
+const { decrementViewYear, incrementViewYear } = useCalendar()
 const { sortedMonths: months } = storeToRefs(useCalendar())
 
 function handleWheel(e: WheelEvent) {
@@ -15,11 +15,11 @@ function handleWheel(e: WheelEvent) {
 }
 
 const moveCalendarLeft = useThrottleFn(() => {
-  decrementYear()
+  decrementViewYear()
 }, 100)
 
 const moveCalendarRight = useThrottleFn(() => {
-  incrementYear()
+  incrementViewYear()
 }, 100)
 </script>
 

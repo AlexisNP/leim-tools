@@ -1,11 +1,9 @@
 <script lang="ts" setup>
-import { useCalendar } from '@/stores/CalendarStore'
-import { storeToRefs } from 'pinia'
-import { computed } from 'vue'
+import { storeToRefs } from "pinia"
+import { computed } from "vue"
 
-const { defaultDate, areDatesIdentical } = useCalendar()
+const { defaultDate, areDatesIdentical, jumpToDefaultDate, getFormattedDateTitle } = useCalendar()
 const { selectedDate } = storeToRefs(useCalendar())
-const { jumpToDefaultDate, getFormattedDateTitle } = useCalendar()
 
 const defaultDateFormatted: string = getFormattedDateTitle(defaultDate, true)
 

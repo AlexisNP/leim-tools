@@ -1,5 +1,5 @@
-import { z } from 'zod'
-import type { RPGColor } from './Color'
+import { z } from "zod"
+import type { RPGColor } from "./Color"
 
 export interface Category {
   id: number

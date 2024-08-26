@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { useCalendar } from '@/stores/CalendarStore'
+import { useCalendar } from "@/stores/CalendarStore"
 
-import { PhMagnifyingGlass } from '@phosphor-icons/vue'
+import { PhMagnifyingGlass } from "@phosphor-icons/vue"
 
 const { revealAdvancedSearch } = useCalendar()
 </script>
@@ -29,7 +29,9 @@ const { revealAdvancedSearch } = useCalendar()
           </UiButton>
         </li>
         <li>
-          <CalendarSwitch />
+          <ClientOnly>
+            <CalendarSwitch />
+          </ClientOnly>
         </li>
       </menu>
     </div>

@@ -1,18 +1,18 @@
 <script lang="ts" setup>
-import type { Character } from '@/models/Characters'
-import type { RPGDate } from '@/models/Date'
-import { useCalendar } from '@/stores/CalendarStore'
+import type { Character } from "@/models/Characters"
+import type { RPGDate } from "@/models/Date"
+import { useCalendar } from "@/stores/CalendarStore"
 
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
-import { Button } from '@/components/ui/button'
-import { PhArrowSquareOut, PhPlant, PhSkull } from '@phosphor-icons/vue'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { Button } from "@/components/ui/button"
+import { PhArrowSquareOut, PhPlant, PhSkull } from "@phosphor-icons/vue"
 
 const props = defineProps<{
   character: Character
 }>()
 
 defineEmits<{
-  (e: 'query:date-jump', payload: RPGDate): void
+  (e: "query:date-jump", payload: RPGDate): void
 }>()
 
 const { getFormattedDateTitle } = useCalendar()

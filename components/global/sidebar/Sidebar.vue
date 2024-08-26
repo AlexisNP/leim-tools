@@ -1,18 +1,14 @@
 <script lang="ts" setup>
-import { PhHouse, PhList } from '@phosphor-icons/vue'
-import type { SidebarMenuActionType } from './SidebarProps';
-
-const route = useRoute()
-
-const isHome = computed<boolean>(() => {
-  return route.fullPath === '/'
-})
+import { PhGlobeHemisphereWest, PhHouse, PhList } from "@phosphor-icons/vue"
+import type { SidebarMenuActionType } from "./SidebarProps";
 
 const { revealAdvancedSearch } = useCalendar()
 const { currentMenu } = storeToRefs(useUiStore())
 
+const user = useSupabaseUser()
+
 function handleMenuItemAction(actionType: SidebarMenuActionType) {
-  if (actionType === 'event-search') {
+  if (actionType === "event-search") {
     revealAdvancedSearch()
   }
 }
@@ -27,25 +23,46 @@ function handleMenuItemAction(actionType: SidebarMenuActionType) {
         </UiButton>
       </li>
 
-      <li v-if="!isHome">
-        <UiTooltipProvider :delay-duration="100">
-          <UiTooltip>
-            <UiTooltipTrigger as-child>
-              <UiButton variant="ghost" size="icon" class="rounded-full" as-child>
-                <RouterLink to="/">
-                  <PhHouse size="24" weight="fill" />
-                </RouterLink>
-              </UiButton>
-            </UiTooltipTrigger>
-            <UiTooltipContent :side="'right'">
-              <p>Retourner aux outils</p>
-            </UiTooltipContent>
-          </UiTooltip>
-        </UiTooltipProvider>
-      </li>
+      <template v-if="!user">
+        <li>
+          <UiTooltipProvider :delay-duration="50">
+            <UiTooltip>
+              <UiTooltipTrigger as-child>
+                <UiButton variant="ghost" size="icon" class="rounded-full" as-child>
+                  <RouterLink to="/">
+                    <PhHouse size="24" weight="fill" />
+                  </RouterLink>
+                </UiButton>
+              </UiTooltipTrigger>
+              <UiTooltipContent :side="'right'" :side-offset="6">
+                <p>Accueil</p>
+              </UiTooltipContent>
+            </UiTooltip>
+          </UiTooltipProvider>
+        </li>
+      </template>
+
+      <template v-else>
+        <li>
+          <UiTooltipProvider :delay-duration="50">
+            <UiTooltip>
+              <UiTooltipTrigger as-child>
+                <UiButton variant="ghost" size="icon" class="rounded-full" as-child>
+                  <RouterLink to="/my">
+                    <PhGlobeHemisphereWest size="24" weight="fill" />
+                  </RouterLink>
+                </UiButton>
+              </UiTooltipTrigger>
+              <UiTooltipContent :side="'right'" :side-offset="6">
+                <p>Mondes</p>
+              </UiTooltipContent>
+            </UiTooltip>
+          </UiTooltipProvider>
+        </li>
+      </template>
 
       <li v-for="(item, i) in currentMenu" :key="i">
-        <UiTooltipProvider :delay-duration="100">
+        <UiTooltipProvider :delay-duration="50">
           <UiTooltip>
             <UiTooltipTrigger as-child>
               <UiButton v-if="item.to" variant="ghost" size="icon" class="rounded-full" as-child>
@@ -57,7 +74,7 @@ function handleMenuItemAction(actionType: SidebarMenuActionType) {
                 <component :is="item.phIcon" size="24" weight="fill" />
               </UiButton>
             </UiTooltipTrigger>
-            <UiTooltipContent :side="'right'">
+            <UiTooltipContent :side="'right'" :side-offset="6">
               <p>{{ item.tooltip }}</p>
             </UiTooltipContent>
           </UiTooltip>

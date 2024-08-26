@@ -1,13 +1,13 @@
 <script lang="ts" setup>
-import { isCharacter, type Character } from '@/models/Characters'
-import type { RPGDate, RPGDateOrder } from '@/models/Date'
-import { useCalendar } from '@/stores/CalendarStore'
-import { computed } from 'vue'
-import { isCalendarEvent, type CalendarEvent } from '~/models/CalendarEvent'
-import type { SearchMode } from '../../SearchMode'
+import { isCharacter, type Character } from "@/models/Characters"
+import type { RPGDate, RPGDateOrder } from "@/models/Date"
+import { useCalendar } from "@/stores/CalendarStore"
+import { computed } from "vue"
+import { isCalendarEvent, type CalendarEvent } from "~/models/CalendarEvent"
+import type { SearchMode } from "../../SearchMode"
 
-import CharacterCallout from './CharacterCallout.vue'
-import EventCallout from './EventCallout.vue'
+import CharacterCallout from "./CharacterCallout.vue"
+import EventCallout from "./EventCallout.vue"
 
 const props = defineProps<{
   results: (Character | CalendarEvent)[]
@@ -18,7 +18,7 @@ const props = defineProps<{
   limit?: number
 }>()
 
-const emit = defineEmits(['jumpedToDate'])
+const emit = defineEmits(["jumpedToDate"])
 
 const { jumpToDate, compareDates } = useCalendar()
 
@@ -26,7 +26,7 @@ function handleJumpToDate(date?: RPGDate) {
   if (!date) return
 
   jumpToDate(date)
-  emit('jumpedToDate')
+  emit("jumpedToDate")
 }
 
 // Initial sorting of the results

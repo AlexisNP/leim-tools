@@ -1,8 +1,7 @@
 <script lang="ts" setup>
-import { cn } from '@/lib/utils'
-import type { Category } from '~/models/Category';
+import type { Category } from "~/models/Category";
 
-import { PhCaretDown, PhCheck } from '@phosphor-icons/vue';
+import { PhCaretDown, PhCheck } from "@phosphor-icons/vue";
 
 const isPopoverOpen = ref<boolean>(false)
 
@@ -17,12 +16,12 @@ watch(modelBuffer.value, () => {
   model.value = [ ...modelBuffer.value ]
 })
 
-const { categories: availableCategories } = useCalendarEvents()
+const { categories: availableCategories } = useCalendar()
 
-const searchTerm = ref<string>('')
+const searchTerm = ref<string>("")
 
 const filteredCategories = computed(() =>
-  searchTerm.value === ''
+  searchTerm.value === ""
     ? availableCategories
     : availableCategories.filter((category) => {
       return category.name.toLowerCase().includes(searchTerm.value.toLowerCase())
@@ -70,9 +69,6 @@ const filteredCategories = computed(() =>
               :key="category.id"
               :value="category"
               class="cursor-pointer flex justify-between items-center"
-              :class="cn({
-
-              })"
             >
               <span>
                 {{ category.name }}

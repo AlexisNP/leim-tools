@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useCalendar } from '@/stores/CalendarStore'
-import { PhCalendarBlank } from '@phosphor-icons/vue'
-import { computed } from 'vue'
+import { useCalendar } from "@/stores/CalendarStore"
+import { PhCalendarBlank } from "@phosphor-icons/vue"
+import { computed } from "vue"
 
 const { currentConfig, viewTypeOptions, getViewTypeTitle, setViewType } = useCalendar()
 

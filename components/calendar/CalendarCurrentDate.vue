@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { storeToRefs } from 'pinia'
-import { computed } from 'vue'
+import { storeToRefs } from "pinia"
+import { computed } from "vue"
 
-import { PhMapPin } from '@phosphor-icons/vue'
+import { PhMapPin } from "@phosphor-icons/vue"
 
 const { defaultDate, getFormattedDateTitle, getRelativeString } = useCalendar()
 const { selectedDate } = storeToRefs(useCalendar())

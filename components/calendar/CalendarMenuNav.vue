@@ -1,13 +1,13 @@
 <script lang="ts" setup>
-import { computed, type ComputedRef } from 'vue'
-import { useCalendar } from '@/stores/CalendarStore'
+import { computed, type ComputedRef } from "vue"
+import { useCalendar } from "@/stores/CalendarStore"
 
 import {
   PhCaretDoubleLeft,
   PhCaretDoubleRight,
   PhCaretLeft,
   PhCaretRight
-} from '@phosphor-icons/vue'
+} from "@phosphor-icons/vue"
 
 interface DirectionLabels {
   pastFar: string
@@ -16,126 +16,126 @@ interface DirectionLabels {
   futureFar: string
 }
 
-const { currentConfig, decrementMonth, incrementMonth, decrementYear, incrementYear } =
+const { currentConfig, decrementViewMonth, incrementViewMonth, decrementViewYear, incrementViewYear } =
   useCalendar()
 
 const activeDirectionLabels: ComputedRef<DirectionLabels> = computed(() => {
   switch (currentConfig.viewType) {
-    case 'month':
+    case "month":
       return {
-        pastFar: 'Année précédente',
-        pastNear: 'Mois précédent',
-        futureNear: 'Mois suivant',
-        futureFar: 'Année suivante'
+        pastFar: "Année précédente",
+        pastNear: "Mois précédent",
+        futureNear: "Mois suivant",
+        futureFar: "Année suivante"
       }
 
-    case 'year':
+    case "year":
       return {
-        pastFar: 'Décennie précédente',
-        pastNear: 'Année précédente',
-        futureNear: 'Année suivante',
-        futureFar: 'Décennie suivante'
+        pastFar: "Décennie précédente",
+        pastNear: "Année précédente",
+        futureNear: "Année suivante",
+        futureFar: "Décennie suivante"
       }
 
-    case 'decade':
+    case "decade":
       return {
-        pastFar: 'Siècle précédent',
-        pastNear: 'Décennie précédente',
-        futureNear: 'Décennie suivante',
-        futureFar: 'Siècle suivant'
+        pastFar: "Siècle précédent",
+        pastNear: "Décennie précédente",
+        futureNear: "Décennie suivante",
+        futureFar: "Siècle suivant"
       }
 
-    case 'century':
+    case "century":
     default:
       return {
-        pastFar: 'Millénaire précédent',
-        pastNear: 'Siècle précédent',
-        futureNear: 'Siècle suivant',
-        futureFar: 'Millénaire suivant'
+        pastFar: "Millénaire précédent",
+        pastNear: "Siècle précédent",
+        futureNear: "Siècle suivant",
+        futureFar: "Millénaire suivant"
       }
   }
 })
 
 function toPastFar(): void {
   switch (currentConfig.viewType) {
-    case 'month':
-      decrementYear()
+    case "month":
+      decrementViewYear()
       break
 
-    case 'year':
-      decrementYear(10)
+    case "year":
+      decrementViewYear(10)
       break
 
-    case 'decade':
-      decrementYear(100)
+    case "decade":
+      decrementViewYear(100)
       break
 
-    case 'century':
+    case "century":
     default:
-      decrementYear(1000)
+      decrementViewYear(1000)
       break
   }
 }
 
 function toPastNear(): void {
   switch (currentConfig.viewType) {
-    case 'month':
-      decrementMonth()
+    case "month":
+      decrementViewMonth()
       break
 
-    case 'year':
-      decrementYear()
+    case "year":
+      decrementViewYear()
       break
 
-    case 'decade':
-      decrementYear(10)
+    case "decade":
+      decrementViewYear(10)
       break
 
-    case 'century':
+    case "century":
     default:
-      decrementYear(100)
+      decrementViewYear(100)
       break
   }
 }
 
 function toFutureNear(): void {
   switch (currentConfig.viewType) {
-    case 'month':
-      incrementMonth()
+    case "month":
+      incrementViewMonth()
       break
 
-    case 'year':
-      incrementYear()
+    case "year":
+      incrementViewYear()
       break
 
-    case 'decade':
-      incrementYear(10)
+    case "decade":
+      incrementViewYear(10)
       break
 
-    case 'century':
+    case "century":
     default:
-      incrementYear(100)
+      incrementViewYear(100)
       break
   }
 }
 
 function toFutureFar(): void {
   switch (currentConfig.viewType) {
-    case 'month':
-      incrementYear()
+    case "month":
+      incrementViewYear()
       break
 
-    case 'year':
-      incrementYear(10)
+    case "year":
+      incrementViewYear(10)
       break
 
-    case 'decade':
-      incrementYear(100)
+    case "decade":
+      incrementViewYear(100)
       break
 
-    case 'century':
+    case "century":
     default:
-      incrementYear(1000)
+      incrementViewYear(1000)
       break
   }
 }
