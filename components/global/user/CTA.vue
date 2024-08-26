@@ -55,7 +55,6 @@ function pushRoute(to: AvailableRoutes) {
 </script>
 
 <template>
-  {{ preference }}
   <ClientOnly>
     <UiDropdownMenu v-model:open="menuOpened">
       <UiDropdownMenuTrigger>
