@@ -45,20 +45,17 @@ async function handleLogout() {
   }
 }
 
-function gotoProfilePage() {
-  router.push({ path: "/my/preferences" })
+type AvailableRoutes = "/my" | "/my/settings"
 
-  closeMenu()
-}
-
-function gotoSettingsPage() {
-  router.push({ path: "/my/settings" })
+function pushRoute(to: AvailableRoutes) {
+  router.push({ path: to })
 
   closeMenu()
 }
 </script>
 
 <template>
+  {{ preference }}
   <ClientOnly>
     <UiDropdownMenu v-model:open="menuOpened">
       <UiDropdownMenuTrigger>
@@ -79,7 +76,7 @@ function gotoSettingsPage() {
         <template v-if="user">
           <p class="p-2 text-xs opacity-75">Connecté en tant que {{ user?.email }}</p>
 
-          <UiDropdownMenuItem class="flex gap-[.5ch] items-center rounded-none" @click="gotoProfilePage">
+          <UiDropdownMenuItem class="flex gap-[.5ch] items-center rounded-none" @click="pushRoute('/my')">
             <PhGlobeHemisphereWest size="20" weight="fill" />
             <span>Mondes</span>
           </UiDropdownMenuItem>
@@ -95,15 +92,15 @@ function gotoSettingsPage() {
             </UiDropdownMenuSubTrigger>
             <UiDropdownMenuPortal>
               <UiDropdownMenuSubContent>
-                <UiDropdownMenuItem class="flex gap-[.5ch] items-center rounded-none">
+                <UiDropdownMenuItem class="flex gap-[.5ch] items-center rounded-none" @click="$colorMode.preference = 'dark'">
                   <PhMoon size="20" />
                   <span>Sombre</span>
                 </UiDropdownMenuItem>
-                <UiDropdownMenuItem class="flex gap-[.5ch] items-center rounded-none">
+                <UiDropdownMenuItem class="flex gap-[.5ch] items-center rounded-none" @click="$colorMode.preference = 'light'">
                   <PhSun size="20" />
                   <span>Clair</span>
                 </UiDropdownMenuItem>
-                <UiDropdownMenuItem class="flex gap-[.5ch] items-center rounded-none">
+                <UiDropdownMenuItem class="flex gap-[.5ch] items-center rounded-none" @click="$colorMode.preference = 'system'">
                   <PhLaptop size="20" />
                   <span>Système</span>
                 </UiDropdownMenuItem>
@@ -134,7 +131,7 @@ function gotoSettingsPage() {
 
           <UiDropdownMenuSeparator />
 
-          <UiDropdownMenuItem class="flex gap-[.5ch] items-center rounded-none" @click="gotoSettingsPage">
+          <UiDropdownMenuItem class="flex gap-[.5ch] items-center rounded-none" @click="pushRoute('/my/settings')">
             <PhGear size="20" weight="fill" />
             <span>Compte</span>
           </UiDropdownMenuItem>

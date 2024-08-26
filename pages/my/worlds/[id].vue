@@ -12,9 +12,20 @@ const { data: res, pending } = await useFetch("/api/worlds/query", { query: { id
 
 const world = ref<World>(res.value?.data as World)
 
-useHead({
-  title: world.value.name
-})
+if (world.value) {
+  useHead({
+    title: world.value.name
+  })
+}
+
+watch(world, (n) => {
+  if (n) {
+    useHead({
+      title: n.name
+    })
+  }
+}, { deep: true })
+
 definePageMeta({
   middleware: ["auth-guard"]
 })

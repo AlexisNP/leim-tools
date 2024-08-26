@@ -24,8 +24,16 @@ const { data: catData, pending: catPending } = await useLazyFetch("/api/calendar
 const cal = computed<Calendar>(() => calendarData?.value?.data as Calendar)
 const categories = computed<Category[]>(() => catData?.value?.data as Category[])
 
-useHead({
-  title: cal.value.name
+if (cal.value) {
+  useHead({
+    title: cal.value.name
+  })
+}
+
+watch(cal, (n) => {
+  useHead({
+    title: n.name
+  })
 })
 </script>
 

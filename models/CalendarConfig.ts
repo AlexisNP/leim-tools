@@ -12,7 +12,7 @@ export interface Calendar extends CalendarConfig {
   id?: number
   name: string
   events: CalendarEvent[]
-  color?: string,
+  color?: string
 }
 
 export const postCalendarSchema = z.object({
