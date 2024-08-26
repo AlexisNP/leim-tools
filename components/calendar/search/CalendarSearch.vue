@@ -31,6 +31,10 @@ const { characters } = storeToRefs(useCharacters())
 const searchQuery = ref<string>("")
 // const searchEnough = computed<boolean>(() => searchQuery.value.length >= 2)
 
+// If the query changes, resets the pagination
+// This prevents active page to be greater than the search results
+watch(searchQuery, resetPage)
+
 const selectedEntity = useStorage("se", "events" as SearchMode)
 
 // Order
