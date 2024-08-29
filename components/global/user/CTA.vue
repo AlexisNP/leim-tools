@@ -83,8 +83,8 @@ function pushRoute(to: AvailableRoutes) {
           <UiDropdownMenuSeparator />
 
           <UiDropdownMenuSub>
-            <UiDropdownMenuSubTrigger class="p-0">
-              <UiDropdownMenuItem class="flex gap-[.5ch] items-center rounded-none pointer-events-none">
+            <UiDropdownMenuSubTrigger class="p-0 rounded-none">
+              <UiDropdownMenuItem class="flex gap-[.5ch] items-center pointer-events-none">
                 <PhPalette size="20" weight="fill" />
                 <span>Apparence</span>
               </UiDropdownMenuItem>
@@ -123,8 +123,8 @@ function pushRoute(to: AvailableRoutes) {
           </UiDropdownMenuSub>
 
           <UiDropdownMenuSub>
-            <UiDropdownMenuSubTrigger class="p-0">
-              <UiDropdownMenuItem class="flex gap-[.5ch] items-center rounded-none pointer-events-none">
+            <UiDropdownMenuSubTrigger class="p-0 rounded-none">
+              <UiDropdownMenuItem class="flex gap-[.5ch] items-center pointer-events-none">
                 <PhTranslate size="20" />
                 <span>Langage</span>
               </UiDropdownMenuItem>

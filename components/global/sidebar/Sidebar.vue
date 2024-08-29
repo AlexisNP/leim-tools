@@ -15,7 +15,7 @@ function handleMenuItemAction(actionType: SidebarMenuActionType) {
 </script>
 
 <template>
-  <nav class="w-16 py-6 border-r-[1px] bg-indigo-700 dark:bg-black text-white dark:border-r-indigo-950 grid grid-rows-[1fr_auto] justify-center transition-colors">
+  <nav class="w-16 py-6 border-r-[1px] bg-indigo-700 dark:bg-black text-white border-r-indigo-700 dark:border-r-indigo-950 grid grid-rows-[1fr_auto] justify-center transition-colors">
     <menu class="flex flex-col gap-4">
       <li class="mb-12">
         <UiButton variant="ghost" size="icon" class="rounded-full" @click="console.log">

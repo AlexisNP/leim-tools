@@ -149,8 +149,7 @@ function hideDeleteModal() {
           <ul v-if="world.calendars && world.calendars?.length > 0" class="grid md:grid-cols-3 gap-2">
             <li v-for="calendar in world.calendars" :key="calendar.id">
               <UiCard
-                v-if="calendar"
-                class="w-full transition-all text-slate-100 bg-slate-900 border-slate-700 hover:bg-slate-700 dark:hover:bg-slate-800 dark:border-slate-900 dark:focus-within:outline-slate-900"
+                class="w-full transition-all hover:bg-slate-50 dark:bg-gray-950 dark:hover:bg-indigo-950 dark:focus-within:outline-gray-900"
                 :link="`/my/calendars/${calendar.id}`"
               >
                 <UiCardHeader>
