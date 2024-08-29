@@ -85,7 +85,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <main class="p-8">
+    <main class="p-8 after:fill-red-400">
     <Heading>{{ user?.user_metadata.full_name }}</Heading>
 
     <section v-if="worlds" class="mt-4">
@@ -133,3 +133,29 @@ onUnmounted(() => {
     </section>
   </main>
 </template>
+
+<style lang="scss" scoped>
+main {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+
+  &::after {
+    display: block;
+    content: '';
+    position: absolute;
+    right: -2.4rem;
+    bottom: -10%;
+    height: 75%;
+    width: 100%;
+    background-image: url('/images/galaxy.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position-y: bottom;
+    background-position-x: right;
+    z-index: -1;
+    mask-image: radial-gradient(ellipse 100% 100% at 120% 80%, black, transparent);
+    opacity: .3;
+  }
+}
+</style>

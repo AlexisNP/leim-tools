@@ -38,12 +38,20 @@ const useIdFunction = () => useId()
 
     <NuxtLayout>
       <ConfigProvider :use-id="useIdFunction">
-        <div class="h-full grid grid-cols-[auto_1fr]">
+        <div class="h-full grid grid-cols-[auto_1fr] dark:bg-black transition-colors">
           <Sidebar />
 
-          <NuxtPage/>
+          <div class="wrapper shadow-body-light dark:shadow-body-dark transition-all">
+            <NuxtPage />
+          </div>
         </div>
       </ConfigProvider>
     </NuxtLayout>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.wrapper > * {
+  height: 100%;
+}
+</style>

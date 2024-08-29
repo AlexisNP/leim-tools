@@ -15,7 +15,7 @@ function handleMenuItemAction(actionType: SidebarMenuActionType) {
 </script>
 
 <template>
-  <nav class="w-16 py-6 border-r-[1px] border-l-slate-500 grid grid-rows-[1fr_auto] justify-center">
+  <nav class="w-16 py-6 border-r-[1px] bg-indigo-700 dark:bg-black text-white dark:border-r-indigo-950 grid grid-rows-[1fr_auto] justify-center transition-colors">
     <menu class="flex flex-col gap-4">
       <li class="mb-12">
         <UiButton variant="ghost" size="icon" class="rounded-full" @click="console.log">
@@ -23,43 +23,39 @@ function handleMenuItemAction(actionType: SidebarMenuActionType) {
         </UiButton>
       </li>
 
-      <template v-if="!user">
-        <li>
-          <UiTooltipProvider :delay-duration="50">
-            <UiTooltip>
-              <UiTooltipTrigger as-child>
-                <UiButton variant="ghost" size="icon" class="rounded-full" as-child>
-                  <RouterLink to="/">
-                    <PhHouse size="24" weight="fill" />
-                  </RouterLink>
-                </UiButton>
-              </UiTooltipTrigger>
-              <UiTooltipContent :side="'right'" :side-offset="6">
-                <p>Accueil</p>
-              </UiTooltipContent>
-            </UiTooltip>
-          </UiTooltipProvider>
-        </li>
-      </template>
+      <li v-if="!user">
+        <UiTooltipProvider :delay-duration="50">
+          <UiTooltip>
+            <UiTooltipTrigger as-child>
+              <UiButton variant="ghost" size="icon" class="rounded-full" as-child>
+                <RouterLink to="/">
+                  <PhHouse size="24" weight="fill" />
+                </RouterLink>
+              </UiButton>
+            </UiTooltipTrigger>
+            <UiTooltipContent :side="'right'" :side-offset="6">
+              <p>Accueil</p>
+            </UiTooltipContent>
+          </UiTooltip>
+        </UiTooltipProvider>
+      </li>
 
-      <template v-else>
-        <li>
-          <UiTooltipProvider :delay-duration="50">
-            <UiTooltip>
-              <UiTooltipTrigger as-child>
-                <UiButton variant="ghost" size="icon" class="rounded-full" as-child>
-                  <RouterLink to="/my">
-                    <PhGlobeHemisphereWest size="24" weight="fill" />
-                  </RouterLink>
-                </UiButton>
-              </UiTooltipTrigger>
-              <UiTooltipContent :side="'right'" :side-offset="6">
-                <p>Mondes</p>
-              </UiTooltipContent>
-            </UiTooltip>
-          </UiTooltipProvider>
-        </li>
-      </template>
+      <li v-else>
+        <UiTooltipProvider :delay-duration="50">
+          <UiTooltip>
+            <UiTooltipTrigger as-child>
+              <UiButton variant="ghost" size="icon" class="rounded-full" as-child>
+                <RouterLink to="/my">
+                  <PhGlobeHemisphereWest size="24" weight="fill" />
+                </RouterLink>
+              </UiButton>
+            </UiTooltipTrigger>
+            <UiTooltipContent :side="'right'" :side-offset="6">
+              <p>Mondes</p>
+            </UiTooltipContent>
+          </UiTooltip>
+        </UiTooltipProvider>
+      </li>
 
       <li v-for="(item, i) in currentMenu" :key="i">
         <UiTooltipProvider :delay-duration="50">
