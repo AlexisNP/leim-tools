@@ -156,7 +156,7 @@ function deployDeleteModal() {
     </menu>
 
     <nav v-if="event.startDate && event.endDate" class="mt-2 flex gap-2">
-      <UiBadge class="hover:opacity-100 hover:bg-indigo-400 dark:hover:bg-slate-300" as-child>
+      <UiBadge class="hover:bg-indigo-400 dark:hover:bg-slate-300" as-child>
         <button
           class="flex gap-1"
           title="Naviguer au début"
@@ -165,7 +165,7 @@ function deployDeleteModal() {
           <PhHourglassHigh size="16" weight="fill" /> Début
         </button>
       </UiBadge>
-      <UiBadge class="hover:opacity-100 hover:bg-indigo-400 dark:hover:bg-slate-300" as-child title="Naviguer à la fin">
+      <UiBadge class="hover:bg-indigo-400 dark:hover:bg-slate-300" as-child title="Naviguer à la fin">
         <button
           class="flex gap-1"
           title="Naviguer à la fin"
@@ -179,7 +179,7 @@ function deployDeleteModal() {
     <UiTooltipProvider v-if="event.hidden" :delay-duration="250">
       <UiTooltip>
         <UiTooltipTrigger as-child>
-          <UiBadge class="absolute -top-2 right-2 flex gap-1 hover:bg-slate-300 hover:opacity-100">
+          <UiBadge class="absolute -top-2 right-2 flex gap-1">
             <PhEye size="16" weight="fill" /> Évènement privé
           </UiBadge>
         </UiTooltipTrigger>

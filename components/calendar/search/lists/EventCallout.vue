@@ -61,7 +61,7 @@ const dateDuration: string | null = props.event.endDate
         <UiTooltipProvider :delay-duration="250">
           <UiTooltip>
             <UiTooltipTrigger as-child>
-              <UiBadge class="flex gap-1 border-[1px] border-slate-900 hover:bg-slate-300 hover:opacity-100">
+              <UiBadge class="flex gap-1">
                 <PhEye size="16" weight="fill" /> Évènement privé
               </UiBadge>
             </UiTooltipTrigger>
@@ -92,13 +92,13 @@ const dateDuration: string | null = props.event.endDate
     <div v-if="event.category || event.secondaryCategories" class="absolute top-3 right-4">
       <ul class="flex gap-1">
         <li v-if="event.category">
-          <UiBadge class="mix-blend-luminosity font-bold bg-gray-600 lowercase" variant="secondary">
+          <UiBadge class="mix-blend-luminosity font-bold bg-gray-300 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-600 lowercase" variant="secondary">
             {{ event.category?.name }}
           </UiBadge>
         </li>
 
         <li v-for="cat in event.secondaryCategories" :key="cat.id">
-          <UiBadge class="mix-blend-luminosity bg-gray-600 lowercase" variant="secondary">
+          <UiBadge class="mix-blend-luminosity bg-gray-300 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-600 lowercase" variant="secondary">
             {{ cat.name }}
           </UiBadge>
         </li>

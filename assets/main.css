@@ -133,7 +133,7 @@
   @apply text-white bg-stone-500 hover:bg-stone-700
 }
 .event-white {
-  @apply text-slate-900 bg-white hover:bg-yellow-200
+  @apply text-slate-900 bg-white hover:bg-yellow-200 border-[1px] border-slate-300
 }
 
 .dark .event-details-red {
