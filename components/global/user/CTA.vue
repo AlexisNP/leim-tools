@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { computed } from "vue"
 
-import { PhGear, PhGlobeHemisphereWest, PhLaptop, PhMoon, PhPalette, PhSignOut, PhSun, PhTranslate, PhUserCircle } from "@phosphor-icons/vue"
+import { PhCheckCircle, PhGear, PhGlobeHemisphereWest, PhLaptop, PhMoon, PhPalette, PhSignOut, PhSun, PhTranslate, PhUserCircle } from "@phosphor-icons/vue"
+import { cn } from "~/lib/utils";
 
 const router = useRouter()
-const { preference } = useColorMode()
 
 const { auth } = useSupabaseClient()
 const user = useSupabaseUser()
@@ -83,24 +83,39 @@ function pushRoute(to: AvailableRoutes) {
           <UiDropdownMenuSeparator />
 
           <UiDropdownMenuSub>
-            <UiDropdownMenuSubTrigger class="p-0">
-              <UiDropdownMenuItem class="flex gap-[.5ch] items-center rounded-none">
+            <UiDropdownMenuSubTrigger class="p-0 rounded-none">
+              <UiDropdownMenuItem class="flex gap-[.5ch] items-center pointer-events-none">
                 <PhPalette size="20" weight="fill" />
                 <span>Apparence</span>
               </UiDropdownMenuItem>
             </UiDropdownMenuSubTrigger>
             <UiDropdownMenuPortal>
               <UiDropdownMenuSubContent>
-                <UiDropdownMenuItem class="flex gap-[.5ch] items-center rounded-none" @click="$colorMode.preference = 'dark'">
-                  <PhMoon size="20" />
+                <UiDropdownMenuItem
+                  class="flex gap-[.5ch] items-center rounded-none"
+                  :class="cn({ 'text-emerald-600': $colorMode.preference === 'dark' })"
+                  @select.prevent="$colorMode.preference = 'dark'"
+                >
+                  <PhCheckCircle v-if="$colorMode.preference === 'dark'" size="20" weight="fill" />
+                  <PhMoon v-else size="20" />
                   <span>Sombre</span>
                 </UiDropdownMenuItem>
-                <UiDropdownMenuItem class="flex gap-[.5ch] items-center rounded-none" @click="$colorMode.preference = 'light'">
-                  <PhSun size="20" />
+                <UiDropdownMenuItem
+                  class="flex gap-[.5ch] items-center rounded-none"
+                  :class="cn({ 'text-emerald-600': $colorMode.preference === 'light' })"
+                  @select.prevent="$colorMode.preference = 'light'"
+                >
+                  <PhCheckCircle v-if="$colorMode.preference === 'light'" size="20" weight="fill" />
+                  <PhSun v-else size="20" />
                   <span>Clair</span>
                 </UiDropdownMenuItem>
-                <UiDropdownMenuItem class="flex gap-[.5ch] items-center rounded-none" @click="$colorMode.preference = 'system'">
-                  <PhLaptop size="20" />
+                <UiDropdownMenuItem
+                  class="flex gap-[.5ch] items-center rounded-none"
+                  :class="cn({ 'text-emerald-600': $colorMode.preference === 'system' })"
+                  @select.prevent="$colorMode.preference = 'system'"
+                >
+                  <PhCheckCircle v-if="$colorMode.preference === 'system'" size="20" weight="fill" />
+                  <PhLaptop v-else size="20" />
                   <span>Système</span>
                 </UiDropdownMenuItem>
               </UiDropdownMenuSubContent>
@@ -108,8 +123,8 @@ function pushRoute(to: AvailableRoutes) {
           </UiDropdownMenuSub>
 
           <UiDropdownMenuSub>
-            <UiDropdownMenuSubTrigger class="p-0">
-              <UiDropdownMenuItem class="flex gap-[.5ch] items-center rounded-none">
+            <UiDropdownMenuSubTrigger class="p-0 rounded-none">
+              <UiDropdownMenuItem class="flex gap-[.5ch] items-center pointer-events-none">
                 <PhTranslate size="20" />
                 <span>Langage</span>
               </UiDropdownMenuItem>

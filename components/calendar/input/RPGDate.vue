@@ -117,7 +117,7 @@ function handleValueReset() {
       v-if="model"
       align="start"
       side="bottom"
-      class="bg-slate-900 border-slate-800"
+      class="border-indigo-200 dark:bg-slate-950 dark:border-indigo-950"
     >
       <div class="grid grid-cols-2 items-center gap-x-2 gap-y-3">
         <UiSelect @update:model-value="handleMonthChange">
@@ -151,8 +151,11 @@ function handleValueReset() {
             <button
               v-for="day in monthData.days"
               :key="`popover-day-grid-${id}-${day}`"
-              class="aspect-square rounded-full text-[.8em] transition-colors hover:bg-slate-700"
-              :class="{'bg-blue-500 hover:bg-blue-700': day === model.day}"
+              class="aspect-square rounded-full text-[.8em] transition-colors"
+              :class="{
+                'hover:bg-indigo-200 dark:hover:bg-indigo-700': day !== model.day,
+                'bg-indigo-500 hover:bg-indigo-700 text-white': day === model.day
+              }"
               @click="setModelDay(day)"
             >
               {{ day }}

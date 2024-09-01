@@ -63,7 +63,7 @@ function handleCancel(): void {
     <UiAlertDialogContent
       :disable-outside-pointer-events="true"
       :trap-focus="true"
-      class="min-w-96 bg-slate-900 border-slate-800"
+      class="min-w-96 border-indigo-200 dark:bg-slate-950 dark:border-indigo-950"
       @escape-key-down="handleClosing"
       @focus-outside="handleClosing"
       @interact-outside="handleClosing"
@@ -85,7 +85,7 @@ function handleCancel(): void {
         </div>
 
         <footer class="flex gap-2 justify-between">
-          <UiButton type="button" size="sm" variant="ghost" @click="() => isDeleteEventModalOpen = false">
+          <UiButton type="button" size="sm" variant="outline" @click="() => isDeleteEventModalOpen = false">
             Retour
           </UiButton>
 

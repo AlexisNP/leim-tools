@@ -73,10 +73,10 @@ const eventsNotDisplayed: ComputedRef<number>  = computed<number>(() => eventsFo
 <template>
   <div
     ref="calendarTile"
-    class="tile relative text-xs p-2 border-slate-700"
+    class="tile relative text-xs p-2 border-slate-400 dark:border-slate-700 dark:bg-black transition-colors"
     :class="{
-      'text-slate-500': props.faded,
-      'text-slate-300': !props.faded
+      'text-slate-300 dark:text-slate-500': props.faded,
+      'text-slate-500 dark:text-slate-300': !props.faded
     }"
   >
     <button
@@ -85,10 +85,10 @@ const eventsNotDisplayed: ComputedRef<number>  = computed<number>(() => eventsFo
     >
       <ClientOnly>
         <span
-          class="inline-flex w-8 h-8 aspect-square items-center justify-center rounded-full border-2 border-transparent font-bold transition-colors group-hover:border-slate-800"
+          class="inline-flex w-8 h-8 aspect-square items-center justify-center rounded-full border-2 border-transparent font-bold transition-colors group-hover:border-indigo-300 dark:group-hover:border-indigo-700"
           :class="{
-            'bg-slate-800': isDefaultDate && !isSelectedDate,
-            'text-white bg-blue-500': isSelectedDate
+            'text-white bg-slate-600 dark:bg-slate-800': isDefaultDate && !isSelectedDate,
+            'text-white bg-indigo-500': isSelectedDate
           }"
         >
           {{ date.day }}

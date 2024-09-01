@@ -47,7 +47,7 @@ function handleClosing() {
     <UiAlertDialogContent
       :disable-outside-pointer-events="true"
       :trap-focus="true"
-      class="min-w-96 bg-slate-900 border-slate-800"
+      class="min-w-96"
       @escape-key-down="handleClosing"
       @focus-outside="handleClosing"
       @interact-outside="handleClosing"
@@ -69,7 +69,7 @@ function handleClosing() {
         </div>
 
         <footer class="flex gap-2 justify-between">
-          <UiButton type="button" size="sm" variant="ghost" @click="handleClosing">
+          <UiButton type="button" size="sm" variant="outline" @click="handleClosing">
             Retour
           </UiButton>
 
