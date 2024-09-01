@@ -11,7 +11,7 @@ defineProps<{
     <div class="font-medium">
       {{ month.name }}
     </div>
-    <div class="grid grid-cols-7">
+    <div class="grid grid-cols-7 gap-1">
       <CalendarStateYearlyDayTile
         v-for="day in month.days"
         :key="day"

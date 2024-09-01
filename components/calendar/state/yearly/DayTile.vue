@@ -40,14 +40,14 @@ const hasAtLeastOneEvent = computed<boolean>(() => {
   <button
     class="relative grid place-items-center aspect-square rounded-full border-2 border-transparent transition-colors after:content-[''] after:absolute after:top-1 after:right-1 after:w-[.3rem] after:h-[.3rem] after:rounded-full after:transition-colors"
     :class="{
-      'hover:bg-slate-800 hover:border-slate-800': !isDefaultDate && !isSelectedDate,
-      'bg-slate-800 hover:bg-slate-600 hover:border-slate-600': isDefaultDate && !isSelectedDate,
-      'text-white bg-blue-500 hover:bg-blue-600 hover:border-blue-600': isSelectedDate,
+      'text-slate-500 hover:border-indigo-300 hover:text-slate-900': !isDefaultDate && !isSelectedDate,
+      'font-semibold text-white bg-slate-600 dark:bg-slate-800 hover:border-indigo-400': isDefaultDate && !isSelectedDate,
+      'font-semibold text-white bg-indigo-500 hover:bg-indigo-600 hover:border-indigo-500': isSelectedDate,
       'after:bg-green-600': hasAtLeastOneEvent,
       'after:bg-slate-950': hasAtLeastOneEvent && isSelectedDate
     }"
     @click="selectDate(tileDate)"
   >
-    <span ref="tileRef" class="text-slate-300 text-[.85em]">{{ dayNumber }}</span>
+    <span ref="tileRef" class="text-[.85em]">{{ dayNumber }}</span>
   </button>
 </template>
