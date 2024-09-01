@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { PhAlarm, PhCircleNotch, PhEye, PhEyeClosed, PhMapPinArea, PhPencilSimpleLine, PhTag } from "@phosphor-icons/vue"
-import { VisuallyHidden } from "radix-vue"
 
 const { resetSkeleton, updateEventFromSkeleton, cancelLatestRequest } = useCalendar()
 const { eventSkeleton, lastActiveEvent, isEditEventModalOpen } = storeToRefs(useCalendar())
@@ -64,19 +63,19 @@ function handleCancel() {
     <UiDialogContent
       :disable-outside-pointer-events="true"
       :trap-focus="true"
-      class="pl-3 min-w-96 bg-slate-900 border-slate-800"
+      class="pl-3 min-w-96 border-indigo-200 dark:bg-slate-950 dark:border-indigo-950"
       @escape-key-down="handleClosing"
       @focus-outside="handleClosing"
       @interact-outside="handleClosing"
       @pointer-down-outside="(e) => e.preventDefault()"
     >
-      <VisuallyHidden>
+      <header class="pl-8 grid gap-y-2">
         <UiDialogTitle> Modifier l'évènement</UiDialogTitle>
 
         <UiDialogDescription>
           Mettre à jour les données de l'évènement
         </UiDialogDescription>
-      </VisuallyHidden>
+      </header>
 
       <form @submit.prevent="handleAction">
         <div class="grid grid-cols-2 gap-y-3">

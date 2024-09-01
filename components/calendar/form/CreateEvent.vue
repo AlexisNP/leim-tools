@@ -88,7 +88,7 @@ function handleCancel() {
       :collision-padding="60"
       :disable-outside-pointer-events="true"
       :trap-focus="true"
-      class="pl-3 min-w-96 bg-slate-900 border-slate-800"
+      class="pl-3 min-w-96 border-indigo-200 dark:bg-slate-950 dark:border-indigo-950"
       @escape-key-down="handleClosing"
       @focus-outside="handleClosing"
       @interact-outside="handleClosing"

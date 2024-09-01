@@ -62,7 +62,7 @@ function deployDeleteModal() {
 
 <template>
   <UiPopoverContent
-    class=" w-96 bg-slate-900 border-slate-800"
+    class=" w-96 "
     :align="'center'"
     :align-offset="50"
     :side="'left'"
@@ -96,15 +96,15 @@ function deployDeleteModal() {
 
       <div class="mb-1 space-y-1">
         <template v-if="event.location">
-          <p class="text-sm italic opacity-75 flex items-center gap-1">
+          <p class="text-sm italic dark:opacity-75 flex items-center gap-1">
             <PhMapPinArea size="16" weight="fill" /> {{ event.location }}
           </p>
         </template>
-        <p class="text-sm italic opacity-75 flex items-center gap-1">
+        <p class="text-sm italic dark:opacity-75 flex items-center gap-1">
           <PhAlarm size="16" weight="fill" /> {{ dateDifference }}
         </p>
         <template v-if="dateDuration">
-          <p class="text-sm italic opacity-75 flex items-center gap-1">
+          <p class="text-sm italic dark:opacity-75 flex items-center gap-1">
             <PhHourglassMedium size="16" weight="fill" /> Pendant {{ dateDuration }}
           </p>
         </template>
@@ -113,13 +113,13 @@ function deployDeleteModal() {
       <template v-if="event.category || event.secondaryCategories">
         <ul class="flex gap-1">
           <li v-if="event.category">
-            <UiBadge class="mix-blend-luminosity font-bold bg-gray-600 lowercase" variant="secondary">
+            <UiBadge class="mix-blend-luminosity font-bold bg-gray-400 hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-600 lowercase" variant="secondary">
               {{ event.category?.name }}
             </UiBadge>
           </li>
 
           <li v-for="cat in event.secondaryCategories" :key="cat.id">
-            <UiBadge class="mix-blend-luminosity bg-gray-600 lowercase" variant="secondary">
+            <UiBadge class="mix-blend-luminosity bg-gray-300 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-600 lowercase" variant="secondary">
               {{ cat.name }}
             </UiBadge>
           </li>
@@ -129,7 +129,7 @@ function deployDeleteModal() {
       <template v-if="event.description">
         <hr class="border-slate-500 mt-2" >
 
-        <div class="mt-2 text-sm text-slate-300">
+        <div class="mt-2 text-sm text-slate-600 dark:text-slate-300">
           {{ event.description }}
         </div>
       </template>
@@ -138,7 +138,7 @@ function deployDeleteModal() {
     <menu class="absolute top-4 right-4" :class="cn({ 'top-6': event.hidden })">
       <UiPopover v-model:open="commandMenuOpened">
         <UiPopoverTrigger as-child>
-          <UiButton size="icon" variant="ghost">
+          <UiButton size="icon" variant="outline" class="mix-blend-luminosity bg-gray-300 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-600">
             <PhDotsThreeOutlineVertical size="20" weight="fill" />
           </UiButton>
         </UiPopoverTrigger>
@@ -156,7 +156,7 @@ function deployDeleteModal() {
     </menu>
 
     <nav v-if="event.startDate && event.endDate" class="mt-2 flex gap-2">
-      <UiBadge class="hover:opacity-100 hover:bg-slate-300" as-child>
+      <UiBadge class="hover:opacity-100 hover:bg-indigo-400 dark:hover:bg-slate-300" as-child>
         <button
           class="flex gap-1"
           title="Naviguer au début"
@@ -165,7 +165,7 @@ function deployDeleteModal() {
           <PhHourglassHigh size="16" weight="fill" /> Début
         </button>
       </UiBadge>
-      <UiBadge class="hover:opacity-100 hover:bg-slate-300" as-child title="Naviguer à la fin">
+      <UiBadge class="hover:opacity-100 hover:bg-indigo-400 dark:hover:bg-slate-300" as-child title="Naviguer à la fin">
         <button
           class="flex gap-1"
           title="Naviguer à la fin"

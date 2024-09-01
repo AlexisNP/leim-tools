@@ -136,73 +136,136 @@
   @apply text-slate-900 bg-white hover:bg-yellow-200
 }
 
-.event-details-red {
+.dark .event-details-red {
   --base-color: var(--color-red-800);
 }
-.event-details-orange {
+.dark .event-details-orange {
   --base-color: var(--color-orange-800);
 }
-.event-details-amber {
+.dark .event-details-amber {
   --base-color: var(--color-amber-800);
 }
-.event-details-yellow {
+.dark .event-details-yellow {
   --base-color: var(--color-yellow-800);
 }
-.event-details-lime {
+.dark .event-details-lime {
   --base-color: var(--color-lime-800);
 }
-.event-details-green {
+.dark .event-details-green {
   --base-color: var(--color-green-800);
 }
-.event-details-emerald {
+.dark .event-details-emerald {
   --base-color: var(--color-emerald-800);
 }
-.event-details-teal {
+.dark .event-details-teal {
   --base-color: var(--color-teal-800);
 }
-.event-details-cyan {
+.dark .event-details-cyan {
   --base-color: var(--color-cyan-800);
 }
-.event-details-sky {
+.dark .event-details-sky {
   --base-color: var(--color-sky-800);
 }
-.event-details-blue {
+.dark .event-details-blue {
   --base-color: var(--color-blue-800);
 }
-.event-details-indigo {
+.dark .event-details-indigo {
   --base-color: var(--color-indigo-800);
 }
-.event-details-violet {
+.dark .event-details-violet {
   --base-color: var(--color-violet-800);
 }
-.event-details-purple {
+.dark .event-details-purple {
   --base-color: var(--color-purple-800);
 }
-.event-details-fuchsia {
+.dark .event-details-fuchsia {
   --base-color: var(--color-fuchsia-800);
 }
-.event-details-pink {
+.dark .event-details-pink {
   --base-color: var(--color-pink-800);
 }
-.event-details-rose {
+.dark .event-details-rose {
   --base-color: var(--color-rose-800);
 }
-.event-details-black {
+.dark .event-details-black {
   --base-color: var(--color-stone-800);
+}
+.dark .event-details-white {
+  --base-color: var(--color-white);
+}
+
+.event-details-red {
+  --base-color: var(--color-red-300);
+}
+.event-details-orange {
+  --base-color: var(--color-orange-300);
+}
+.event-details-amber {
+  --base-color: var(--color-amber-300);
+}
+.event-details-yellow {
+  --base-color: var(--color-yellow-300);
+}
+.event-details-lime {
+  --base-color: var(--color-lime-300);
+}
+.event-details-green {
+  --base-color: var(--color-green-300);
+}
+.event-details-emerald {
+  --base-color: var(--color-emerald-300);
+}
+.event-details-teal {
+  --base-color: var(--color-teal-300);
+}
+.event-details-cyan {
+  --base-color: var(--color-cyan-300);
+}
+.event-details-sky {
+  --base-color: var(--color-sky-300);
+}
+.event-details-blue {
+  --base-color: var(--color-blue-300);
+}
+.event-details-indigo {
+  --base-color: var(--color-indigo-300);
+}
+.event-details-violet {
+  --base-color: var(--color-violet-300);
+}
+.event-details-purple {
+  --base-color: var(--color-purple-300);
+}
+.event-details-fuchsia {
+  --base-color: var(--color-fuchsia-300);
+}
+.event-details-pink {
+  --base-color: var(--color-pink-300);
+}
+.event-details-rose {
+  --base-color: var(--color-rose-300);
+}
+.event-details-black {
+  --base-color: var(--color-stone-300);
 }
 .event-details-white {
   --base-color: var(--color-white);
 }
 
 .event-details {
-  --bg-color: color-mix(in srgb, var(--base-color), var(--color-slate-950) 80%);
-  --border-color: color-mix(in srgb, var(--base-color), var(--color-slate-800) 50%);
+  --bg-color: color-mix(in srgb, var(--base-color), var(--color-white) 80%);
+  --border-color: color-mix(in srgb, var(--base-color), var(--color-white) 50%);
   background-color: var(--bg-color);
   border-color: var(--border-color);
 
   hr {
     border-color: var(--border-color);
   }
+}
+
+.dark .event-details {
+  --bg-color: color-mix(in srgb, var(--base-color), var(--color-slate-950) 80%);
+  --border-color: color-mix(in srgb, var(--base-color), var(--color-slate-800) 50%);
 }
 
 .fade-enter-active,
