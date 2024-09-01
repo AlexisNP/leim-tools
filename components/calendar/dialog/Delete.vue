@@ -68,24 +68,26 @@ function handleClosing() {
           </div>
         </div>
 
-        <footer class="flex gap-2 justify-end">
+        <footer class="flex gap-2 justify-between">
           <UiButton type="button" size="sm" variant="outline" @click="handleClosing">
             Retour
           </UiButton>
 
-          <Transition name="fade-delay">
-            <UiButton v-if="isLoading" type="button" size="sm" variant="destructive">
-              Annuler
-            </UiButton>
-          </Transition>
-
-          <UiButton v-if="calendar" size="sm" variant="destructive" :disabled="isLoading">
-            <Transition name="fade">
-              <PhCircleNotch v-if="isLoading" size="20" class="animate-spin"/>
+          <div class="flex gap-2 justify-end">
+            <Transition name="fade-delay">
+              <UiButton v-if="isLoading" type="button" size="sm" variant="destructive">
+                Annuler
+              </UiButton>
             </Transition>
 
-            Supprimer "{{ calendar?.name }}"
-          </UiButton>
+            <UiButton v-if="calendar" size="sm" variant="destructive" :disabled="isLoading">
+              <Transition name="fade">
+                <PhCircleNotch v-if="isLoading" size="20" class="animate-spin"/>
+              </Transition>
+
+              Supprimer "{{ calendar?.name }}"
+            </UiButton>
+          </div>
         </footer>
       </form>
     </UiAlertDialogContent>
