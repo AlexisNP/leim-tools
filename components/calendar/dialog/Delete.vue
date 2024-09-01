@@ -47,7 +47,7 @@ function handleClosing() {
     <UiAlertDialogContent
       :disable-outside-pointer-events="true"
       :trap-focus="true"
-      class="min-w-96 bg-slate-900 border-slate-800"
+      class="min-w-96"
       @escape-key-down="handleClosing"
       @focus-outside="handleClosing"
       @interact-outside="handleClosing"
@@ -68,26 +68,24 @@ function handleClosing() {
           </div>
         </div>
 
-        <footer class="flex gap-2 justify-between">
-          <UiButton type="button" size="sm" variant="ghost" @click="handleClosing">
+        <footer class="flex gap-2 justify-end">
+          <UiButton type="button" size="sm" variant="outline" @click="handleClosing">
             Retour
           </UiButton>
 
-          <div class="flex gap-2 justify-end">
-            <Transition name="fade-delay">
-              <UiButton v-if="isLoading" type="button" size="sm" variant="destructive">
-                Annuler
-              </UiButton>
+          <Transition name="fade-delay">
+            <UiButton v-if="isLoading" type="button" size="sm" variant="destructive">
+              Annuler
+            </UiButton>
+          </Transition>
+
+          <UiButton v-if="calendar" size="sm" variant="destructive" :disabled="isLoading">
+            <Transition name="fade">
+              <PhCircleNotch v-if="isLoading" size="20" class="animate-spin"/>
             </Transition>
 
-            <UiButton v-if="calendar" size="sm" variant="destructive" :disabled="isLoading">
-              <Transition name="fade">
-                <PhCircleNotch v-if="isLoading" size="20" class="animate-spin"/>
-              </Transition>
-
-              Supprimer "{{ calendar?.name }}"
-            </UiButton>
-          </div>
+            Supprimer "{{ calendar?.name }}"
+          </UiButton>
         </footer>
       </form>
     </UiAlertDialogContent>

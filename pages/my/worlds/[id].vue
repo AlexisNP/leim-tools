@@ -159,7 +159,7 @@ function hideDeleteModal() {
                 <UiCardContent>
                   <p class="italic">Description future (ou alors des informations sur le nb d'évènements)</p>
 
-                  <UiButton size="icon" variant="ghost" class="absolute top-2 right-2 z-20 hover:bg-slate-600" @click="deployDeleteModal(calendar)">
+                  <UiButton size="icon" variant="ghost" class="absolute top-2 right-2 z-20 hover:text-white hover:bg-rose-400 dark:hover:bg-rose-700" @click="deployDeleteModal(calendar)">
                     <PhTrash size="16" />
                   </UiButton>
                 </UiCardContent>
@@ -179,3 +179,29 @@ function hideDeleteModal() {
     <CalendarDialogDelete :calendar="markedCalendar" :modal-state="isDeleteEventModalOpen" @on-close="hideDeleteModal" />
   </main>
 </template>
+
+<style lang="scss" scoped>
+main {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+
+  &::after {
+    display: block;
+    content: '';
+    position: absolute;
+    right: 2.4rem;
+    bottom: -5%;
+    height: 75%;
+    width: 100%;
+    background-image: url('/images/planet.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position-y: bottom;
+    background-position-x: right;
+    z-index: -1;
+    mask-image: radial-gradient(ellipse 100% 100% at 120% 80%, black, transparent);
+    opacity: .3;
+  }
+}
+</style>

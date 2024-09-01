@@ -62,7 +62,7 @@ function handleGotoPreviousEventPage(position: "next" | "prev" = "next") {
 
 <template>
   <div class="flex gap-2">
-    <div class="grid items-end w-40 px-4 py-2 border-slate-700 border-x-[1px] border-t-[1px] rounded-t-sm text-sm">
+    <div class="grid items-end w-40 px-4 py-2 border-slate-200 bg-white dark:bg-black dark:border-slate-700 border-x-[1px] border-t-[1px] rounded-t-sm text-sm transition-colors">
       <ClientOnly>
         <span>{{ currentDate.currentDateTitle }}</span>
 
@@ -73,14 +73,14 @@ function handleGotoPreviousEventPage(position: "next" | "prev" = "next") {
         </template>
       </ClientOnly>
     </div>
-    <div class="border-slate-700 border-x-[1px] border-t-[1px] rounded-t-sm">
+    <div>
       <UiTooltipProvider :delay-duration="250">
         <UiTooltip>
           <UiTooltipTrigger as-child>
             <UiButton
-              variant="ghost"
+              variant="outline"
               size="icon"
-              class="rounded-t-sm rounded-b-none"
+              class="rounded-t-sm rounded-b-none border-b-0"
               @click="handleGotoPreviousEventPage('prev')"
             >
               <PhArrowLineLeft size="22" />
@@ -92,14 +92,14 @@ function handleGotoPreviousEventPage(position: "next" | "prev" = "next") {
         </UiTooltip>
       </UiTooltipProvider>
     </div>
-    <div class="border-slate-700 border-x-[1px] border-t-[1px] rounded-t-sm">
+    <div>
       <UiTooltipProvider :delay-duration="250">
         <UiTooltip>
           <UiTooltipTrigger as-child>
             <UiButton
-              variant="ghost"
+              variant="outline"
               size="icon"
-              class="rounded-t-sm rounded-b-none"
+              class="rounded-t-sm rounded-b-none border-b-0"
               @click="handleGotoPreviousEventPage('next')"
             >
               <PhArrowLineRight size="22" />

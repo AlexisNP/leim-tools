@@ -144,8 +144,8 @@ main {
     display: block;
     content: '';
     position: absolute;
-    right: -2.4rem;
-    bottom: -10%;
+    right: 2.4rem;
+    bottom: -5%;
     height: 75%;
     width: 100%;
     background-image: url('/images/galaxy.svg');

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { PhGlobeHemisphereWest, PhHouse, PhList } from "@phosphor-icons/vue"
+import { PhGlobeHemisphereWest, PhList } from "@phosphor-icons/vue"
 import type { SidebarMenuActionType } from "./SidebarProps";
 
 const { revealAdvancedSearch } = useCalendar()
@@ -23,24 +23,7 @@ function handleMenuItemAction(actionType: SidebarMenuActionType) {
         </UiButton>
       </li>
 
-      <li v-if="!user">
-        <UiTooltipProvider :delay-duration="50">
-          <UiTooltip>
-            <UiTooltipTrigger as-child>
-              <UiButton variant="ghost" size="icon" class="rounded-full" as-child>
-                <RouterLink to="/">
-                  <PhHouse size="24" weight="fill" />
-                </RouterLink>
-              </UiButton>
-            </UiTooltipTrigger>
-            <UiTooltipContent :side="'right'" :side-offset="6">
-              <p>Accueil</p>
-            </UiTooltipContent>
-          </UiTooltip>
-        </UiTooltipProvider>
-      </li>
-
-      <li v-else>
+      <li v-if="user">
         <UiTooltipProvider :delay-duration="50">
           <UiTooltip>
             <UiTooltipTrigger as-child>
