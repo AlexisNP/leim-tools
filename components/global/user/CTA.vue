@@ -66,20 +66,26 @@ function pushRoute(to: AvailableRoutes) {
             :alt="userMeta?.full_name"
             referrerpolicy="no-referrer"
           />
-          <UiAvatarFallback>Me</UiAvatarFallback>
+          <UiAvatarFallback>
+            {{ $t('ui.sidebarMenu.avatarFallback') }}
+          </UiAvatarFallback>
         </UiAvatar>
         <UiButton v-else variant="outline" size="icon">
           <PhUserCircle size="18" />
         </UiButton>
       </UiDropdownMenuTrigger>
 
-      <UiDropdownMenuContent class="min-w-48 w-fit p-0" :align="'start'" :side="'top'" :side-offset="10" :align-offset="25" :collision-padding="40">
+      <UiDropdownMenuContent class="w-72 p-0" :align="'start'" :side="'top'" :side-offset="10" :align-offset="25" :collision-padding="40">
         <template v-if="user">
-          <p class="p-2 text-xs opacity-75">Connecté en tant que {{ user?.email }}</p>
+          <p class="p-2 text-[.7em] opacity-75">
+            {{ $t('ui.greeting', { user: user?.email }) }}
+          </p>
 
           <UiDropdownMenuItem class="flex gap-[.5ch] items-center rounded-none" @click="pushRoute('/my')">
             <PhGlobeHemisphereWest size="20" weight="fill" />
-            <span>Mondes</span>
+            <span>
+              {{ $t('entity.world.namePlural') }}
+            </span>
           </UiDropdownMenuItem>
 
           <UiDropdownMenuSeparator />
@@ -89,37 +95,48 @@ function pushRoute(to: AvailableRoutes) {
           <UiDropdownMenuSubTrigger class="p-0 rounded-none">
             <UiDropdownMenuItem class="flex gap-[.5ch] items-center pointer-events-none">
               <PhPalette size="20" weight="fill" />
-              <span>Apparence</span>
+              <span>
+                {{ $t('ui.sidebarMenu.appearance') }}
+              </span>
             </UiDropdownMenuItem>
           </UiDropdownMenuSubTrigger>
           <UiDropdownMenuPortal>
             <UiDropdownMenuSubContent>
               <UiDropdownMenuItem
-                class="flex gap-[.5ch] items-center rounded-none"
+                class="flex gap-[.5ch] items-center rounded-none transition-colors"
                 :class="cn({ 'text-emerald-600': $colorMode.preference === 'dark' })"
                 @select.prevent="$colorMode.preference = 'dark'"
               >
                 <PhCheckCircle v-if="$colorMode.preference === 'dark'" size="20" weight="fill" />
                 <PhMoon v-else size="20" />
-                <span>Sombre</span>
+
+                <span>
+                  {{ $t('ui.dark') }}
+                </span>
               </UiDropdownMenuItem>
               <UiDropdownMenuItem
-                class="flex gap-[.5ch] items-center rounded-none"
+                class="flex gap-[.5ch] items-center rounded-none transition-colors"
                 :class="cn({ 'text-emerald-600': $colorMode.preference === 'light' })"
                 @select.prevent="$colorMode.preference = 'light'"
               >
                 <PhCheckCircle v-if="$colorMode.preference === 'light'" size="20" weight="fill" />
                 <PhSun v-else size="20" />
-                <span>Clair</span>
+
+                <span>
+                  {{ $t('ui.light') }}
+                </span>
               </UiDropdownMenuItem>
               <UiDropdownMenuItem
-                class="flex gap-[.5ch] items-center rounded-none"
+                class="flex gap-[.5ch] items-center rounded-none transition-colors"
                 :class="cn({ 'text-emerald-600': $colorMode.preference === 'system' })"
                 @select.prevent="$colorMode.preference = 'system'"
               >
                 <PhCheckCircle v-if="$colorMode.preference === 'system'" size="20" weight="fill" />
                 <PhLaptop v-else size="20" />
-                <span>Système</span>
+
+                <span>
+                  {{ $t('ui.system') }}
+                </span>
               </UiDropdownMenuItem>
             </UiDropdownMenuSubContent>
           </UiDropdownMenuPortal>
@@ -129,14 +146,16 @@ function pushRoute(to: AvailableRoutes) {
           <UiDropdownMenuSubTrigger class="p-0 rounded-none">
             <UiDropdownMenuItem class="flex gap-[.5ch] items-center pointer-events-none">
               <PhTranslate size="20" />
-              <span>Langage</span>
+              <span>
+                {{ $t('ui.sidebarMenu.language') }}
+              </span>
             </UiDropdownMenuItem>
           </UiDropdownMenuSubTrigger>
           <UiDropdownMenuPortal>
             <UiDropdownMenuSubContent>
               <UiDropdownMenuSubContent>
                 <UiDropdownMenuItem
-                  class="flex gap-[.5ch] items-center rounded-none"
+                  class="flex gap-[.5ch] items-center rounded-none transition-colors"
                   :class="cn({ 'text-emerald-600': locale === 'fr' })"
                   @select.prevent="setLocale('fr')"
                 >
@@ -145,7 +164,7 @@ function pushRoute(to: AvailableRoutes) {
                   <span>Français</span>
                 </UiDropdownMenuItem>
                 <UiDropdownMenuItem
-                  class="flex gap-[.5ch] items-center rounded-none"
+                  class="flex gap-[.5ch] items-center rounded-none transition-colors"
                   :class="cn({ 'text-emerald-600': locale === 'en' })"
                   @select.prevent="setLocale('en')"
                 >
@@ -163,17 +182,23 @@ function pushRoute(to: AvailableRoutes) {
         <template v-if="user">
           <UiDropdownMenuItem class="flex gap-[.5ch] items-center rounded-none" @click="pushRoute('/my/settings')">
             <PhGear size="20" weight="fill" />
-            <span>Compte</span>
+            <span>
+              {{ $t('ui.sidebarMenu.account') }}
+            </span>
           </UiDropdownMenuItem>
           <UiDropdownMenuItem class="flex gap-[.5ch] items-center rounded-none" @click="handleLogout">
             <PhSignOut size="20" weight="fill" />
-            <span>Déconnexion</span>
+            <span>
+              {{ $t('ui.sidebarMenu.logout') }}
+            </span>
           </UiDropdownMenuItem>
         </template>
 
         <UiDropdownMenuItem v-if="!user" class="flex gap-[.5ch] items-center rounded-none" @click="handleGoogleLogin">
           <PhGear size="20" weight="fill" />
-          <span>Connexion</span>
+          <span>
+            {{ $t('ui.sidebarMenu.login') }}
+          </span>
         </UiDropdownMenuItem>
       </UiDropdownMenuContent>
     </UiDropdownMenu>
