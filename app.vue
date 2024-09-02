@@ -9,7 +9,6 @@ useHead({
     { name: "charset", content: "UTF-8" },
     { name: "viewport", content: "width=device-width, initial-scale=1.0" },
     { name: "author", content: "Alexis Pelé" },
-    { name: "description", content: "Tools destined to players and game master, helping them visualize their worlds better." },
     { name: "generator", content: "Nuxt" },
     { name: "msapplication-TileColor", content: "00aba9" },
     { name: "theme-color", content: "00aba9" },

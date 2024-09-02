@@ -2,10 +2,6 @@
 import type { RealtimeChannel } from "@supabase/supabase-js"
 import type { World } from "~/models/World";
 
-useHead({
-  title: "Mondes"
-})
-
 const supabase = useSupabaseClient()
 
 const { data: res } = await useFetch("/api/worlds/query")
@@ -85,12 +81,16 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <main class="p-8 after:fill-red-400">
+  <main class="p-8 after:fill-red-400">
+    <Head>
+      <Title>{{ $t("entity.world.namePlural") }}</Title>
+    </Head>
+
     <Heading>{{ user?.user_metadata.full_name }}</Heading>
 
     <section v-if="worlds" class="mt-4">
       <h2 class="mb-4 text-lg font-bold">
-        Mondes
+        {{ $t('entity.world.namePlural') }}
       </h2>
 
       <ul class="grid lg:grid-cols-2 gap-2">

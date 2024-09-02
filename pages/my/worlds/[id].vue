@@ -12,20 +12,6 @@ const { data: res, pending } = await useFetch("/api/worlds/query", { query: { id
 
 const world = ref<World>(res.value?.data as World)
 
-if (world.value) {
-  useHead({
-    title: world.value.name
-  })
-}
-
-watch(world, (n) => {
-  if (n) {
-    useHead({
-      title: n.name
-    })
-  }
-}, { deep: true })
-
 definePageMeta({
   middleware: ["auth-guard"]
 })
@@ -116,9 +102,17 @@ function hideDeleteModal() {
 <template>
   <main class="p-8">
     <template v-if="pending">
+      <Head>
+        <Title>{{ $t("entity.world.namePlural") }}</Title>
+      </Head>
+
       <Heading>Chargement...</Heading>
     </template>
     <template v-else-if="world">
+      <Head>
+        <Title>{{ world.name }}</Title>
+      </Head>
+
       <header class="lg:w-1/2 mb-8">
         <Spacing>
           <Heading>{{ world.name }}</Heading>
@@ -130,7 +124,9 @@ function hideDeleteModal() {
       <section>
         <Spacing size="lg">
           <div class="flex items-center gap-3">
-            <Heading>Calendriers</Heading>
+            <Heading>
+              {{ $t('entity.calendar.namePlural') }}
+            </Heading>
 
             <UiTooltipProvider :delay-duration="250">
               <UiTooltip>
@@ -140,7 +136,9 @@ function hideDeleteModal() {
                   </UiButton>
                 </UiTooltipTrigger>
                 <UiTooltipContent :side-offset="10">
-                  <p>Ajouter un calendrier</p>
+                  <p>
+                    {{ $t('entity.calendar.addSingle') }}
+                  </p>
                 </UiTooltipContent>
               </UiTooltip>
             </UiTooltipProvider>
@@ -168,7 +166,7 @@ function hideDeleteModal() {
           </ul>
           <template v-else>
             <p class="pl-6 opacity-75 italic">
-              Aucun calendrier pour ce monde
+              {{ $t('entity.calendar.notFoundForWorld') }}
             </p>
           </template>
         </Spacing>

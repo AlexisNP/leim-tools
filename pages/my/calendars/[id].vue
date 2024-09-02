@@ -23,27 +23,25 @@ const { data: catData, pending: catPending } = await useLazyFetch("/api/calendar
 
 const cal = computed<Calendar>(() => calendarData?.value?.data as Calendar)
 const categories = computed<Category[]>(() => catData?.value?.data as Category[])
-
-if (cal.value) {
-  useHead({
-    title: cal.value.name
-  })
-}
-
-watch(cal, (n) => {
-  useHead({
-    title: n.name
-  })
-})
 </script>
 
 <template>
   <div v-if="calPending || catPending" class="h-full w-full grid place-items-center">
+    <Head>
+      <Title>{{ $t("entity.calendar.nameSingular") }}</Title>
+    </Head>
+
     <div class="grid gap-2 justify-items-center opacity-50">
       <p>Chargement du calendrier</p>
       <PhCircleNotch size="50" class="animate-spin"/>
     </div>
   </div>
 
-  <Calendar v-else-if="cal && categories" :calendar-data="cal" :categories />
+  <div v-else-if="cal && categories" class="h-full w-full">
+    <Head>
+      <Title>{{ cal.name }}</Title>
+    </Head>
+
+    <Calendar :calendar-data="cal" :categories />
+  </div>
 </template>
