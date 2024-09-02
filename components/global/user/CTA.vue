@@ -11,6 +11,8 @@ const user = useSupabaseUser()
 const userMeta = computed(() => user.value?.user_metadata)
 const profileUrl: string = `${useRequestURL().origin}/my/`
 
+const { locale, setLocale } = useI18n()
+
 const menuOpened = ref<boolean>(false)
 
 function closeMenu() {
@@ -70,8 +72,8 @@ function pushRoute(to: AvailableRoutes) {
           <PhUserCircle size="18" />
         </UiButton>
       </UiDropdownMenuTrigger>
-      <UiDropdownMenuContent class="w-fit p-0" :align="'start'" :side="'top'" :side-offset="10" :align-offset="25" :collision-padding="40">
 
+      <UiDropdownMenuContent class="min-w-48 w-fit p-0" :align="'start'" :side="'top'" :side-offset="10" :align-offset="25" :collision-padding="40">
         <template v-if="user">
           <p class="p-2 text-xs opacity-75">Connecté en tant que {{ user?.email }}</p>
 
@@ -81,70 +83,84 @@ function pushRoute(to: AvailableRoutes) {
           </UiDropdownMenuItem>
 
           <UiDropdownMenuSeparator />
+        </template>
 
-          <UiDropdownMenuSub>
-            <UiDropdownMenuSubTrigger class="p-0 rounded-none">
-              <UiDropdownMenuItem class="flex gap-[.5ch] items-center pointer-events-none">
-                <PhPalette size="20" weight="fill" />
-                <span>Apparence</span>
+        <UiDropdownMenuSub>
+          <UiDropdownMenuSubTrigger class="p-0 rounded-none">
+            <UiDropdownMenuItem class="flex gap-[.5ch] items-center pointer-events-none">
+              <PhPalette size="20" weight="fill" />
+              <span>Apparence</span>
+            </UiDropdownMenuItem>
+          </UiDropdownMenuSubTrigger>
+          <UiDropdownMenuPortal>
+            <UiDropdownMenuSubContent>
+              <UiDropdownMenuItem
+                class="flex gap-[.5ch] items-center rounded-none"
+                :class="cn({ 'text-emerald-600': $colorMode.preference === 'dark' })"
+                @select.prevent="$colorMode.preference = 'dark'"
+              >
+                <PhCheckCircle v-if="$colorMode.preference === 'dark'" size="20" weight="fill" />
+                <PhMoon v-else size="20" />
+                <span>Sombre</span>
               </UiDropdownMenuItem>
-            </UiDropdownMenuSubTrigger>
-            <UiDropdownMenuPortal>
+              <UiDropdownMenuItem
+                class="flex gap-[.5ch] items-center rounded-none"
+                :class="cn({ 'text-emerald-600': $colorMode.preference === 'light' })"
+                @select.prevent="$colorMode.preference = 'light'"
+              >
+                <PhCheckCircle v-if="$colorMode.preference === 'light'" size="20" weight="fill" />
+                <PhSun v-else size="20" />
+                <span>Clair</span>
+              </UiDropdownMenuItem>
+              <UiDropdownMenuItem
+                class="flex gap-[.5ch] items-center rounded-none"
+                :class="cn({ 'text-emerald-600': $colorMode.preference === 'system' })"
+                @select.prevent="$colorMode.preference = 'system'"
+              >
+                <PhCheckCircle v-if="$colorMode.preference === 'system'" size="20" weight="fill" />
+                <PhLaptop v-else size="20" />
+                <span>Système</span>
+              </UiDropdownMenuItem>
+            </UiDropdownMenuSubContent>
+          </UiDropdownMenuPortal>
+        </UiDropdownMenuSub>
+
+        <UiDropdownMenuSub>
+          <UiDropdownMenuSubTrigger class="p-0 rounded-none">
+            <UiDropdownMenuItem class="flex gap-[.5ch] items-center pointer-events-none">
+              <PhTranslate size="20" />
+              <span>Langage</span>
+            </UiDropdownMenuItem>
+          </UiDropdownMenuSubTrigger>
+          <UiDropdownMenuPortal>
+            <UiDropdownMenuSubContent>
               <UiDropdownMenuSubContent>
                 <UiDropdownMenuItem
                   class="flex gap-[.5ch] items-center rounded-none"
-                  :class="cn({ 'text-emerald-600': $colorMode.preference === 'dark' })"
-                  @select.prevent="$colorMode.preference = 'dark'"
+                  :class="cn({ 'text-emerald-600': locale === 'fr' })"
+                  @select.prevent="setLocale('fr')"
                 >
-                  <PhCheckCircle v-if="$colorMode.preference === 'dark'" size="20" weight="fill" />
-                  <PhMoon v-else size="20" />
-                  <span>Sombre</span>
+                  <PhCheckCircle v-if="locale === 'fr'" size="20" weight="fill" />
+                  <img v-else src="/images/flag-fr.png" width="20" alt="" loading="eager">
+                  <span>Français</span>
                 </UiDropdownMenuItem>
                 <UiDropdownMenuItem
                   class="flex gap-[.5ch] items-center rounded-none"
-                  :class="cn({ 'text-emerald-600': $colorMode.preference === 'light' })"
-                  @select.prevent="$colorMode.preference = 'light'"
+                  :class="cn({ 'text-emerald-600': locale === 'en' })"
+                  @select.prevent="setLocale('en')"
                 >
-                  <PhCheckCircle v-if="$colorMode.preference === 'light'" size="20" weight="fill" />
-                  <PhSun v-else size="20" />
-                  <span>Clair</span>
-                </UiDropdownMenuItem>
-                <UiDropdownMenuItem
-                  class="flex gap-[.5ch] items-center rounded-none"
-                  :class="cn({ 'text-emerald-600': $colorMode.preference === 'system' })"
-                  @select.prevent="$colorMode.preference = 'system'"
-                >
-                  <PhCheckCircle v-if="$colorMode.preference === 'system'" size="20" weight="fill" />
-                  <PhLaptop v-else size="20" />
-                  <span>Système</span>
+                  <PhCheckCircle v-if="locale === 'en'" size="20" weight="fill" />
+                  <img v-else src="/images/flag-uk.png" width="20" alt="" loading="eager">
+                  <span>English</span>
                 </UiDropdownMenuItem>
               </UiDropdownMenuSubContent>
-            </UiDropdownMenuPortal>
-          </UiDropdownMenuSub>
+            </UiDropdownMenuSubContent>
+          </UiDropdownMenuPortal>
+        </UiDropdownMenuSub>
 
-          <UiDropdownMenuSub>
-            <UiDropdownMenuSubTrigger class="p-0 rounded-none">
-              <UiDropdownMenuItem class="flex gap-[.5ch] items-center pointer-events-none">
-                <PhTranslate size="20" />
-                <span>Langage</span>
-              </UiDropdownMenuItem>
-            </UiDropdownMenuSubTrigger>
-            <UiDropdownMenuPortal>
-              <UiDropdownMenuSubContent>
-                <UiDropdownMenuSubContent>
-                  <UiDropdownMenuItem class="flex gap-[.5ch] items-center rounded-none">
-                    <span>Français</span>
-                  </UiDropdownMenuItem>
-                  <UiDropdownMenuItem class="flex gap-[.5ch] items-center rounded-none">
-                    <span>English</span>
-                  </UiDropdownMenuItem>
-                </UiDropdownMenuSubContent>
-              </UiDropdownMenuSubContent>
-            </UiDropdownMenuPortal>
-          </UiDropdownMenuSub>
+        <UiDropdownMenuSeparator />
 
-          <UiDropdownMenuSeparator />
-
+        <template v-if="user">
           <UiDropdownMenuItem class="flex gap-[.5ch] items-center rounded-none" @click="pushRoute('/my/settings')">
             <PhGear size="20" weight="fill" />
             <span>Compte</span>
@@ -155,12 +171,10 @@ function pushRoute(to: AvailableRoutes) {
           </UiDropdownMenuItem>
         </template>
 
-        <template v-else>
-          <UiDropdownMenuItem class="flex gap-[.5ch] items-center rounded-none" @click="handleGoogleLogin">
-            <PhGear size="20" weight="fill" />
-            <span>Connexion</span>
-          </UiDropdownMenuItem>
-        </template>
+        <UiDropdownMenuItem v-if="!user" class="flex gap-[.5ch] items-center rounded-none" @click="handleGoogleLogin">
+          <PhGear size="20" weight="fill" />
+          <span>Connexion</span>
+        </UiDropdownMenuItem>
       </UiDropdownMenuContent>
     </UiDropdownMenu>
   </ClientOnly>

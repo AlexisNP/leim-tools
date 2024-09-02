@@ -5,9 +5,6 @@ useHead({
   titleTemplate: (titleChunk) => {
     return titleChunk ? `${titleChunk} — TTTools` : "TTTools";
   },
-  htmlAttrs: {
-    lang: "fr"
-  },
   meta: [
     { name: "charset", content: "UTF-8" },
     { name: "viewport", content: "width=device-width, initial-scale=1.0" },
