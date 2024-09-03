@@ -14,17 +14,9 @@ const isDefaultDate: ComputedRef<boolean> = computed<boolean>(() => areDatesIden
   <UiTooltipProvider :delay-duration="250">
     <UiTooltip>
       <UiTooltipTrigger as-child>
-        <ClientOnly>
-          <UiButton size="sm" :disabled="isDefaultDate" @click="jumpToDefaultDate">
-            Aujourd'hui
-          </UiButton>
-
-          <template #fallback>
-            <UiButton size="sm">
-              Aujourd'hui
-            </UiButton>
-          </template>
-        </ClientOnly>
+        <UiButton size="sm" :disabled="isDefaultDate" @click="jumpToDefaultDate">
+          {{ $t('entity.calendar.date.today') }}
+        </UiButton>
       </UiTooltipTrigger>
       <UiTooltipContent>
         <p>{{ defaultDateFormatted }}</p>

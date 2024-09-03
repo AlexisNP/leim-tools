@@ -53,8 +53,14 @@ const dateDuration: string | null = props.event.endDate
       </template>
       <template v-else>
         <p class="font-semibold text-sm opacity-75">
-          Du {{ getFormattedDateTitle(event.startDate, true) }} au
-          {{ getFormattedDateTitle(event.endDate, true) }}
+          {{
+            $t('entity.calendar.date.fromTo',
+              {
+                startDate: getFormattedDateTitle(event.startDate, true),
+                endDate: getFormattedDateTitle(event.endDate, true)
+              }
+            )
+          }}
         </p>
       </template>
       <div v-if="event.hidden" class="flex justify-end">
@@ -62,11 +68,13 @@ const dateDuration: string | null = props.event.endDate
           <UiTooltip>
             <UiTooltipTrigger as-child>
               <UiBadge class="flex gap-1">
-                <PhEye size="16" weight="fill" /> Évènement privé
+                <PhEye size="16" weight="fill" /> {{ $t('entity.calendar.event.isHidden') }}
               </UiBadge>
             </UiTooltipTrigger>
             <UiTooltipContent>
-              <p>Cet évènement est uniquement visible pour vous</p>
+              <p>
+                {{ $t('entity.calendar.event.hiddenTooltip') }}
+              </p>
             </UiTooltipContent>
           </UiTooltip>
         </UiTooltipProvider>
@@ -84,7 +92,7 @@ const dateDuration: string | null = props.event.endDate
       </p>
       <template v-if="dateDuration">
         <p class="w-fit text-sm italic opacity-75 flex items-center gap-1">
-          <PhHourglassMedium size="16" weight="fill" /> Pendant {{ dateDuration }}
+          <PhHourglassMedium size="16" weight="fill" /> {{ $t('entity.calendar.date.while', { duration: dateDuration } )}}
         </p>
       </template>
     </div>

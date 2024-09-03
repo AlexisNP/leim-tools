@@ -70,10 +70,12 @@ function handleCancel() {
       @pointer-down-outside="(e) => e.preventDefault()"
     >
       <header class="pl-8 grid gap-y-2">
-        <UiDialogTitle> Modifier l'évènement</UiDialogTitle>
+        <UiDialogTitle>
+          {{ $t('entity.calendar.event.editDialog.title') }}
+        </UiDialogTitle>
 
         <UiDialogDescription>
-          Mettre à jour les données de l'évènement
+          {{ $t('entity.calendar.event.editDialog.subtitle') }}
         </UiDialogDescription>
       </header>
 
@@ -89,7 +91,7 @@ function handleCancel() {
                 type="text"
                 name="new-event-title"
                 required
-                placeholder="Titre de l'évènement"
+                :placeholder="$t('entity.calendar.event.title')"
                 class="w-full -my-1 py-1 -mx-1 px-1 text-lg border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600"
               >
             </div>
@@ -100,7 +102,7 @@ function handleCancel() {
               id="new-event-description"
               v-model="eventSkeleton.description"
               name="new-event-description"
-              placeholder="Ajouter une description"
+              :placeholder="$t('entity.addDescription')"
               class="w-full -my-1 py-1 -mx-1 px-1 min-h-24 max-h-36 text-sm border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600"
             />
           </div>
@@ -111,7 +113,7 @@ function handleCancel() {
 
               <CalendarInputRPGDate
                 v-model:model-value="eventSkeleton.startDate"
-                placeholder="Date de début"
+                :placeholder="$t('entity.calendar.date.start')"
                 :initial-date="lastActiveEvent?.startDate"
                 :required="true"
               />
@@ -120,7 +122,7 @@ function handleCancel() {
 
               <CalendarInputRPGDate
                 v-model:model-value="eventSkeleton.endDate"
-                placeholder="Date de fin"
+                :placeholder="$t('entity.calendar.date.end')"
                 :initial-date="lastActiveEvent?.endDate"
               />
             </div>
@@ -155,7 +157,7 @@ function handleCancel() {
                 v-model="eventSkeleton.location"
                 type="text"
                 name="new-event-location"
-                placeholder="Ajouter un endroit"
+                :placeholder="$t('entity.calendar.event.addLocation')"
                 class="w-full -my-1 py-2 px-2 text-sm border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600">
             </div>
           </div>
@@ -169,10 +171,10 @@ function handleCancel() {
                 <UiSwitch id="new-event-visibility" v-model:checked="eventSkeleton.hidden" />
                 <UiLabel for="new-event-visibility">
                   <template v-if="!eventSkeleton.hidden">
-                    Évènement visible par tous
+                    {{ $t('entity.calendar.event.isPublic') }}
                   </template>
                   <template v-else>
-                    Évènement caché
+                    {{ $t('entity.calendar.event.isHidden') }}
                   </template>
                 </UiLabel>
               </div>
@@ -189,7 +191,7 @@ function handleCancel() {
         <footer class="flex gap-2 justify-end">
           <Transition name="fade-delay">
             <UiButton v-if="isLoading" type="button" size="sm" variant="destructive" @click.prevent="handleCancel">
-              Annuler
+              {{ $t('ui.action.cancel') }}
             </UiButton>
           </Transition>
 
@@ -198,7 +200,7 @@ function handleCancel() {
               <PhCircleNotch v-if="isLoading" size="20" class="animate-spin"/>
             </Transition>
 
-            Enregistrer
+            {{ $t('ui.action.save') }}
           </UiButton>
         </footer>
       </form>

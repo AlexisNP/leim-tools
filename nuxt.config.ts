@@ -15,7 +15,11 @@ export default defineNuxtConfig({
   css: ["~/assets/main.css"],
 
   i18n: {
-    vueI18n: "./i18n.config.ts"
+    vueI18n: "./i18n.config.ts",
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: "tttools_lang"
+    },
   },
 
   supabase: {

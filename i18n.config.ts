@@ -11,7 +11,9 @@ export default defineI18nConfig(() => ({
         action: {
           back: "Back",
           cancel: "Cancel",
-          save: "Save"
+          save: "Save",
+          delete: "Delete",
+          edit: "Edit",
         },
         greeting: "Connected as {user}",
         sidebarMenu: {
@@ -30,7 +32,17 @@ export default defineI18nConfig(() => ({
         title: "Title"
       },
       entity: {
+        searchCategories: "Search categories",
+        noCategoriesFound: "No categories found.",
+        addDescription: "Add a description",
         deleteOne: "Delete \"{entity}\"",
+        advancedSearch: {
+          title: "Advanced search",
+          subtitle: "Search through calendar and world data",
+          older: "Older",
+          newer: "Newer",
+          ctaPlaceholder: "Search an event, characters…"
+        },
         world: {
           nameSingular: "World",
           namePlural: "Worlds",
@@ -40,6 +52,33 @@ export default defineI18nConfig(() => ({
           namePlural: "Calendars",
           addSingle: "Add a calendar",
           notFoundForWorld: "No calendar for this world… yet !",
+          isLoading: "Calendar is loading…",
+          date: {
+            start: "Start date",
+            end: "End date",
+            today: "Today",
+            fromTo: "From {startDate} to {endDate}",
+            while: "During {duration}",
+          },
+          event: {
+            nameSingular: "Event",
+            namePlural: "Events",
+            title: "Event title",
+            isStart: "Start",
+            isEnd: "End",
+            isHidden: "Hidden event",
+            isPublic: "Public event",
+            hiddenTooltip: "This event is visible only to game masters.",
+            addLocation: "Add a place",
+            editDialog: {
+              title: "Edit event",
+              subtitle: "Update event data",
+            },
+            deleteDialog: {
+              title: "Delete this event",
+              subtitle: "Data associated with this event will be lost and you won't be able to retrieve it !",
+            }
+          },
           createDialog: {
             title: "New calendar",
             tabs: {
@@ -73,6 +112,10 @@ export default defineI18nConfig(() => ({
             chooseOne: "Choose a month",
             deleteOne: "Remove {month} from this calendar"
           }
+        },
+        character: {
+          nameSingular: "Character",
+          namePlural: "Characters",
         }
       }
     },
@@ -85,7 +128,9 @@ export default defineI18nConfig(() => ({
         action: {
           back: "Retour",
           cancel: "Annuler",
-          save: "Sauvegarder"
+          save: "Sauvegarder",
+          delete: "Supprimer",
+          edit: "Modifier",
         },
         greeting: "Connecté en tant que {user}",
         sidebarMenu: {
@@ -104,7 +149,17 @@ export default defineI18nConfig(() => ({
         title: "Titre"
       },
       entity: {
+        searchCategories: "Rechercher les catégories",
+        noCategoriesFound: "Aucune catégorie trouvée.",
+        addDescription: "Ajouter une description",
         deleteOne: "Supprimer \"{entity}\"",
+        advancedSearch: {
+          title: "Recherche avancée",
+          subtitle: "Rechercher les données disponibles sur le calendrier",
+          older: "Plus ancien",
+          newer: "Plus récent",
+          ctaPlaceholder: "Rechercher un évènement, personnage…"
+        },
         world: {
           nameSingular: "Monde",
           namePlural: "Mondes",
@@ -114,6 +169,33 @@ export default defineI18nConfig(() => ({
           namePlural: "Calendrier",
           addSingle: "Ajouter un calendrier",
           notFoundForWorld: "Aucun calendrier pour ce monde… pour l'instant !",
+          isLoading: "Chargement du calendrier…",
+          date: {
+            start: "Date de début",
+            end: "Date de fin",
+            today: "Aujourd'hui",
+            fromTo: "Du {startDate} au {endDate}",
+            while: "Pendant {duration}",
+          },
+          event: {
+            nameSingular: "Évènement",
+            namePlural: "Évènements",
+            title: "Titre de l'évènement",
+            isStart: "Début",
+            isEnd: "Fin",
+            isHidden: "Évènement privé",
+            isPublic: "Évènement public",
+            hiddenTooltip: "Cet évènement est uniquement visible pour les maîtres du jeu.",
+            addLocation: "Ajouter un endroit",
+            editDialog: {
+              title: "Modifier l'évènement",
+              subtitle: "Mettre à jour les données de l'évènement",
+            },
+            deleteDialog: {
+              title: "Supprimer l'évènement",
+              subtitle: "Les données associés à cet évènement seront supprimées et vous ne pourrez plus les récupérer !",
+            }
+          },
           createDialog: {
             title: "Nouveau calendrier",
             tabs: {
@@ -148,6 +230,10 @@ export default defineI18nConfig(() => ({
             chooseOne: "Choisir un mois",
             deleteOne: "Supprimer {month} du calendrier"
           }
+        },
+        character: {
+          nameSingular: "Personnage",
+          namePlural: "Personnages",
         }
       }
     }

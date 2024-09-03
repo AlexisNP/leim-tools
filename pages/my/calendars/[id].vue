@@ -32,7 +32,9 @@ const categories = computed<Category[]>(() => catData?.value?.data as Category[]
     </Head>
 
     <div class="grid gap-2 justify-items-center opacity-50">
-      <p>Chargement du calendrier</p>
+      <p>
+        {{ $t('entity.calendar.isLoading') }}
+      </p>
       <PhCircleNotch size="50" class="animate-spin"/>
     </div>
   </div>

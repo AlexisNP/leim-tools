@@ -87,8 +87,14 @@ function deployDeleteModal() {
           </template>
           <template v-else>
             <p class="font-semibold">
-              Du {{ getFormattedDateTitle(event.startDate, true) }} au
-              {{ getFormattedDateTitle(event.endDate, true) }}
+              {{
+                $t('entity.calendar.date.fromTo',
+                  {
+                    startDate: getFormattedDateTitle(event.startDate, true),
+                    endDate: getFormattedDateTitle(event.endDate, true)
+                  }
+                )
+              }}
             </p>
           </template>
         </div>
@@ -105,7 +111,8 @@ function deployDeleteModal() {
         </p>
         <template v-if="dateDuration">
           <p class="text-sm italic dark:opacity-75 flex items-center gap-1">
-            <PhHourglassMedium size="16" weight="fill" /> Pendant {{ dateDuration }}
+            <PhHourglassMedium size="16" weight="fill" />
+            {{ $t('entity.calendar.date.while', { duration: dateDuration } )}}
           </p>
         </template>
       </div>
@@ -146,8 +153,8 @@ function deployDeleteModal() {
           <UiCommand>
             <UiCommandList>
               <UiCommandGroup>
-                <UiCommandItem value="edit-event" @select="deployEditModal"> Modifier </UiCommandItem>
-                <UiCommandItem value="delete-event" @select="deployDeleteModal"> Supprimer </UiCommandItem>
+                <UiCommandItem value="edit-event" @select="deployEditModal"> {{ $t('ui.action.edit') }} </UiCommandItem>
+                <UiCommandItem value="delete-event" @select="deployDeleteModal"> {{ $t('ui.action.delete') }} </UiCommandItem>
               </UiCommandGroup>
             </UiCommandList>
           </UiCommand>
@@ -162,7 +169,7 @@ function deployDeleteModal() {
           title="Naviguer au début"
           @click="handleJumpToDate(event.startDate!)"
         >
-          <PhHourglassHigh size="16" weight="fill" /> Début
+          <PhHourglassHigh size="16" weight="fill" /> {{ $t('entity.calendar.event.isStart') }}
         </button>
       </UiBadge>
       <UiBadge class="hover:bg-indigo-400 dark:hover:bg-slate-300" as-child title="Naviguer à la fin">
@@ -171,7 +178,7 @@ function deployDeleteModal() {
           title="Naviguer à la fin"
           @click="handleJumpToDate(event.endDate!)"
         >
-          <PhHourglassLow size="16" weight="fill" /> Fin
+          <PhHourglassLow size="16" weight="fill" /> {{ $t('entity.calendar.event.isEnd') }}
         </button>
       </UiBadge>
     </nav>
@@ -180,11 +187,13 @@ function deployDeleteModal() {
       <UiTooltip>
         <UiTooltipTrigger as-child>
           <UiBadge class="absolute -top-2 right-2 flex gap-1">
-            <PhEye size="16" weight="fill" /> Évènement privé
+            <PhEye size="16" weight="fill" /> {{ $t('entity.calendar.event.isHidden') }}
           </UiBadge>
         </UiTooltipTrigger>
         <UiTooltipContent>
-          <p>Cet évènement est uniquement visible pour vous</p>
+          <p>
+            {{ $t('entity.calendar.event.hiddenTooltip') }}
+          </p>
         </UiTooltipContent>
       </UiTooltip>
     </UiTooltipProvider>

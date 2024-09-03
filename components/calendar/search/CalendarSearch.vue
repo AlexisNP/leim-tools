@@ -241,11 +241,11 @@ function handleCategorySelect(e: (Category)) {
       }"
     >
       <VisuallyHidden>
-        <UiDialogTitle> Recherche avancée </UiDialogTitle>
+        <UiDialogTitle> {{ $t('entity.advancedSearch.title') }} </UiDialogTitle>
       </VisuallyHidden>
       <VisuallyHidden>
         <UiDialogDescription>
-          Rechercher les données disponibles sur le calendrier
+          {{ $t('entity.advancedSearch.title') }}
         </UiDialogDescription>
       </VisuallyHidden>
 
@@ -256,7 +256,7 @@ function handleCategorySelect(e: (Category)) {
             id="search"
             v-model:model-value="searchQuery"
             type="text"
-            placeholder="Rechercher le calendrier"
+            :placeholder="$t('entity.advancedSearch.ctaPlaceholder')"
             class="pl-10 py-6 text-lg"
             autocomplete="off"
           />
@@ -274,10 +274,10 @@ function handleCategorySelect(e: (Category)) {
               @update:model-value="handleEntitySwitch()"
             >
               <UiToggleGroupItem value="events" aria-label="Uniquement les évènements">
-                Évènements
+                {{ $t('entity.calendar.event.namePlural') }}
               </UiToggleGroupItem>
               <UiToggleGroupItem value="characters" aria-label="Uniquement les personnages">
-                Personnages
+                {{ $t('entity.character.namePlural') }}
               </UiToggleGroupItem>
             </UiToggleGroup>
           </div>
@@ -341,7 +341,7 @@ function handleCategorySelect(e: (Category)) {
                   </UiButton>
                 </UiTooltipTrigger>
                 <UiTooltipContent>
-                  <p>Plus ancien</p>
+                  <p>{{ $t('entity.advancedSearch.older') }}</p>
                 </UiTooltipContent>
               </UiTooltip>
             </UiTooltipProvider>
@@ -358,7 +358,7 @@ function handleCategorySelect(e: (Category)) {
                   </UiButton>
                 </UiTooltipTrigger>
                 <UiTooltipContent>
-                  <p>Plus récent</p>
+                  <p>{{ $t('entity.advancedSearch.newer') }}</p>
                 </UiTooltipContent>
               </UiTooltip>
             </UiTooltipProvider>
