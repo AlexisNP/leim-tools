@@ -67,10 +67,28 @@ useSortable(monthSortableList, model.value, { animation: 150, handle: ".handle" 
 <template>
   <div class="grid md:grid-cols-12 gap-4 items-center">
     <div class="md:col-start-2 md:col-span-5">
-      <UiInput id="new-month-name" ref="monthNameRef" v-model="monthName" type="text" name="newMonthName" placeholder="Nom du mois" :class="cn({ 'border-red-600': monthNameIsTaken })"/>
+      <UiInput
+        id="new-month-name"
+        ref="monthNameRef"
+        v-model="monthName"
+        type="text"
+        name="newMonthName"
+        :placeholder="$t('entity.calendar.months.inputName')"
+        :class="cn({ 'border-red-600': monthNameIsTaken })"
+      />
     </div>
     <div class="md:col-span-5">
-      <UiInput id="new-month-days" ref="monthDaysRef" v-model="monthDays" type="number" name="newMonthName" placeholder="Nombre de jours" min="0" step="1" class="invalid:border-red-600" />
+      <UiInput
+        id="new-month-days"
+        ref="monthDaysRef"
+        v-model="monthDays"
+        type="number"
+        name="newMonthName"
+        :placeholder="$t('entity.calendar.months.daysNb')"
+        min="0"
+        step="1"
+        class="invalid:border-red-600"
+      />
     </div>
     <div class="md:col-span-1">
       <UiButton size="icon" class="rounded-full h-8 w-8" :disabled="!validNewMonth" @click.prevent="addMonthToModel">
@@ -78,7 +96,10 @@ useSortable(monthSortableList, model.value, { animation: 150, handle: ".handle" 
       </UiButton>
     </div>
     <div class="md:col-span-full">
-      <div class="border-[1px] dark:border-slate-800 p-4 rounded-sm max-h-80 overflow-y-auto" :class="model.length ? 'md:grid md:grid-cols-12 md:gap-4 md:items-center' : ''">
+      <div
+        class="border-[1px] dark:border-slate-800 p-4 rounded-sm max-h-80 overflow-y-auto"
+        :class="model.length ? 'md:grid md:grid-cols-12 md:gap-4 md:items-center' : ''"
+      >
           <div v-if="model.length" class="hidden md:block col-span-1">
             <ul class="grid gap-y-4 justify-center">
               <li v-for="(m, i) in model" :key="`num-${m.name}`">
@@ -88,6 +109,7 @@ useSortable(monthSortableList, model.value, { animation: 150, handle: ".handle" 
               </li>
             </ul>
           </div>
+
           <div class="md:col-span-11">
             <ul ref="monthSortableList" class="grid gap-y-2" :class="model.length ? 'visible' : 'absolute invisible'">
               <template v-if="model.length">
@@ -102,12 +124,23 @@ useSortable(monthSortableList, model.value, { animation: 150, handle: ".handle" 
                       {{ m.name }}
                     </div>
                   </div>
+
                   <div class="md:col-span-2">
-                    <UiInput :id="`month-days-n${i}`" v-model="m.days" class="bg-transparent border-none" type="number" :name="`monthDays-n${i}`" placeholder="Nombre de jours" min="0" />
+                    <UiInput
+                      :id="`month-days-n${i}`"
+                      v-model="m.days"
+                      class="bg-transparent border-none"
+                      type="number"
+                      :name="`monthDays-n${i}`"
+                      :placeholder="$t('entity.calendar.months.daysNb')"
+                      min="0"
+                    />
                   </div>
+
                   <div class="md:col-span-1">
-                    jour(s)
+                    {{ $t('entity.calendar.months.daysMaybePlural') }}
                   </div>
+
                   <div class="md:col-start-12">
                     <UiTooltipProvider>
                       <UiTooltip>
@@ -117,7 +150,9 @@ useSortable(monthSortableList, model.value, { animation: 150, handle: ".handle" 
                           </UiButton>
                         </UiTooltipTrigger>
                         <UiTooltipContent>
-                          <p>Supprimer {{ m.name }} du calendrier</p>
+                          <p>
+                            {{ $t('entity.calendar.months.deleteOne', { month: m.name }) }}
+                          </p>
                         </UiTooltipContent>
                       </UiTooltip>
                     </UiTooltipProvider>
@@ -127,7 +162,9 @@ useSortable(monthSortableList, model.value, { animation: 150, handle: ".handle" 
             </ul>
           </div>
         <template v-if="!model.length">
-          <p class="col-span-12 text-lg text-center italic opacity-50">Aucun mois pour l'instant</p>
+          <p class="col-span-12 text-lg text-center italic opacity-50">
+            {{ $t('entity.calendar.months.none') }}
+          </p>
         </template>
       </div>
     </div>

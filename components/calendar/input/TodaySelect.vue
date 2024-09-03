@@ -33,7 +33,7 @@ watch(model.value, (n, _o) => {
 
 <template>
   <div class="flex gap-2 items-stretch">
-    <UiInput id="new-month-current-day" v-model="model.day" type="number" name="newMonthCurrentDay" placeholder="Jour" min="1" step="1" class="invalid:border-red-600" />
+    <UiInput id="new-month-current-day" v-model="model.day" type="number" name="newMonthCurrentDay" :placeholder="$t('entity.calendar.months.daysNameSingular')" min="1" step="1" class="invalid:border-red-600" />
 
     <UiDropdownMenu>
       <UiDropdownMenuTrigger as-child :disabled="props.availableMonths.length < 1">
@@ -41,18 +41,20 @@ watch(model.value, (n, _o) => {
           <PhCalendarBlank size="18" weight="fill" />
 
           <template v-if="props.availableMonths.length < 1">
-            Aucun mois disponible
+            {{ $t('entity.calendar.months.noneAvailable') }}
           </template>
           <template v-else-if="model.month && typeof model.month === 'number'">
             {{ props.availableMonths[model.month - 1].name }}
           </template>
           <template v-else>
-            Choisir le mois
+            {{ $t('entity.calendar.months.chooseOne') }}
           </template>
         </UiButton>
       </UiDropdownMenuTrigger>
       <UiDropdownMenuContent :side="'bottom'" :collision-padding="30">
-        <UiDropdownMenuLabel>Mois disponibles</UiDropdownMenuLabel>
+        <UiDropdownMenuLabel>
+          {{ $t('entity.calendar.months.available') }}
+        </UiDropdownMenuLabel>
         <UiDropdownMenuSeparator />
         <UiDropdownMenuItem
           v-for="m in props.availableMonths"
@@ -64,6 +66,6 @@ watch(model.value, (n, _o) => {
       </UiDropdownMenuContent>
     </UiDropdownMenu>
 
-    <UiInput id="new-month-current-day" v-model="model.year" type="number" name="newMonthCurrentYear" placeholder="Année" step="1" class="invalid:border-red-600" />
+    <UiInput id="new-month-current-day" v-model="model.year" type="number" name="newMonthCurrentYear" :placeholder="$t('entity.calendar.years.nameSingular')" step="1" class="invalid:border-red-600" />
   </div>
 </template>
