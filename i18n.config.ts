@@ -59,7 +59,11 @@ export default defineI18nConfig(() => ({
           date: {
             start: "Start date",
             end: "End date",
+            afterTomorrow: "In 2 days",
+            tomorrow: "Tomorrow",
             today: "Today",
+            yesterday: "Yesterday",
+            beforeYesterday: "2 days ago",
             fromTo: "From {startDate} to {endDate}",
             while: "During {duration}",
           },
@@ -199,7 +203,11 @@ export default defineI18nConfig(() => ({
           date: {
             start: "Date de début",
             end: "Date de fin",
+            afterTomorrow: "Après-demain",
+            tomorrow: "Demain",
             today: "Aujourd'hui",
+            yesterday: "Hier",
+            beforeYesterday: "Avant-hier",
             fromTo: "Du {startDate} au {endDate}",
             while: "Pendant {duration}",
           },

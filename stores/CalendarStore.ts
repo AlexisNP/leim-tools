@@ -495,19 +495,19 @@ export const useCalendar = defineStore("calendar", () => {
     if (formatting === "complex") {
     // Handle if it's the same date
       if (direction === "present") {
-        return "Aujourd'hui"
+        return t("entity.calendar.date.today")
       }
       if (differenceInDays === -2) {
-        return "Avant-hier"
+        return t("entity.calendar.date.beforeYesterday")
       }
       if (differenceInDays === -1) {
-        return "Hier"
+        return t("entity.calendar.date.yesterday")
       }
       if (differenceInDays === 1) {
-        return "Demain"
+        return t("entity.calendar.date.tomorrow")
       }
       if (differenceInDays === 2) {
-        return "Après-demain"
+        return t("entity.calendar.date.afterTomorrow")
       }
 
       // Get relevant prefix for the string
