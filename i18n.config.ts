@@ -27,11 +27,14 @@ export default defineI18nConfig(() => ({
         dark: "Dark",
         light: "Light",
         system: "System",
+        displayMode: "Display mode"
       },
       common: {
         title: "Title"
       },
       entity: {
+        categoriesNameSingular: "Category",
+        categoriesNamePlural: "Categories",
         searchCategories: "Search categories",
         noCategoriesFound: "No categories found.",
         addDescription: "Add a description",
@@ -101,6 +104,7 @@ export default defineI18nConfig(() => ({
             nameSingular: "Year",
           },
           months: {
+            nameSingular: "Month",
             inputName: "Month's name",
             daysNb: "Number of days",
             daysNameSingular: "Day",
@@ -144,11 +148,14 @@ export default defineI18nConfig(() => ({
         dark: "Sombre",
         light: "Clair",
         system: "Système",
+        displayMode: "Mode d'affichage",
       },
       common: {
         title: "Titre"
       },
       entity: {
+        categoriesNameSingular: "Catégorie",
+        categoriesNamePlural: "Catégories",
         searchCategories: "Rechercher les catégories",
         noCategoriesFound: "Aucune catégorie trouvée.",
         addDescription: "Ajouter une description",
@@ -218,12 +225,13 @@ export default defineI18nConfig(() => ({
             nameSingular: "Année",
           },
           months: {
+            nameSingular: "Mois",
             inputName: "Nom du mois",
             daysNb: "Nombre de jours",
             daysNameSingular: "Jour",
             daysNamePlural: "Jours",
             daysMaybePlural: "jour(s)",
-            yearsSingular: "Année",
+            Singular: "Année",
             available: "Mois disponibles",
             none: "Aucun mois pour l'instant",
             noneAvailable: "Aucun mois disponible",

@@ -25,6 +25,8 @@ type CalendarCurrentDate = {
 }
 
 export const useCalendar = defineStore("calendar", () => {
+  const { t } = useI18n()
+
   /**
    * Static calendar config
    */
@@ -326,7 +328,7 @@ export const useCalendar = defineStore("calendar", () => {
   function getViewTypeTitle(viewType: CalendarViewType): string {
     switch (viewType) {
       case "year":
-        return "Année"
+        return t("entity.calendar.years.nameSingular")
 
       case "decade":
         return "Décennie"
@@ -336,7 +338,7 @@ export const useCalendar = defineStore("calendar", () => {
 
       case "month":
       default:
-        return "Mois"
+        return t("entity.calendar.months.nameSingular")
     }
   }
 

@@ -18,7 +18,9 @@ const viewTypeTitle = computed(() => getViewTypeTitle(currentConfig.viewType))
       </UiButton>
     </UiDropdownMenuTrigger>
     <UiDropdownMenuContent :side="'bottom'" :collision-padding="30">
-      <UiDropdownMenuLabel>Mode d'affichage</UiDropdownMenuLabel>
+      <UiDropdownMenuLabel>
+        {{ $t('ui.displayMode') }}
+      </UiDropdownMenuLabel>
       <UiDropdownMenuSeparator />
       <UiDropdownMenuItem
         v-for="option in viewTypeOptions"
