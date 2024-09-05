@@ -16,9 +16,7 @@ defineEmits<{
 const { getRelativeString, defaultDate, getFormattedDateTitle } = useCalendar()
 
 const dateDifference: string = getRelativeString(defaultDate, props.event.startDate)
-const dateDuration: string | null = props.event.endDate
-  ? getRelativeString(props.event.startDate, props.event.endDate, "compact")
-  : null
+const dateDuration = computed<string | null>(() => props.event.endDate ? getRelativeString(props.event.startDate, props.event.endDate, "compact") : null)
 </script>
 
 <template>

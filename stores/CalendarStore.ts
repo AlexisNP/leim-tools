@@ -496,11 +496,23 @@ export const useCalendar = defineStore("calendar", () => {
       years: "xYearsNext",
       yearsAndMonths: "xYearsAndMonthsNext",
     }
+    const futureKeysCompact: DateDirectionTranslationKeys = {
+      days: "xDaysNextCompact",
+      months: "xMonthsNextCompact",
+      years: "xYearsNextCompact",
+      yearsAndMonths: "xYearsAndMonthsNextCompact",
+    }
     const pastKeys: DateDirectionTranslationKeys = {
       days: "xDaysAgo",
       months: "xMonthsAgo",
       years: "xYearsAgo",
       yearsAndMonths: "xYearsAndMonthsAgo",
+    }
+    const pastKeysCompact: DateDirectionTranslationKeys = {
+      days: "xDaysAgoCompact",
+      months: "xMonthsAgoCompact",
+      years: "xYearsAgoCompact",
+      yearsAndMonths: "xYearsAndMonthsAgoCompact",
     }
     let directionKeys: DateDirectionTranslationKeys = pastKeys
 
@@ -534,6 +546,13 @@ export const useCalendar = defineStore("calendar", () => {
         directionKeys = futureKeys
       } else {
         directionKeys = pastKeys
+      }
+    } else {
+      // Get relevant prefix for the string (without the prefix)
+      if (direction === "future") {
+        directionKeys = futureKeysCompact
+      } else {
+        directionKeys = pastKeysCompact
       }
     }
 
