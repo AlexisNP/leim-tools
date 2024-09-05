@@ -100,11 +100,30 @@ export default defineI18nConfig(() => ({
             title: "Are you sure you want to delete this calendar ?",
             subtitle: "Its events won't be accessible anymore and you won't be able to retrieve the deleted data !",
           },
+          millennia: {
+            nameSingular: "Millennia",
+            nextSingular: "Next millennia",
+            prevSingular: "Last millennia",
+          },
+          centuries: {
+            nameSingular: "Century",
+            nextSingular: "Next century",
+            prevSingular: "Last century",
+          },
+          decades: {
+            nameSingular: "Decade",
+            nextSingular: "Next decade",
+            prevSingular: "Last decade",
+          },
           years: {
             nameSingular: "Year",
+            nextSingular: "Next year",
+            prevSingular: "Last year",
           },
           months: {
             nameSingular: "Month",
+            nextSingular: "Next month",
+            prevSingular: "Last month",
             inputName: "Month's name",
             daysNb: "Number of days",
             daysNameSingular: "Day",
@@ -221,11 +240,30 @@ export default defineI18nConfig(() => ({
             title: "Êtes-vous sûr de supprimer ce calendrier ?",
             subtitle: "Les évènements ne seront plus accessibles et vous ne pourrez plus récupérer les données !",
           },
+          millennia: {
+            nameSingular: "Millénaire",
+            nextSingular: "Millénaire suivant",
+            prevSingular: "Millénaire précédent",
+          },
+          centuries: {
+            nameSingular: "Siècle",
+            nextSingular: "Siècle suivant",
+            prevSingular: "Siècle précédent",
+          },
+          decades: {
+            nameSingular: "Décennie",
+            nextSingular: "Décennie suivante",
+            prevSingular: "Décennie précédente",
+          },
           years: {
             nameSingular: "Année",
+            nextSingular: "Année suivante",
+            prevSingular: "Année précédente",
           },
           months: {
             nameSingular: "Mois",
+            nextSingular: "Mois suivant",
+            prevSingular: "Mois précédent",
             inputName: "Nom du mois",
             daysNb: "Nombre de jours",
             daysNameSingular: "Jour",

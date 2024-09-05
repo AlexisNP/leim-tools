@@ -9,6 +9,8 @@ import {
   PhCaretRight
 } from "@phosphor-icons/vue"
 
+const { t } = useI18n()
+
 interface DirectionLabels {
   pastFar: string
   pastNear: string
@@ -23,35 +25,35 @@ const activeDirectionLabels: ComputedRef<DirectionLabels> = computed(() => {
   switch (currentConfig.viewType) {
     case "month":
       return {
-        pastFar: "Année précédente",
-        pastNear: "Mois précédent",
-        futureNear: "Mois suivant",
-        futureFar: "Année suivante"
+        pastFar: t("entity.calendar.years.prevSingular"),
+        pastNear: t("entity.calendar.months.prevSingular"),
+        futureNear: t("entity.calendar.months.nextSingular"),
+        futureFar: t("entity.calendar.years.nextSingular")
       }
 
     case "year":
       return {
-        pastFar: "Décennie précédente",
-        pastNear: "Année précédente",
-        futureNear: "Année suivante",
-        futureFar: "Décennie suivante"
+        pastFar: t("entity.calendar.decades.prevSingular"),
+        pastNear: t("entity.calendar.years.prevSingular"),
+        futureNear: t("entity.calendar.years.nextSingular"),
+        futureFar: t("entity.calendar.decades.nextSingular")
       }
 
     case "decade":
       return {
-        pastFar: "Siècle précédent",
-        pastNear: "Décennie précédente",
-        futureNear: "Décennie suivante",
-        futureFar: "Siècle suivant"
+        pastFar: t("entity.calendar.centuries.prevSingular"),
+        pastNear: t("entity.calendar.decades.prevSingular"),
+        futureNear: t("entity.calendar.decades.nextSingular"),
+        futureFar: t("entity.calendar.centuries.nextSingular")
       }
 
     case "century":
     default:
       return {
-        pastFar: "Millénaire précédent",
-        pastNear: "Siècle précédent",
-        futureNear: "Siècle suivant",
-        futureFar: "Millénaire suivant"
+        pastFar: t("entity.calendar.millenias.prevSingular"),
+        pastNear: t("entity.calendar.centuries.prevSingular"),
+        futureNear: t("entity.calendar.centuries.nextSingular"),
+        futureFar: t("entity.calendar.millenias.nextSingular")
       }
   }
 })
