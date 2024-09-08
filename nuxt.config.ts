@@ -18,8 +18,10 @@ export default defineNuxtConfig({
     vueI18n: "./i18n.config.ts",
     detectBrowserLanguage: {
       useCookie: true,
-      cookieKey: "tttools_lang"
-    },
+      cookieKey: "tttools_lang",
+      redirectOn: "all",
+      alwaysRedirect: true,
+    }
   },
 
   supabase: {
