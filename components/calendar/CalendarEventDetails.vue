@@ -29,7 +29,7 @@ const eventDetails = ref<HTMLElement>()
 
 const emit = defineEmits(["query:close-popover"])
 
-const dateDifference: string = getRelativeString(defaultDate, props.event.startDate)
+const dateDifference = computed<string>(() => getRelativeString(defaultDate, props.event.startDate))
 const dateDuration = computed<string | null>(() => props.event.endDate ? getRelativeString(props.event.startDate, props.event.endDate, "compact") : null)
 
 function handleJumpToDate(date: RPGDate) {

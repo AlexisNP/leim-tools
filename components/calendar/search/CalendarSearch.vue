@@ -298,7 +298,7 @@ function handleCategorySelect(e: (Category)) {
                 class="w-full"
               >
                 <ComboboxAnchor as-child>
-                  <ComboboxInput :placeholder="$t('entity.categoriesNamePlural')" as-child>
+                  <ComboboxInput :placeholder="$t('entity.category.namePlural')" as-child>
                     <UiTagsInputInput
                       class="w-full px-3"
                       :class="selectedCategories.length > 0 ? 'mt-2' : ''"

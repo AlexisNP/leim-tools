@@ -33,10 +33,14 @@ export default defineI18nConfig(() => ({
         title: "Title"
       },
       entity: {
-        categoriesNameSingular: "Category",
-        categoriesNamePlural: "Categories",
-        searchCategories: "Search categories",
-        noCategoriesFound: "No categories found.",
+        category: {
+          nameSingular: "Category",
+          namePlural: "Categories",
+          search: "Search categories",
+          notFoundAny: "No categories found.",
+          addPrimary: "Add a primary category",
+          addSecondaries: "Add secondary categories"
+        },
         addDescription: "Add a description",
         deleteOne: "Delete \"{entity}\"",
         advancedSearch: {
@@ -93,6 +97,8 @@ export default defineI18nConfig(() => ({
             isPublic: "Public event",
             hiddenTooltip: "This event is visible only to game masters.",
             addLocation: "Add a place",
+            prevPage: "Previous page with events",
+            nextPage: "Next page with events",
             editDialog: {
               title: "Edit event",
               subtitle: "Update event data",
@@ -193,10 +199,14 @@ export default defineI18nConfig(() => ({
         title: "Titre"
       },
       entity: {
-        categoriesNameSingular: "Catégorie",
-        categoriesNamePlural: "Catégories",
-        searchCategories: "Rechercher les catégories",
-        noCategoriesFound: "Aucune catégorie trouvée.",
+        category: {
+          nameSingular: "Catégorie",
+          namePlural: "Catégories",
+          search: "Rechercher les catégories",
+          notFoundAny: "Aucune catégorie trouvée.",
+          addPrimary: "Ajouter une catégorie principale",
+          addSecondaries: "Ajouter des catégories secondaires"
+        },
         addDescription: "Ajouter une description",
         deleteOne: "Supprimer \"{entity}\"",
         advancedSearch: {
@@ -253,6 +263,8 @@ export default defineI18nConfig(() => ({
             isPublic: "Évènement public",
             hiddenTooltip: "Cet évènement est uniquement visible pour les maîtres du jeu.",
             addLocation: "Ajouter un endroit",
+            prevPage: "Précédente page à évènements",
+            nextPage: "Prochaine page à évènements",
             editDialog: {
               title: "Modifier l'évènement",
               subtitle: "Mettre à jour les données de l'évènement",

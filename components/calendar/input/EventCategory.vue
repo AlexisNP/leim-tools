@@ -52,8 +52,8 @@ const filteredCategories = computed(() =>
       class="w-fit h-[33vh] p-0"
     >
       <UiCommand v-model="model" v-model:searchTerm="searchTerm">
-        <UiCommandInput :placeholder="$t('entity.searchCategories')" />
-        <UiCommandEmpty>{{ $t('entity.noCategoriesFound') }}</UiCommandEmpty>
+        <UiCommandInput :placeholder="$t('entity.category.search')" />
+        <UiCommandEmpty>{{ $t('entity.category.notFoundAny') }}</UiCommandEmpty>
         <UiCommandList>
           <UiCommandGroup>
             <UiCommandItem

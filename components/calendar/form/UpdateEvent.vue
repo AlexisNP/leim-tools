@@ -143,7 +143,7 @@ function handleCancel() {
               <PhTag size="18" weight="fill" />
 
               <div class="w-1/2">
-                <CalendarInputEventCategories v-model="eventSkeleton.secondaryCategories" placeholder="Ajouter des catégories secondaires" />
+                <CalendarInputEventCategories v-model="eventSkeleton.secondaryCategories" :placeholder="Ajouter des catégories secondaires" />
               </div>
             </div>
           </div> -->
