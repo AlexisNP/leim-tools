@@ -17,6 +17,7 @@ export default defineI18nConfig(() => ({
           edit: "Edit",
         },
         greeting: "Connected as {user}",
+        anonymousGreeting: "Preferences",
         sidebarMenu: {
           appearance: "Appearance",
           language: "Language",
@@ -189,6 +190,7 @@ export default defineI18nConfig(() => ({
           edit: "Modifier",
         },
         greeting: "Connecté en tant que {user}",
+        anonymousGreeting: "Préférences",
         sidebarMenu: {
           appearance: "Apparence",
           language: "Langue",
