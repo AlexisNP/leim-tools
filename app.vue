@@ -43,6 +43,10 @@ const useIdFunction = () => useId()
         </div>
       </ConfigProvider>
     </NuxtLayout>
+
+    <ClientOnly>
+      <UiToaster />
+    </ClientOnly>
   </div>
 </template>
 

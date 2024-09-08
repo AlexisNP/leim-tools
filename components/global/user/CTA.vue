@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed } from "vue"
 
-import { PhCheckCircle, PhGear, PhGlobeHemisphereWest, PhLaptop, PhMoon, PhPalette, PhSignOut, PhSun, PhTranslate, PhUserCircle } from "@phosphor-icons/vue"
+import { PhCheckCircle, PhGear, PhGlobeHemisphereWest, PhLaptop, PhMoon, PhPalette, PhSignIn, PhSignOut, PhSun, PhTranslate, PhUserCircle } from "@phosphor-icons/vue"
 import { cn } from "~/lib/utils";
 
 const router = useRouter()
@@ -70,12 +70,12 @@ function pushRoute(to: AvailableRoutes) {
             {{ $t('ui.sidebarMenu.avatarFallback') }}
           </UiAvatarFallback>
         </UiAvatar>
-        <UiButton v-else variant="outline" size="icon">
-          <PhUserCircle size="18" />
+        <UiButton v-else variant="outline" size="icon" class="rounded-full">
+          <PhUserCircle size="24" />
         </UiButton>
       </UiDropdownMenuTrigger>
 
-      <UiDropdownMenuContent class="w-72 p-0" :align="'start'" :side="'top'" :side-offset="10" :align-offset="25" :collision-padding="40">
+      <UiDropdownMenuContent class="w-72 p-0 pb-1" :align="'start'" :side="'top'" :side-offset="10" :align-offset="25" :collision-padding="40">
         <template v-if="user">
           <p class="p-2 text-[.7em] opacity-75">
             {{ $t('ui.greeting', { user: user?.email }) }}
@@ -89,6 +89,12 @@ function pushRoute(to: AvailableRoutes) {
           </UiDropdownMenuItem>
 
           <UiDropdownMenuSeparator />
+        </template>
+
+        <template v-else>
+          <p class="p-2 text-[.7em] opacity-75">
+            {{ $t('ui.anonymousGreeting') }}
+          </p>
         </template>
 
         <UiDropdownMenuSub>
@@ -195,7 +201,7 @@ function pushRoute(to: AvailableRoutes) {
         </template>
 
         <UiDropdownMenuItem v-if="!user" class="flex gap-[.5ch] items-center rounded-none" @click="handleGoogleLogin">
-          <PhGear size="20" weight="fill" />
+          <PhSignIn size="18" weight="fill" />
           <span>
             {{ $t('ui.sidebarMenu.login') }}
           </span>

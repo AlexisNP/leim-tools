@@ -1,6 +1,10 @@
 <script lang="ts" setup>
 import { PhCircleNotch } from "@phosphor-icons/vue";
+import { useToast } from "~/components/ui/toast";
 import type { Calendar } from "~/models/CalendarConfig";
+
+const { toast } = useToast()
+const { t } = useI18n()
 
 const props = defineProps<{
   modalState: boolean,
@@ -19,11 +23,20 @@ async function handleAction(): Promise<void> {
 
   try {
     await $fetch(`/api/calendars/${props.calendar.id}`, { method: "DELETE" })
+    emit("on-close")
 
-    // isDeleteEventModalOpen.value = false
+    toast({
+      title: t("entity.calendar.deletedToast.title", { calendar: props.calendar.name }),
+      variant: "success",
+      duration: 3000
+    })
   } catch (err) {
+    console.log(err)
     if (err instanceof Error) {
-      // formErrors.message = err.message
+      toast({
+        title: err.message,
+        variant: "destructive"
+      })
     }
   } finally {
     isLoading.value = false

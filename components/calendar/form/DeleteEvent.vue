@@ -1,8 +1,12 @@
 <script lang="ts" setup>
 import { PhCircleNotch } from "@phosphor-icons/vue";
+import { useToast } from "~/components/ui/toast";
 
 const { resetSkeleton, deleteEventFromSkeleton, cancelLatestRequest } = useCalendar()
 const { isDeleteEventModalOpen, eventSkeleton, lastActiveEvent } = storeToRefs(useCalendar())
+
+const { toast } = useToast()
+const { t } = useI18n()
 
 const isLoading = ref<boolean>(false)
 
@@ -22,16 +26,24 @@ async function handleAction(): Promise<void> {
 
   isLoading.value = true
 
+  const eventTitle = eventSkeleton.value.title
+
   try {
     await deleteEventFromSkeleton()
 
     isDeleteEventModalOpen.value = false
+    resetSkeleton()
+
+    toast({
+      title: t("entity.calendar.event.deletedToast.title", { event: eventTitle }),
+      variant: "success",
+      duration: 3000
+    })
   } catch (err) {
     if (err instanceof Error) {
       formErrors.message = err.message
     }
   } finally {
-    resetSkeleton()
     isLoading.value = false
   }
 }

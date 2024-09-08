@@ -17,6 +17,7 @@ export default defineI18nConfig(() => ({
           edit: "Edit",
         },
         greeting: "Connected as {user}",
+        anonymousGreeting: "Preferences",
         sidebarMenu: {
           appearance: "Appearance",
           language: "Language",
@@ -107,7 +108,10 @@ export default defineI18nConfig(() => ({
             deleteDialog: {
               title: "Delete this event",
               subtitle: "Data associated with this event will be lost and you won't be able to retrieve it !",
-            }
+            },
+            deletedToast: {
+              title: "The event \"{event}\" has been successfuly deleted.",
+            },
           },
           createDialog: {
             title: "New calendar",
@@ -126,6 +130,9 @@ export default defineI18nConfig(() => ({
           deleteDialog: {
             title: "Are you sure you want to delete this calendar ?",
             subtitle: "Its events won't be accessible anymore and you won't be able to retrieve the deleted data !",
+          },
+          deletedToast: {
+            title: "Calendar \"{calendar}\" has been successfuly deleted.",
           },
           millennia: {
             nameSingular: "Millennia",
@@ -183,6 +190,7 @@ export default defineI18nConfig(() => ({
           edit: "Modifier",
         },
         greeting: "Connecté en tant que {user}",
+        anonymousGreeting: "Préférences",
         sidebarMenu: {
           appearance: "Apparence",
           language: "Langue",
@@ -273,7 +281,10 @@ export default defineI18nConfig(() => ({
             deleteDialog: {
               title: "Supprimer l'évènement",
               subtitle: "Les données associés à cet évènement seront supprimées et vous ne pourrez plus les récupérer !",
-            }
+            },
+            deletedToast: {
+              title: "L'évènement \"{event}\" a été supprimé avec succès.",
+            },
           },
           createDialog: {
             title: "Nouveau calendrier",
@@ -292,6 +303,9 @@ export default defineI18nConfig(() => ({
           deleteDialog: {
             title: "Êtes-vous sûr de supprimer ce calendrier ?",
             subtitle: "Les évènements ne seront plus accessibles et vous ne pourrez plus récupérer les données !",
+          },
+          deletedToast: {
+            title: "Le calendrier \"{calendar}\" a été supprimé avec succès.",
           },
           millennia: {
             nameSingular: "Millénaire",
