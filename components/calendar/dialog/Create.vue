@@ -30,7 +30,9 @@ function handleClose() {
           <span v-if="calendarSkeletonName">
             {{ calendarSkeletonName }}
           </span>
-          <span v-else>Nouveau calendrier</span>
+          <span v-else>
+            {{ $t('entity.calendar.createDialog.title') }}
+          </span>
         </span>
       </UiAlertDialogTitle>
 

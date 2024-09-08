@@ -9,9 +9,20 @@ export default defineNuxtConfig({
     "@nuxtjs/tailwindcss",
     "@nuxtjs/color-mode",
     "@nuxt/eslint",
-    "shadcn-nuxt"
+    "shadcn-nuxt",
+    "@nuxtjs/i18n"
   ],
   css: ["~/assets/main.css"],
+
+  i18n: {
+    vueI18n: "./i18n.config.ts",
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: "tttools_lang",
+      redirectOn: "all",
+      alwaysRedirect: true,
+    }
+  },
 
   supabase: {
     redirectOptions: {

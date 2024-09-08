@@ -78,19 +78,22 @@ function handleFormCancel() {
           <UiTabsTrigger value="global" class="font-bold">
             <div class="flex items-center gap-1">
               <PhWrench size="18" weight="fill" />
-              Général
+
+              {{ $t('entity.calendar.createDialog.tabs.general.title') }}
             </div>
           </UiTabsTrigger>
           <UiTabsTrigger value="months" class="font-bold">
             <div class="flex items-center gap-1">
               <PhCalendarDots size="18" weight="fill" />
-              Mois de l'année
+
+              {{ $t('entity.calendar.createDialog.tabs.months.title') }}
             </div>
           </UiTabsTrigger>
           <UiTabsTrigger value="today" class="font-bold">
             <div class="flex items-center gap-1">
               <PhAlarm size="18" weight="fill" />
-              Aujourd'hui
+
+              {{ $t('entity.calendar.createDialog.tabs.today.title') }}
             </div>
           </UiTabsTrigger>
         </UiTabsList>
@@ -116,7 +119,7 @@ function handleFormCancel() {
 
       <footer class="flex justify-end gap-2 mt-6">
         <UiButton type="button" variant="destructive" @click="handleFormCancel">
-          Annuler
+          {{ $t('ui.action.cancel') }}
         </UiButton>
 
         <UiButton type="submit" :disabled="!validSkeleton || isCreatingCalendar">
@@ -124,7 +127,7 @@ function handleFormCancel() {
             <PhCircleNotch v-if="isCreatingCalendar" size="20" class="opacity-50 animate-spin"/>
           </Transition>
 
-          Créer
+          {{ $t('ui.action.save') }}
         </UiButton>
       </footer>
     </form>

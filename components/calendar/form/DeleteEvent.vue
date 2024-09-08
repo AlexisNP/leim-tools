@@ -69,10 +69,10 @@ function handleCancel(): void {
       @interact-outside="handleClosing"
       @pointer-down-outside="handleClosing"
     >
-      <UiAlertDialogTitle> Supprimer l'évènement</UiAlertDialogTitle>
+      <UiAlertDialogTitle>{{ $t('entity.calendar.event.deleteDialog.title') }}</UiAlertDialogTitle>
 
       <UiAlertDialogDescription>
-        Les données associés à cet évènement seront supprimées et vous ne pourrez plus les récupérer !
+        {{ $t('entity.calendar.event.deleteDialog.subtitle') }}
       </UiAlertDialogDescription>
 
       <form @submit.prevent="handleAction">
@@ -86,13 +86,13 @@ function handleCancel(): void {
 
         <footer class="flex gap-2 justify-between">
           <UiButton type="button" size="sm" variant="outline" @click="() => isDeleteEventModalOpen = false">
-            Retour
+            {{ $t('ui.action.back') }}
           </UiButton>
 
           <div class="flex gap-2 justify-end">
             <Transition name="fade-delay">
               <UiButton v-if="isLoading" type="button" size="sm" variant="destructive" @click.prevent="handleCancel">
-                Annuler
+                {{ $t('ui.action.cancel') }}
               </UiButton>
             </Transition>
 
@@ -101,7 +101,7 @@ function handleCancel(): void {
                 <PhCircleNotch v-if="isLoading" size="20" class="animate-spin"/>
               </Transition>
 
-              Supprimer
+              {{ $t('ui.action.delete') }}
             </UiButton>
           </div>
         </footer>

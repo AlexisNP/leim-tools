@@ -34,7 +34,9 @@ function handleMenuItemAction(actionType: SidebarMenuActionType) {
               </UiButton>
             </UiTooltipTrigger>
             <UiTooltipContent :side="'right'" :side-offset="6">
-              <p>Mondes</p>
+              <p>
+                {{ $t('entity.world.namePlural') }}
+              </p>
             </UiTooltipContent>
           </UiTooltip>
         </UiTooltipProvider>

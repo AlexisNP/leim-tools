@@ -24,7 +24,16 @@ type CalendarCurrentDate = {
   currentDateTitle: ComputedRef<string>
 }
 
+type DateDirectionTranslationKeys = {
+  days: string
+  months: string
+  years: string
+  yearsAndMonths: string
+}
+
 export const useCalendar = defineStore("calendar", () => {
+  const { t } = useI18n()
+
   /**
    * Static calendar config
    */
@@ -326,7 +335,7 @@ export const useCalendar = defineStore("calendar", () => {
   function getViewTypeTitle(viewType: CalendarViewType): string {
     switch (viewType) {
       case "year":
-        return "Année"
+        return t("entity.calendar.years.nameSingular")
 
       case "decade":
         return "Décennie"
@@ -336,7 +345,7 @@ export const useCalendar = defineStore("calendar", () => {
 
       case "month":
       default:
-        return "Mois"
+        return t("entity.calendar.months.nameSingular")
     }
   }
 
@@ -481,7 +490,31 @@ export const useCalendar = defineStore("calendar", () => {
     const differenceInDays: number = getDifferenceInDays(baseDate, relativeDate)
     let output: string = ""
     let direction: "past" | "present" | "future" = "present"
-    let directionPrefix: string = ""
+    const futureKeys: DateDirectionTranslationKeys = {
+      days: "xDaysNext",
+      months: "xMonthsNext",
+      years: "xYearsNext",
+      yearsAndMonths: "xYearsAndMonthsNext",
+    }
+    const futureKeysCompact: DateDirectionTranslationKeys = {
+      days: "xDaysNextCompact",
+      months: "xMonthsNextCompact",
+      years: "xYearsNextCompact",
+      yearsAndMonths: "xYearsAndMonthsNextCompact",
+    }
+    const pastKeys: DateDirectionTranslationKeys = {
+      days: "xDaysAgo",
+      months: "xMonthsAgo",
+      years: "xYearsAgo",
+      yearsAndMonths: "xYearsAndMonthsAgo",
+    }
+    const pastKeysCompact: DateDirectionTranslationKeys = {
+      days: "xDaysAgoCompact",
+      months: "xMonthsAgoCompact",
+      years: "xYearsAgoCompact",
+      yearsAndMonths: "xYearsAndMonthsAgoCompact",
+    }
+    let directionKeys: DateDirectionTranslationKeys = pastKeys
 
     // Check whether it's a past or future date
     if (differenceInDays > 0) {
@@ -491,31 +524,36 @@ export const useCalendar = defineStore("calendar", () => {
     }
 
     if (formatting === "complex") {
-    // Handle if it's the same date
+      // Handle if it's the same date
       if (direction === "present") {
-        return "Aujourd'hui"
+        return t("entity.calendar.date.today")
       }
       if (differenceInDays === -2) {
-        return "Avant-hier"
+        return t("entity.calendar.date.beforeYesterday")
       }
       if (differenceInDays === -1) {
-        return "Hier"
+        return t("entity.calendar.date.yesterday")
       }
       if (differenceInDays === 1) {
-        return "Demain"
+        return t("entity.calendar.date.tomorrow")
       }
       if (differenceInDays === 2) {
-        return "Après-demain"
+        return t("entity.calendar.date.afterTomorrow")
       }
 
       // Get relevant prefix for the string
       if (direction === "future") {
-        directionPrefix = "Dans "
-      } else if (direction === "past") {
-        directionPrefix = "Il y a "
+        directionKeys = futureKeys
+      } else {
+        directionKeys = pastKeys
       }
-
-      output += directionPrefix
+    } else {
+      // Get relevant prefix for the string (without the prefix)
+      if (direction === "future") {
+        directionKeys = futureKeysCompact
+      } else {
+        directionKeys = pastKeysCompact
+      }
     }
 
     const isSameMonth = baseDate.month === relativeDate.month
@@ -544,11 +582,7 @@ export const useCalendar = defineStore("calendar", () => {
     if (isSameMonth && isSameYear) {
       dateAcc.day = futureDate.day - datePivot.day
 
-      if (dateAcc.day === 1) {
-        output += ` ${dateAcc.day} jour`
-      } else {
-        output += ` ${dateAcc.day} jours`
-      }
+      output = t(`entity.calendar.date.${directionKeys.days}`, { days: dateAcc.day })
 
       return output
     }
@@ -557,7 +591,7 @@ export const useCalendar = defineStore("calendar", () => {
     else if (isSameYear) {
       dateAcc.month = futureDate.month - datePivot.month
 
-      output += ` ${dateAcc.month} mois`
+      output = t(`entity.calendar.date.${directionKeys.months}`, { months: dateAcc.month })
 
       return output
     }
@@ -600,13 +634,13 @@ export const useCalendar = defineStore("calendar", () => {
       const remainderMonths = dateAcc.month % monthsPerYear.value
 
       if (computedYear >= 1 && remainderMonths) {
-        output += ` ${computedYear} an(s) et ${remainderMonths} mois`
+        output = t(`entity.calendar.date.${directionKeys.yearsAndMonths}`, { years: computedYear, months: remainderMonths })
       }
       else if (computedYear >= 1 && !remainderMonths) {
-        output += ` ${computedYear} an(s)`;
+        output = t(`entity.calendar.date.${directionKeys.years}`, { years: computedYear })
       }
       else {
-        output += ` ${remainderMonths} mois`
+        output = t(`entity.calendar.date.${directionKeys.months}`, { months: remainderMonths })
       }
 
       return output

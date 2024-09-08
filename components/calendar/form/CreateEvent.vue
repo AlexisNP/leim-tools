@@ -103,7 +103,7 @@ function handleCancel() {
               type="text"
               name="new-event-title"
               required
-              placeholder="Titre de l'évènement"
+              :placeholder="$t('entity.calendar.event.title')"
               class="w-full -my-1 py-1 -mx-1 px-1 text-lg border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600"
             >
           </div>
@@ -113,8 +113,7 @@ function handleCancel() {
               id="new-event-description"
               v-model="eventSkeleton.description"
               name="new-event-description"
-              placeholder="Ajouter une description"
-              class="w-full -my-1 py-1 -mx-1 px-1 min-h-24 max-h-36 text-sm border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600"
+              :placeholder="$t('entity.addDescription')"              class="w-full -my-1 py-1 -mx-1 px-1 min-h-24 max-h-36 text-sm border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600"
             />
           </div>
 
@@ -124,7 +123,7 @@ function handleCancel() {
 
               <CalendarInputRPGDate
                 v-model:model-value="eventSkeleton.startDate"
-                placeholder="Date de début"
+                :placeholder="$t('entity.calendar.date.start')"
                 :initial-date="props.date"
                 :required="true"
               />
@@ -133,7 +132,7 @@ function handleCancel() {
 
               <CalendarInputRPGDate
                 v-model:model-value="eventSkeleton.endDate"
-                placeholder="Date de fin"
+                :placeholder="$t('entity.calendar.date.end')"
                 :initial-date="props.date"
               />
             </div>
@@ -143,7 +142,7 @@ function handleCancel() {
             <div class="flex items-center gap-4">
               <PhTag size="18" weight="fill" />
 
-              <CalendarInputEventCategory v-model="eventSkeleton.category" placeholder="Ajouter une catégorie principale" />
+              <CalendarInputEventCategory v-model="eventSkeleton.category" :placeholder="$t('entity.category.addPrimary')" />
             </div>
           </div>
 
@@ -151,7 +150,7 @@ function handleCancel() {
             <div class="flex items-center gap-4">
               <PhTag size="18" weight="fill" />
 
-              <CalendarInputEventCategories v-model="eventSkeleton.secondaryCategories" placeholder="Ajouter des catégories secondaires" />
+              <CalendarInputEventCategories v-model="eventSkeleton.secondaryCategories" :placeholder="$t('entity.category.addSecondaries')" />
             </div>
           </div> -->
 
@@ -164,7 +163,7 @@ function handleCancel() {
                 v-model="eventSkeleton.location"
                 type="text"
                 name="new-event-location"
-                placeholder="Ajouter un endroit"
+                :placeholder="$t('entity.calendar.event.addLocation')"
                 class="w-full -my-1 py-2 px-2 text-sm border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600">
             </div>
           </div>
@@ -178,10 +177,10 @@ function handleCancel() {
                 <UiSwitch id="new-event-visibility" v-model:checked="eventSkeleton.hidden" />
                 <UiLabel for="new-event-visibility">
                   <template v-if="!eventSkeleton.hidden">
-                    Évènement visible
+                    {{ $t('entity.calendar.event.isPublic') }}
                   </template>
                   <template v-else>
-                    Évènement caché
+                    {{ $t('entity.calendar.event.isHidden') }}
                   </template>
                 </UiLabel>
               </div>
@@ -197,7 +196,7 @@ function handleCancel() {
           <div class="flex gap-2 justify-end">
             <Transition name="fade-delay">
               <UiButton v-if="isLoading" type="button" size="sm" variant="destructive" @click.prevent="handleCancel">
-                Annuler
+                {{ $t('ui.action.cancel') }}
               </UiButton>
             </Transition>
 
@@ -206,7 +205,7 @@ function handleCancel() {
                 <PhCircleNotch v-if="isLoading" size="20" class="opacity-50 animate-spin"/>
               </Transition>
 
-              Sauvegarder
+              {{ $t('ui.action.save') }}
             </UiButton>
           </div>
         </div>

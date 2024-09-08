@@ -53,10 +53,12 @@ function handleClosing() {
       @interact-outside="handleClosing"
       @pointer-down-outside="handleClosing"
     >
-      <UiAlertDialogTitle> Êtes-vous sûr de supprimer ce calendrier ?</UiAlertDialogTitle>
+      <UiAlertDialogTitle>
+        {{ $t('entity.calendar.deleteDialog.title') }}
+      </UiAlertDialogTitle>
 
       <UiAlertDialogDescription>
-        Les évènements ne seront plus accessibles et vous ne pourrez plus récupérer les données !
+        {{ $t('entity.calendar.deleteDialog.subtitle') }}
       </UiAlertDialogDescription>
 
       <form @submit.prevent="handleAction">
@@ -70,13 +72,13 @@ function handleClosing() {
 
         <footer class="flex gap-2 justify-between">
           <UiButton type="button" size="sm" variant="outline" @click="handleClosing">
-            Retour
+            {{ $t('ui.action.back') }}
           </UiButton>
 
           <div class="flex gap-2 justify-end">
             <Transition name="fade-delay">
               <UiButton v-if="isLoading" type="button" size="sm" variant="destructive">
-                Annuler
+                {{ $t('ui.action.cancel') }}
               </UiButton>
             </Transition>
 
@@ -85,7 +87,7 @@ function handleClosing() {
                 <PhCircleNotch v-if="isLoading" size="20" class="animate-spin"/>
               </Transition>
 
-              Supprimer "{{ calendar?.name }}"
+              {{ $t('entity.deleteOne', { entity: calendar?.name }) }}
             </UiButton>
           </div>
         </footer>

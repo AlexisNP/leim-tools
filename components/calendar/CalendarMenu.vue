@@ -25,7 +25,7 @@ const { revealAdvancedSearch } = useCalendar()
         <li>
           <UiButton search-slash @click="revealAdvancedSearch()">
             <PhMagnifyingGlass size="20" weight="light" />
-            Recherche avancée
+            {{ $t('entity.advancedSearch.title') }}
           </UiButton>
         </li>
         <li>

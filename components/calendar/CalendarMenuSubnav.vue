@@ -87,7 +87,9 @@ function handleGotoPreviousEventPage(position: "next" | "prev" = "next") {
             </UiButton>
           </UiTooltipTrigger>
           <UiTooltipContent>
-            <p>Précédente page à évènements</p>
+            <p>
+              {{ $t('entity.calendar.event.prevPage') }}
+            </p>
           </UiTooltipContent>
         </UiTooltip>
       </UiTooltipProvider>
@@ -106,7 +108,9 @@ function handleGotoPreviousEventPage(position: "next" | "prev" = "next") {
             </UiButton>
           </UiTooltipTrigger>
           <UiTooltipContent>
-            <p>Prochaine page à évènements</p>
+            <p>
+              {{ $t('entity.calendar.event.nextPage') }}
+            </p>
           </UiTooltipContent>
         </UiTooltip>
       </UiTooltipProvider>
