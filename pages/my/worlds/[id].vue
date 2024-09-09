@@ -86,15 +86,15 @@ onUnmounted(() => {
 })
 
 const markedCalendar = ref<Calendar | null>(null)
-const isDeleteEventModalOpen = ref<boolean>(false)
+const isDeleteCalendarModalOpen = ref<boolean>(false)
 
 function deployDeleteModal(calendar: Calendar) {
-  isDeleteEventModalOpen.value = true
+  isDeleteCalendarModalOpen.value = true
   markedCalendar.value = calendar
 }
 
 function hideDeleteModal() {
-  isDeleteEventModalOpen.value = false
+  isDeleteCalendarModalOpen.value = false
   markedCalendar.value = null
 }
 </script>
@@ -176,7 +176,7 @@ function hideDeleteModal() {
     </template>
 
     <CalendarDialogCreate :world :modal-state="isCreateCalendarModalOpen" @on-close="hideCreateDialog" />
-    <CalendarDialogDelete :calendar="markedCalendar" :modal-state="isDeleteEventModalOpen" @on-close="hideDeleteModal" />
+    <CalendarDialogDelete :calendar="markedCalendar" :modal-state="isDeleteCalendarModalOpen" @on-close="hideDeleteModal" />
   </main>
 </template>
 

@@ -83,6 +83,13 @@ export default defineI18nConfig(() => ({
             title: "Create a world",
             subtitle: "Worlds are the building blocks which hold all your characters, your calendars…"
           },
+          deleteDialog: {
+            title: "Delete this world ?",
+            subtitle: "This world will be deleted permanently, and all of its associated data will be lost !",
+          },
+          deletedToast: {
+            title: "The world \"{world}\" has been successfuly deleted.",
+          },
         },
         calendar: {
           nameSingular: "Calendar",
@@ -283,6 +290,13 @@ export default defineI18nConfig(() => ({
           createDialog: {
             title: "Créer un monde",
             subtitle: "Un monde est la brique de base qui contient vos personnages, vos calendriers…"
+          },
+          deleteDialog: {
+            title: "Supprimer ce monde ?",
+            subtitle: "Le monde sera supprimé définitivement, vous perdrez toutes les données associées !",
+          },
+          deletedToast: {
+            title: "Le monde \"{world}\" a été supprimé avec succès.",
           },
         },
         calendar: {

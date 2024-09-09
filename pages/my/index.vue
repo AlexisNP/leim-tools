@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { PhPlus } from "@phosphor-icons/vue";
+import { PhPlus, PhTrash } from "@phosphor-icons/vue";
 import type { RealtimeChannel } from "@supabase/supabase-js"
 import type { World } from "~/models/World";
 
@@ -85,6 +85,19 @@ onUnmounted(() => {
   // Unsubscribe from realtime
   supabase.removeChannel(worldChannel)
 })
+
+const markedWorld = ref<World | null>(null)
+const isDeleteWorldModalOpen = ref<boolean>(false)
+
+function deployDeleteModal(calendar: World) {
+  isDeleteWorldModalOpen.value = true
+  markedWorld.value = calendar
+}
+
+function hideDeleteModal() {
+  isDeleteWorldModalOpen.value = false
+  markedWorld.value = null
+}
 </script>
 
 <template>
@@ -118,7 +131,7 @@ onUnmounted(() => {
           </UiTooltipProvider>
         </div>
 
-        <ul class="grid lg:grid-cols-2 gap-2">
+        <ul class="grid lg:grid-cols-3 gap-2">
           <li v-for="world in worlds" :key="world.id">
             <UiCard
               class="w-full transition-all"
@@ -151,6 +164,10 @@ onUnmounted(() => {
               </UiCardHeader>
               <UiCardContent>
                 <p class="italic">{{ world.description }}</p>
+
+                <UiButton size="icon" variant="ghost" class="absolute top-2 right-2 z-20 hover:text-white hover:bg-rose-400 dark:hover:bg-rose-700" @click="deployDeleteModal(world)">
+                  <PhTrash size="16" />
+                </UiButton>
               </UiCardContent>
             </UiCard>
           </li>
@@ -158,10 +175,8 @@ onUnmounted(() => {
       </Spacing>
     </section>
 
-    <WorldDialogCreate
-      :modal-state="isCreateWorldModalOpen"
-      @on-close="hideCreateDialog"
-    />
+    <WorldDialogCreate :modal-state="isCreateWorldModalOpen" @on-close="hideCreateDialog" />
+    <WorldDialogDelete :world="markedWorld" :modal-state="isDeleteWorldModalOpen" @on-close="hideDeleteModal" />
   </main>
 </template>
 
