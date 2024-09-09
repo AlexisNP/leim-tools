@@ -172,9 +172,10 @@ create policy "Allow individual update access" on public.users for update using 
 create policy "Allow individual read access" on public.user_roles for select using ( auth.uid() = user_id );
 
 -- World policies
-create policy "Allow individual read access for GMs" on public.worlds for select using ( ( auth.uid() = gm_id ) );
-create policy "Allow individual insert access for GMs" on public.worlds for insert with check ( auth.uid() = gm_id );
-create policy "Allow individual update access for GMs" on public.worlds for update using ( auth.uid() = gm_id );
+create policy "Allow GMs to see their worlds" on public.worlds for select using ( ( auth.uid() = gm_id ) );
+create policy "Allow GMs to create worlds" on public.worlds for insert with check ( auth.uid() = gm_id );
+create policy "Allow GMs to edit their worlds" on public.worlds for update using ( auth.uid() = gm_id );
+create policy "Allow GMs to delete their worlds" on public.worlds for delete using ( auth.uid() = gm_id );
 
 -- Calendar policies
 create policy "Allow GMs to see their calendars" on public.calendars for select using (

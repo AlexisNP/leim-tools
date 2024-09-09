@@ -25,10 +25,10 @@ watch(user, (n) => {
   }
 })
 
-const isCreateEventModalOpen = ref<boolean>(false)
+const isCreateCalendarModalOpen = ref<boolean>(false)
 
 function hideCreateDialog() {
-  isCreateEventModalOpen.value = false
+  isCreateCalendarModalOpen.value = false
 }
 
 /**
@@ -57,7 +57,7 @@ function handleDeletedCalendar(id: number) {
 }
 
 onMounted(() => {
-  calendarChannel = supabase.channel("custom-insert-channel")
+  calendarChannel = supabase.channel("realtime-calendar-channel")
     .on(
       "postgres_changes",
       { event: "*", schema: "public", table: "calendars" },
@@ -86,15 +86,15 @@ onUnmounted(() => {
 })
 
 const markedCalendar = ref<Calendar | null>(null)
-const isDeleteEventModalOpen = ref<boolean>(false)
+const isDeleteCalendarModalOpen = ref<boolean>(false)
 
 function deployDeleteModal(calendar: Calendar) {
-  isDeleteEventModalOpen.value = true
+  isDeleteCalendarModalOpen.value = true
   markedCalendar.value = calendar
 }
 
 function hideDeleteModal() {
-  isDeleteEventModalOpen.value = false
+  isDeleteCalendarModalOpen.value = false
   markedCalendar.value = null
 }
 </script>
@@ -106,7 +106,9 @@ function hideDeleteModal() {
         <Title>{{ $t("entity.world.namePlural") }}</Title>
       </Head>
 
-      <Heading>Chargement...</Heading>
+      <Heading level="h1">
+        {{ $t('entity.isLoading') }}
+      </Heading>
     </template>
     <template v-else-if="world">
       <Head>
@@ -115,7 +117,7 @@ function hideDeleteModal() {
 
       <header class="lg:w-1/2 mb-8">
         <Spacing>
-          <Heading>{{ world.name }}</Heading>
+          <Heading level="h1">{{ world.name }}</Heading>
 
           <p>{{ world.description }}</p>
         </Spacing>
@@ -124,14 +126,14 @@ function hideDeleteModal() {
       <section>
         <Spacing size="lg">
           <div class="flex items-center gap-3">
-            <Heading>
+            <Heading level="h2">
               {{ $t('entity.calendar.namePlural') }}
             </Heading>
 
             <UiTooltipProvider :delay-duration="250">
               <UiTooltip>
                 <UiTooltipTrigger as-child>
-                  <UiButton size="icon" class="rounded-full h-8 w-8" @click="() => isCreateEventModalOpen = true">
+                  <UiButton size="icon" class="rounded-full h-8 w-8" @click="() => isCreateCalendarModalOpen = true">
                     <PhPlus size="17"/>
                   </UiButton>
                 </UiTooltipTrigger>
@@ -173,8 +175,8 @@ function hideDeleteModal() {
       </section>
     </template>
 
-    <CalendarDialogCreate :world :modal-state="isCreateEventModalOpen" @on-close="hideCreateDialog" />
-    <CalendarDialogDelete :calendar="markedCalendar" :modal-state="isDeleteEventModalOpen" @on-close="hideDeleteModal" />
+    <CalendarDialogCreate :world :modal-state="isCreateCalendarModalOpen" @on-close="hideCreateDialog" />
+    <CalendarDialogDelete :calendar="markedCalendar" :modal-state="isDeleteCalendarModalOpen" @on-close="hideDeleteModal" />
   </main>
 </template>
 

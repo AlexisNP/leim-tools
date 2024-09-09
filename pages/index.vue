@@ -13,6 +13,6 @@ useHead({
       <Meta name="description" :content="$t('head.description')" />
     </Head>
 
-    <Heading>TTTools</Heading>
+    <Heading level="h1">TTTools</Heading>
   </main>
 </template>
