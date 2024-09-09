@@ -40,7 +40,7 @@ const isCreatingCalendar = ref<boolean>(false)
 async function handleSubmit() {
   try {
     isCreatingCalendar.value = true
-    await $fetch("/api/calendars/create", { method: "POST", body: {...calendarSkeleton.value, worldId: 1 } })
+    await $fetch("/api/calendars/create", { method: "POST", body: { ...calendarSkeleton.value, worldId: 1 } })
 
     emit("on-close")
   } catch (err) {
@@ -104,7 +104,7 @@ function handleFormCancel() {
             type="text"
             name="new-calendar-name"
             required
-            placeholder="Titre"
+            :placeholder="$t('common.title')"
             class="w-full -my-1 py-2 -mx-1 px-1 text-xl border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600"
             @input="handleNameChange"
           >

@@ -16,6 +16,28 @@ export default defineI18nConfig(() => ({
           delete: "Delete",
           edit: "Edit",
         },
+        colors: {
+          selectOne: "Select a color",
+          red: "Red",
+          orange: "Orange",
+          amber: "Amber",
+          yellow: "Yellow",
+          lime: "Lime",
+          green: "Green",
+          emerald: "Emerald",
+          teal: "Teal",
+          cyan: "Cyan",
+          sky: "Sky",
+          blue: "Blue",
+          indigo: "Indigo",
+          violet: "Violet",
+          purple: "Purple",
+          fuchsia: "Fuchsia",
+          pink: "Pink",
+          rose: "Rose",
+          black: "Black",
+          white: "White",
+        },
         greeting: "Connected as {user}",
         anonymousGreeting: "Preferences",
         sidebarMenu: {
@@ -43,6 +65,7 @@ export default defineI18nConfig(() => ({
           addPrimary: "Add a primary category",
           addSecondaries: "Add secondary categories"
         },
+        isLoading: "Loading in progress…",
         addDescription: "Add a description",
         deleteOne: "Delete \"{entity}\"",
         advancedSearch: {
@@ -55,6 +78,11 @@ export default defineI18nConfig(() => ({
         world: {
           nameSingular: "World",
           namePlural: "Worlds",
+          addSingle: "Add a world",
+          createDialog: {
+            title: "Create a world",
+            subtitle: "Worlds are the building blocks which hold all your characters, your calendars…"
+          },
         },
         calendar: {
           nameSingular: "Calendar",
@@ -114,7 +142,7 @@ export default defineI18nConfig(() => ({
             },
           },
           createDialog: {
-            title: "New calendar",
+            title: "Create a calendar",
             tabs: {
               general: {
                 title: "General",
@@ -189,6 +217,28 @@ export default defineI18nConfig(() => ({
           delete: "Supprimer",
           edit: "Modifier",
         },
+        colors: {
+          selectOne: "Sélectionner une couleur",
+          red: "Rouge",
+          orange: "Orange",
+          amber: "Ambre",
+          yellow: "Jaune",
+          lime: "Citron",
+          green: "Vert",
+          emerald: "Émeraude",
+          teal: "Turquoise",
+          cyan: "Cyan",
+          sky: "Bleu clair",
+          blue: "Bleu",
+          indigo: "Indigo",
+          violet: "Violet",
+          purple: "Pourpre",
+          fuchsia: "Fuchsia",
+          pink: "Rose",
+          rose: "Magenta",
+          black: "Noir",
+          white: "Blanc",
+        },
         greeting: "Connecté en tant que {user}",
         anonymousGreeting: "Préférences",
         sidebarMenu: {
@@ -216,6 +266,7 @@ export default defineI18nConfig(() => ({
           addPrimary: "Ajouter une catégorie principale",
           addSecondaries: "Ajouter des catégories secondaires"
         },
+        isLoading: "Chargement en cours…",
         addDescription: "Ajouter une description",
         deleteOne: "Supprimer \"{entity}\"",
         advancedSearch: {
@@ -228,6 +279,11 @@ export default defineI18nConfig(() => ({
         world: {
           nameSingular: "Monde",
           namePlural: "Mondes",
+          addSingle: "Ajouter un monde",
+          createDialog: {
+            title: "Créer un monde",
+            subtitle: "Un monde est la brique de base qui contient vos personnages, vos calendriers…"
+          },
         },
         calendar: {
           nameSingular: "Calendriers",
@@ -287,7 +343,7 @@ export default defineI18nConfig(() => ({
             },
           },
           createDialog: {
-            title: "Nouveau calendrier",
+            title: "Créer un calendrier",
             tabs: {
               general: {
                 title: "Général",
