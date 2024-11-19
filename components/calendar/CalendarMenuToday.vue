@@ -1,20 +1,20 @@
 <script lang="ts" setup>
-import { storeToRefs } from "pinia"
 import { computed } from "vue"
 
-const { defaultDate, areDatesIdentical, jumpToDefaultDate, getFormattedDateTitle } = useCalendar()
-const { selectedDate } = storeToRefs(useCalendar())
+const { defaultDate, jumpToDefaultDate, getFormattedDateTitle, currentDate } = useCalendar()
 
 const defaultDateFormatted: string = getFormattedDateTitle(defaultDate, true)
 
-const isDefaultDate: ComputedRef<boolean> = computed<boolean>(() => areDatesIdentical(selectedDate.value, defaultDate))
+const buttonDisabledState: ComputedRef<boolean> = computed<boolean>(() => {
+  return currentDate.currentMonth === defaultDate.month && currentDate.currentYear === defaultDate.year
+})
 </script>
 
 <template>
   <UiTooltipProvider :delay-duration="250">
     <UiTooltip>
       <UiTooltipTrigger as-child>
-        <UiButton size="sm" :disabled="isDefaultDate" @click="jumpToDefaultDate">
+        <UiButton size="sm" :disabled="buttonDisabledState" @click="jumpToDefaultDate">
           {{ $t('entity.calendar.date.today') }}
         </UiButton>
       </UiTooltipTrigger>
