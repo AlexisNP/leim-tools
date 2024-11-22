@@ -13,12 +13,13 @@ import { useMagicKeys, useScroll, useStorage, whenever } from "@vueuse/core"
 import { computed, ref, watch } from "vue"
 import { searchUnifier, type SearchMode } from "../SearchMode"
 
-import { PhClockClockwise, PhClockCounterClockwise, PhMagnifyingGlass } from "@phosphor-icons/vue"
+import { PhCaretDown, PhClockClockwise, PhClockCounterClockwise, PhMagnifyingGlass } from "@phosphor-icons/vue"
 import {
   ComboboxAnchor,
   ComboboxInput,
   ComboboxPortal,
   ComboboxRoot,
+  ComboboxTrigger,
   VisuallyHidden
 } from "radix-vue"
 
@@ -113,7 +114,7 @@ const searchResults = computed<(Character | CalendarEvent)[]>(() => {
       }
 
       hitCategories = selectedCategories.value.every((selectedCat) => {
-        return allCategories.includes(selectedCat as Category)
+        return allCategories.findIndex((c) => c.name === selectedCat.name) !== -1
       })
 
       return (hitTitle || hitDesc) && hitCategories
@@ -203,28 +204,44 @@ watch([currentPage, selectedEntity], () => {
 })
 
 // Compute categories based on current selectedEntity
-const currentCategories = computed(() => {
-  return []
-})
+const { data: resCategories } = await useFetch("/api/calendars/categories/query")
+const currentCategories = ref<Category[]>(resCategories.value?.data as Category[])
 
 const selectedCategories = ref<(Category)[]>([])
 const categoryFilterOpened = ref<boolean>(false)
 const searchCategory = ref<string>("")
 
-const filteredCategories = computed(() =>
-  currentCategories.value.filter((i) => !selectedCategories.value.includes(i))
-)
+const filteredCategories = computed(() => {
+  if (!currentCategories.value) return []
+  return currentCategories.value.filter((i) => !selectedCategories.value.includes(i))
+})
+
+const categoryInput = ref(null)
+const { focused: categoryInputFocused } = useFocus(categoryInput)
+
+watch(categoryInputFocused, (isFocused) => {
+  categoryFilterOpened.value = isFocused
+})
 
 /**
  * Handles the category selections from the TagInput component
  *
  * @param e Radix Change Event
  */
-function handleCategorySelect(e: (Category)) {
-  if (typeof e === "string") {
-    searchCategory.value = ""
-    selectedCategories.value.push(e)
+function handleCategorySelect(e: Category) {
+  searchCategory.value = ""
+  selectedCategories.value.push(e)
+
+  if (filteredCategories.value.length === 0) {
+    categoryFilterOpened.value = false
   }
+}
+
+/**
+ * Removes a category from selection from the TagInput component
+ */
+function handleCategoryUnselect(e: Category) {
+  selectedCategories.value.splice(selectedCategories.value.findIndex(sc => sc.name === e.name), 1)
 
   if (filteredCategories.value.length === 0) {
     categoryFilterOpened.value = false
@@ -265,7 +282,7 @@ function handleCategorySelect(e: (Category)) {
           </span>
         </div>
 
-        <div class="flex items-center justify-between">
+        <div class="flex items-center justify-between gap-8">
           <div>
             <UiToggleGroup
               v-model="selectedEntity"
@@ -276,18 +293,18 @@ function handleCategorySelect(e: (Category)) {
               <UiToggleGroupItem value="events" aria-label="Uniquement les évènements">
                 {{ $t('entity.calendar.event.namePlural') }}
               </UiToggleGroupItem>
-              <UiToggleGroupItem value="characters" aria-label="Uniquement les personnages">
+              <!-- Not used for now -->
+              <!-- <UiToggleGroupItem value="characters" aria-label="Uniquement les personnages">
                 {{ $t('entity.character.namePlural') }}
-              </UiToggleGroupItem>
+              </UiToggleGroupItem> -->
             </UiToggleGroup>
           </div>
 
-          <div class="flex items-center gap-1">
-            <UiTagsInput class="px-0 gap-0 w-72">
-              <div class="flex gap-2 flex-wrap items-center px-3">
+          <div class="grow flex justify-end items-center gap-1">
+            <UiTagsInput class="grow px-0 gap-y-1 w-80">
+              <div v-if="selectedCategories.length > 0" class="flex gap-2 flex-wrap items-center px-3">
                 <UiTagsInputItem v-for="item in selectedCategories" :key="item.id" :value="item.name">
-                  <UiTagsInputItemText class="capitalize" />
-                  <UiTagsInputItemDelete />
+                  <UiTagsInputItemText class="capitalize cursor-pointer" @click="handleCategoryUnselect(item)" />
                 </UiTagsInputItem>
               </div>
 
@@ -295,17 +312,21 @@ function handleCategorySelect(e: (Category)) {
                 v-model="selectedCategories"
                 v-model:open="categoryFilterOpened"
                 v-model:searchTerm="searchCategory"
-                class="w-full"
+                class="grow flex items-center gap-y-1 pr-2"
               >
                 <ComboboxAnchor as-child>
                   <ComboboxInput :placeholder="$t('entity.category.namePlural')" as-child>
                     <UiTagsInputInput
-                      class="w-full px-3"
-                      :class="selectedCategories.length > 0 ? 'mt-2' : ''"
+                      ref="categoryInput"
+                      class="min-w-16 px-3"
                       @keydown.enter.prevent
                     />
                   </ComboboxInput>
                 </ComboboxAnchor>
+
+                <ComboboxTrigger>
+                  <PhCaretDown size="16" />
+                </ComboboxTrigger>
 
                 <ComboboxPortal :to="'#searchForm'">
                   <UiCommandList
@@ -317,11 +338,11 @@ function handleCategorySelect(e: (Category)) {
                     <UiCommandGroup>
                       <UiCommandItem
                         v-for="cat in filteredCategories"
-                        :key="cat"
+                        :key="cat.name"
                         :value="cat"
                         @select.prevent="handleCategorySelect(cat)"
                       >
-                        {{ capitalize(cat) }}
+                        {{ capitalize(cat.name) }}
                       </UiCommandItem>
                     </UiCommandGroup>
                   </UiCommandList>
