@@ -212,11 +212,21 @@ const categoryFilterOpened = ref<boolean>(false)
 const searchCategory = ref<string>("")
 
 const filteredCategories = computed(() => {
+  // Display original data
   if (!currentCategories.value) return []
-  return currentCategories.value.filter((i) => !selectedCategories.value.includes(i))
+
+  // If current categories are selected, ignore them
+  if (!searchCategory.value) return currentCategories.value.filter((i) => !selectedCategories.value.includes(i))
+
+  // If we also have a query to filter them by, do that
+  return currentCategories.value.filter((i) => {
+    return !selectedCategories.value.includes(i) && i.name.toLocaleLowerCase().includes(searchCategory.value.toLocaleLowerCase())
+  })
 })
 
+// Reactivity rules for category searches
 const categoryInput = ref(null)
+const categoryInputValue = ref<string>("")
 const { focused: categoryInputFocused } = useFocus(categoryInput)
 
 watch(categoryInputFocused, (isFocused) => {
@@ -318,6 +328,7 @@ function handleCategoryUnselect(e: Category) {
                   <ComboboxInput :placeholder="$t('entity.category.namePlural')" as-child>
                     <UiTagsInputInput
                       ref="categoryInput"
+                      v-model="categoryInputValue"
                       class="min-w-16 px-3"
                       @keydown.enter.prevent
                     />
