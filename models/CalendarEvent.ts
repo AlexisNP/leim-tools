@@ -22,7 +22,7 @@ export const postEventBodySchema = z.object({
   event: z.object({
     title: z.string().max(240),
     description: z.string().max(1200).optional().nullable(),
-    location: z.string().optional().nullable(),
+    location: z.string().max(240).optional().nullable(),
     startDate: dateSchema.required(),
     endDate: dateSchema.optional().nullable(),
     hidden: z.boolean().optional().nullable(),

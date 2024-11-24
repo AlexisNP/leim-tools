@@ -27,7 +27,7 @@ export default defineEventHandler(async (event) => {
       fatal: false,
       statusCode: 401,
       statusMessage: "Validation Error",
-      message: "Erreur de validation du schéma, cela est probablement dû à une erreur utilisateur.",
+      message: "Erreur de validation du schéma, probablement dûe à une erreur utilisateur.",
       data: {
         errors: bodyError.issues.map(issue => ({
           path: issue.path,

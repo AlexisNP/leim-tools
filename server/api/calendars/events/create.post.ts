@@ -7,14 +7,22 @@ export default defineEventHandler(async (event) => {
   const { data: bodyData, error: schemaError } = await readValidatedBody(event, body => postEventBodySchema.safeParse(body))
 
   if (schemaError) {
-    throw createError({
+    const error = createError({
       cause: "Utilisateur",
       fatal: false,
-      message: "Le schéma de la requête n'est pas complet ou mal renseigné.",
-      data: schemaError.issues,
-      statusMessage: "test",
-      status: 401,
+      statusCode: 401,
+      statusMessage: "Validation Error",
+      message: "Erreur de validation du schéma, probablement dûe à une erreur utilisateur.",
+      data: {
+        errors: schemaError.issues.map(issue => ({
+          path: issue.path,
+          message: issue.message,
+          code: issue.code
+        }))
+      }
     })
+
+    throw error
   }
 
   try {

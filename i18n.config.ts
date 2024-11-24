@@ -144,6 +144,7 @@ export default defineI18nConfig(() => ({
               toastTitle: "Event wasn't updated.",
               title_too_big: "Title should be less than 240 characters long.",
               description_too_big: "Description should be less than 1200 characters long.",
+              location_too_big: "Location should be less than 240 characters long.",
             },
             deleteDialog: {
               title: "Delete this event",
@@ -357,6 +358,7 @@ export default defineI18nConfig(() => ({
               toastTitle: "L'évènement n'a pas été modifié",
               title_too_big: "Le titre doit être inférieur à 240 caractères.",
               description_too_big: "La description doit être inférieure à 1200 caractères.",
+              location_too_big: "La localisation doit être inférieure à 240 caractères.",
             },
             deleteDialog: {
               title: "Supprimer l'évènement",

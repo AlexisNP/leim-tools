@@ -93,7 +93,8 @@ alter table public.calendar_events
   add constraint calendar_events_maxlen_check
   check (
     char_length(title) <= 240 AND
-    (description IS NULL OR char_length(description) <= 1200)
+    (description IS NULL OR char_length(description) <= 1200) AND
+    (location IS NULL OR char_length(location) <= 240)
   );
 
 -- Link table for events - categories
