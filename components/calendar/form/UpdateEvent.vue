@@ -1,8 +1,13 @@
 <script lang="ts" setup>
 import { PhAlarm, PhCircleNotch, PhEye, PhEyeClosed, PhMapPinArea, PhPencilSimpleLine, PhTag } from "@phosphor-icons/vue"
+import { useToast } from "~/components/ui/toast";
+import type { APIError } from "~/models/Errors";
 
 const { resetSkeleton, updateEventFromSkeleton, cancelLatestRequest } = useCalendar()
 const { eventSkeleton, lastActiveEvent, isEditEventModalOpen } = storeToRefs(useCalendar())
+
+const { toast } = useToast()
+const { t } = useI18n()
 
 const isLoading = ref(false)
 
@@ -24,15 +29,22 @@ async function handleAction() {
 
   try {
     await updateEventFromSkeleton()
-
-    isEditEventModalOpen.value = false
   } catch (err) {
-    if (err instanceof Error) {
-      formErrors.message = err.message
-    }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const apiError = (err as any).data as APIError
+
+    apiError.data.errors.forEach((error) => {
+      toast({
+        title: t("entity.calendar.event.editErrors.toastTitle"),
+        variant: "destructive",
+        description: t(`entity.calendar.event.editErrors.${error.path[1]}_${error.code}`),
+        duration: 2000,
+      })
+    })
   } finally {
     resetSkeleton()
     isLoading.value = false
+    isEditEventModalOpen.value = false
   }
 }
 

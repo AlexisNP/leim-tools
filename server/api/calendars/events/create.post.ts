@@ -11,6 +11,8 @@ export default defineEventHandler(async (event) => {
       cause: "Utilisateur",
       fatal: false,
       message: "Le schéma de la requête n'est pas complet ou mal renseigné.",
+      data: schemaError.issues,
+      statusMessage: "test",
       status: 401,
     })
   }

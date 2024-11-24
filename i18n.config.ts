@@ -140,6 +140,11 @@ export default defineI18nConfig(() => ({
               title: "Edit event",
               subtitle: "Update event data",
             },
+            editErrors: {
+              toastTitle: "Event wasn't updated.",
+              title_too_big: "Title should be less than 240 characters long.",
+              description_too_big: "Description should be less than 1200 characters long.",
+            },
             deleteDialog: {
               title: "Delete this event",
               subtitle: "Data associated with this event will be lost and you won't be able to retrieve it !",
@@ -347,6 +352,11 @@ export default defineI18nConfig(() => ({
             editDialog: {
               title: "Modifier l'évènement",
               subtitle: "Mettre à jour les données de l'évènement",
+            },
+            editErrors: {
+              toastTitle: "L'évènement n'a pas été modifié",
+              title_too_big: "Le titre doit être inférieur à 240 caractères.",
+              description_too_big: "La description doit être inférieure à 1200 caractères.",
             },
             deleteDialog: {
               title: "Supprimer l'évènement",

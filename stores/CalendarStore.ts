@@ -869,8 +869,8 @@ export const useCalendar = defineStore("calendar", () => {
 
       const eventIndex = baseEvents.value.findIndex(e => e.id === eventSkeleton.value.id)
       baseEvents.value[eventIndex] = res
-    } catch (err) {
-      console.log(err)
+
+      return res
     } finally {
       abortController = null
       isUpdatingEvent.value = false

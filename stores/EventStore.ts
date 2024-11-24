@@ -247,17 +247,13 @@ export const useCalendarEvents = defineStore("calendar-events", () => {
     abortController = new AbortController()
     isUpdatingEvent.value = true
 
-    try {
-      const res = await $fetch(`/api/calendars/events/${eventSkeleton.value.id}`, { method: "PATCH", body: { event : eventSkeleton.value, calendarId: activeCalendar?.id }, signal: abortController.signal })
+    const res = await $fetch(`/api/calendars/events/${eventSkeleton.value.id}`, { method: "PATCH", body: { event : eventSkeleton.value, calendarId: activeCalendar?.id }, signal: abortController.signal })
 
-      const eventIndex = baseEvents.value.findIndex(e => e.id === eventSkeleton.value.id)
-      baseEvents.value[eventIndex] = res
-    } catch (err) {
-      console.log(err)
-    } finally {
-      abortController = null
-      isUpdatingEvent.value = false
-    }
+    const eventIndex = baseEvents.value.findIndex(e => e.id === eventSkeleton.value.id)
+    baseEvents.value[eventIndex] = res
+
+    abortController = null
+    isUpdatingEvent.value = false
   }
 
   async function deleteEventFromSkeleton() {
