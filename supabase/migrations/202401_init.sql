@@ -88,6 +88,14 @@ create table public.calendar_events (
 );
 comment on table public.calendar_events is 'Events linked to a world';
 
+-- Calendar Events restrictions
+alter table public.calendar_events
+  add constraint calendar_events_maxlen_check
+  check (
+    char_length(title) <= 240 AND
+    (description IS NULL OR char_length(description) <= 1200)
+  );
+
 -- Link table for events - categories
 create table public.calendar_event_categories_links (
   calendar_event_id               bigint references public.calendar_events on delete cascade,
