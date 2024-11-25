@@ -136,9 +136,20 @@ export default defineI18nConfig(() => ({
             addLocation: "Add a place",
             prevPage: "Previous page with events",
             nextPage: "Next page with events",
+            patterns: {
+              title: "Between 3 and 120 caracters, without special symbols, except & - ~ ()",
+              description: "1200 caracters max.",
+              location: "Between 3 and 160 caracters, without special symbols, except & - ~ ()",
+            },
             editDialog: {
               title: "Edit event",
               subtitle: "Update event data",
+            },
+            editErrors: {
+              toastTitle: "Event wasn't updated.",
+              title_too_big: "Title should be less than 120 characters long.",
+              description_too_big: "Description should be less than 1200 characters long.",
+              location_too_big: "Location should be less than 160 characters long.",
             },
             deleteDialog: {
               title: "Delete this event",
@@ -344,9 +355,20 @@ export default defineI18nConfig(() => ({
             addLocation: "Ajouter un endroit",
             prevPage: "Précédente page à évènements",
             nextPage: "Prochaine page à évènements",
+            patterns: {
+              title: "Entre 3 et 120 charactères, sans symboles spéciaux, sauf & - ~ ()",
+              description: "Maximum 1200 charactères.",
+              location: "Entre 3 et 160 charactères, sans symboles spéciaux, sauf & - ~ ()",
+            },
             editDialog: {
               title: "Modifier l'évènement",
               subtitle: "Mettre à jour les données de l'évènement",
+            },
+            editErrors: {
+              toastTitle: "L'évènement n'a pas été modifié",
+              title_too_big: "Le titre doit être inférieur à 120 caractères.",
+              description_too_big: "La description doit être inférieure à 1200 caractères.",
+              location_too_big: "La localisation doit être inférieure à 160 caractères.",
             },
             deleteDialog: {
               title: "Supprimer l'évènement",

@@ -5,6 +5,9 @@ import { PhAlarm, PhCircleNotch, PhEye, PhEyeClosed, PhMapPinArea, PhTag } from 
 const { eventSkeleton, operationInProgress } = storeToRefs(useCalendar())
 const { resetSkeleton, submitSkeleton, cancelLatestRequest } = useCalendar()
 const popoverOpen = ref(false)
+
+const { t } = useI18n()
+
 const isLoading = ref(false)
 
 const formErrors = reactive<{ message: string | null }>({
@@ -88,7 +91,7 @@ function handleCancel() {
       :collision-padding="60"
       :disable-outside-pointer-events="true"
       :trap-focus="true"
-      class="pl-3 min-w-96 border-indigo-200 dark:bg-slate-950 dark:border-indigo-950"
+      class="pl-3 w-[30rem] max-w-full border-indigo-200 dark:bg-slate-950 dark:border-indigo-950"
       @escape-key-down="handleClosing"
       @focus-outside="handleClosing"
       @interact-outside="handleClosing"
@@ -104,8 +107,14 @@ function handleCancel() {
               name="new-event-title"
               required
               :placeholder="$t('entity.calendar.event.title')"
-              class="w-full -my-1 py-1 -mx-1 px-1 text-lg border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600"
+              :maxlength="120"
+              pattern="([A-Za-zÀ-ÖØ-öø-ÿ0-9\s\&\-\~]+){3,120}"
+              class="w-full -my-1 py-1 -mx-1 px-1 text-lg border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600 invalid:border-red-500"
             >
+
+            <div class="mt-2 mb-1 text-xs opacity-50">
+              {{ t('entity.calendar.event.patterns.title') }}
+            </div>
           </div>
 
           <div class="col-span-2 my-2 pl-8">
@@ -113,8 +122,13 @@ function handleCancel() {
               id="new-event-description"
               v-model="eventSkeleton.description"
               name="new-event-description"
-              :placeholder="$t('entity.addDescription')"              class="w-full -my-1 py-1 -mx-1 px-1 min-h-24 max-h-36 text-sm border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600"
+              :placeholder="$t('entity.addDescription')"
+              :maxlength="1200"
+              class="w-full -my-1 py-1 -mx-1 px-1 min-h-24 max-h-36 text-sm border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600 invalid:border-red-500"
             />
+            <div class="mt-2 mb-1 text-xs opacity-50">
+              {{ t('entity.calendar.event.patterns.description') }}
+            </div>
           </div>
 
           <div class="col-span-2">
@@ -142,7 +156,10 @@ function handleCancel() {
             <div class="flex items-center gap-4">
               <PhTag size="18" weight="fill" />
 
-              <CalendarInputEventCategory v-model="eventSkeleton.category" :placeholder="$t('entity.category.addPrimary')" />
+              <CalendarInputEventCategory
+                v-model="eventSkeleton.category"
+                :placeholder="$t('entity.category.addPrimary')"
+              />
             </div>
           </div>
 
@@ -158,13 +175,21 @@ function handleCancel() {
             <div class="flex items-center gap-4">
               <PhMapPinArea size="18" weight="fill" />
 
-              <input
-                id="new-event-location"
-                v-model="eventSkeleton.location"
-                type="text"
-                name="new-event-location"
-                :placeholder="$t('entity.calendar.event.addLocation')"
-                class="w-full -my-1 py-2 px-2 text-sm border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600">
+              <div class="grow">
+                <input
+                  id="new-event-location"
+                  v-model="eventSkeleton.location"
+                  type="text"
+                  name="new-event-location"
+                  :placeholder="$t('entity.calendar.event.addLocation')"
+                  :maxlength="160"
+                  pattern="([A-Za-zÀ-ÖØ-öø-ÿ0-9\s\&\-\~]+){3,160}"
+                  class="w-full -my-1 py-2 px-2 text-sm border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600"
+                >
+                <div class="mt-2 mb-1 text-xs opacity-50">
+                  {{ t('entity.calendar.event.patterns.location') }}
+                </div>
+              </div>
             </div>
           </div>
 

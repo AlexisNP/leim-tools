@@ -1,8 +1,13 @@
 <script lang="ts" setup>
 import { PhAlarm, PhCircleNotch, PhEye, PhEyeClosed, PhMapPinArea, PhPencilSimpleLine, PhTag } from "@phosphor-icons/vue"
+import { useToast } from "~/components/ui/toast";
+import type { APIError } from "~/models/Errors";
 
 const { resetSkeleton, updateEventFromSkeleton, cancelLatestRequest } = useCalendar()
 const { eventSkeleton, lastActiveEvent, isEditEventModalOpen } = storeToRefs(useCalendar())
+
+const { toast } = useToast()
+const { t } = useI18n()
 
 const isLoading = ref(false)
 
@@ -24,15 +29,22 @@ async function handleAction() {
 
   try {
     await updateEventFromSkeleton()
-
-    isEditEventModalOpen.value = false
   } catch (err) {
-    if (err instanceof Error) {
-      formErrors.message = err.message
-    }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const apiError = (err as any).data as APIError
+
+    apiError.data.errors.forEach((error) => {
+      toast({
+        title: t("entity.calendar.event.editErrors.toastTitle"),
+        variant: "destructive",
+        description: t(`entity.calendar.event.editErrors.${error.path[1]}_${error.code}`),
+        duration: 2000,
+      })
+    })
   } finally {
     resetSkeleton()
     isLoading.value = false
+    isEditEventModalOpen.value = false
   }
 }
 
@@ -85,15 +97,22 @@ function handleCancel() {
             <div class="flex items-center gap-4">
               <PhPencilSimpleLine size="20" weight="fill" />
 
-              <input
-                id="new-event-title"
-                v-model="eventSkeleton.title"
-                type="text"
-                name="new-event-title"
-                required
-                :placeholder="$t('entity.calendar.event.title')"
-                class="w-full -my-1 py-1 -mx-1 px-1 text-lg border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600"
-              >
+              <div class="grow">
+                <input
+                  id="new-event-title"
+                  v-model="eventSkeleton.title"
+                  type="text"
+                  name="new-event-title"
+                  required
+                  :placeholder="$t('entity.calendar.event.title')"
+                  :maxlength="120"
+                  pattern="([A-Za-zÀ-ÖØ-öø-ÿ0-9\s\&\-\~]+){3,120}"
+                  class="w-full -my-1 py-1 -mx-1 px-1 text-lg border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600 invalid:border-red-500"
+                >
+                <div class="mt-2 mb-1 text-xs opacity-50">
+                  {{ t('entity.calendar.event.patterns.title') }}
+                </div>
+              </div>
             </div>
           </div>
 
@@ -103,8 +122,12 @@ function handleCancel() {
               v-model="eventSkeleton.description"
               name="new-event-description"
               :placeholder="$t('entity.addDescription')"
-              class="w-full -my-1 py-1 -mx-1 px-1 min-h-24 max-h-36 text-sm border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600"
+              :maxlength="1200"
+              class="w-full -my-1 py-1 -mx-1 px-1 min-h-24 max-h-36 text-sm border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600 invalid:border-red-500"
             />
+            <div class="mt-2 mb-1 text-xs opacity-50">
+              {{ t('entity.calendar.event.patterns.description') }}
+            </div>
           </div>
 
           <div class="col-span-2">
@@ -133,7 +156,10 @@ function handleCancel() {
               <PhTag size="18" weight="fill" />
 
               <div class="w-1/2">
-                <CalendarInputEventCategory v-model="eventSkeleton.category" placeholder="Ajouter une catégorie principale" />
+                <CalendarInputEventCategory
+                  v-model="eventSkeleton.category"
+                  :placeholder="$t('entity.category.addPrimary')"
+                />
               </div>
             </div>
           </div>
@@ -143,7 +169,7 @@ function handleCancel() {
               <PhTag size="18" weight="fill" />
 
               <div class="w-1/2">
-                <CalendarInputEventCategories v-model="eventSkeleton.secondaryCategories" :placeholder="Ajouter des catégories secondaires" />
+                <CalendarInputEventCategories v-model="eventSkeleton.secondaryCategories" placeholder="Ajouter des catégories secondaires" />
               </div>
             </div>
           </div> -->
@@ -152,13 +178,22 @@ function handleCancel() {
             <div class="flex items-center gap-4">
               <PhMapPinArea size="18" weight="fill" />
 
-              <input
-                id="new-event-location"
-                v-model="eventSkeleton.location"
-                type="text"
-                name="new-event-location"
-                :placeholder="$t('entity.calendar.event.addLocation')"
-                class="w-full -my-1 py-2 px-2 text-sm border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600">
+              <div class="grow">
+                <input
+                  id="new-event-location"
+                  v-model="eventSkeleton.location"
+                  type="text"
+                  name="new-event-location"
+                  :placeholder="$t('entity.calendar.event.addLocation')"
+                  :maxlength="160"
+                  pattern="([A-Za-zÀ-ÖØ-öø-ÿ0-9\s\&\-\~]+){3,160}"
+                  class="w-full -my-1 py-2 px-2 text-sm border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600 invalid:border-red-500"
+                >
+
+                <div class="mt-2 mb-1 text-xs opacity-50">
+                  {{ t('entity.calendar.event.patterns.location') }}
+                </div>
+              </div>
             </div>
           </div>
 

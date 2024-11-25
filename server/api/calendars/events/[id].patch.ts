@@ -22,12 +22,22 @@ export default defineEventHandler(async (event) => {
   }
 
   if (bodyError) {
-    throw createError({
+    const error = createError({
       cause: "Utilisateur",
       fatal: false,
-      message: "Le schéma de la requête n'est pas complet ou mal renseigné.",
-      status: 401,
+      statusCode: 401,
+      statusMessage: "Validation Error",
+      message: "Erreur de validation du schéma, probablement dûe à une erreur utilisateur.",
+      data: {
+        errors: bodyError.issues.map(issue => ({
+          path: issue.path,
+          message: issue.message,
+          code: issue.code
+        }))
+      }
     })
+
+    throw error
   }
 
   try {
