@@ -92,9 +92,9 @@ comment on table public.calendar_events is 'Events linked to a world';
 alter table public.calendar_events
   add constraint calendar_events_maxlen_check
   check (
-    char_length(title) <= 240 AND
+    char_length(title) <= 120 AND
     (description IS NULL OR char_length(description) <= 1200) AND
-    (location IS NULL OR char_length(location) <= 240)
+    (location IS NULL OR char_length(location) <= 160)
   );
 
 -- Link table for events - categories

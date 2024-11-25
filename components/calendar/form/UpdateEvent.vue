@@ -104,6 +104,7 @@ function handleCancel() {
                 name="new-event-title"
                 required
                 :placeholder="$t('entity.calendar.event.title')"
+                :maxlength="120"
                 class="w-full -my-1 py-1 -mx-1 px-1 text-lg border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600"
               >
             </div>
@@ -116,6 +117,7 @@ function handleCancel() {
               name="new-event-description"
               :placeholder="$t('entity.addDescription')"
               class="w-full -my-1 py-1 -mx-1 px-1 min-h-24 max-h-36 text-sm border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600"
+              :maxlength="1200"
             />
           </div>
 
@@ -170,7 +172,9 @@ function handleCancel() {
                 type="text"
                 name="new-event-location"
                 :placeholder="$t('entity.calendar.event.addLocation')"
-                class="w-full -my-1 py-2 px-2 text-sm border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600">
+                class="w-full -my-1 py-2 px-2 text-sm border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600"
+                :maxlength="160"
+              >
             </div>
           </div>
 

@@ -75,7 +75,7 @@ function deployDeleteModal() {
   >
     <div ref="eventDetails" class="grid gap-1">
       <header class="pr-12">
-        <div class="text-lg font-semibold">
+        <div class="mb-2 max-h-24 overflow-y-auto text-lg font-semibold">
           {{ event.title }}
         </div>
 
@@ -100,18 +100,26 @@ function deployDeleteModal() {
 
       <div class="mb-1 space-y-1">
         <template v-if="event.location">
-          <p class="text-sm italic dark:opacity-75 flex items-center gap-1">
-            <PhMapPinArea size="16" weight="fill" /> {{ event.location }}
-          </p>
+          <div class="text-sm italic dark:opacity-75 flex items-center gap-1">
+            <div>
+              <PhMapPinArea size="16" weight="fill" />
+            </div>
+            <p class="max-h-12 overflow-y-auto">{{ event.location }}</p>
+          </div>
         </template>
-        <p class="text-sm italic dark:opacity-75 flex items-center gap-1">
-          <PhAlarm size="16" weight="fill" /> {{ dateDifference }}
-        </p>
+        <div class="text-sm italic dark:opacity-75 flex items-center gap-1">
+          <div>
+            <PhAlarm size="16" weight="fill" />
+          </div>
+          <p>{{ dateDifference }}</p>
+        </div>
         <template v-if="dateDuration">
-          <p class="text-sm italic dark:opacity-75 flex items-center gap-1">
-            <PhHourglassMedium size="16" weight="fill" />
-            {{ $t('entity.calendar.date.while', { duration: dateDuration } )}}
-          </p>
+          <div class="text-sm italic dark:opacity-75 flex items-center gap-1">
+            <div>
+              <PhHourglassMedium size="16" weight="fill" />
+            </div>
+            <p>{{ $t('entity.calendar.date.while', { duration: dateDuration } )}}</p>
+          </div>
         </template>
       </div>
 
@@ -134,7 +142,7 @@ function deployDeleteModal() {
       <template v-if="event.description">
         <hr class="border-slate-500 mt-2" >
 
-        <div class="mt-2 text-sm text-slate-600 dark:text-slate-300">
+        <div class="max-h-48 overflow-y-auto mt-2 text-sm text-slate-600 dark:text-slate-300">
           {{ event.description }}
         </div>
       </template>
