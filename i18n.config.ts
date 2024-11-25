@@ -136,6 +136,11 @@ export default defineI18nConfig(() => ({
             addLocation: "Add a place",
             prevPage: "Previous page with events",
             nextPage: "Next page with events",
+            patterns: {
+              title: "Between 3 and 120 caracters, without special symbols, except & - ~ ()",
+              description: "1200 caracters max.",
+              location: "Between 3 and 160 caracters, without special symbols, except & - ~ ()",
+            },
             editDialog: {
               title: "Edit event",
               subtitle: "Update event data",
@@ -350,6 +355,11 @@ export default defineI18nConfig(() => ({
             addLocation: "Ajouter un endroit",
             prevPage: "Précédente page à évènements",
             nextPage: "Prochaine page à évènements",
+            patterns: {
+              title: "Entre 3 et 120 charactères, sans symboles spéciaux, sauf & - ~ ()",
+              description: "Maximum 1200 charactères.",
+              location: "Entre 3 et 160 charactères, sans symboles spéciaux, sauf & - ~ ()",
+            },
             editDialog: {
               title: "Modifier l'évènement",
               subtitle: "Mettre à jour les données de l'évènement",
