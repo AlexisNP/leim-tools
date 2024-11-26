@@ -1,0 +1,294 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+
+    --primary: 245 58% 51%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --success: 156 72% 67%;
+    --success-muted: 156 72% 90%;
+    --success-foreground: 222.2 84% 4.9%;
+
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 180 0 4.9%;
+    --foreground: 210 40% 98%;
+
+    --muted: 244 47% 20%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --popover: 180 0 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --card: 180 0 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --border: 217 0 10%;
+    --input: 244 47% 20%;
+
+    --primary: 245 58% 51%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 244 47% 20%;
+    --secondary-foreground: 210 40% 98%;
+
+    --accent: 244 47% 20%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --success: 142 72% 29%;
+    --success-muted: 142 72% 10%;
+    --success-foreground: 210 40% 98%;
+
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Colors */
+.event-red {
+  @apply text-slate-900 bg-red-500 hover:bg-red-600
+}
+.event-orange {
+  @apply text-slate-900 bg-orange-500 hover:bg-orange-600
+}
+.event-amber {
+  @apply text-slate-900 bg-amber-500 hover:bg-amber-600
+}
+.event-yellow {
+  @apply text-slate-900 bg-yellow-600 hover:bg-yellow-700
+}
+.event-lime {
+  @apply text-slate-900 bg-lime-500 hover:bg-lime-600
+}
+.event-green {
+  @apply text-white bg-green-600 hover:bg-green-700
+}
+.event-emerald {
+  @apply text-white bg-emerald-600 hover:bg-emerald-700
+}
+.event-teal {
+  @apply text-white bg-teal-600 hover:bg-teal-700
+}
+.event-cyan {
+  @apply text-white bg-cyan-600 hover:bg-cyan-700
+}
+.event-sky {
+  @apply text-white bg-sky-600 hover:bg-sky-700
+}
+.event-blue {
+  @apply text-white bg-blue-600 hover:bg-blue-700
+}
+.event-indigo {
+  @apply text-white bg-indigo-600 hover:bg-indigo-700
+}
+.event-violet {
+  @apply text-white bg-violet-600 hover:bg-violet-700
+}
+.event-purple {
+  @apply text-white bg-purple-600 hover:bg-purple-700
+}
+.event-fuchsia {
+  @apply text-white bg-fuchsia-600 hover:bg-fuchsia-700
+}
+.event-pink {
+  @apply text-white bg-pink-700 hover:bg-pink-800
+}
+.event-rose {
+  @apply text-white bg-rose-700 hover:bg-rose-800
+}
+.event-black {
+  @apply text-white bg-stone-500 hover:bg-stone-700
+}
+.event-white {
+  @apply text-slate-900 bg-white hover:bg-yellow-200 border-[1px] border-slate-300
+}
+
+.dark .event-details-red {
+  --base-color: var(--color-red-800);
+}
+.dark .event-details-orange {
+  --base-color: var(--color-orange-800);
+}
+.dark .event-details-amber {
+  --base-color: var(--color-amber-800);
+}
+.dark .event-details-yellow {
+  --base-color: var(--color-yellow-800);
+}
+.dark .event-details-lime {
+  --base-color: var(--color-lime-800);
+}
+.dark .event-details-green {
+  --base-color: var(--color-green-800);
+}
+.dark .event-details-emerald {
+  --base-color: var(--color-emerald-800);
+}
+.dark .event-details-teal {
+  --base-color: var(--color-teal-800);
+}
+.dark .event-details-cyan {
+  --base-color: var(--color-cyan-800);
+}
+.dark .event-details-sky {
+  --base-color: var(--color-sky-800);
+}
+.dark .event-details-blue {
+  --base-color: var(--color-blue-800);
+}
+.dark .event-details-indigo {
+  --base-color: var(--color-indigo-800);
+}
+.dark .event-details-violet {
+  --base-color: var(--color-violet-800);
+}
+.dark .event-details-purple {
+  --base-color: var(--color-purple-800);
+}
+.dark .event-details-fuchsia {
+  --base-color: var(--color-fuchsia-800);
+}
+.dark .event-details-pink {
+  --base-color: var(--color-pink-800);
+}
+.dark .event-details-rose {
+  --base-color: var(--color-rose-800);
+}
+.dark .event-details-black {
+  --base-color: var(--color-stone-800);
+}
+.dark .event-details-white {
+  --base-color: var(--color-white);
+}
+
+.event-details-red {
+  --base-color: var(--color-red-300);
+}
+.event-details-orange {
+  --base-color: var(--color-orange-300);
+}
+.event-details-amber {
+  --base-color: var(--color-amber-300);
+}
+.event-details-yellow {
+  --base-color: var(--color-yellow-300);
+}
+.event-details-lime {
+  --base-color: var(--color-lime-300);
+}
+.event-details-green {
+  --base-color: var(--color-green-300);
+}
+.event-details-emerald {
+  --base-color: var(--color-emerald-300);
+}
+.event-details-teal {
+  --base-color: var(--color-teal-300);
+}
+.event-details-cyan {
+  --base-color: var(--color-cyan-300);
+}
+.event-details-sky {
+  --base-color: var(--color-sky-300);
+}
+.event-details-blue {
+  --base-color: var(--color-blue-300);
+}
+.event-details-indigo {
+  --base-color: var(--color-indigo-300);
+}
+.event-details-violet {
+  --base-color: var(--color-violet-300);
+}
+.event-details-purple {
+  --base-color: var(--color-purple-300);
+}
+.event-details-fuchsia {
+  --base-color: var(--color-fuchsia-300);
+}
+.event-details-pink {
+  --base-color: var(--color-pink-300);
+}
+.event-details-rose {
+  --base-color: var(--color-rose-300);
+}
+.event-details-black {
+  --base-color: var(--color-stone-300);
+}
+.event-details-white {
+  --base-color: var(--color-white);
+}
+
+.event-details {
+  --bg-color: color-mix(in srgb, var(--base-color), var(--color-white) 80%);
+  --border-color: color-mix(in srgb, var(--base-color), var(--color-white) 50%);
+  background-color: var(--bg-color);
+  border-color: var(--border-color);
+
+  hr {
+    border-color: var(--border-color);
+  }
+}
+
+.dark .event-details {
+  --bg-color: color-mix(in srgb, var(--base-color), var(--color-slate-950) 80%);
+  --border-color: color-mix(in srgb, var(--base-color), var(--color-slate-800) 50%);
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: all .5s ease;
+}
+.fade-delay-enter-active,
+.fade-delay-leave-active {
+  transition: all .5s ease 1s;
+}
+
+.fade-enter-from,
+.fade-leave-to,
+.fade-delay-enter-from,
+.fade-delay-leave-to {
+  opacity: 0;
+  visibility: hidden;
+}

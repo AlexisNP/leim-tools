@@ -1,0 +1,5 @@
+{
+  "eslint.experimental.useFlatConfig": true,
+  "editor.indentSize": "tabSize",
+  "editor.tabSize": 2,
+}
