@@ -137,9 +137,9 @@ export default defineI18nConfig(() => ({
             prevPage: "Previous page with events",
             nextPage: "Next page with events",
             patterns: {
-              title: "Between 3 and 120 caracters, without special symbols, except & - ~ ()",
+              title: "Between 3 and 120 caracters.",
               description: "1200 caracters max.",
-              location: "Between 3 and 160 caracters, without special symbols, except & - ~ ()",
+              location: "Between 3 and 160 caracters.",
             },
             editDialog: {
               title: "Edit event",
@@ -356,9 +356,9 @@ export default defineI18nConfig(() => ({
             prevPage: "Précédente page à évènements",
             nextPage: "Prochaine page à évènements",
             patterns: {
-              title: "Entre 3 et 120 charactères, sans symboles spéciaux, sauf & - ~ ()",
+              title: "Entre 3 et 120 charactères.",
               description: "Maximum 1200 charactères.",
-              location: "Entre 3 et 160 charactères, sans symboles spéciaux, sauf & - ~ ()",
+              location: "Entre 3 et 160 charactères.",
             },
             editDialog: {
               title: "Modifier l'évènement",
