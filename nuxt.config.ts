@@ -10,7 +10,8 @@ export default defineNuxtConfig({
     "@nuxtjs/color-mode",
     "@nuxt/eslint",
     "shadcn-nuxt",
-    "@nuxtjs/i18n"
+    "@nuxtjs/i18n",
+    "@nuxthub/core"
   ],
   css: ["~/assets/main.css"],
 
