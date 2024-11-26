@@ -105,8 +105,8 @@ function handleCancel() {
                   name="new-event-title"
                   required
                   :placeholder="$t('entity.calendar.event.title')"
+                  :minlength="3"
                   :maxlength="120"
-                  pattern="([A-Za-zÀ-ÖØ-öø-ÿ0-9\s\&\-\~]+){3,120}"
                   class="w-full -my-1 py-1 -mx-1 px-1 text-lg border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600 invalid:border-red-500"
                 >
                 <div class="mt-2 mb-1 text-xs opacity-50">
@@ -185,8 +185,8 @@ function handleCancel() {
                   type="text"
                   name="new-event-location"
                   :placeholder="$t('entity.calendar.event.addLocation')"
+                  :minlength="3"
                   :maxlength="160"
-                  pattern="([A-Za-zÀ-ÖØ-öø-ÿ0-9\s\&\-\~]+){3,160}"
                   class="w-full -my-1 py-2 px-2 text-sm border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600 invalid:border-red-500"
                 >
 
