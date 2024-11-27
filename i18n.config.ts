@@ -136,6 +136,8 @@ export default defineI18nConfig(() => ({
             addLocation: "Add a place",
             prevPage: "Previous page with events",
             nextPage: "Next page with events",
+            outOfBoundsTitle: "No next or previous events were found",
+            outOfBoundsMessage: "Maybe the event is the first or last one ?",
             patterns: {
               title: "Between 3 and 120 caracters.",
               description: "1200 caracters max.",
@@ -355,6 +357,8 @@ export default defineI18nConfig(() => ({
             addLocation: "Ajouter un endroit",
             prevPage: "Précédente page à évènements",
             nextPage: "Prochaine page à évènements",
+            outOfBoundsTitle: "Aucun évènement suivant ou précédent trouvé",
+            outOfBoundsMessage: "Peut-être l'évènement se situe au début ou à la fin du calendrier ?",
             patterns: {
               title: "Entre 3 et 120 charactères.",
               description: "Maximum 1200 charactères.",
