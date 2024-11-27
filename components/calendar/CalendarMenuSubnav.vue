@@ -2,8 +2,12 @@
 import { type RPGDate } from "@/models/Date"
 
 import { PhArrowLineLeft, PhArrowLineRight } from "@phosphor-icons/vue"
+import { useToast } from "../ui/toast";
 
 const { currentDate, currentConfig, jumpToDate, getRelativeEventFromDate } = useCalendar()
+
+const { toast } = useToast()
+const { t } = useI18n()
 
 function handleGotoPreviousEventPage(position: "next" | "prev" = "next") {
   let fromDate: RPGDate
@@ -55,7 +59,12 @@ function handleGotoPreviousEventPage(position: "next" | "prev" = "next") {
 
     jumpToDate(targetDate)
   } catch (err) {
-    console.log(err)
+    toast({
+      title: t("entity.calendar.event.outOfBoundsTitle"),
+      variant: "default",
+      description: t("entity.calendar.event.outOfBoundsMessage"),
+      duration: 4000,
+    })
   }
 }
 </script>
