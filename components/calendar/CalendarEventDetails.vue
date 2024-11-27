@@ -60,7 +60,7 @@ function deployDeleteModal() {
 
 <template>
   <UiPopoverContent
-    class=" w-96 "
+    class="w-96"
     :align="'center'"
     :align-offset="50"
     :side="'left'"
@@ -72,6 +72,7 @@ function deployDeleteModal() {
         'event-details': event.category
       }
     )"
+    @focus-outside.prevent
   >
     <div ref="eventDetails" class="grid gap-1">
       <header class="pr-12">
