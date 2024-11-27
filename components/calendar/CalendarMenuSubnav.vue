@@ -4,7 +4,7 @@ import { type RPGDate } from "@/models/Date"
 import { PhArrowLineLeft, PhArrowLineRight } from "@phosphor-icons/vue"
 import { useToast } from "../ui/toast";
 
-const { currentDate, currentConfig, jumpToDate, getRelativeEventFromDate } = useCalendar()
+const { currentDate, currentConfig, jumpToDate, getRelativeEventFromDate, monthsPerYear } = useCalendar()
 
 const { toast } = useToast()
 const { t } = useI18n()
@@ -14,7 +14,6 @@ function handleGotoPreviousEventPage(position: "next" | "prev" = "next") {
 
   // To modify, obviously
   const daysPerMonth = 32
-  const monthsPerYear = 10
 
   const toDay = position === "next" ? daysPerMonth : 1
   const toMonth = position === "next" ? monthsPerYear : 0
