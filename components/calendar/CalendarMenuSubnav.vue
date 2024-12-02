@@ -1,71 +1,66 @@
 <script lang="ts" setup>
-import { type RPGDate } from "@/models/Date"
+const { currentDate } = useCalendar()
 
-import { PhArrowLineLeft, PhArrowLineRight } from "@phosphor-icons/vue"
-import { useToast } from "../ui/toast";
+// const { toast } = useToast()
+// const { t } = useI18n()
 
-const { currentDate, currentConfig, jumpToDate, getRelativeEventFromDate, monthsPerYear } = useCalendar()
+// function handleGotoPreviousEventPage(position: "next" | "prev" = "next") {
+//   let fromDate: RPGDate
 
-const { toast } = useToast()
-const { t } = useI18n()
+//   // To modify, obviously
+//   const daysPerMonth = 32
 
-function handleGotoPreviousEventPage(position: "next" | "prev" = "next") {
-  let fromDate: RPGDate
+//   const toDay = position === "next" ? daysPerMonth : 1
+//   const toMonth = position === "next" ? monthsPerYear : 0
 
-  // To modify, obviously
-  const daysPerMonth = 32
+//   switch (currentConfig.viewType) {
+//     case "month":
+//       fromDate = {
+//         day: toDay,
+//         month: currentDate.currentMonth,
+//         year: currentDate.currentYear
+//       }
+//       break
 
-  const toDay = position === "next" ? daysPerMonth : 1
-  const toMonth = position === "next" ? monthsPerYear : 0
+//     case "year":
+//       fromDate = {
+//         day: toDay,
+//         month: toMonth,
+//         year: currentDate.currentYear
+//       }
+//       break
 
-  switch (currentConfig.viewType) {
-    case "month":
-      fromDate = {
-        day: toDay,
-        month: currentDate.currentMonth,
-        year: currentDate.currentYear
-      }
-      break
+//     case "decade":
+//       fromDate = {
+//         day: toDay,
+//         month: currentDate.currentMonth,
+//         year: currentDate.currentYear
+//       }
+//       break
 
-    case "year":
-      fromDate = {
-        day: toDay,
-        month: toMonth,
-        year: currentDate.currentYear
-      }
-      break
+//     case "century":
+//     default:
+//       fromDate = {
+//         day: toDay,
+//         month: currentDate.currentMonth,
+//         year: currentDate.currentYear
+//       }
+//       break
+//   }
 
-    case "decade":
-      fromDate = {
-        day: toDay,
-        month: currentDate.currentMonth,
-        year: currentDate.currentYear
-      }
-      break
+//   try {
+//     const { targetDate } = getRelativeEventFromDate(fromDate, position)
 
-    case "century":
-    default:
-      fromDate = {
-        day: toDay,
-        month: currentDate.currentMonth,
-        year: currentDate.currentYear
-      }
-      break
-  }
-
-  try {
-    const { targetDate } = getRelativeEventFromDate(fromDate, position)
-
-    jumpToDate(targetDate)
-  } catch (err) {
-    toast({
-      title: t("entity.calendar.event.outOfBoundsTitle"),
-      variant: "default",
-      description: t("entity.calendar.event.outOfBoundsMessage"),
-      duration: 4000,
-    })
-  }
-}
+//     jumpToDate(targetDate)
+//   } catch (err) {
+//     toast({
+//       title: t("entity.calendar.event.outOfBoundsTitle"),
+//       variant: "default",
+//       description: t("entity.calendar.event.outOfBoundsMessage"),
+//       duration: 4000,
+//     })
+//   }
+// }
 </script>
 
 <template>
@@ -81,7 +76,7 @@ function handleGotoPreviousEventPage(position: "next" | "prev" = "next") {
         </template>
       </ClientOnly>
     </div>
-    <div>
+    <!-- <div>
       <UiTooltipProvider :delay-duration="250">
         <UiTooltip>
           <UiTooltipTrigger as-child>
@@ -122,6 +117,6 @@ function handleGotoPreviousEventPage(position: "next" | "prev" = "next") {
           </UiTooltipContent>
         </UiTooltip>
       </UiTooltipProvider>
-    </div>
+    </div> -->
   </div>
 </template>
