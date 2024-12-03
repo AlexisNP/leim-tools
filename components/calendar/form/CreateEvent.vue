@@ -2,9 +2,10 @@
 import type { RPGDate } from "~/models/Date";
 import { PhAlarm, PhCircleNotch, PhEye, PhEyeClosed, PhMapPinArea, PhTag } from "@phosphor-icons/vue"
 
+const emit = defineEmits(["event-created"])
+
 const { eventSkeleton } = storeToRefs(useCalendar())
 const { submitSkeleton, cancelLatestRequest } = useCalendar()
-const popoverOpen = ref(false)
 
 const { t } = useI18n()
 
@@ -28,7 +29,7 @@ async function handleSubmit() {
   try {
     await submitSkeleton()
 
-    popoverOpen.value = false
+    emit("event-created")
   } catch (err) {
     if (err instanceof Error) {
       formErrors.message = err.message
@@ -64,7 +65,6 @@ function handleCancel() {
           pattern="([A-Za-zÀ-ÖØ-öø-ÿ0-9\s\&\-\~]+){3,120}"
           class="w-full -my-1 py-1 -mx-1 px-1 text-lg border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600 invalid:border-red-500"
         >
-
         <div class="mt-2 mb-1 text-xs opacity-50">
           {{ t('entity.calendar.event.patterns.title') }}
         </div>

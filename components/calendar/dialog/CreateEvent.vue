@@ -39,6 +39,7 @@ function openEventCreatePopover() {
  */
 function handleClosing(e: Event) {
   if (isLoading.value) {
+    popoverOpen.value = false
     e.preventDefault()
   }
 }
@@ -61,7 +62,7 @@ function handleClosing(e: Event) {
       @interact-outside="handleClosing"
       @pointer-down-outside="handleClosing"
     >
-      <CalendarFormCreateEvent />
+      <CalendarFormCreateEvent @event-created="handleClosing" />
     </UiPopoverContent>
   </UiPopover>
 </template>

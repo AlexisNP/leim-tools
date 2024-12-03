@@ -14,7 +14,7 @@ const buttonDisabledState: ComputedRef<boolean> = computed<boolean>(() => {
   <UiTooltipProvider :delay-duration="250">
     <UiTooltip>
       <UiTooltipTrigger as-child>
-        <UiButton size="sm" :disabled="buttonDisabledState" @click="jumpToDefaultDate">
+        <UiButton size="sm" variant="secondary" :disabled="buttonDisabledState" @click="jumpToDefaultDate">
           {{ $t('entity.calendar.date.today') }}
         </UiButton>
       </UiTooltipTrigger>
