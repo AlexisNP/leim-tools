@@ -127,6 +127,8 @@ export default defineI18nConfig(() => ({
           event: {
             nameSingular: "Event",
             namePlural: "Events",
+            addSingle: "Add an event",
+            newEvent: "New event",
             title: "Event title",
             isStart: "Start",
             isEnd: "End",
@@ -348,6 +350,8 @@ export default defineI18nConfig(() => ({
           event: {
             nameSingular: "Évènement",
             namePlural: "Évènements",
+            addSingle: "Ajouter un évènement",
+            newEvent: "Nouvel évènement",
             title: "Titre de l'évènement",
             isStart: "Début",
             isEnd: "Fin",
