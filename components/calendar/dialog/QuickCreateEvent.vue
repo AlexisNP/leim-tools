@@ -19,7 +19,7 @@ function toggleDialog() {
   </UiButton>
 
   <UiDialog v-model:open="isDialogOpen">
-    <UiDialogContent>
+    <UiDialogContent class="border-indigo-200 dark:bg-slate-950 dark:border-indigo-950">
       <UiDialogTitle>
         {{ $t("entity.calendar.event.addSingle") }}
       </UiDialogTitle>

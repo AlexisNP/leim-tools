@@ -53,8 +53,8 @@ onMounted(() => {
       <component :is="currentViewComponent" />
 
       <CalendarSearch />
-      <CalendarFormUpdateEvent />
-      <CalendarFormDeleteEvent />
+      <CalendarDialogUpdateEvent />
+      <CalendarDialogDeleteEvent />
     </div>
   </div>
 </template>
