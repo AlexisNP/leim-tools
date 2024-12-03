@@ -143,7 +143,7 @@ const eventsNotDisplayed: ComputedRef<number>  = computed<number>(() => eventsFo
     </ClientOnly>
 
     <ClientOnly>
-      <LazyCalendarFormCreateEvent :date btn-class="absolute inset-0 w-full h-full cursor-default z-0" />
+      <LazyCalendarDialogCreateEvent :date btn-class="absolute inset-0 w-full h-full cursor-default z-0" />
     </ClientOnly>
   </div>
 </template>

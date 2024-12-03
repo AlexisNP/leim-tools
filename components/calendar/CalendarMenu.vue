@@ -10,7 +10,10 @@ const { revealAdvancedSearch } = useCalendar()
   <header class="pt-4 border-slate-400 dark:border-slate-700 border-b-[1px]">
     <div class="px-6 flex justify-between">
       <menu class="flex items-center gap-2">
-        <li class="flex items-center">
+        <li>
+          <CalendarDialogQuickCreateEvent />
+        </li>
+        <li>
           <CalendarMenuToday />
         </li>
         <li>

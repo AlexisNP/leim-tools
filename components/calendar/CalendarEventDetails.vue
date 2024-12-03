@@ -46,6 +46,7 @@ function deployEditModal() {
   lastActiveEvent.value = { ...props.event }
   revealEditEventModal()
   commandMenuOpened.value = false
+  emit("query:close-popover")
 }
 
 /**
@@ -55,6 +56,7 @@ function deployDeleteModal() {
   lastActiveEvent.value = { ...props.event }
   revealDeleteEventModal()
   commandMenuOpened.value = false
+  emit("query:close-popover")
 }
 </script>
 
