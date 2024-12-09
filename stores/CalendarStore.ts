@@ -45,7 +45,13 @@ export const useCalendar = defineStore("calendar", () => {
     "year"
   ])
 
-  const activeCalendar = ref<{ id: number; name: string; today: RPGDate} | null>(null)
+  const activeCalendar = ref<{ id: number; name: string; today: RPGDate } | null>(null)
+
+  const isReadOnly = ref<boolean>(true)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  function setReadStatus(user: any, calendar: Calendar) {
+    isReadOnly.value = (!user) || (calendar.world?.gmId !== user?.id)
+  }
 
   /**
    * Month list (queried from API)
@@ -59,7 +65,7 @@ export const useCalendar = defineStore("calendar", () => {
       activeCalendar.value = {
         id: calendarData.id,
         name: calendarData.name,
-        today: calendarData.today
+        today: calendarData.today,
       }
 
       setDefaultDate(activeCalendar.value.today)
@@ -901,6 +907,8 @@ export const useCalendar = defineStore("calendar", () => {
   }
 
   return {
+    isReadOnly,
+    setReadStatus,
     setActiveCalendar,
     activeCalendar,
     months,

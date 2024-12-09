@@ -20,8 +20,7 @@ const { setActiveCalendar } = useCalendar()
 setActiveCalendar(props.calendarData, props.categories)
 
 const { currentConfig, jumpToDate, selectedDate } = useCalendar()
-
-// const { setCharacters } = useCharacters()
+const { isReadOnly } = storeToRefs(useCalendar())
 
 const currentViewComponent: ComputedRef<Component> = computed<Component>(() => {
   switch (currentConfig.viewType) {
@@ -47,6 +46,7 @@ onMounted(() => {
 
 <template>
   <div class="h-full w-full relative">
+  {{ isReadOnly }}
     <div class="h-full grid grid-rows-[auto,1fr]">
       <CalendarMenu />
 

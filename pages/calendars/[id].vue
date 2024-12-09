@@ -3,26 +3,16 @@ import { PhCircleNotch } from "@phosphor-icons/vue";
 import type { Calendar } from "~/models/CalendarConfig";
 import type { Category } from "~/models/Category";
 
-definePageMeta({
-  middleware: ["auth-guard"]
-})
-
-const user = useSupabaseUser()
-// Redirect user back home when they log out on the page
-watch(user, (n) => {
-  if (!n) {
-    navigateTo("/")
-  }
-})
-
 const route = useRoute()
-const id = route.params.id
+const shortId = route.params.id
 
-const { data: calendarData, pending: calPending } = await useLazyFetch("/api/calendars/query", { key: `calendar-${id}`, query: { id, full: true } })
-const { data: catData, pending: catPending } = await useLazyFetch("/api/calendars/categories/query", { key: `categories-${id}` })
+const { data: calendarData, pending: calPending } = await useLazyFetch("/api/calendars/query", { key: `calendar-${shortId}`, query: { shortId, full: true } })
+const { data: catData, pending: catPending } = await useLazyFetch("/api/calendars/categories/query", { key: `categories-${shortId}` })
 
 const cal = computed<Calendar>(() => calendarData?.value?.data as Calendar)
 const categories = computed<Category[]>(() => catData?.value?.data as Category[])
+
+const user = useSupabaseUser()
 
 const { setReadStatus } = useCalendar()
 setReadStatus(user.value, cal.value)
