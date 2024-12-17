@@ -46,15 +46,14 @@ onMounted(() => {
 
 <template>
   <div class="h-full w-full relative">
-  {{ isReadOnly }}
     <div class="h-full grid grid-rows-[auto,1fr]">
       <CalendarMenu />
 
       <component :is="currentViewComponent" />
 
       <CalendarSearch />
-      <CalendarDialogUpdateEvent />
-      <CalendarDialogDeleteEvent />
+      <CalendarDialogUpdateEvent v-if="!isReadOnly" />
+      <CalendarDialogDeleteEvent v-if="!isReadOnly" />
     </div>
   </div>
 </template>

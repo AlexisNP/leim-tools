@@ -15,7 +15,7 @@ import {
 } from "@phosphor-icons/vue"
 
 const { defaultDate, getFormattedDateTitle, jumpToDate, getRelativeString, revealEditEventModal, revealDeleteEventModal } = useCalendar()
-const { lastActiveEvent } = storeToRefs(useCalendar())
+const { lastActiveEvent, isReadOnly } = storeToRefs(useCalendar())
 
 const props = defineProps<{
   event: CalendarEvent
@@ -151,7 +151,7 @@ function deployDeleteModal() {
       </template>
     </div>
 
-    <menu class="absolute top-4 right-4" :class="cn({ 'top-6': event.hidden })">
+    <menu v-if="!isReadOnly" class="absolute top-4 right-4" :class="cn({ 'top-6': event.hidden })">
       <UiPopover v-model:open="commandMenuOpened">
         <UiPopoverTrigger as-child>
           <UiButton size="icon" variant="outline" class="mix-blend-luminosity bg-gray-300 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-600">

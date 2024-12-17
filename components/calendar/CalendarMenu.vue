@@ -4,13 +4,14 @@ import { useCalendar } from "@/stores/CalendarStore"
 import { PhMagnifyingGlass } from "@phosphor-icons/vue"
 
 const { revealAdvancedSearch } = useCalendar()
+const { isReadOnly } = storeToRefs(useCalendar())
 </script>
 
 <template>
   <header class="pt-4 border-slate-400 dark:border-slate-700 border-b-[1px]">
     <div class="px-6 flex justify-between">
       <menu class="flex items-center gap-2">
-        <li>
+        <li v-if="!isReadOnly">
           <CalendarDialogQuickCreateEvent />
         </li>
         <li>

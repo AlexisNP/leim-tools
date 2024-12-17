@@ -11,11 +11,6 @@ const { data: catData, pending: catPending } = await useLazyFetch("/api/calendar
 
 const cal = computed<Calendar>(() => calendarData?.value?.data as Calendar)
 const categories = computed<Category[]>(() => catData?.value?.data as Category[])
-
-const user = useSupabaseUser()
-
-const { setReadStatus } = useCalendar()
-setReadStatus(user.value, cal.value)
 </script>
 
 <template>
