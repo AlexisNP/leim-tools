@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: false },
+  devtools: { enabled: true },
 
   modules: [
     "@nuxtjs/supabase",
@@ -37,7 +37,10 @@ export default defineNuxtConfig({
   supabase: {
     redirectOptions: {
       login: "/",
-      callback: "/my/"
+      callback: "/my/",
+      exclude: [
+        "/calendars(/*)?"
+      ]
     }
   },
 

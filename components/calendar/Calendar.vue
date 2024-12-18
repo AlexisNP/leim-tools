@@ -20,8 +20,7 @@ const { setActiveCalendar } = useCalendar()
 setActiveCalendar(props.calendarData, props.categories)
 
 const { currentConfig, jumpToDate, selectedDate } = useCalendar()
-
-// const { setCharacters } = useCharacters()
+const { isReadOnly } = storeToRefs(useCalendar())
 
 const currentViewComponent: ComputedRef<Component> = computed<Component>(() => {
   switch (currentConfig.viewType) {
@@ -53,8 +52,8 @@ onMounted(() => {
       <component :is="currentViewComponent" />
 
       <CalendarSearch />
-      <CalendarDialogUpdateEvent />
-      <CalendarDialogDeleteEvent />
+      <CalendarDialogUpdateEvent v-if="!isReadOnly" />
+      <CalendarDialogDeleteEvent v-if="!isReadOnly" />
     </div>
   </div>
 </template>

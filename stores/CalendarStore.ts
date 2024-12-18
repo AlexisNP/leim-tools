@@ -33,6 +33,7 @@ type DateDirectionTranslationKeys = {
 
 export const useCalendar = defineStore("calendar", () => {
   const { t } = useI18n()
+  const user = useSupabaseUser()
 
   /**
    * Static calendar config
@@ -45,7 +46,21 @@ export const useCalendar = defineStore("calendar", () => {
     "year"
   ])
 
-  const activeCalendar = ref<{ id: number; name: string; today: RPGDate} | null>(null)
+  const activeCalendar = ref<{ id: number; name: string; today: RPGDate, gmId: string | undefined } | null>(null)
+
+  const isReadOnly = ref<boolean>(true)
+
+  function setReadStatus(gmId: string) {
+    // If the user is not logged in, or the calendar is not owned by the user, it's read-only
+    isReadOnly.value = (!user) || (gmId !== user.value?.id)
+  }
+
+  // Watch for user changes
+  watch(user, () => {
+    if (activeCalendar.value) {
+      setReadStatus(activeCalendar.value.gmId!)
+    }
+  })
 
   /**
    * Month list (queried from API)
@@ -59,11 +74,15 @@ export const useCalendar = defineStore("calendar", () => {
       activeCalendar.value = {
         id: calendarData.id,
         name: calendarData.name,
-        today: calendarData.today
+        today: calendarData.today,
+        gmId: calendarData.world?.gmId
       }
 
       setDefaultDate(activeCalendar.value.today)
       selectDate(activeCalendar.value.today)
+      if (calendarData.world) {
+        setReadStatus(activeCalendar.value.gmId!)
+      }
 
       if (!params.day) {
         params.day = defaultDate.value.day.toString()
@@ -901,6 +920,8 @@ export const useCalendar = defineStore("calendar", () => {
   }
 
   return {
+    isReadOnly,
+    setReadStatus,
     setActiveCalendar,
     activeCalendar,
     months,
