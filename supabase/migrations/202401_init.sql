@@ -96,7 +96,7 @@ create table public.calendar_events (
   start_date    json not null,
   end_date      json,
   category      bigint references public.calendar_event_categories on delete cascade,
-  hidden        boolean,
+  hidden        boolean default false,
   wiki          text,
   calendar_id   bigint references public.calendars on delete cascade not null
 );
@@ -174,6 +174,7 @@ alter table public.users enable row level security;
 alter table public.user_roles enable row level security;
 alter table public.role_permissions enable row level security;
 alter table public.worlds enable row level security;
+alter table public.world_players enable row level security;
 alter table public.character_categories enable row level security;
 alter table public.character_categories_links enable row level security;
 alter table public.characters enable row level security;
