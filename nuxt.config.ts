@@ -39,7 +39,8 @@ export default defineNuxtConfig({
       login: "/",
       callback: "/my/",
       exclude: [
-        "/calendars(/*)?"
+        "/calendars(/*)?",
+        "/explore(/*)?"
       ]
     }
   },

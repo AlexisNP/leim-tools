@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import { PhGlobeHemisphereWest, PhList } from "@phosphor-icons/vue"
+import { PhCompass, PhList } from "@phosphor-icons/vue"
 import type { SidebarMenuActionType } from "./SidebarProps";
 
 const { revealAdvancedSearch } = useCalendar()
 const { currentMenu } = storeToRefs(useUiStore())
 
-const user = useSupabaseUser()
+// const user = useSupabaseUser()
 
 function handleMenuItemAction(actionType: SidebarMenuActionType) {
   if (actionType === "event-search") {
@@ -23,19 +23,19 @@ function handleMenuItemAction(actionType: SidebarMenuActionType) {
         </UiButton>
       </li>
 
-      <li v-if="user">
+      <li>
         <UiTooltipProvider :delay-duration="50">
           <UiTooltip>
             <UiTooltipTrigger as-child>
               <UiButton variant="ghost" size="icon" class="rounded-full" as-child>
-                <RouterLink to="/my">
-                  <PhGlobeHemisphereWest size="24" weight="fill" />
+                <RouterLink to="/explore">
+                  <PhCompass size="24" weight="fill" />
                 </RouterLink>
               </UiButton>
             </UiTooltipTrigger>
             <UiTooltipContent :side="'right'" :side-offset="6">
               <p>
-                {{ $t('entity.world.namePlural') }}
+                {{ $t('pages.explore.menuLabel') }}
               </p>
             </UiTooltipContent>
           </UiTooltip>

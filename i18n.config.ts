@@ -41,6 +41,7 @@ export default defineI18nConfig(() => ({
         greeting: "Connected as {user}",
         anonymousGreeting: "Preferences",
         sidebarMenu: {
+          profile: "Profile",
           appearance: "Appearance",
           language: "Language",
           account: "Account",
@@ -94,6 +95,8 @@ export default defineI18nConfig(() => ({
         calendar: {
           nameSingular: "Calendar",
           namePlural: "Calendars",
+          namePublicSingular: "Public Calendar",
+          namePublicPlural: "Public Calendars",
           addSingle: "Add a calendar",
           notFound: "Calendar not found",
           notFoundDescription: "The link is not valid or the calendar has been deleted / archived.",
@@ -229,6 +232,12 @@ export default defineI18nConfig(() => ({
           nameSingular: "Character",
           namePlural: "Characters",
         }
+      },
+      pages: {
+        explore: {
+          menuLabel: "Explore",
+          title: "Explore worlds",
+        }
       }
     },
     fr: {
@@ -269,6 +278,7 @@ export default defineI18nConfig(() => ({
         greeting: "Connecté en tant que {user}",
         anonymousGreeting: "Préférences",
         sidebarMenu: {
+          profile: "Profil",
           appearance: "Apparence",
           language: "Langue",
           account: "Compte",
@@ -322,6 +332,8 @@ export default defineI18nConfig(() => ({
         calendar: {
           nameSingular: "Calendriers",
           namePlural: "Calendrier",
+          namePublicSingular: "Calendrier Public",
+          namePublicPlural: "Calendriers Publics",
           addSingle: "Ajouter un calendrier",
           notFound: "Aucun calendrier trouvé",
           notFoundDescription: "Le lien n'est pas valide ou le calendrier a été supprimé / archivé.",
@@ -457,6 +469,12 @@ export default defineI18nConfig(() => ({
         character: {
           nameSingular: "Personnage",
           namePlural: "Personnages",
+        }
+      },
+      pages: {
+        explore: {
+          menuLabel: "Explorer",
+          title: "Explorer les mondes",
         }
       }
     }
