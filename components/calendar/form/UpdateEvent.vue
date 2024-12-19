@@ -26,6 +26,12 @@ async function handleAction() {
     await updateEventFromSkeleton()
 
     emit("event-updated")
+
+    toast({
+      title: t("entity.calendar.event.updatedToast.title", { event: eventSkeleton.value.title }),
+      variant: "success",
+      duration: 3000
+    })
   } catch (err) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const apiError = (err as any).data as APIError

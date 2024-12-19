@@ -149,6 +149,9 @@ export default defineI18nConfig(() => ({
               title: "Edit event",
               subtitle: "Update event data",
             },
+            updatedToast: {
+              title: "Event \"{event}\" has been successfuly updated.",
+            },
             editErrors: {
               toastTitle: "Event wasn't updated.",
               title_too_big: "Title should be less than 120 characters long.",
@@ -371,6 +374,9 @@ export default defineI18nConfig(() => ({
             editDialog: {
               title: "Modifier l'évènement",
               subtitle: "Mettre à jour les données de l'évènement",
+            },
+            updatedToast: {
+              title: "L'évènement \"{event}\" a été modifié avec succès.",
             },
             editErrors: {
               toastTitle: "L'évènement n'a pas été modifié",
