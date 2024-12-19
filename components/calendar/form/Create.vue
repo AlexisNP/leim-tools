@@ -2,7 +2,7 @@
 import type { Calendar } from "~/models/CalendarConfig";
 import { PhAlarm, PhCalendarDots, PhCircleNotch, PhWrench } from "@phosphor-icons/vue";
 
-const defaultSkeleton: Calendar = { name: "", today: { day: 1, month: 0, year: 0 }, months: [], events: []}
+const defaultSkeleton: Calendar = { name: "", today: { day: 1, month: 0, year: 0 }, months: [], events: [], state: "draft" }
 const calendarSkeleton = ref<Calendar>({ ...defaultSkeleton })
 
 onMounted(() => {

@@ -5,8 +5,6 @@ const { eventSkeleton, operationInProgress } = storeToRefs(useCalendar())
 const { resetSkeleton } = useCalendar()
 const popoverOpen = ref(false)
 
-const isLoading = ref(false)
-
 const props = defineProps<{
   date?: RPGDate
   btnClass?: string
@@ -38,10 +36,8 @@ function openEventCreatePopover() {
  * @param e The closing event (can be keydown or click)
  */
 function handleClosing(e: Event) {
-  if (isLoading.value) {
-    popoverOpen.value = false
-    e.preventDefault()
-  }
+  popoverOpen.value = false
+  e.preventDefault()
 }
 </script>
 

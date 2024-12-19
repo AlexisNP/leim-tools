@@ -13,7 +13,7 @@ export interface CalendarConfig {
 
 export interface Calendar extends CalendarConfig {
   id?: number
-  shortId: string
+  shortId?: string
   name: string
   events: CalendarEvent[]
   state: CalendarState

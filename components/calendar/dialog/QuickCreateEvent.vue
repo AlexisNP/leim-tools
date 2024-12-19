@@ -23,7 +23,7 @@ function toggleDialog() {
       <UiDialogTitle>
         {{ $t("entity.calendar.event.addSingle") }}
       </UiDialogTitle>
-      <CalendarFormCreateEvent />
+      <CalendarFormCreateEvent @event-created="toggleDialog" />
     </UiDialogContent>
   </UiDialog>
 </template>
