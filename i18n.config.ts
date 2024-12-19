@@ -95,6 +95,8 @@ export default defineI18nConfig(() => ({
           nameSingular: "Calendar",
           namePlural: "Calendars",
           addSingle: "Add a calendar",
+          notFound: "Calendar not found",
+          notFoundDescription: "The link is not valid or the calendar has been deleted / archived.",
           notFoundForWorld: "No calendar for this world… yet !",
           isLoading: "Calendar is loading…",
           date: {
@@ -321,6 +323,8 @@ export default defineI18nConfig(() => ({
           nameSingular: "Calendriers",
           namePlural: "Calendrier",
           addSingle: "Ajouter un calendrier",
+          notFound: "Aucun calendrier trouvé",
+          notFoundDescription: "Le lien n'est pas valide ou le calendrier a été supprimé / archivé.",
           notFoundForWorld: "Aucun calendrier pour ce monde… pour l'instant !",
           isLoading: "Chargement du calendrier…",
           date: {

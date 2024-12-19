@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { PhCircleNotch } from "@phosphor-icons/vue";
+import { PhCalendarX, PhCircleNotch } from "@phosphor-icons/vue";
 import type { Calendar } from "~/models/CalendarConfig";
 import type { Category } from "~/models/Category";
 
@@ -33,5 +33,23 @@ const categories = computed<Category[]>(() => catData?.value?.data as Category[]
     </Head>
 
     <Calendar :calendar-data="cal" :categories />
+  </div>
+
+  <div v-else class="h-full w-full grid place-items-center">
+    <Head>
+      <Title>{{ $t("entity.calendar.notFound") }}</Title>
+    </Head>
+
+    <div class="grid justify-items-center opacity-80">
+      <PhCalendarX size="75" class="opacity-60" />
+
+      <Heading level="h1">
+        {{ $t("entity.calendar.notFound") }}
+      </Heading>
+
+      <p>
+        {{ $t('entity.calendar.notFoundDescription') }}
+      </p>
+    </div>
   </div>
 </template>
