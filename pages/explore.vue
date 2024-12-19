@@ -33,7 +33,9 @@ const availableCalendars = data.value?.data as Calendar[]
               </UiCardHeader>
 
               <UiCardContent>
-                <p class="italic">Description future (ou alors des informations sur le nb d'évènements)</p>
+                <p>
+                  {{ $t("entity.calendar.hasXEvents", { count: calendar.eventNb?.[0].count }) }}
+                </p>
               </UiCardContent>
             </UiCard>
           </li>

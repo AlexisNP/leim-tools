@@ -102,6 +102,7 @@ export default defineI18nConfig(() => ({
           notFoundDescription: "The link is not valid or the calendar has been deleted / archived.",
           notFoundForWorld: "No calendar for this world… yet !",
           isLoading: "Calendar is loading…",
+          hasXEvents: "This calendar has {count} public events",
           date: {
             start: "Start date",
             end: "End date",
@@ -339,6 +340,7 @@ export default defineI18nConfig(() => ({
           notFoundDescription: "Le lien n'est pas valide ou le calendrier a été supprimé / archivé.",
           notFoundForWorld: "Aucun calendrier pour ce monde… pour l'instant !",
           isLoading: "Chargement du calendrier…",
+          hasXEvents: "Ce calendrier contient {count} évènements publiques",
           date: {
             start: "Date de début",
             end: "Date de fin",

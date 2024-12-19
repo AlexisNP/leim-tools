@@ -16,6 +16,7 @@ export interface Calendar extends CalendarConfig {
   shortId?: string
   name: string
   events: CalendarEvent[]
+  eventNb?: Array<{ count: number }>
   state: CalendarState
   color?: string
   world?: World
