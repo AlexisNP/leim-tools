@@ -16,7 +16,7 @@ const calendarTile = ref()
 const calendarEventsList = ref()
 
 const { defaultDate, selectDate, areDatesIdentical } = useCalendar()
-const { selectedDate, currentEvents } = storeToRefs(useCalendar())
+const { selectedDate, currentEvents, isReadOnly } = storeToRefs(useCalendar())
 
 /**
  * All events with a startDate / endDate that starts or ends on the tile
@@ -143,7 +143,7 @@ const eventsNotDisplayed: ComputedRef<number>  = computed<number>(() => eventsFo
     </ClientOnly>
 
     <ClientOnly>
-      <LazyCalendarDialogCreateEvent :date btn-class="absolute inset-0 w-full h-full cursor-default z-0" />
+      <LazyCalendarDialogCreateEvent v-if="!isReadOnly" :date btn-class="absolute inset-0 w-full h-full cursor-default z-0" />
     </ClientOnly>
   </div>
 </template>
