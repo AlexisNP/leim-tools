@@ -36,8 +36,10 @@ function openEventCreatePopover() {
  * @param e The closing event (can be keydown or click)
  */
 function handleClosing(e: Event) {
-  popoverOpen.value = false
   e.preventDefault()
+  popoverOpen.value = false
+
+  console.log(e)
 }
 </script>
 
@@ -54,8 +56,6 @@ function handleClosing(e: Event) {
       :trap-focus="true"
       class="pl-3 w-[30rem] max-w-full border-indigo-200 dark:bg-slate-950 dark:border-indigo-950"
       @escape-key-down="handleClosing"
-      @focus-outside="handleClosing"
-      @interact-outside="handleClosing"
       @pointer-down-outside="handleClosing"
     >
       <CalendarFormCreateEvent @event-created="handleClosing" />
