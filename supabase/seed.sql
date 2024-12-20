@@ -36,10 +36,10 @@ insert into public.character_categories (name, color) values ('Activiste', 'sky'
 insert into public.character_categories (name, color) values ('Commerçant', 'amber');
 
 -- Worlds
-insert into public.worlds (name, description, color) values ('Léïm', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aliquet congue aliquet. Curabitur eu iaculis diam. Nunc iaculis nibh orci, eu semper nunc congue congue. Praesent euismod tortor eget metus tristique lobortis vel in risus. In volutpat ligula orci, id pharetra lectus egestas at.', 'black');
+insert into public.worlds (name, description, color, state) values ('Léïm', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aliquet congue aliquet. Curabitur eu iaculis diam. Nunc iaculis nibh orci, eu semper nunc congue congue. Praesent euismod tortor eget metus tristique lobortis vel in risus. In volutpat ligula orci, id pharetra lectus egestas at.', 'black', 'published');
 
 -- Worlds' calendars
-insert into public.calendars (world_id, name, today) values (1, 'Calendrier solaire', '{ "day": 23, "month": 8, "year": 3209 }');
+insert into public.calendars (world_id, name, today, state) values (1, 'Calendrier solaire', '{ "day": 23, "month": 8, "year": 3209 }', 'published');
 
 -- Calendar's months
 insert into public.calendar_months (calendar_id, name, days, position) values (1, 'Jalen', 32, 1);

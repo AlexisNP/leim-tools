@@ -7,6 +7,7 @@ create type public.app_permission as enum ('events.see.hidden', 'users.ban');
 create type public.app_role as enum ('sa', 'admin', 'moderator', 'user');
 create type public.app_colors as enum ('red', 'orange', 'amber', 'yellow', 'lime', 'green', 'emerald', 'teal', 'cyan', 'sky', 'blue', 'indigo', 'violet', 'purple', 'fuchsia', 'pink', 'rose', 'black', 'white');
 
+create type public.world_state as enum ('published', 'draft', 'archived');
 create type public.calendar_state as enum ('published', 'draft', 'archived');
 
 -- DATA STRUCTURES
@@ -42,6 +43,7 @@ create table public.worlds (
   name          text not null,
   description   text,
   color         app_colors default 'black',
+  state         world_state default 'draft',
   gm_id         uuid references public.users on delete cascade
 );
 comment on table public.worlds is 'Worlds belonging to a single user ; a game master.';
@@ -190,12 +192,16 @@ alter publication supabase_realtime add table worlds;
 alter publication supabase_realtime add table calendars;
 
 -- User policies
+create policy "Allow public read access" on public.users for select to authenticated, anon using ( true );
 create policy "Allow logged-in read access" on public.users for select using ( auth.role() = 'authenticated' );
 create policy "Allow individual insert access" on public.users for insert with check ( auth.uid() = id );
 create policy "Allow individual update access" on public.users for update using ( auth.uid() = id );
 create policy "Allow individual read access" on public.user_roles for select using ( auth.uid() = user_id );
 
 -- World policies
+create policy "Allow anonymous access to published worlds" on public.worlds
+    for select
+    using (state = 'published');
 create policy "Allow GMs to see their worlds" on public.worlds for select using ( ( auth.uid() = gm_id ) );
 create policy "Allow GMs to create worlds" on public.worlds for insert with check ( auth.uid() = gm_id );
 create policy "Allow GMs to edit their worlds" on public.worlds for update using ( auth.uid() = gm_id );

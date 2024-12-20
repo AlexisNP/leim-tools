@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { Calendar } from "~/models/CalendarConfig";
 
-const { data } = await useFetch("/api/calendars/query")
+const { data } = await useFetch("/api/calendars/query", { key: "explore-calendars" })
 
 const availableCalendars = data.value?.data as Calendar[]
 </script>
