@@ -3,6 +3,8 @@ import { PhAlarm, PhCircleNotch, PhEye, PhEyeClosed, PhMapPinArea, PhPencilSimpl
 import { useToast } from "~/components/ui/toast";
 import type { APIError } from "~/models/Errors";
 
+const emit = defineEmits(["event-updated"])
+
 const { resetSkeleton, updateEventFromSkeleton, cancelLatestRequest } = useCalendar()
 const { eventSkeleton, lastActiveEvent } = storeToRefs(useCalendar())
 
@@ -22,6 +24,14 @@ async function handleAction() {
 
   try {
     await updateEventFromSkeleton()
+
+    emit("event-updated")
+
+    toast({
+      title: t("entity.calendar.event.updatedToast.title", { event: eventSkeleton.value.title }),
+      variant: "success",
+      duration: 3000
+    })
   } catch (err) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const apiError = (err as any).data as APIError

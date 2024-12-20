@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed } from "vue"
 
-import { PhCheckCircle, PhGear, PhGlobeHemisphereWest, PhLaptop, PhMoon, PhPalette, PhSignIn, PhSignOut, PhSun, PhTranslate, PhUserCircle } from "@phosphor-icons/vue"
+import { PhCheckCircle, PhGear, PhUser, PhLaptop, PhMoon, PhPalette, PhSignIn, PhSignOut, PhSun, PhTranslate, PhUserCircle } from "@phosphor-icons/vue"
 import { cn } from "~/lib/utils";
 
 const router = useRouter()
@@ -82,9 +82,9 @@ function pushRoute(to: AvailableRoutes) {
           </p>
 
           <UiDropdownMenuItem class="flex gap-[.5ch] items-center rounded-none" @click="pushRoute('/my')">
-            <PhGlobeHemisphereWest size="20" weight="fill" />
+            <PhUser size="20" weight="fill" />
             <span>
-              {{ $t('entity.world.namePlural') }}
+              {{ $t('ui.sidebarMenu.profile') }}
             </span>
           </UiDropdownMenuItem>
 

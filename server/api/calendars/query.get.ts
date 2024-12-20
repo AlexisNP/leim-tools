@@ -20,7 +20,8 @@ export default defineEventHandler(async (event) => {
     name,
     today,
     months:calendar_months (*),
-    state
+    state,
+    eventNb:calendar_events(count)
   `
 
   const fullFields = `
@@ -42,6 +43,7 @@ export default defineEventHandler(async (event) => {
       category:calendar_event_categories!calendar_events_category_fkey (*),
       secondaryCategories:calendar_event_categories!calendar_event_categories_links (*)
     ),
+    eventNb:calendar_events(count),
     world:worlds (
       id,
       gmId:gm_id

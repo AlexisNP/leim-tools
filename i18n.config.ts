@@ -41,6 +41,7 @@ export default defineI18nConfig(() => ({
         greeting: "Connected as {user}",
         anonymousGreeting: "Preferences",
         sidebarMenu: {
+          profile: "Profile",
           appearance: "Appearance",
           language: "Language",
           account: "Account",
@@ -94,9 +95,14 @@ export default defineI18nConfig(() => ({
         calendar: {
           nameSingular: "Calendar",
           namePlural: "Calendars",
+          namePublicSingular: "Public Calendar",
+          namePublicPlural: "Public Calendars",
           addSingle: "Add a calendar",
+          notFound: "Calendar not found",
+          notFoundDescription: "The link is not valid or the calendar has been deleted / archived.",
           notFoundForWorld: "No calendar for this world… yet !",
           isLoading: "Calendar is loading…",
+          hasXEvents: "This calendar has {count} public events",
           date: {
             start: "Start date",
             end: "End date",
@@ -148,6 +154,9 @@ export default defineI18nConfig(() => ({
             editDialog: {
               title: "Edit event",
               subtitle: "Update event data",
+            },
+            updatedToast: {
+              title: "Event \"{event}\" has been successfuly updated.",
             },
             editErrors: {
               toastTitle: "Event wasn't updated.",
@@ -224,6 +233,12 @@ export default defineI18nConfig(() => ({
           nameSingular: "Character",
           namePlural: "Characters",
         }
+      },
+      pages: {
+        explore: {
+          menuLabel: "Explore",
+          title: "Explore worlds",
+        }
       }
     },
     fr: {
@@ -264,6 +279,7 @@ export default defineI18nConfig(() => ({
         greeting: "Connecté en tant que {user}",
         anonymousGreeting: "Préférences",
         sidebarMenu: {
+          profile: "Profil",
           appearance: "Apparence",
           language: "Langue",
           account: "Compte",
@@ -317,9 +333,14 @@ export default defineI18nConfig(() => ({
         calendar: {
           nameSingular: "Calendriers",
           namePlural: "Calendrier",
+          namePublicSingular: "Calendrier Public",
+          namePublicPlural: "Calendriers Publics",
           addSingle: "Ajouter un calendrier",
+          notFound: "Aucun calendrier trouvé",
+          notFoundDescription: "Le lien n'est pas valide ou le calendrier a été supprimé / archivé.",
           notFoundForWorld: "Aucun calendrier pour ce monde… pour l'instant !",
           isLoading: "Chargement du calendrier…",
+          hasXEvents: "Ce calendrier contient {count} évènements publiques",
           date: {
             start: "Date de début",
             end: "Date de fin",
@@ -371,6 +392,9 @@ export default defineI18nConfig(() => ({
             editDialog: {
               title: "Modifier l'évènement",
               subtitle: "Mettre à jour les données de l'évènement",
+            },
+            updatedToast: {
+              title: "L'évènement \"{event}\" a été modifié avec succès.",
             },
             editErrors: {
               toastTitle: "L'évènement n'a pas été modifié",
@@ -447,6 +471,12 @@ export default defineI18nConfig(() => ({
         character: {
           nameSingular: "Personnage",
           namePlural: "Personnages",
+        }
+      },
+      pages: {
+        explore: {
+          menuLabel: "Explorer",
+          title: "Explorer les mondes",
         }
       }
     }

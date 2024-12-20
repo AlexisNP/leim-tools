@@ -55,13 +55,6 @@ export const useCalendar = defineStore("calendar", () => {
     isReadOnly.value = (!user) || (gmId !== user.value?.id)
   }
 
-  // Watch for user changes
-  watch(user, () => {
-    if (activeCalendar.value) {
-      setReadStatus(activeCalendar.value.gmId!)
-    }
-  })
-
   /**
    * Month list (queried from API)
    */
@@ -80,9 +73,7 @@ export const useCalendar = defineStore("calendar", () => {
 
       setDefaultDate(activeCalendar.value.today)
       selectDate(activeCalendar.value.today)
-      if (calendarData.world) {
-        setReadStatus(activeCalendar.value.gmId!)
-      }
+      setReadStatus(activeCalendar.value.gmId!)
 
       if (!params.day) {
         params.day = defaultDate.value.day.toString()

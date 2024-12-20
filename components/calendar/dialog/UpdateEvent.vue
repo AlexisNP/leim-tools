@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 const { eventSkeleton, lastActiveEvent, isEditEventModalOpen } = storeToRefs(useCalendar())
 
-const isLoading = ref(false)
-
 // Watch the popover state
 watch(isEditEventModalOpen, (hasOpened, _o) => {
   if (hasOpened && lastActiveEvent.value) {
@@ -15,10 +13,8 @@ watch(isEditEventModalOpen, (hasOpened, _o) => {
  *
  * @param e The closing event (can be keydown or click)
  */
-function handleClosing(e: Event) {
-  if (isLoading.value) {
-    e.preventDefault()
-  }
+function handleClosing() {
+  isEditEventModalOpen.value = false
 }
 </script>
 
@@ -43,7 +39,7 @@ function handleClosing(e: Event) {
         </UiDialogDescription>
       </header>
 
-      <CalendarFormUpdateEvent />
+      <CalendarFormUpdateEvent @event-updated="handleClosing" />
     </UiDialogContent>
   </UiDialog>
 </template>
