@@ -38,8 +38,6 @@ function openEventCreatePopover() {
 function handleClosing(e: Event) {
   e.preventDefault()
   popoverOpen.value = false
-
-  console.log(e)
 }
 </script>
 
