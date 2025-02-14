@@ -13,6 +13,7 @@ export default defineNuxtConfig({
     "@nuxtjs/i18n",
     "@nuxthub/core"
   ],
+
   css: ["~/assets/main.css"],
 
   i18n: {
@@ -51,14 +52,18 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
+
   shadcn: {
     prefix: "Ui",
     componentDir: "./components/ui"
   },
+
   colorMode: {
     classSuffix: "",
     preference: "dark",
     fallback: "dark",
   },
-  eslint: {}
+
+  eslint: {},
+  compatibilityDate: "2025-02-14"
 })
