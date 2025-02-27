@@ -8,11 +8,8 @@ const shortId = route.params.id
 
 const user = useSupabaseUser()
 
-const { data: calendarData, pending: calPending, refresh: calRefresh } = await useLazyFetch("/api/calendars/query", { key: `calendar-${shortId}`, query: { shortId, full: true } })
-const { data: catData, pending: catPending, refresh: catRefresh } = await useLazyFetch("/api/calendars/categories/query", { key: `categories-${shortId}` })
-
-const cal = computed<Calendar>(() => calendarData?.value?.data as Calendar)
-const categories = computed<Category[]>(() => catData?.value?.data as Category[])
+const { data: calendarData, pending: calPending, refresh: calRefresh } = await useLazyFetch<{ data: Calendar }>("/api/calendars/query", { query: { shortId, full: true } })
+const { data: catData, pending: catPending, refresh: catRefresh } = await useLazyFetch<{ data: Category[] }>("/api/calendars/categories/query")
 
 watch(user, () => {
   calRefresh()
@@ -34,12 +31,12 @@ watch(user, () => {
     </div>
   </div>
 
-  <div v-else-if="cal && categories" class="h-full w-full">
+  <div v-else-if="calendarData && catData" class="h-full w-full">
     <Head>
-      <Title>{{ cal.name }}</Title>
+      <Title>{{ calendarData.data.name }}</Title>
     </Head>
 
-    <Calendar :calendar-data="cal" :categories />
+    <Calendar :calendar-data="calendarData.data" :categories="catData.data" />
   </div>
 
   <div v-else class="h-full w-full grid place-items-center">
