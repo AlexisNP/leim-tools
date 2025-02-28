@@ -203,7 +203,7 @@
   @apply text-stone-700 hover:text-white border-stone-500 hover:bg-stone-700 dark:text-white
 }
 .event-white.is-hidden {
-  @apply text-slate-900 dark:hover:text-slate-900 border-neutral-400 hover:bg-yellow-200 dark:text-white
+  @apply text-slate-900 border-neutral-400 hover:bg-yellow-200 dark:bg-neutral-800 dark:text-white dark:hover:bg-neutral-300 dark:hover:text-slate-900
 }
 
 .dark .event-details-red {
