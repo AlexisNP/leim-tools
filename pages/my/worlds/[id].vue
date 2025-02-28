@@ -8,9 +8,7 @@ const supabase = useSupabaseClient()
 const route = useRoute()
 const id = route.params.id
 
-const { data: res, pending } = await useFetch("/api/worlds/query", { query: { id, full: true } })
-
-const world = ref<World>(res.value?.data as World)
+const { data: world, status } = await useFetch<{ data: World }>("/api/worlds/query", { query: { id, full: true } })
 
 definePageMeta({
   middleware: ["auth-guard"]
@@ -40,8 +38,10 @@ let calendarChannel: RealtimeChannel
 
 /** Handles calendar insertion realtime events */
 function handleInsertedCalendar(newCalendar: Calendar) {
+  if (!world.value) return
+
   try {
-    world.value.calendars?.push(newCalendar)
+    world.value.data.calendars?.push(newCalendar)
   } catch (err) {
     console.log(err)
   }
@@ -49,8 +49,10 @@ function handleInsertedCalendar(newCalendar: Calendar) {
 
 /** Handles calendar deletion realtime events */
 function handleDeletedCalendar(id: number) {
+  if (!world.value) return
+
   try {
-    world.value.calendars?.splice(world.value.calendars.findIndex(c => c.id === id))
+    world.value.data.calendars?.splice(world.value.data.calendars.findIndex(c => c.id === id))
   } catch (err) {
     console.log(err)
   }
@@ -101,7 +103,7 @@ function hideDeleteModal() {
 
 <template>
   <main class="p-8">
-    <template v-if="pending">
+    <template v-if="status === 'pending'">
       <Head>
         <Title>{{ $t("entity.world.namePlural") }}</Title>
       </Head>
@@ -112,14 +114,14 @@ function hideDeleteModal() {
     </template>
     <template v-else-if="world">
       <Head>
-        <Title>{{ world.name }}</Title>
+        <Title>{{ world.data.name }}</Title>
       </Head>
 
       <header class="lg:w-1/2 mb-8">
         <Spacing>
-          <Heading level="h1">{{ world.name }}</Heading>
+          <Heading level="h1">{{ world.data.name }}</Heading>
 
-          <p>{{ world.description }}</p>
+          <p>{{ world.data.description }}</p>
         </Spacing>
       </header>
 
@@ -146,8 +148,8 @@ function hideDeleteModal() {
             </UiTooltipProvider>
           </div>
 
-          <ul v-if="world.calendars && world.calendars?.length > 0" class="grid md:grid-cols-3 gap-2">
-            <li v-for="calendar in world.calendars" :key="calendar.id">
+          <ul v-if="world.data.calendars && world.data.calendars?.length > 0" class="grid md:grid-cols-3 gap-2">
+            <li v-for="calendar in world.data.calendars" :key="calendar.id">
               <UiCard
                 class="w-full transition-all hover:bg-slate-50 dark:bg-gray-950 dark:hover:bg-indigo-950 dark:focus-within:outline-gray-900"
                 :link="`/my/calendars/${calendar.id}`"
@@ -173,10 +175,13 @@ function hideDeleteModal() {
           </template>
         </Spacing>
       </section>
-    </template>
 
-    <CalendarDialogCreate :world :modal-state="isCreateCalendarModalOpen" @on-close="hideCreateDialog" />
-    <CalendarDialogDelete :calendar="markedCalendar" :modal-state="isDeleteCalendarModalOpen" @on-close="hideDeleteModal" />
+      <CalendarDialogCreate :world="world.data" :modal-state="isCreateCalendarModalOpen" @on-close="hideCreateDialog" />
+      <CalendarDialogDelete :calendar="markedCalendar" :modal-state="isDeleteCalendarModalOpen" @on-close="hideDeleteModal" />
+    </template>
+    <template v-else>
+      Not found
+    </template>
   </main>
 </template>
 
