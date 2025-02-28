@@ -86,62 +86,124 @@
 }
 
 /* Colors */
-.event-red {
+.event-red:not(.is-hidden) {
   @apply text-slate-900 bg-red-500 hover:bg-red-600
 }
-.event-orange {
+.event-orange:not(.is-hidden) {
   @apply text-slate-900 bg-orange-500 hover:bg-orange-600
 }
-.event-amber {
+.event-amber:not(.is-hidden) {
   @apply text-slate-900 bg-amber-500 hover:bg-amber-600
 }
-.event-yellow {
+.event-yellow:not(.is-hidden) {
   @apply text-slate-900 bg-yellow-600 hover:bg-yellow-700
 }
-.event-lime {
+.event-lime:not(.is-hidden) {
   @apply text-slate-900 bg-lime-500 hover:bg-lime-600
 }
-.event-green {
+.event-green:not(.is-hidden) {
   @apply text-white bg-green-600 hover:bg-green-700
 }
-.event-emerald {
+.event-emerald:not(.is-hidden) {
   @apply text-white bg-emerald-600 hover:bg-emerald-700
 }
-.event-teal {
+.event-teal:not(.is-hidden) {
   @apply text-white bg-teal-600 hover:bg-teal-700
 }
-.event-cyan {
+.event-cyan:not(.is-hidden) {
   @apply text-white bg-cyan-600 hover:bg-cyan-700
 }
-.event-sky {
+.event-sky:not(.is-hidden) {
   @apply text-white bg-sky-600 hover:bg-sky-700
 }
-.event-blue {
+.event-blue:not(.is-hidden) {
   @apply text-white bg-blue-600 hover:bg-blue-700
 }
-.event-indigo {
+.event-indigo:not(.is-hidden) {
   @apply text-white bg-indigo-600 hover:bg-indigo-700
 }
-.event-violet {
+.event-violet:not(.is-hidden) {
   @apply text-white bg-violet-600 hover:bg-violet-700
 }
-.event-purple {
+.event-purple:not(.is-hidden) {
   @apply text-white bg-purple-600 hover:bg-purple-700
 }
-.event-fuchsia {
+.event-fuchsia:not(.is-hidden) {
   @apply text-white bg-fuchsia-600 hover:bg-fuchsia-700
 }
-.event-pink {
+.event-pink:not(.is-hidden) {
   @apply text-white bg-pink-700 hover:bg-pink-800
 }
-.event-rose {
+.event-rose:not(.is-hidden) {
   @apply text-white bg-rose-700 hover:bg-rose-800
 }
-.event-black {
+.event-black:not(.is-hidden) {
   @apply text-white bg-stone-500 hover:bg-stone-700
 }
-.event-white {
+.event-white:not(.is-hidden) {
   @apply text-slate-900 bg-white hover:bg-yellow-200 border-[1px] border-slate-300
+}
+
+.event.is-hidden {
+  border: 1px solid transparent;
+}
+
+.event-red.is-hidden {
+  @apply text-red-500 hover:text-white dark:hover:text-slate-900 border-red-500 hover:bg-red-600 dark:text-white
+}
+.event-orange.is-hidden {
+  @apply text-orange-500 hover:text-white dark:hover:text-slate-900 border-orange-500 hover:bg-orange-600 dark:text-white
+}
+.event-amber.is-hidden {
+  @apply text-amber-500 hover:text-white dark:hover:text-slate-900 border-amber-500 hover:bg-amber-600 dark:text-white
+}
+.event-yellow.is-hidden {
+  @apply text-yellow-600 hover:text-white dark:hover:text-slate-900 border-yellow-600 hover:bg-yellow-700 dark:text-white
+}
+.event-lime.is-hidden {
+  @apply text-lime-500 hover:text-white dark:hover:text-slate-900 border-lime-500 hover:bg-lime-600 dark:text-white
+}
+.event-green.is-hidden {
+  @apply text-green-600 hover:text-white border-green-600 hover:bg-green-700 dark:text-white
+}
+.event-emerald.is-hidden {
+  @apply text-emerald-600 hover:text-white border-emerald-600 hover:bg-emerald-700 dark:text-white
+}
+.event-teal.is-hidden {
+  @apply text-teal-700 hover:text-white border-teal-600 hover:bg-teal-700 dark:text-white
+}
+.event-cyan.is-hidden {
+  @apply text-cyan-600 hover:text-white border-cyan-600 hover:bg-cyan-700 dark:text-white
+}
+.event-sky.is-hidden {
+  @apply text-sky-600 hover:text-white border-sky-600 hover:bg-sky-700 dark:text-white
+}
+.event-blue.is-hidden {
+  @apply text-blue-600 hover:text-white border-blue-600 hover:bg-blue-700 dark:text-white
+}
+.event-indigo.is-hidden {
+  @apply text-indigo-600 hover:text-white border-indigo-600 hover:bg-indigo-700 dark:text-white
+}
+.event-violet.is-hidden {
+  @apply text-violet-600 hover:text-white border-violet-600 hover:bg-violet-700 dark:text-white
+}
+.event-purple.is-hidden {
+  @apply text-purple-600 hover:text-white border-purple-600 hover:bg-purple-700 dark:text-white
+}
+.event-fuchsia.is-hidden {
+  @apply text-fuchsia-600 hover:text-white border-fuchsia-600 hover:bg-fuchsia-700 dark:text-white
+}
+.event-pink.is-hidden {
+  @apply text-pink-700 hover:text-white border-pink-700 hover:bg-pink-800 dark:text-white
+}
+.event-rose.is-hidden {
+  @apply text-rose-700 hover:text-white border-rose-700 hover:bg-rose-800 dark:text-white
+}
+.event-black.is-hidden {
+  @apply text-stone-700 hover:text-white border-stone-500 hover:bg-stone-700 dark:text-white
+}
+.event-white.is-hidden {
+  @apply text-slate-900 border-neutral-400 hover:bg-yellow-200 dark:bg-neutral-800 dark:text-white dark:hover:bg-neutral-300 dark:hover:text-slate-900
 }
 
 .dark .event-details-red {
