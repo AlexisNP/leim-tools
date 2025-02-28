@@ -88,9 +88,16 @@ export default defineI18nConfig(() => ({
             title: "Create a world",
             subtitle: "Worlds are the building blocks which hold all your characters, your calendars…"
           },
+          editDialog: {
+            title: "Edit world",
+            subtitle: "Update world data",
+          },
           deleteDialog: {
             title: "Delete this world ?",
             subtitle: "This world will be deleted permanently, and all of its associated data will be lost !",
+          },
+          updatedToast: {
+            title: "The world \"{world}\" has been successfuly updated.",
           },
           deletedToast: {
             title: "The world \"{world}\" has been successfuly deleted.",
@@ -331,9 +338,16 @@ export default defineI18nConfig(() => ({
             title: "Créer un monde",
             subtitle: "Un monde est la brique de base qui contient vos personnages, vos calendriers…"
           },
+          editDialog: {
+            title: "Modifier le monde",
+            subtitle: "Mettre à jour les données du monde",
+          },
           deleteDialog: {
             title: "Supprimer ce monde ?",
             subtitle: "Le monde sera supprimé définitivement, vous perdrez toutes les données associées !",
+          },
+          updatedToast: {
+            title: "Le monde \"{world}\" a été modifié avec succès.",
           },
           deletedToast: {
             title: "Le monde \"{world}\" a été supprimé avec succès.",

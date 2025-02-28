@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { PhPlus, PhTrash } from "@phosphor-icons/vue";
+import { PhPencil, PhPlus, PhTrash } from "@phosphor-icons/vue";
 import type { RealtimeChannel } from "@supabase/supabase-js"
 import type { World } from "~/models/World";
 
@@ -91,15 +91,26 @@ onUnmounted(() => {
 })
 
 const markedWorld = ref<World | null>(null)
+const isEditWorldModalOpen = ref<boolean>(false)
 const isDeleteWorldModalOpen = ref<boolean>(false)
 
-function deployDeleteModal(calendar: World) {
+function deployDeleteModal(world: World) {
   isDeleteWorldModalOpen.value = true
-  markedWorld.value = calendar
+  markedWorld.value = world
 }
 
 function hideDeleteModal() {
   isDeleteWorldModalOpen.value = false
+  markedWorld.value = null
+}
+
+function deployEditModal(world: World) {
+  isEditWorldModalOpen.value = true
+  markedWorld.value = world
+}
+
+function hideEditModal() {
+  isEditWorldModalOpen.value = false
   markedWorld.value = null
 }
 </script>
@@ -169,9 +180,15 @@ function hideDeleteModal() {
               <UiCardContent>
                 <p class="italic">{{ world.description }}</p>
 
-                <UiButton size="icon" variant="ghost" class="absolute top-2 right-2 z-20 hover:text-white hover:bg-rose-400 dark:hover:bg-rose-700" @click="deployDeleteModal(world)">
-                  <PhTrash size="16" />
-                </UiButton>
+                <div class="flex gap-1 absolute top-4 right-4 z-20">
+                  <UiButton size="icon" variant="ghost" class=" hover:text-white hover:bg-indigo-400 dark:hover:bg-indigo-700" @click="deployEditModal(world)">
+                    <PhPencil size="16" />
+                  </UiButton>
+
+                  <UiButton size="icon" variant="ghost" class=" hover:text-white hover:bg-rose-400 dark:hover:bg-rose-700" @click="deployDeleteModal(world)">
+                    <PhTrash size="16" />
+                  </UiButton>
+                </div>
               </UiCardContent>
             </UiCard>
           </li>
@@ -180,6 +197,7 @@ function hideDeleteModal() {
     </section>
 
     <WorldDialogCreate :modal-state="isCreateWorldModalOpen" @on-close="hideCreateDialog" />
+    <WorldDialogEdit :world="markedWorld" :modal-state="isEditWorldModalOpen" @on-close="hideEditModal" />
     <WorldDialogDelete :world="markedWorld" :modal-state="isDeleteWorldModalOpen" @on-close="hideDeleteModal" />
   </main>
 </template>
