@@ -21,11 +21,11 @@ const dateDuration = computed<string | null>(() => props.event.endDate ? getRela
 
 <template>
   <button
-    class="relative block w-full text-left py-3 px-4 rounded-sm transition-colors"
+    class="event relative block w-full text-left py-3 px-4 rounded-sm transition-colors"
     :class="cn(
       event.category ? `event-${event.category.color}` : '',
       {
-        'pt-4': event.hidden,
+        'pt-4 is-hidden': event.hidden,
       })"
     @click="$emit('query:date-jump', event.startDate)"
   >
