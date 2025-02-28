@@ -15,7 +15,7 @@ function handleMenuItemAction(actionType: SidebarMenuActionType) {
 </script>
 
 <template>
-  <nav class="w-16 py-6 border-r-[1px] bg-indigo-700 dark:bg-black text-white border-r-indigo-700 dark:border-r-indigo-950 grid grid-rows-[1fr_auto] justify-center transition-colors">
+  <nav class="w-16 py-6 border-r-[1px] bg-indigo-700 dark:bg-black text-white border-r-indigo-700 dark:border-r-indigo-950 grid grid-rows-[1fr_auto] justify-center transition-colors after:opacity-50 after:contrast-125 dark:after:opacity-75 dark:after:contrast-175 after:-hue-rotate-60">
     <menu class="flex flex-col gap-4">
       <li class="mb-12">
         <UiButton variant="ghost" size="icon" class="rounded-full" @click="console.log">
@@ -66,3 +66,26 @@ function handleMenuItemAction(actionType: SidebarMenuActionType) {
     <UserCTA />
   </nav>
 </template>
+
+<style lang="scss" scoped>
+nav {
+  position: relative;
+  isolation: isolate;
+
+  &::after {
+    display: block;
+    content: '';
+    position: absolute;
+    bottom: 0;
+    inset-inline: 0;
+    height: 25rem;
+    max-height: 100%;
+    background-image: url("/images/sidebar.png");
+    background-position: bottom;
+    background-size: cover;
+    background-repeat: no-repeat;
+    mask-image: linear-gradient(to top, black 25%, transparent 50%, transparent);
+    z-index: -1;
+  }
+}
+</style>

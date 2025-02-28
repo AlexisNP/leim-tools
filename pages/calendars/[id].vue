@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { PhCalendarX, PhCircleNotch } from "@phosphor-icons/vue";
+import { PhArrowBendDoubleUpLeft, PhCalendarX, PhCircleNotch } from "@phosphor-icons/vue";
 import type { Calendar } from "~/models/CalendarConfig";
 import type { Category } from "~/models/Category";
 
@@ -8,8 +8,29 @@ const shortId = route.params.id
 
 const user = useSupabaseUser()
 
-const { data: calendarData, pending: calPending, refresh: calRefresh } = await useLazyFetch<{ data: Calendar }>("/api/calendars/query", { query: { shortId, full: true } })
-const { data: catData, pending: catPending, refresh: catRefresh } = await useLazyFetch<{ data: Category[] }>("/api/calendars/categories/query")
+const {
+  data: calendar,
+  status: calendarStatus,
+  refresh: calRefresh
+} = await useLazyFetch<{ data: Calendar }>("/api/calendars/query",
+  {
+    key: `calendar-${shortId}`,
+    query: {
+      shortId,
+      full: true
+    }
+  }
+)
+
+const {
+  data: categories,
+  status: categoriesStatus,
+  refresh: catRefresh
+} = await useLazyFetch<{ data: Category[] }>("/api/calendars/categories/query",
+  { key: `categories-${shortId}` }
+)
+
+const isLoading = computed(() => calendarStatus.value === "pending" || categoriesStatus.value === "pending")
 
 watch(user, () => {
   calRefresh()
@@ -18,7 +39,7 @@ watch(user, () => {
 </script>
 
 <template>
-  <div v-if="calPending || catPending" class="h-full w-full grid place-items-center">
+  <div v-if="isLoading" class="h-full w-full grid place-items-center">
     <Head>
       <Title>{{ $t("entity.calendar.nameSingular") }}</Title>
     </Head>
@@ -31,12 +52,12 @@ watch(user, () => {
     </div>
   </div>
 
-  <div v-else-if="calendarData && catData" class="h-full w-full">
+  <div v-else-if="calendar?.data && categories?.data" class="h-full w-full">
     <Head>
-      <Title>{{ calendarData.data.name }}</Title>
+      <Title>{{ calendar.data.name }}</Title>
     </Head>
 
-    <Calendar :calendar-data="calendarData.data" :categories="catData.data" />
+    <Calendar :calendar-data="calendar.data" :categories="categories.data" />
   </div>
 
   <div v-else class="h-full w-full grid place-items-center">
@@ -54,6 +75,14 @@ watch(user, () => {
       <p>
         {{ $t('entity.calendar.notFoundDescription') }}
       </p>
+
+      <UiButton variant="default" class="mt-4 gap-2" as-child>
+        <RouterLink to="/explore">
+          <PhArrowBendDoubleUpLeft size="24" />
+
+          {{ $t('entity.calendar.backToList') }}
+        </RouterLink>
+      </UiButton>
     </div>
   </div>
 </template>

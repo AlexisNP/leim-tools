@@ -1,13 +1,11 @@
 <script lang="ts" setup>
-import { PhPlus, PhTrash } from "@phosphor-icons/vue";
+import { PhPencil, PhPlus, PhTrash } from "@phosphor-icons/vue";
 import type { RealtimeChannel } from "@supabase/supabase-js"
 import type { World } from "~/models/World";
 
 const supabase = useSupabaseClient()
 
-const { data: res } = await useFetch("/api/worlds/query")
-
-const worlds = ref<World[]>(res.value?.data as World[])
+const { data: worlds } = await useLazyFetch<{ data: World[] }>("/api/worlds/query")
 
 definePageMeta({
   middleware: ["auth-guard"]
@@ -36,8 +34,10 @@ let worldChannel: RealtimeChannel
 
 /** Handles world insertion realtime events */
 function handleInsertedWorld(newWorld: World) {
+  if (!worlds.value?.data) return
+
   try {
-    worlds.value.push(newWorld)
+    worlds.value?.data.push(newWorld)
   } catch (err) {
     console.log(err)
   }
@@ -45,8 +45,10 @@ function handleInsertedWorld(newWorld: World) {
 
 /** Handles world deletion realtime events */
 function handleDeletedWorld(id: number) {
+  if (!worlds.value?.data) return
+
   try {
-    worlds.value.splice(worlds.value.findIndex(w => w.id === id))
+    worlds.value.data.splice(worlds.value.data.findIndex(w => w.id === id))
   } catch (err) {
     console.log(err)
   }
@@ -68,7 +70,9 @@ onMounted(() => {
             break
 
           case "UPDATE":
-            worlds.value = (await $fetch("/api/worlds/query")).data as World[]
+            if (!worlds.value?.data) return
+
+            worlds.value.data = (await $fetch("/api/worlds/query")).data as World[]
             break
 
           default:
@@ -87,21 +91,32 @@ onUnmounted(() => {
 })
 
 const markedWorld = ref<World | null>(null)
+const isEditWorldModalOpen = ref<boolean>(false)
 const isDeleteWorldModalOpen = ref<boolean>(false)
 
-function deployDeleteModal(calendar: World) {
+function deployDeleteModal(world: World) {
   isDeleteWorldModalOpen.value = true
-  markedWorld.value = calendar
+  markedWorld.value = world
 }
 
 function hideDeleteModal() {
   isDeleteWorldModalOpen.value = false
   markedWorld.value = null
 }
+
+function deployEditModal(world: World) {
+  isEditWorldModalOpen.value = true
+  markedWorld.value = world
+}
+
+function hideEditModal() {
+  isEditWorldModalOpen.value = false
+  markedWorld.value = null
+}
 </script>
 
 <template>
-  <main class="p-8 after:fill-red-400">
+  <main class="p-8">
     <Head>
       <Title>{{ $t("entity.world.namePlural") }}</Title>
     </Head>
@@ -131,8 +146,8 @@ function hideDeleteModal() {
           </UiTooltipProvider>
         </div>
 
-        <ul class="grid lg:grid-cols-3 gap-2">
-          <li v-for="world in worlds" :key="world.id">
+        <ul v-if="worlds?.data" class="grid lg:grid-cols-3 gap-2">
+          <li v-for="world in worlds.data" :key="world.id">
             <UiCard
               class="w-full transition-all"
               :link="`/my/worlds/${world.id}`"
@@ -165,9 +180,15 @@ function hideDeleteModal() {
               <UiCardContent>
                 <p class="italic">{{ world.description }}</p>
 
-                <UiButton size="icon" variant="ghost" class="absolute top-2 right-2 z-20 hover:text-white hover:bg-rose-400 dark:hover:bg-rose-700" @click="deployDeleteModal(world)">
-                  <PhTrash size="16" />
-                </UiButton>
+                <div class="flex gap-1 absolute top-4 right-4 z-20">
+                  <UiButton size="icon" variant="ghost" class=" hover:text-white hover:bg-indigo-400 dark:hover:bg-indigo-700" @click="deployEditModal(world)">
+                    <PhPencil size="16" />
+                  </UiButton>
+
+                  <UiButton size="icon" variant="ghost" class=" hover:text-white hover:bg-rose-400 dark:hover:bg-rose-700" @click="deployDeleteModal(world)">
+                    <PhTrash size="16" />
+                  </UiButton>
+                </div>
               </UiCardContent>
             </UiCard>
           </li>
@@ -176,32 +197,7 @@ function hideDeleteModal() {
     </section>
 
     <WorldDialogCreate :modal-state="isCreateWorldModalOpen" @on-close="hideCreateDialog" />
+    <WorldDialogEdit :world="markedWorld" :modal-state="isEditWorldModalOpen" @on-close="hideEditModal" />
     <WorldDialogDelete :world="markedWorld" :modal-state="isDeleteWorldModalOpen" @on-close="hideDeleteModal" />
   </main>
 </template>
-
-<style lang="scss" scoped>
-main {
-  position: relative;
-  isolation: isolate;
-  overflow: clip;
-
-  &::after {
-    display: block;
-    content: '';
-    position: absolute;
-    right: 2.4rem;
-    bottom: -5%;
-    height: 75%;
-    width: 100%;
-    background-image: url('/images/galaxy.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position-y: bottom;
-    background-position-x: right;
-    z-index: -1;
-    mask-image: radial-gradient(ellipse 100% 100% at 120% 80%, black, transparent);
-    opacity: .3;
-  }
-}
-</style>

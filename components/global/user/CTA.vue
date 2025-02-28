@@ -60,7 +60,7 @@ function pushRoute(to: AvailableRoutes) {
   <ClientOnly>
     <UiDropdownMenu v-model:open="menuOpened">
       <UiDropdownMenuTrigger>
-        <UiAvatar v-if="user" class="cursor-pointer">
+        <UiAvatar v-if="user" id="user-avatar" class="ring-[.2rem] ring-indigo-700 dark:ring-neutral-900 cursor-pointer">
           <UiAvatarImage
             :src="userMeta?.avatar_url"
             :alt="userMeta?.full_name"
