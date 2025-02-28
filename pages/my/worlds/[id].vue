@@ -208,29 +208,3 @@ function hideDeleteModal() {
     </template>
   </main>
 </template>
-
-<style lang="scss" scoped>
-main {
-  position: relative;
-  isolation: isolate;
-  overflow: clip;
-
-  &::after {
-    display: block;
-    content: '';
-    position: absolute;
-    right: 2.4rem;
-    bottom: -5%;
-    height: 75%;
-    width: 100%;
-    background-image: url('/images/planet.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position-y: bottom;
-    background-position-x: right;
-    z-index: -1;
-    mask-image: radial-gradient(ellipse 100% 100% at 120% 80%, black, transparent);
-    opacity: .3;
-  }
-}
-</style>
