@@ -2,7 +2,7 @@
 import type { RealtimeChannel } from "@supabase/supabase-js"
 import type { World } from "~/models/World";
 import type { Calendar } from "~/models/CalendarConfig";
-import { PhPlus, PhTrash } from "@phosphor-icons/vue";
+import { PhArrowBendDoubleUpLeft, PhGlobeHemisphereWest, PhPlus, PhTrash } from "@phosphor-icons/vue";
 
 const supabase = useSupabaseClient()
 const route = useRoute()
@@ -112,7 +112,7 @@ function hideDeleteModal() {
         {{ $t('entity.isLoading') }}
       </Heading>
     </template>
-    <template v-else-if="world">
+    <template v-else-if="world?.data">
       <Head>
         <Title>{{ world.data.name }}</Title>
       </Head>
@@ -180,7 +180,31 @@ function hideDeleteModal() {
       <CalendarDialogDelete :calendar="markedCalendar" :modal-state="isDeleteCalendarModalOpen" @on-close="hideDeleteModal" />
     </template>
     <template v-else>
-      Not found
+      <div class="h-full w-full grid place-items-center">
+        <Head>
+          <Title>{{ $t("entity.world.notFound") }}</Title>
+        </Head>
+
+        <div class="grid justify-items-center opacity-80">
+          <PhGlobeHemisphereWest size="75" class="opacity-60" weight="fill" />
+
+          <Heading level="h1">
+            {{ $t("entity.world.notFound") }}
+          </Heading>
+
+          <p>
+            {{ $t('entity.world.notFoundDescription') }}
+          </p>
+
+          <UiButton variant="default" class="mt-4 gap-2" as-child>
+            <RouterLink to="/my">
+              <PhArrowBendDoubleUpLeft size="24" />
+
+              {{ $t('entity.world.backToList') }}
+            </RouterLink>
+          </UiButton>
+        </div>
+      </div>
     </template>
   </main>
 </template>

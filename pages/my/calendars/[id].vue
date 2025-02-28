@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { PhCircleNotch } from "@phosphor-icons/vue";
+import { PhArrowBendDoubleUpLeft, PhCalendarX, PhCircleNotch } from "@phosphor-icons/vue";
 import type { Calendar } from "~/models/CalendarConfig";
 import type { Category } from "~/models/Category";
 
@@ -56,11 +56,36 @@ const isLoading = computed(() => calendarStatus.value === "pending" || categorie
     </div>
   </div>
 
-  <div v-else-if="calendar && categories" class="h-full w-full">
+  <div v-else-if="calendar?.data && categories?.data" class="h-full w-full">
     <Head>
       <Title>{{ calendar.data.name }}</Title>
     </Head>
 
     <Calendar :calendar-data="calendar.data" :categories="categories.data" />
   </div>
-</template>
+
+  <div v-else class="h-full w-full grid place-items-center">
+    <Head>
+      <Title>{{ $t("entity.calendar.notFound") }}</Title>
+    </Head>
+
+    <div class="grid justify-items-center opacity-80">
+      <PhCalendarX size="75" class="opacity-60" />
+
+      <Heading level="h1">
+        {{ $t("entity.calendar.notFound") }}
+      </Heading>
+
+      <p>
+        {{ $t('entity.calendar.notFoundDescription') }}
+      </p>
+
+      <UiButton variant="default" class="mt-4 gap-2" as-child>
+        <RouterLink to="/my">
+          <PhArrowBendDoubleUpLeft size="24" />
+
+          {{ $t('entity.calendar.backToList') }}
+        </RouterLink>
+      </UiButton>
+  </div>
+</div></template>

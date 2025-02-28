@@ -40,6 +40,7 @@ export default defineI18nConfig(() => ({
         },
         greeting: "Connected as {user}",
         anonymousGreeting: "Preferences",
+        backToProfile: "Back to profile",
         sidebarMenu: {
           profile: "Profile",
           appearance: "Appearance",
@@ -80,6 +81,9 @@ export default defineI18nConfig(() => ({
           nameSingular: "World",
           namePlural: "Worlds",
           addSingle: "Add a world",
+          notFound: "World not found",
+          notFoundDescription: "The link is not valid or the world has been deleted / archived.",
+          backToList: "Go back to worlds",
           createDialog: {
             title: "Create a world",
             subtitle: "Worlds are the building blocks which hold all your characters, your calendars…"
@@ -101,6 +105,7 @@ export default defineI18nConfig(() => ({
           notFound: "Calendar not found",
           notFoundDescription: "The link is not valid or the calendar has been deleted / archived.",
           notFoundForWorld: "No calendar for this world… yet !",
+          backToList: "Go back to calendars",
           isLoading: "Calendar is loading…",
           hasXEvents: "This calendar has {count} public events",
           date: {
@@ -278,6 +283,7 @@ export default defineI18nConfig(() => ({
         },
         greeting: "Connecté en tant que {user}",
         anonymousGreeting: "Préférences",
+        backToProfile: "Retour au profil",
         sidebarMenu: {
           profile: "Profil",
           appearance: "Apparence",
@@ -318,6 +324,9 @@ export default defineI18nConfig(() => ({
           nameSingular: "Monde",
           namePlural: "Mondes",
           addSingle: "Ajouter un monde",
+          notFound: "Aucun monde trouvé",
+          notFoundDescription: "Le lien n'est pas valide ou le monde a été supprimé / archivé.",
+          backToList: "Retourner aux mondes",
           createDialog: {
             title: "Créer un monde",
             subtitle: "Un monde est la brique de base qui contient vos personnages, vos calendriers…"
@@ -339,6 +348,7 @@ export default defineI18nConfig(() => ({
           notFound: "Aucun calendrier trouvé",
           notFoundDescription: "Le lien n'est pas valide ou le calendrier a été supprimé / archivé.",
           notFoundForWorld: "Aucun calendrier pour ce monde… pour l'instant !",
+          backToList: "Retourner aux calendriers",
           isLoading: "Chargement du calendrier…",
           hasXEvents: "Ce calendrier contient {count} évènements publiques",
           date: {

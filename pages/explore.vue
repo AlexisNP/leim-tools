@@ -1,9 +1,7 @@
 <script lang="ts" setup>
 import type { Calendar } from "~/models/CalendarConfig";
 
-const { data } = await useFetch("/api/calendars/query", { key: "explore-calendars" })
-
-const availableCalendars = data.value?.data as Calendar[]
+const { data: availableCalendars } = await useLazyFetch<{ data: Calendar[] }>("/api/calendars/query", { key: "explore-calendars" })
 </script>
 
 <template>
@@ -22,8 +20,8 @@ const availableCalendars = data.value?.data as Calendar[]
           {{ $t("entity.calendar.namePublicPlural") }}
         </Heading>
 
-        <ul v-if="availableCalendars && availableCalendars?.length > 0" class="grid md:grid-cols-3 gap-2">
-          <li v-for="calendar in availableCalendars" :key="calendar.shortId">
+        <ul v-if="availableCalendars?.data" class="grid md:grid-cols-3 gap-2">
+          <li v-for="calendar in availableCalendars.data" :key="calendar.shortId">
             <UiCard
               class="w-full transition-all hover:bg-slate-50 dark:bg-gray-950 dark:hover:bg-indigo-950 dark:focus-within:outline-gray-900"
               :link="`/calendars/${calendar.shortId}`"

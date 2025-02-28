@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { PhCalendarX, PhCircleNotch } from "@phosphor-icons/vue";
+import { PhArrowBendDoubleUpLeft, PhCalendarX, PhCircleNotch } from "@phosphor-icons/vue";
 import type { Calendar } from "~/models/CalendarConfig";
 import type { Category } from "~/models/Category";
 
@@ -52,7 +52,7 @@ watch(user, () => {
     </div>
   </div>
 
-  <div v-else-if="calendar && categories" class="h-full w-full">
+  <div v-else-if="calendar?.data && categories?.data" class="h-full w-full">
     <Head>
       <Title>{{ calendar.data.name }}</Title>
     </Head>
@@ -75,6 +75,14 @@ watch(user, () => {
       <p>
         {{ $t('entity.calendar.notFoundDescription') }}
       </p>
+
+      <UiButton variant="default" class="mt-4 gap-2" as-child>
+        <RouterLink to="/explore">
+          <PhArrowBendDoubleUpLeft size="24" />
+
+          {{ $t('entity.calendar.backToList') }}
+        </RouterLink>
+      </UiButton>
     </div>
   </div>
 </template>
