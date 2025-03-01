@@ -66,6 +66,7 @@ function handleClosing() {
       @focus-outside="handleClosing"
       @interact-outside="handleClosing"
       @pointer-down-outside="handleClosing"
+      @close-auto-focus="(e) => e.preventDefault()"
     >
       <UiAlertDialogTitle>
         {{ $t('entity.world.deleteDialog.title') }}

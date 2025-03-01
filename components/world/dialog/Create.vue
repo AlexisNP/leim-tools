@@ -20,7 +20,7 @@ function handleClose() {
 
 <template>
   <UiAlertDialog :open="modalState">
-    <UiAlertDialogContent class="gap-4">
+    <UiAlertDialogContent class="gap-4" @close-auto-focus="(e) => e.preventDefault()">
       <header>
         <UiAlertDialogTitle>
           <span class="text-2xl">
