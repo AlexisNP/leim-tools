@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { PhAlarm, PhCircleNotch, PhEye, PhEyeClosed, PhMapPinArea, PhPencilSimpleLine, PhTag } from "@phosphor-icons/vue"
 import { useToast } from "~/components/ui/toast";
+import { ToastLifetime } from "~/components/ui/toast/use-toast";
 import type { APIError } from "~/models/Errors";
 
 const emit = defineEmits(["event-updated"])
@@ -30,7 +31,7 @@ async function handleAction() {
     toast({
       title: t("entity.calendar.event.updatedToast.title", { event: eventSkeleton.value.title }),
       variant: "success",
-      duration: 3000
+      duration: ToastLifetime.SHORT
     })
   } catch (err) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -41,7 +42,7 @@ async function handleAction() {
         title: t("entity.calendar.event.editErrors.toastTitle"),
         variant: "destructive",
         description: t(`entity.calendar.event.editErrors.${error.path[1]}_${error.code}`),
-        duration: 2000,
+        duration: ToastLifetime.MEDIUM,
       })
     })
   } finally {

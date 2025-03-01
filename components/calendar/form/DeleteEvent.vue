@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { PhCircleNotch } from "@phosphor-icons/vue";
 import { useToast } from "~/components/ui/toast";
+import { ToastLifetime } from "~/components/ui/toast/use-toast";
 
 const { resetSkeleton, deleteEventFromSkeleton, cancelLatestRequest } = useCalendar()
 const { isDeleteEventModalOpen, eventSkeleton } = storeToRefs(useCalendar())
@@ -30,7 +31,7 @@ async function handleAction(): Promise<void> {
     toast({
       title: t("entity.calendar.event.deletedToast.title", { event: eventTitle }),
       variant: "success",
-      duration: 3000
+      duration: ToastLifetime.MEDIUM
     })
   } catch (err) {
     if (err instanceof Error) {

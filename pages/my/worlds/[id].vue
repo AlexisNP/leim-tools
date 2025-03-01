@@ -2,7 +2,7 @@
 import type { RealtimeChannel } from "@supabase/supabase-js"
 import type { World } from "~/models/World";
 import type { Calendar } from "~/models/CalendarConfig";
-import { PhArrowBendDoubleUpLeft, PhGlobeHemisphereWest, PhPlus, PhTrash } from "@phosphor-icons/vue";
+import { PhArrowBendDoubleUpLeft, PhGlobeHemisphereWest, PhPencil, PhPlus, PhTrash } from "@phosphor-icons/vue";
 
 const supabase = useSupabaseClient()
 const route = useRoute()
@@ -30,11 +30,13 @@ function hideCreateDialog() {
 }
 
 /**
- * === Calendar subscriptions ===
+ * === Subscriptions ===
  */
 
 /** Active calendar channel */
 let calendarChannel: RealtimeChannel
+/** Active world channel */
+let worldChannel: RealtimeChannel
 
 /** Handles calendar insertion realtime events */
 function handleInsertedCalendar(newCalendar: Calendar) {
@@ -81,23 +83,58 @@ onMounted(() => {
     )
     .subscribe()
 })
-
 onUnmounted(() => {
   // Unsubscribe from realtime
   supabase.removeChannel(calendarChannel)
 })
 
+onMounted(() => {
+  worldChannel = supabase.channel("realtime-world-channel")
+    .on(
+      "postgres_changes",
+      { event: "*", schema: "public", table: "worlds" },
+      async (payload) => {
+        switch (payload.eventType) {
+          case "UPDATE":
+            if (!world.value?.data) return
+
+            world.value.data = (await $fetch<{ data: World }>("/api/worlds/query", { query: { id, full: true } })).data
+            break
+
+          default:
+            console.log("Unknown event has been triggered. This should not happen unless Supabase added one somehow.")
+            console.log(payload)
+            break
+        }
+      }
+    )
+    .subscribe()
+})
+onUnmounted(() => {
+  // Unsubscribe from realtime
+  supabase.removeChannel(worldChannel)
+})
+
 const markedCalendar = ref<Calendar | null>(null)
 const isDeleteCalendarModalOpen = ref<boolean>(false)
+const isEditWorldModalOpen = ref<boolean>(false)
 
-function deployDeleteModal(calendar: Calendar) {
+function deployDeleteCalendarModal(calendar: Calendar) {
   isDeleteCalendarModalOpen.value = true
   markedCalendar.value = calendar
 }
 
-function hideDeleteModal() {
+function hideDeleteCalendarModal() {
   isDeleteCalendarModalOpen.value = false
   markedCalendar.value = null
+}
+
+function deployEditModal() {
+  isEditWorldModalOpen.value = true
+}
+
+function hideEditModal() {
+  isEditWorldModalOpen.value = false
 }
 </script>
 
@@ -119,7 +156,24 @@ function hideDeleteModal() {
 
       <header class="lg:w-1/2 mb-8">
         <Spacing>
-          <Heading level="h1">{{ world.data.name }}</Heading>
+          <div class="flex items-center gap-2">
+            <Heading level="h1">{{ world.data.name }}</Heading>
+
+            <UiTooltipProvider :delay-duration="250">
+              <UiTooltip>
+                <UiTooltipTrigger as-child>
+                  <UiButton size="icon" class="rounded-full h-8 w-8" @click="deployEditModal">
+                    <PhPencil size="17" weight="fill" />
+                  </UiButton>
+                </UiTooltipTrigger>
+                <UiTooltipContent :side-offset="10">
+                  <p>
+                    {{ $t('entity.calendar.addSingle') }}
+                  </p>
+                </UiTooltipContent>
+              </UiTooltip>
+            </UiTooltipProvider>
+          </div>
 
           <p>{{ world.data.description }}</p>
         </Spacing>
@@ -161,7 +215,7 @@ function hideDeleteModal() {
                 <UiCardContent>
                   <p class="italic">Description future (ou alors des informations sur le nb d'évènements)</p>
 
-                  <UiButton size="icon" variant="ghost" class="absolute top-2 right-2 z-20 hover:text-white hover:bg-rose-400 dark:hover:bg-rose-700" @click="deployDeleteModal(calendar)">
+                  <UiButton size="icon" variant="ghost" class="absolute top-2 right-2 z-20 hover:text-white hover:bg-rose-400 dark:hover:bg-rose-700" @click="deployDeleteCalendarModal(calendar)">
                     <PhTrash size="16" />
                   </UiButton>
                 </UiCardContent>
@@ -176,8 +230,9 @@ function hideDeleteModal() {
         </Spacing>
       </section>
 
+      <WorldDialogEdit :world="world.data" :modal-state="isEditWorldModalOpen" @on-close="hideEditModal" />
       <CalendarDialogCreate :world="world.data" :modal-state="isCreateCalendarModalOpen" @on-close="hideCreateDialog" />
-      <CalendarDialogDelete :calendar="markedCalendar" :modal-state="isDeleteCalendarModalOpen" @on-close="hideDeleteModal" />
+      <CalendarDialogDelete :calendar="markedCalendar" :modal-state="isDeleteCalendarModalOpen" @on-close="hideDeleteCalendarModal" />
     </template>
     <template v-else>
       <div class="h-full w-full grid place-items-center">

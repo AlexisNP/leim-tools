@@ -5,6 +5,12 @@ import type { ToastProps } from "."
 const TOAST_LIMIT = 3
 const TOAST_REMOVE_DELAY = 1000000
 
+export enum ToastLifetime {
+  SHORT = 2000,
+  MEDIUM = 3500,
+  LONG = 6000,
+}
+
 export type StringOrVNode =
   | string
   | VNode
