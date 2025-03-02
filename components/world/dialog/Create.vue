@@ -15,6 +15,7 @@ const emit = defineEmits(["on-close"])
 
 function handleClose() {
   emit("on-close")
+  worldSkeletonName.value = ""
 }
 </script>
 

@@ -4,7 +4,7 @@ import type { World } from "~/models/World";
 
 const user = useSupabaseUser()
 
-const defaultWorld: World = { name: "", description: "", gmId: user.value?.id }
+const defaultWorld: World = { name: "", description: "", gmId: user.value?.id, color: "white", state: "draft" }
 const worldSkeleton = ref<World>({ ...defaultWorld })
 
 onMounted(() => {

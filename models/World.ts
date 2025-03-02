@@ -17,7 +17,7 @@ export interface World {
 export const postWorldSchema = z.object({
   name: z.string(),
   description: z.string().optional().nullable(),
-  color: rpgColorSchema,
+  color: rpgColorSchema.default("white"),
   gmId: z.string().optional().nullable(),
   state: z.string().optional().nullable().default("draft"),
 })
