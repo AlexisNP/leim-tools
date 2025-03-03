@@ -6,7 +6,7 @@ const emit = defineEmits(["on-click"])
 
 <template>
   <UiCard
-    class="h-full w-fit transition-all bg-transparent dark:hover:bg-gray-950 dark:focus-within:outline-gray-900 hover:-translate-y-0"
+    class="h-full md:w-fit transition-all bg-transparent dark:hover:bg-gray-950 dark:focus-within:outline-gray-900 hover:-translate-y-0"
     has-click
     @on-click="emit('on-click')"
   >

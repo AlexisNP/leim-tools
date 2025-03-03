@@ -2,13 +2,14 @@
 import type { RealtimeChannel } from "@supabase/supabase-js"
 import type { World } from "~/models/World";
 import type { Calendar } from "~/models/CalendarConfig";
-import { PhArrowBendDoubleUpLeft, PhGlobeHemisphereWest, PhPencil, PhTrash } from "@phosphor-icons/vue";
+import { PhArrowBendDoubleUpLeft, PhGlobeHemisphereWest, PhPencil } from "@phosphor-icons/vue";
 
 const supabase = useSupabaseClient()
 const route = useRoute()
 const id = route.params.id
 
 const { data: world, status } = await useFetch<{ data: World }>("/api/worlds/query", { query: { id, full: true } })
+const sortedCalendars = computed(() => world.value?.data.calendars ? [...world.value.data.calendars].sort((a, b) => (a.id ?? 0) - (b.id ?? 0)) : [])
 
 definePageMeta({
   middleware: ["auth-guard"]
@@ -54,7 +55,7 @@ function handleDeletedCalendar(id: number) {
   if (!world.value) return
 
   try {
-    world.value.data.calendars?.splice(world.value.data.calendars.findIndex(c => c.id === id))
+    world.value.data.calendars?.splice(world.value.data.calendars.findIndex(c => c.id === id), 1)
   } catch (err) {
     console.log(err)
   }
@@ -187,36 +188,22 @@ function hideEditModal() {
             </Heading>
           </div>
 
-          <ul v-if="world.data.calendars && world.data.calendars?.length > 0" class="grid md:grid-cols-3 gap-2">
-            <li v-for="calendar in world.data.calendars" :key="calendar.id">
-              <UiCard
-                class="w-full transition-all hover:bg-slate-50 dark:bg-gray-950 dark:hover:bg-indigo-950 dark:focus-within:outline-gray-900"
-                :link="`/my/calendars/${calendar.id}`"
-              >
-                <UiCardHeader>
-                  <UiCardTitle class="text-xl pr-12">{{ calendar.name }}</UiCardTitle>
-                </UiCardHeader>
-
-                <UiCardContent>
-                  <p class="italic">Description future (ou alors des informations sur le nb d'évènements)</p>
-
-                  <UiButton size="icon" variant="ghost" class="absolute top-2 right-2 z-20 hover:text-white hover:bg-rose-400 dark:hover:bg-rose-700" @click="deployDeleteCalendarModal(calendar)">
-                    <PhTrash size="16" />
-                  </UiButton>
-                </UiCardContent>
-              </UiCard>
+          <ul class="grid md:grid-cols-3 gap-2">
+            <li v-for="calendar in sortedCalendars" :key="calendar.id">
+              <CalendarPreviewCard :calendar="calendar" @on-delete="() => deployDeleteCalendarModal(calendar)" />
             </li>
-            <li class="w-fit">
+
+            <li class="md:w-fit">
               <AddCard @on-click="() => isCreateCalendarModalOpen = true">
-                {{ $t('entity.calendar.addSingle') }}
+                <template v-if="sortedCalendars.length > 0">
+                  {{ $t('entity.calendar.addSingle') }}
+                </template>
+                <template v-else>
+                  {{ $t('entity.calendar.addSingleFirst') }}
+                </template>
               </AddCard>
             </li>
           </ul>
-          <template v-else>
-            <p class="pl-6 opacity-75 italic">
-              {{ $t('entity.calendar.notFoundForWorld') }}
-            </p>
-          </template>
         </Spacing>
       </section>
 
