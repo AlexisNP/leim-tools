@@ -1,6 +1,7 @@
 --
 -- For use with https://github.com/supabase/supabase/tree/master/examples/slack-clone/nextjs-slack-clone
 --
+create extension if not exists moddatetime schema extensions;
 
 -- Custom types
 create type public.app_permission as enum ('events.see.hidden', 'users.ban');
@@ -49,6 +50,8 @@ create table public.worlds (
   gm_id         uuid references public.users on delete cascade
 );
 comment on table public.worlds is 'Worlds belonging to a single user ; a game master.';
+create trigger handle_updated_at before update on public.worlds
+  for each row execute procedure moddatetime (updated_at);
 
 -- World Players (join table)
 create table public.world_players (
@@ -73,6 +76,8 @@ create table public.calendars (
   world_id          bigint references public.worlds on delete cascade not null
 );
 comment on table public.calendars is 'Calendar settings and configuration attached to a single world.';
+create trigger handle_updated_at before update on public.calendars
+  for each row execute procedure moddatetime (updated_at);
 
 -- Calendar Months
 create table public.calendar_months (

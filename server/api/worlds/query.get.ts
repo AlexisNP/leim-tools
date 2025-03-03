@@ -12,8 +12,37 @@ export default defineEventHandler(async (event) => {
   const client = await serverSupabaseClient(event)
   const query = await getValidatedQuery(event, querySchema.parse)
 
-  const fullFields = "id, name, description, color, createdAt:created_at, updatedAt:updated_at, calendars (id, name, color, today, eventNb:calendar_events(count))"
-  const partialFields = "id, name, description, color, createdAt:created_at, updatedAt:updated_at, calendars (eventNb:calendar_events(count))"
+  const fullFields = `
+    id,
+    name,
+    description,
+    color,
+    createdAt:created_at,
+    updatedAt:updated_at,
+    gmId:gm_id,
+    calendars (
+      id,
+      name,
+      color,
+      today,
+      createdAt:created_at,
+      updatedAt:updated_at,
+      eventNb:calendar_events(count)
+    )
+  `
+  const partialFields = `
+    id,
+    name,
+    description,
+    color,
+    createdAt:created_at,
+    updatedAt:updated_at,
+    calendars (
+      createdAt:created_at,
+      updatedAt:updated_at,
+      eventNb:calendar_events(count)
+    )
+  `
 
   let output
 

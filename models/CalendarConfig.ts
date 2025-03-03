@@ -20,6 +20,8 @@ export interface Calendar extends CalendarConfig {
   state: CalendarState
   color?: string
   world?: World
+  createdAt?: string
+  updatedAt?: string
 }
 
 export const postCalendarSchema = z.object({

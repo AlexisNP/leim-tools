@@ -190,7 +190,7 @@ function hideEditModal() {
 
           <ul class="grid md:grid-cols-3 gap-2">
             <li v-for="calendar in sortedCalendars" :key="calendar.id">
-              <CalendarPreviewCard :calendar="calendar" @on-delete="() => deployDeleteCalendarModal(calendar)" />
+              <CalendarPreviewCard :calendar="calendar" :gm-id="world.data.gmId" show-actions @on-delete="() => deployDeleteCalendarModal(calendar)" />
             </li>
 
             <li class="md:w-fit">

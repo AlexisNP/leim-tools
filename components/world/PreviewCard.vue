@@ -57,6 +57,7 @@ const updatedAt = computed<string>(() => props.world.updatedAt ? DateTime.fromIS
         </UiButton>
       </div>
     </UiCardContent>
+
     <UiCardFooter>
       <ul class="grid gap-2">
         <li class="flex gap-1 items-center">
