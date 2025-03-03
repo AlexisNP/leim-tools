@@ -2,7 +2,7 @@
 import type { RealtimeChannel } from "@supabase/supabase-js"
 import type { World } from "~/models/World";
 import type { Calendar } from "~/models/CalendarConfig";
-import { PhArrowBendDoubleUpLeft, PhGlobeHemisphereWest, PhPencil, PhPlus, PhTrash } from "@phosphor-icons/vue";
+import { PhArrowBendDoubleUpLeft, PhGlobeHemisphereWest, PhPencil, PhTrash } from "@phosphor-icons/vue";
 
 const supabase = useSupabaseClient()
 const route = useRoute()
@@ -166,9 +166,9 @@ function hideEditModal() {
                     <PhPencil size="17" weight="fill" />
                   </UiButton>
                 </UiTooltipTrigger>
-                <UiTooltipContent :side-offset="10">
+                <UiTooltipContent :side-offset="12" side="right">
                   <p>
-                    {{ $t('entity.calendar.addSingle') }}
+                    {{ $t('entity.world.editSingle') }}
                   </p>
                 </UiTooltipContent>
               </UiTooltip>
@@ -185,21 +185,6 @@ function hideEditModal() {
             <Heading level="h2">
               {{ $t('entity.calendar.namePlural') }}
             </Heading>
-
-            <UiTooltipProvider :delay-duration="250">
-              <UiTooltip>
-                <UiTooltipTrigger as-child>
-                  <UiButton size="icon" class="rounded-full h-8 w-8" @click="() => isCreateCalendarModalOpen = true">
-                    <PhPlus size="17"/>
-                  </UiButton>
-                </UiTooltipTrigger>
-                <UiTooltipContent :side-offset="10">
-                  <p>
-                    {{ $t('entity.calendar.addSingle') }}
-                  </p>
-                </UiTooltipContent>
-              </UiTooltip>
-            </UiTooltipProvider>
           </div>
 
           <ul v-if="world.data.calendars && world.data.calendars?.length > 0" class="grid md:grid-cols-3 gap-2">
@@ -220,6 +205,11 @@ function hideEditModal() {
                   </UiButton>
                 </UiCardContent>
               </UiCard>
+            </li>
+            <li class="w-fit">
+              <AddCard @on-click="() => isCreateCalendarModalOpen = true">
+                {{ $t('entity.calendar.addSingle') }}
+              </AddCard>
             </li>
           </ul>
           <template v-else>

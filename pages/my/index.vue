@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { PhPencil, PhPlus, PhTrash } from "@phosphor-icons/vue";
+import { PhPencil, PhTrash } from "@phosphor-icons/vue";
 import type { RealtimeChannel } from "@supabase/supabase-js"
 import type { World } from "~/models/World";
 
@@ -129,21 +129,6 @@ function hideEditModal() {
           <Heading level="h2">
             {{ $t('entity.world.namePlural') }}
           </Heading>
-
-          <UiTooltipProvider :delay-duration="250">
-            <UiTooltip>
-              <UiTooltipTrigger as-child>
-                <UiButton size="icon" class="rounded-full h-8 w-8" @click="() => isCreateWorldModalOpen = true">
-                  <PhPlus size="17"/>
-                </UiButton>
-              </UiTooltipTrigger>
-              <UiTooltipContent :side-offset="10">
-                <p>
-                  {{ $t('entity.world.addSingle') }}
-                </p>
-              </UiTooltipContent>
-            </UiTooltip>
-          </UiTooltipProvider>
         </div>
 
         <ul v-if="worlds?.data" class="grid lg:grid-cols-3 gap-2">
@@ -191,6 +176,11 @@ function hideEditModal() {
                 </div>
               </UiCardContent>
             </UiCard>
+          </li>
+          <li class="w-fit">
+            <AddCard @on-click="() => isCreateWorldModalOpen = true">
+              {{ $t('entity.world.addSingle') }}
+            </AddCard>
           </li>
         </ul>
       </Spacing>
