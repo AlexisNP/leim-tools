@@ -2,11 +2,22 @@
 import { PhPlus } from "@phosphor-icons/vue";
 
 const isDialogOpen = ref<boolean>(false);
+const { resetSkeleton } = useCalendar();
 
 // Toggles the dialog
 function toggleDialog() {
   isDialogOpen.value = !isDialogOpen.value;
 };
+
+/**
+ * Prevents the modal from closing if's still loading
+ *
+ * @param e The closing event (can be keydown or click)
+ */
+function handleClosing(e: Event) {
+  e.preventDefault()
+  setTimeout(() => resetSkeleton(), 100)
+}
 </script>
 
 <template>
@@ -19,7 +30,11 @@ function toggleDialog() {
   </UiButton>
 
   <UiDialog v-model:open="isDialogOpen">
-    <UiDialogContent class="border-indigo-200 dark:bg-slate-950 dark:border-indigo-950">
+    <UiDialogContent
+      class="border-indigo-200 dark:bg-slate-950 dark:border-indigo-950"
+      @escape-key-down="handleClosing"
+      @pointer-down-outside="handleClosing"
+    >
       <UiDialogTitle>
         {{ $t("entity.calendar.event.addSingle") }}
       </UiDialogTitle>
