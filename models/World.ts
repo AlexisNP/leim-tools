@@ -1,8 +1,7 @@
 import { z } from "zod"
 import type { Calendar } from "./CalendarConfig"
 import { rpgColorSchema, type RPGColor } from "./Color"
-
-export type WorldState = "published" | "draft" | "archived"
+import type { ContentState } from "./Entity"
 
 export interface World {
   id?: number
@@ -11,7 +10,7 @@ export interface World {
   color?: RPGColor
   calendars?: Calendar[]
   gmId?: string
-  state?: WorldState
+  state?: ContentState
   createdAt?: string
   updatedAt?: string
 }

@@ -83,10 +83,6 @@ function handleFormCancel() {
           @input="handleNameChange"
         >
 
-        <div class="-mx-1 mb-4">
-          <InputColor v-model="worldSkeleton.color" />
-        </div>
-
         <textarea
           id="new-world-description"
           v-model="worldSkeleton.description"
@@ -94,6 +90,14 @@ function handleFormCancel() {
           :placeholder="$t('entity.addDescription')"
           class="w-full -my-1 py-1 -mx-1 px-1 min-h-24 max-h-36 text-sm border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600"
         />
+
+        <div class="-mx-1 mb-4">
+          <InputColor v-model="worldSkeleton.color" />
+        </div>
+
+        <div class="-mx-1 mb-4">
+          <InputContentState v-model="worldSkeleton.state" />
+        </div>
       </div>
 
       <footer class="flex justify-end gap-2 mt-6">

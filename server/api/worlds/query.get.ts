@@ -17,6 +17,7 @@ export default defineEventHandler(async (event) => {
     name,
     description,
     color,
+    state,
     createdAt:created_at,
     updatedAt:updated_at,
     gmId:gm_id,
@@ -35,6 +36,7 @@ export default defineEventHandler(async (event) => {
     name,
     description,
     color,
+    state,
     createdAt:created_at,
     updatedAt:updated_at,
     calendars (

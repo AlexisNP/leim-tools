@@ -3,8 +3,8 @@ import type { CalendarEvent } from "./CalendarEvent"
 import { calendarMonthSchema, type CalendarMonth } from "./CalendarMonth"
 import { dateSchema, type RPGDate } from "./Date"
 import type { World } from "./World"
+import type { ContentState } from "./Entity"
 
-export type CalendarState = "published" | "draft" | "archived"
 
 export interface CalendarConfig {
   months: CalendarMonth[]
@@ -17,7 +17,7 @@ export interface Calendar extends CalendarConfig {
   name: string
   events: CalendarEvent[]
   eventNb?: Array<{ count: number }>
-  state: CalendarState
+  state: ContentState
   color?: string
   world?: World
   createdAt?: string
