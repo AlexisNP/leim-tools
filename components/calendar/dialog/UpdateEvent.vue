@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 const { eventSkeleton, lastActiveEvent, isEditEventModalOpen } = storeToRefs(useCalendar())
+const { resetSkeleton } = useCalendar();
 
 // Watch the popover state
 watch(isEditEventModalOpen, (hasOpened, _o) => {
@@ -15,6 +16,7 @@ watch(isEditEventModalOpen, (hasOpened, _o) => {
  */
 function handleClosing() {
   isEditEventModalOpen.value = false
+  setTimeout(() => resetSkeleton(), 100)
 }
 </script>
 
