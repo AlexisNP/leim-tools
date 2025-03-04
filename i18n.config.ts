@@ -56,7 +56,9 @@ export default defineI18nConfig(() => ({
         displayMode: "Display mode"
       },
       common: {
-        title: "Title"
+        title: "Title",
+        createdAt: "Created {createdAt}",
+        updatedAt: "Last updated {updatedAt}",
       },
       entity: {
         category: {
@@ -81,6 +83,8 @@ export default defineI18nConfig(() => ({
           nameSingular: "World",
           namePlural: "Worlds",
           addSingle: "Add a world",
+          addSingleFirst: "Add your first world !",
+          editSingle: "Edit world",
           notFound: "World not found",
           notFoundDescription: "The link is not valid or the world has been deleted / archived.",
           backToList: "Go back to worlds",
@@ -109,12 +113,13 @@ export default defineI18nConfig(() => ({
           namePublicSingular: "Public Calendar",
           namePublicPlural: "Public Calendars",
           addSingle: "Add a calendar",
+          addSingleFirst: "Add your first calendar !",
           notFound: "Calendar not found",
           notFoundDescription: "The link is not valid or the calendar has been deleted / archived.",
           notFoundForWorld: "No calendar for this world… yet !",
           backToList: "Go back to calendars",
           isLoading: "Calendar is loading…",
-          hasXEvents: "This calendar has {count} public events",
+          hasXEvents: "{count} available events",
           date: {
             start: "Start date",
             end: "End date",
@@ -306,7 +311,9 @@ export default defineI18nConfig(() => ({
         displayMode: "Mode d'affichage",
       },
       common: {
-        title: "Titre"
+        title: "Titre",
+        createdAt: "Créé le {createdAt}",
+        updatedAt: "Dernière modification le {updatedAt}",
       },
       entity: {
         category: {
@@ -331,6 +338,8 @@ export default defineI18nConfig(() => ({
           nameSingular: "Monde",
           namePlural: "Mondes",
           addSingle: "Ajouter un monde",
+          addSingleFirst: "Ajouter votre premier monde !",
+          editSingle: "Modifier le monde",
           notFound: "Aucun monde trouvé",
           notFoundDescription: "Le lien n'est pas valide ou le monde a été supprimé / archivé.",
           backToList: "Retourner aux mondes",
@@ -354,17 +363,18 @@ export default defineI18nConfig(() => ({
           },
         },
         calendar: {
-          nameSingular: "Calendriers",
-          namePlural: "Calendrier",
+          nameSingular: "Calendrier",
+          namePlural: "Calendriers",
           namePublicSingular: "Calendrier Public",
           namePublicPlural: "Calendriers Publics",
           addSingle: "Ajouter un calendrier",
+          addSingleFirst: "Ajouter votre premier calendrier !",
           notFound: "Aucun calendrier trouvé",
           notFoundDescription: "Le lien n'est pas valide ou le calendrier a été supprimé / archivé.",
           notFoundForWorld: "Aucun calendrier pour ce monde… pour l'instant !",
           backToList: "Retourner aux calendriers",
           isLoading: "Chargement du calendrier…",
-          hasXEvents: "Ce calendrier contient {count} évènements publiques",
+          hasXEvents: "{count} évènements disponibles",
           date: {
             start: "Date de début",
             end: "Date de fin",

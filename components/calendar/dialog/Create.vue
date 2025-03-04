@@ -22,7 +22,7 @@ function handleClose() {
 
 <template>
   <UiAlertDialog :open="modalState">
-    <UiAlertDialogContent class="grid grid-rows-[auto_1fr_auto] items-start min-h-[66vh] max-w-4xl gap-6">
+    <UiAlertDialogContent class="grid grid-rows-[auto_1fr_auto] items-start min-h-[66vh] max-w-4xl gap-6" @close-auto-focus="(e) => e.preventDefault()">
       <UiAlertDialogTitle>
         <span class="text-2xl">
           <strong class="font-bold">{{ world.name }}</strong>

@@ -52,7 +52,7 @@ export const useCalendar = defineStore("calendar", () => {
 
   function setReadStatus(gmId: string) {
     // If the user is not logged in, or the calendar is not owned by the user, it's read-only
-    isReadOnly.value = (!user) || (gmId !== user.value?.id)
+    isReadOnly.value = !user.value || gmId !== user.value.id
   }
 
   /**

@@ -8,16 +8,18 @@ export interface World {
   id?: number
   name: string
   description?: string
-  color?: RPGColor,
-  calendars?: Calendar[],
+  color?: RPGColor
+  calendars?: Calendar[]
   gmId?: string
   state?: WorldState
+  createdAt?: string
+  updatedAt?: string
 }
 
 export const postWorldSchema = z.object({
   name: z.string(),
   description: z.string().optional().nullable(),
-  color: rpgColorSchema,
+  color: rpgColorSchema.default("white"),
   gmId: z.string().optional().nullable(),
   state: z.string().optional().nullable().default("draft"),
 })

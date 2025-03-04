@@ -19,6 +19,8 @@ export default defineEventHandler(async (event) => {
     today,
     months:calendar_months (*),
     state,
+    createdAt:created_at,
+    updatedAt:updated_at,
     eventNb:calendar_events(count)
   `
 
@@ -29,6 +31,8 @@ export default defineEventHandler(async (event) => {
     today,
     months:calendar_months (*),
     state,
+    createdAt:created_at,
+    updatedAt:updated_at,
     events:calendar_events (
       id,
       title,
@@ -64,5 +68,5 @@ export default defineEventHandler(async (event) => {
     return output.eq("id", query.id).limit(1).single<Calendar>()
   }
 
-  return output.returns<Calendar[]>()
+  return output.overrideTypes<Calendar[]>()
 })
