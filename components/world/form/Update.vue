@@ -92,19 +92,19 @@ function handleFormCancel() {
         />
 
         <div class="-mx-1 grid gap-3">
-          <UiLabel for="new-world-color">
-            {{ $t('ui.colors.label') }}
-          </UiLabel>
-
-          <InputColor id="new-world-color" v-model="worldSkeleton.color" />
-        </div>
-
-        <div class="-mx-1 grid gap-3">
           <UiLabel for="new-world-state">
             {{ $t('ui.contentState.label') }}
           </UiLabel>
 
           <InputContentState id="new-world-state" v-model="worldSkeleton.state" />
+        </div>
+
+        <div class="-mx-1 grid gap-3">
+          <UiLabel for="new-world-color">
+            {{ $t('ui.colors.label') }}
+          </UiLabel>
+
+          <InputColor id="new-world-color" v-model="worldSkeleton.color" />
         </div>
       </div>
 

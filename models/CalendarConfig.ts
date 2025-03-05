@@ -4,6 +4,7 @@ import { calendarMonthSchema, type CalendarMonth } from "./CalendarMonth"
 import { dateSchema, type RPGDate } from "./Date"
 import type { World } from "./World"
 import type { ContentState } from "./Entity"
+import type { RPGColor } from "./Color"
 
 
 export interface CalendarConfig {
@@ -18,11 +19,14 @@ export interface Calendar extends CalendarConfig {
   events: CalendarEvent[]
   eventNb?: Array<{ count: number }>
   state: ContentState
-  color?: string
+  color?: RPGColor
   world?: World
   createdAt?: string
   updatedAt?: string
 }
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type CalendarChannelPayload = Calendar & Record<string, any>
 
 export const postCalendarSchema = z.object({
   name: z.string(),

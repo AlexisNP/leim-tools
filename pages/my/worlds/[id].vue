@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { RealtimeChannel } from "@supabase/supabase-js"
 import type { World } from "~/models/World";
-import type { Calendar } from "~/models/CalendarConfig";
+import type { Calendar, CalendarChannelPayload } from "~/models/CalendarConfig";
 import { PhArrowBendDoubleUpLeft, PhGlobeHemisphereWest, PhPencil } from "@phosphor-icons/vue";
 
 const supabase = useSupabaseClient()
@@ -40,8 +40,11 @@ let calendarChannel: RealtimeChannel
 let worldChannel: RealtimeChannel
 
 /** Handles calendar insertion realtime events */
-function handleInsertedCalendar(newCalendar: Calendar) {
+function handleInsertedCalendar(newCalendar: CalendarChannelPayload) {
   if (!world.value) return
+
+  newCalendar.createdAt = newCalendar.created_at;
+  newCalendar.eventNb = [{ count: 0 }];
 
   try {
     world.value.data.calendars?.push(newCalendar)

@@ -2,7 +2,7 @@
 import type { Calendar } from "~/models/CalendarConfig";
 import { PhAlarm, PhCalendarDots, PhCircleNotch, PhWrench } from "@phosphor-icons/vue";
 
-const defaultSkeleton: Calendar = { name: "", today: { day: 1, month: 0, year: 0 }, months: [], events: [], state: "draft" }
+const defaultSkeleton: Calendar = { name: "", today: { day: 1, month: 0, year: 0 }, months: [], events: [], state: "draft", color: "white" }
 const calendarSkeleton = ref<Calendar>({ ...defaultSkeleton })
 
 onMounted(() => {
@@ -97,7 +97,7 @@ function handleFormCancel() {
             </div>
           </UiTabsTrigger>
         </UiTabsList>
-        <UiTabsContent value="global" class="grid gap-6">
+        <UiTabsContent value="global" class="grid gap-4">
           <input
             id="new-calendar-name"
             v-model="calendarSkeleton.name"
@@ -115,6 +115,14 @@ function handleFormCancel() {
             </UiLabel>
 
             <InputContentState id="new-calendar-state" v-model="calendarSkeleton.state" />
+          </div>
+
+          <div class="-mx-1 grid gap-3">
+            <UiLabel for="new-calendar-color">
+              {{ $t('ui.colors.label') }}
+            </UiLabel>
+
+            <InputColor id="new-calendar-color" v-model="calendarSkeleton.color" />
           </div>
         </UiTabsContent>
         <UiTabsContent value="months">
