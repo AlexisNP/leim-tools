@@ -17,6 +17,7 @@ const emit = defineEmits(["on-close"])
 
 function handleClose() {
   emit("on-close")
+  setTimeout(() => calendarSkeletonName.value = "", 100)
 }
 </script>
 

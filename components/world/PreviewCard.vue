@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { PhArchive, PhFileDashed, PhFilePlus, PhPencil, PhPencilSimpleLine, PhTrash } from "@phosphor-icons/vue";
+import { PhArchive, PhFile, PhFileDashed, PhFilePlus, PhPencil, PhPencilSimpleLine, PhTrash } from "@phosphor-icons/vue";
 import type { World } from "~/models/World";
 import { DateTime } from "luxon";
 
@@ -16,7 +16,7 @@ const updatedAt = computed<string>(() => props.world.updatedAt ? DateTime.fromIS
 
 <template>
   <UiCard
-    class="w-full h-full transition-all"
+    class="w-full h-full flex flex-col transition-all"
     :link="`/my/worlds/${world.id}`"
     :class="{
       'hover:bg-slate-50 dark:hover:bg-sky-950 dark:focus-within:outline-sky-900': !world.color,
@@ -38,13 +38,17 @@ const updatedAt = computed<string>(() => props.world.updatedAt ? DateTime.fromIS
       'bg-pink-100 dark:bg-pink-950 border-pink-200 hover:bg-pink-50 dark:hover:bg-pink-900 dark:border-pink-900 dark:focus-within:outline-pink-900': world.color === 'pink',
       'bg-pink-100 dark:bg-rose-950 border-rose-200 hover:bg-rose-50 dark:hover:bg-rose-900 dark:border-rose-900 dark:focus-within:outline-rose-900': world.color === 'rose',
       'text-slate-100 bg-slate-900 border-slate-700 hover:bg-slate-700 dark:hover:bg-slate-800 dark:border-slate-900 dark:focus-within:outline-slate-900': world.color === 'black',
-      ' hover:bg-slate-50 dark:hover:text-slate-900 dark:hover:bg-slate-300 dark:border-slate-500 dark:focus-within:outline-slate-100': world.color === 'white',
+      ' hover:bg-slate-50 dark:hover:text-slate-900 dark:hover:bg-slate-200 dark:border-slate-700 dark:focus-within:outline-slate-100': world.color === 'white',
     }"
   >
     <UiCardHeader class="gap-4">
       <UiCardTitle>
         {{ world.name }}
       </UiCardTitle>
+      <div v-if="world.state === 'published'" class="flex items-center gap-1 text-sm">
+        <PhFile size="20" weight="fill" />
+        <span>{{ $t('ui.contentState.published') }}</span>
+      </div>
       <div v-if="world.state === 'draft'" class="flex items-center gap-1 text-sm">
         <PhFileDashed size="20" weight="fill" />
         <span>{{ $t('ui.contentState.draft') }}</span>
@@ -54,7 +58,8 @@ const updatedAt = computed<string>(() => props.world.updatedAt ? DateTime.fromIS
         <span>{{ $t('ui.contentState.archived') }}</span>
       </div>
     </UiCardHeader>
-    <UiCardContent>
+
+    <UiCardContent class="grow">
       <p class="italic">{{ world.description }}</p>
 
       <div class="flex gap-1 absolute top-4 right-4 z-20">
@@ -69,13 +74,13 @@ const updatedAt = computed<string>(() => props.world.updatedAt ? DateTime.fromIS
     </UiCardContent>
 
     <UiCardFooter>
-      <ul class="grid gap-2">
+      <ul class="grid gap-1 text-sm">
         <li class="flex gap-1 items-center">
-          <PhFilePlus size="20" />
+          <PhFilePlus size="18" />
           <span>{{ $t('common.createdAt', { createdAt }) }}</span>
         </li>
         <li v-if="updatedAt" class="flex gap-1 items-center">
-          <PhPencilSimpleLine size="20" />
+          <PhPencilSimpleLine size="18" />
           <span>{{ $t('common.updatedAt', { updatedAt }) }}</span>
         </li>
       </ul>

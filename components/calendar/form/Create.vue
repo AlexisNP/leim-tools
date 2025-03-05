@@ -97,7 +97,7 @@ function handleFormCancel() {
             </div>
           </UiTabsTrigger>
         </UiTabsList>
-        <UiTabsContent value="global">
+        <UiTabsContent value="global" class="grid gap-6">
           <input
             id="new-calendar-name"
             v-model="calendarSkeleton.name"
@@ -105,9 +105,17 @@ function handleFormCancel() {
             name="new-calendar-name"
             required
             :placeholder="$t('common.title')"
-            class="w-full -my-1 py-2 -mx-1 px-1 text-xl border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600"
+            class="w-full py-2 -mx-1 px-1 text-xl border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600"
             @input="handleNameChange"
           >
+
+          <div class="-mx-1 px-1 grid gap-3">
+            <UiLabel for="new-calendar-state">
+              {{ $t('ui.contentState.label') }}
+            </UiLabel>
+
+            <InputContentState id="new-calendar-state" v-model="calendarSkeleton.state" />
+          </div>
         </UiTabsContent>
         <UiTabsContent value="months">
           <CalendarInputMonthList v-model:model-value="calendarSkeleton.months" />

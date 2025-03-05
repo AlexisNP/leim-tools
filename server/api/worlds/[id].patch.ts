@@ -58,7 +58,9 @@ export default defineEventHandler(async (event) => {
         name,
         description,
         color,
-        gm_id,
+        createdAt:created_at,
+        updatedAt:updated_at,
+        gmId:gm_id,
         state
       `)
       .single<World>()

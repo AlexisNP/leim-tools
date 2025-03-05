@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { RealtimeChannel } from "@supabase/supabase-js"
-import type { World } from "~/models/World";
+import type { World, WorldChannelPayload } from "~/models/World";
 
 const supabase = useSupabaseClient()
 const user = useSupabaseUser()
@@ -31,9 +31,13 @@ function hideCreateDialog() {
 /** Active world channel */
 let worldChannel: RealtimeChannel
 
+
 /** Handles world insertion realtime events */
-function handleInsertedWorld(newWorld: World) {
+function handleInsertedWorld(newWorld: WorldChannelPayload) {
   if (!worlds.value?.data) return
+
+  newWorld.createdAt = newWorld.created_at;
+  newWorld.gmId = newWorld.gm_id;
 
   try {
     worlds.value?.data.push(newWorld)

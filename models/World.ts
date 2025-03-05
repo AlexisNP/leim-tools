@@ -15,6 +15,9 @@ export interface World {
   updatedAt?: string
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type WorldChannelPayload = World & Record<string, any>
+
 export const postWorldSchema = z.object({
   name: z.string(),
   description: z.string().optional().nullable(),

@@ -57,7 +57,7 @@ function handleFormCancel() {
 <template>
   <template v-if="worldSkeleton">
     <form class="h-full grid grid-rows-[1fr_auto]" @submit.prevent="handleSubmit">
-      <div>
+      <div class="grid gap-4">
         <input
           id="new-world-name"
           v-model="worldSkeleton.name"
@@ -69,10 +69,6 @@ function handleFormCancel() {
           @input="handleNameChange"
         >
 
-        <div class="-mx-1 mb-4">
-          <InputColor v-model="worldSkeleton.color" />
-        </div>
-
         <textarea
           id="new-world-description"
           v-model="worldSkeleton.description"
@@ -80,6 +76,22 @@ function handleFormCancel() {
           :placeholder="$t('entity.addDescription')"
           class="w-full -my-1 py-1 -mx-1 px-1 min-h-24 max-h-36 text-sm border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600"
         />
+
+        <div class="-mx-1 grid gap-3">
+          <UiLabel for="new-world-color">
+            {{ $t('ui.colors.label') }}
+          </UiLabel>
+
+          <InputColor id="new-world-color" v-model="worldSkeleton.color" />
+        </div>
+
+        <div class="-mx-1 grid gap-3">
+          <UiLabel for="new-world-state">
+            {{ $t('ui.contentState.label') }}
+          </UiLabel>
+
+          <InputContentState id="new-world-state" v-model="worldSkeleton.state" />
+        </div>
       </div>
 
       <footer class="flex justify-end gap-2 mt-6">

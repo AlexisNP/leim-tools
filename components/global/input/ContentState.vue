@@ -1,12 +1,16 @@
 <script lang="ts" setup>
 import { contentStates, type ContentState } from "~/models/Entity";
 
+defineProps<{
+  id: string
+}>();
+
 const model = defineModel<ContentState>({ default: "draft" });
 </script>
 
 <template>
   <UiSelect v-model="model">
-    <UiSelectTrigger>
+    <UiSelectTrigger :id>
       <UiSelectValue
         :placeholder="$t('ui.contentState.selectOne')"
       />

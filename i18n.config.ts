@@ -17,6 +17,7 @@ export default defineI18nConfig(() => ({
           edit: "Edit",
         },
         colors: {
+          label: "Color",
           selectOne: "Select a color",
           red: "Red",
           orange: "Orange",
@@ -39,6 +40,7 @@ export default defineI18nConfig(() => ({
           white: "White",
         },
         contentState: {
+          label: "Status",
           selectOne: "Select a publication state",
           published: "Published",
           draft: "Draft",
@@ -278,6 +280,7 @@ export default defineI18nConfig(() => ({
           edit: "Modifier",
         },
         colors: {
+          label: "Couleur",
           selectOne: "Sélectionner une couleur",
           red: "Rouge",
           orange: "Orange",
@@ -300,7 +303,8 @@ export default defineI18nConfig(() => ({
           white: "Blanc",
         },
         contentState: {
-          selectOne: "Modify l'état de publication",
+          label: "État de publication",
+          selectOne: "Modifier l'état de publication",
           published: "Publié",
           draft: "Brouillon",
           archived: "Archivé",

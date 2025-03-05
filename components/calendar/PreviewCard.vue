@@ -23,14 +23,14 @@ const calendarLink = computed(() => isOwner.value ? `/my/calendars/${props.calen
 
 <template>
   <UiCard
-    class="w-full h-full transition-all hover:bg-slate-50 dark:bg-gray-950 dark:hover:bg-indigo-950 dark:focus-within:outline-gray-900"
+    class="w-full h-full flex flex-col transition-all hover:bg-slate-50 dark:bg-gray-950 dark:hover:bg-indigo-950 dark:focus-within:outline-gray-900"
     :link="calendarLink"
   >
     <UiCardHeader>
       <UiCardTitle class="text-xl pr-12">{{ calendar.name }}</UiCardTitle>
     </UiCardHeader>
 
-    <UiCardContent>
+    <UiCardContent class="grow">
       <p class="flex items-center gap-1">
         <PhCalendarDots size="24" weight="fill" />
         <span>{{ $t("entity.calendar.hasXEvents", { count: calendar.eventNb?.[0].count }) }}</span>
@@ -48,13 +48,13 @@ const calendarLink = computed(() => isOwner.value ? `/my/calendars/${props.calen
     </UiCardContent>
 
     <UiCardFooter>
-      <ul class="grid gap-2">
+      <ul class="grid gap-1 text-sm">
         <li class="flex gap-1 items-center">
-          <PhFilePlus size="20" />
+          <PhFilePlus size="18" />
           <span>{{ $t('common.createdAt', { createdAt }) }}</span>
         </li>
         <li v-if="updatedAt" class="flex gap-1 items-center">
-          <PhPencilSimpleLine size="20" />
+          <PhPencilSimpleLine size="18" />
           <span>{{ $t('common.updatedAt', { updatedAt }) }}</span>
         </li>
       </ul>
