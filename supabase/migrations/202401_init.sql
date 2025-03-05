@@ -225,12 +225,21 @@ create policy "Allow GMs to delete their worlds" on public.worlds for delete usi
 -- Calendar policies
 create policy "Allow anonymous access to published calendars" on public.calendars
     for select
-    using (state = 'published');
+    using (
+        exists (
+            select 1
+            from public.worlds
+            where worlds.id = calendars.world_id
+            and worlds.state = 'published'
+            and calendars.state = 'published'
+        )
+    );
 
 create policy "Allow GMs to see their calendars" on public.calendars for select using (
     exists (
         select 1 from worlds
         where worlds.id = calendars.world_id
+        and worlds.gm_id = auth.uid()
     )
 );
 create policy "Allow GMs to add calendars to their worldd" on public.calendars for insert with check (
@@ -258,9 +267,11 @@ create policy "Allow anonymous access to months in published calendars" ON publi
     using (
         exists (
             select 1
-            from public.calendars
-            where calendars.id = calendar_months.calendar_id
-            and calendars.state = 'published'
+            from public.calendars c
+            join public.worlds w on w.id = c.world_id
+            where c.id = calendar_months.calendar_id
+            and c.state = 'published'
+            and w.state = 'published'
         )
     );
 

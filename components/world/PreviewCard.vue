@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { PhFilePlus, PhPencil, PhPencilSimpleLine, PhTrash } from "@phosphor-icons/vue";
+import { PhArchive, PhFileDashed, PhFilePlus, PhPencil, PhPencilSimpleLine, PhTrash } from "@phosphor-icons/vue";
 import type { World } from "~/models/World";
 import { DateTime } from "luxon";
 
@@ -41,8 +41,18 @@ const updatedAt = computed<string>(() => props.world.updatedAt ? DateTime.fromIS
       ' hover:bg-slate-50 dark:hover:text-slate-900 dark:hover:bg-slate-300 dark:border-slate-500 dark:focus-within:outline-slate-100': world.color === 'white',
     }"
   >
-    <UiCardHeader>
-      <UiCardTitle>{{ world.name }}</UiCardTitle>
+    <UiCardHeader class="gap-4">
+      <UiCardTitle>
+        {{ world.name }}
+      </UiCardTitle>
+      <div v-if="world.state === 'draft'" class="flex items-center gap-1 text-sm">
+        <PhFileDashed size="20" weight="fill" />
+        <span>{{ $t('ui.contentState.draft') }}</span>
+      </div>
+      <div v-if="world.state === 'archived'" class="flex items-center gap-1 text-sm">
+        <PhArchive size="20" weight="fill" />
+        <span>{{ $t('ui.contentState.archived') }}</span>
+      </div>
     </UiCardHeader>
     <UiCardContent>
       <p class="italic">{{ world.description }}</p>
