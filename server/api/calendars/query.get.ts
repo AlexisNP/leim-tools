@@ -21,7 +21,12 @@ export default defineEventHandler(async (event) => {
     state,
     createdAt:created_at,
     updatedAt:updated_at,
-    eventNb:calendar_events(count)
+    eventNb:calendar_events(count),
+    world:worlds (
+      id,
+      name,
+      gmId:gm_id
+    )
   `
 
   const fullFields = `
@@ -48,6 +53,7 @@ export default defineEventHandler(async (event) => {
     eventNb:calendar_events(count),
     world:worlds (
       id,
+      name,
       gmId:gm_id
     )
   `

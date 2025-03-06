@@ -2,24 +2,18 @@
 import type { Calendar } from "~/models/CalendarConfig";
 import { PhAlarm, PhCalendarDots, PhCircleNotch, PhWrench } from "@phosphor-icons/vue";
 
-const defaultSkeleton: Calendar = { name: "", today: { day: 1, month: 0, year: 0 }, months: [], events: [], state: "draft", color: "white" }
-const calendarSkeleton = ref<Calendar>({ ...defaultSkeleton })
+const props = defineProps<{
+  calendar: Calendar | null,
+}>()
+
+const calendarSkeleton = ref<Calendar>({ ...props.calendar } as Calendar)
 
 onMounted(() => {
-  calendarSkeleton.value = { ...defaultSkeleton }
+  calendarSkeleton.value = { ...props.calendar } as Calendar
 })
 
 type FormTabs = "global" | "months" | "today"
 const activeTab = ref<FormTabs>("global")
-
-/**
- * === Current date ===
- */
-// If the months data change, just reset today's month
-// This is a failsafe mainly because of 1) month positions and 2) month names
-watch(calendarSkeleton.value.months, () => {
-  calendarSkeleton.value.today.month = 0
-}, { deep: true })
 
 /**
  * === Form Validation ===
@@ -35,18 +29,18 @@ const validSkeletonGeneral = computed(() => calendarSkeleton.value.name)
 const validSkeleton = computed(() => validSkeletonGeneral.value && validSkeletonMonths.value)
 
 /** Send the data to the store for validation */
-const isCreatingCalendar = ref<boolean>(false)
+const isUpdatingCalendar = ref<boolean>(false)
 
 async function handleSubmit() {
   try {
-    isCreatingCalendar.value = true
-    await $fetch("/api/calendars/create", { method: "POST", body: { ...calendarSkeleton.value, worldId: 1 } })
+    isUpdatingCalendar.value = true
+    await $fetch(`/api/calendars/${calendarSkeleton.value.id}`, { method: "PATCH", body: { ...calendarSkeleton.value, worldId: props.calendar?.world?.id } })
 
     emit("on-close")
   } catch (err) {
     console.log(err)
   } finally {
-    isCreatingCalendar.value = false
+    isUpdatingCalendar.value = false
   }
 }
 
@@ -138,9 +132,9 @@ function handleFormCancel() {
           {{ $t('ui.action.cancel') }}
         </UiButton>
 
-        <UiButton type="submit" :disabled="!validSkeleton || isCreatingCalendar">
+        <UiButton type="submit" :disabled="!validSkeleton || isUpdatingCalendar">
           <Transition name="fade">
-            <PhCircleNotch v-if="isCreatingCalendar" size="20" class="opacity-50 animate-spin"/>
+            <PhCircleNotch v-if="isUpdatingCalendar" size="20" class="opacity-50 animate-spin"/>
           </Transition>
 
           {{ $t('ui.action.save') }}

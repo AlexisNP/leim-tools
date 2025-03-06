@@ -242,22 +242,25 @@ create policy "Allow GMs to see their calendars" on public.calendars for select 
         and worlds.gm_id = auth.uid()
     )
 );
-create policy "Allow GMs to add calendars to their worldd" on public.calendars for insert with check (
+create policy "Allow GMs to add calendars to their world" on public.calendars for insert with check (
     exists (
         select 1 from worlds
         where worlds.id = calendars.world_id
+        and worlds.gm_id = auth.uid()
     )
 );
 create policy "Allow GMs to edit their calendars" on public.calendars for update with check (
     exists (
         select 1 from worlds
         where worlds.id = calendars.world_id
+        and worlds.gm_id = auth.uid()
     )
 );
 create policy "Allow GMs to delete their calendars" on public.calendars for delete using (
     exists (
         select 1 from worlds
         where worlds.id = calendars.world_id
+        and worlds.gm_id = auth.uid()
     )
 );
 

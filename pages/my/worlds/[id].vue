@@ -24,12 +24,6 @@ watch(user, (n) => {
   }
 })
 
-const isCreateCalendarModalOpen = ref<boolean>(false)
-
-function hideCreateDialog() {
-  isCreateCalendarModalOpen.value = false
-}
-
 /**
  * === Subscriptions ===
  */
@@ -120,14 +114,28 @@ onUnmounted(() => {
 })
 
 const markedCalendar = ref<Calendar | null>(null)
-const isDeleteCalendarModalOpen = ref<boolean>(false)
 const isEditWorldModalOpen = ref<boolean>(false)
+
+const isCreateCalendarModalOpen = ref<boolean>(false)
+const isUpdateCalendarModalOpen = ref<boolean>(false)
+const isDeleteCalendarModalOpen = ref<boolean>(false)
+
+function hideCreateDialog() {
+  isCreateCalendarModalOpen.value = false
+}
+
+function deployUpdateDialog(calendar: Calendar) {
+  markedCalendar.value = calendar
+  isUpdateCalendarModalOpen.value = true
+}
+function hideUpdateDialog() {
+  isUpdateCalendarModalOpen.value = false
+}
 
 function deployDeleteCalendarModal(calendar: Calendar) {
   isDeleteCalendarModalOpen.value = true
   markedCalendar.value = calendar
 }
-
 function hideDeleteCalendarModal() {
   isDeleteCalendarModalOpen.value = false
   markedCalendar.value = null
@@ -136,7 +144,6 @@ function hideDeleteCalendarModal() {
 function deployEditModal() {
   isEditWorldModalOpen.value = true
 }
-
 function hideEditModal() {
   isEditWorldModalOpen.value = false
 }
@@ -193,7 +200,12 @@ function hideEditModal() {
 
           <ul class="grid md:grid-cols-3 gap-2">
             <li v-for="calendar in sortedCalendars" :key="calendar.id">
-              <CalendarPreviewCard :calendar="calendar" :gm-id="world.data.gmId" show-actions @on-delete="() => deployDeleteCalendarModal(calendar)" />
+              <CalendarPreviewCard
+                :calendar="calendar"
+                :gm-id="world.data.gmId"
+                show-actions
+                @on-edit="() => deployUpdateDialog(calendar)"
+                @on-delete="() => deployDeleteCalendarModal(calendar)" />
             </li>
 
             <li class="md:w-fit">
@@ -212,6 +224,7 @@ function hideEditModal() {
 
       <WorldDialogEdit :world="world.data" :modal-state="isEditWorldModalOpen" @on-close="hideEditModal" />
       <CalendarDialogCreate :world="world.data" :modal-state="isCreateCalendarModalOpen" @on-close="hideCreateDialog" />
+      <CalendarDialogUpdate v-if="markedCalendar?.id" :calendar-id="markedCalendar.id" :modal-state="isUpdateCalendarModalOpen" @on-close="hideUpdateDialog" />
       <CalendarDialogDelete :calendar="markedCalendar" :modal-state="isDeleteCalendarModalOpen" @on-close="hideDeleteCalendarModal"/>
     </template>
     <template v-else>

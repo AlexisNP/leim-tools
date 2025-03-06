@@ -34,4 +34,5 @@ export const postCalendarSchema = z.object({
   color: z.string().optional().nullable(),
   months: z.array(calendarMonthSchema).min(1),
   worldId: z.number().int(),
+  state: z.string().optional().nullable().default("draft"),
 })

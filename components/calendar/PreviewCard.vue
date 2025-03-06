@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { PhCalendarDots, PhFilePlus, PhPencilSimpleLine, PhTrash } from "@phosphor-icons/vue";
+import { PhCalendarDots, PhFilePlus, PhPencil, PhPencilSimpleLine, PhTrash } from "@phosphor-icons/vue";
 import { DateTime } from "luxon";
 import type { Calendar } from "~/models/CalendarConfig";
 
@@ -9,7 +9,7 @@ const props = defineProps<{
   showActions?: boolean,
 }>()
 
-const emit = defineEmits(["on-delete"])
+const emit = defineEmits(["on-edit", "on-delete"])
 
 const { locale } = useI18n();
 
@@ -36,15 +36,18 @@ const calendarLink = computed(() => isOwner.value ? `/my/calendars/${props.calen
         <span>{{ $t("entity.calendar.hasXEvents", { count: calendar.eventNb?.[0].count }) }}</span>
       </p>
 
-      <UiButton
+      <div
         v-if="isOwner && showActions"
-        size="icon"
-        variant="ghost"
-        class="absolute top-2 right-2 z-20 hover:text-white hover:bg-rose-400 dark:hover:bg-rose-700"
-        @click="emit('on-delete')"
+        class="flex gap-1 absolute top-4 right-4 z-20"
       >
-        <PhTrash size="16" />
-      </UiButton>
+        <UiButton size="icon" variant="ghost" class=" hover:text-white hover:bg-indigo-400 dark:hover:bg-indigo-700" @click="emit('on-edit')">
+          <PhPencil size="16" />
+        </UiButton>
+
+        <UiButton size="icon" variant="ghost" class=" hover:text-white hover:bg-rose-400 dark:hover:bg-rose-700" @click="emit('on-delete')">
+          <PhTrash size="16" />
+        </UiButton>
+      </div>
     </UiCardContent>
 
     <UiCardFooter>

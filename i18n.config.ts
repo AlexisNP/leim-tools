@@ -197,8 +197,7 @@ export default defineI18nConfig(() => ({
               title: "The event \"{event}\" has been successfuly deleted.",
             },
           },
-          createDialog: {
-            title: "Create a calendar",
+          actionDialog: {
             tabs: {
               general: {
                 title: "General",
@@ -210,6 +209,9 @@ export default defineI18nConfig(() => ({
                 title: "Today",
               },
             }
+          },
+          createDialog: {
+            title: "Create a calendar",
           },
           deleteDialog: {
             title: "Are you sure you want to delete this calendar ?",
@@ -460,8 +462,7 @@ export default defineI18nConfig(() => ({
               title: "L'évènement \"{event}\" a été supprimé avec succès.",
             },
           },
-          createDialog: {
-            title: "Créer un calendrier",
+          actionDialog: {
             tabs: {
               general: {
                 title: "Général",
@@ -473,6 +474,12 @@ export default defineI18nConfig(() => ({
                 title: "Aujourd'hui",
               },
             }
+          },
+          createDialog: {
+            title: "Créer un calendrier",
+          },
+          updateDialog: {
+            title: "Modifier le calendrier",
           },
           deleteDialog: {
             title: "Êtes-vous sûr de supprimer ce calendrier ?",
