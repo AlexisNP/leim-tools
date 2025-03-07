@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { Calendar } from "~/models/CalendarConfig";
-import { PhAlarm, PhCalendarDots, PhCircleNotch, PhWrench } from "@phosphor-icons/vue";
+import { PhCircleNotch, PhWrench } from "@phosphor-icons/vue";
 
 const props = defineProps<{
   calendar: Calendar | null,
@@ -68,7 +68,7 @@ function handleFormCancel() {
   <template v-if="calendarSkeleton">
     <form class="h-full grid grid-rows-[1fr_auto]" @submit.prevent="handleSubmit">
       <UiTabs v-model:model-value="activeTab">
-        <UiTabsList class="grid w-full grid-cols-3 mb-4">
+        <UiTabsList class="grid w-full grid-cols-1 mb-4">
           <UiTabsTrigger value="global" class="font-bold">
             <div class="flex items-center gap-1">
               <PhWrench size="18" weight="fill" />
@@ -76,7 +76,7 @@ function handleFormCancel() {
               {{ $t('entity.calendar.actionDialog.tabs.general.title') }}
             </div>
           </UiTabsTrigger>
-          <UiTabsTrigger value="months" class="font-bold">
+          <!-- <UiTabsTrigger value="months" class="font-bold">
             <div class="flex items-center gap-1">
               <PhCalendarDots size="18" weight="fill" />
 
@@ -89,7 +89,7 @@ function handleFormCancel() {
 
               {{ $t('entity.calendar.actionDialog.tabs.today.title') }}
             </div>
-          </UiTabsTrigger>
+          </UiTabsTrigger> -->
         </UiTabsList>
         <UiTabsContent value="global" class="grid gap-4">
           <input
@@ -119,12 +119,12 @@ function handleFormCancel() {
             <InputColor id="new-calendar-color" v-model="calendarSkeleton.color" />
           </div>
         </UiTabsContent>
-        <UiTabsContent value="months">
+        <!-- <UiTabsContent value="months">
           <CalendarInputMonthList v-model:model-value="calendarSkeleton.months" />
         </UiTabsContent>
         <UiTabsContent value="today">
           <CalendarInputTodaySelect v-model:model-value="calendarSkeleton.today" :available-months="calendarSkeleton.months"/>
-        </UiTabsContent>
+        </UiTabsContent> -->
       </UiTabs>
 
       <footer class="flex justify-end gap-2 mt-6">

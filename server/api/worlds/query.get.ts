@@ -26,6 +26,7 @@ export default defineEventHandler(async (event) => {
       name,
       color,
       today,
+      state,
       createdAt:created_at,
       updatedAt:updated_at,
       eventNb:calendar_events(count)
