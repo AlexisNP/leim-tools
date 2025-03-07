@@ -75,7 +75,7 @@ onMounted(() => {
           case "UPDATE":
             if (!worlds.value?.data) return
 
-            worlds.value.data = (await $fetch("/api/worlds/query", { query: { gmId:  user?.value!.id } })).data as World[]
+            worlds.value.data = (await $fetch("/api/worlds/query", { query: { gmId: user?.value!.id } })).data as World[]
             break
 
           default:

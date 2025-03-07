@@ -47,6 +47,27 @@ function handleInsertedCalendar(newCalendar: CalendarChannelPayload) {
   }
 }
 
+/** Handles calendar insertion realtime events */
+function handleUpdatedCalendar(newCalendar: CalendarChannelPayload) {
+  if (!world.value) return
+
+  try {
+    world.value.data.calendars = world.value.data.calendars?.map(c => {
+      if (c.id === newCalendar.id) {
+        const eventNb = c.eventNb
+        c = newCalendar
+        c.createdAt = newCalendar.created_at
+        c.updatedAt = newCalendar.updated_at
+        c.eventNb = eventNb
+      }
+
+      return c
+    })
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 /** Handles calendar deletion realtime events */
 function handleDeletedCalendar(id: number) {
   if (!world.value) return
@@ -71,6 +92,10 @@ onMounted(() => {
 
           case "DELETE":
             handleDeletedCalendar(payload.old.id)
+            break
+
+          case "UPDATE":
+            handleUpdatedCalendar(payload.new as Calendar)
             break
 
           default:
