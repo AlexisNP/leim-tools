@@ -214,8 +214,9 @@ create policy "Allow individual update access" on public.users for update using 
 create policy "Allow individual read access" on public.user_roles for select using ( auth.uid() = user_id );
 
 -- World policies
-create policy "Allow anonymous access to published worlds" on public.worlds
+create policy "Allow public access to published worlds" on public.worlds
     for select
+    to authenticated, anon
     using (state = 'published');
 create policy "Allow GMs to see their worlds" on public.worlds for select using ( ( auth.uid() = gm_id ) );
 create policy "Allow GMs to create worlds" on public.worlds for insert with check ( auth.uid() = gm_id );
@@ -223,8 +224,9 @@ create policy "Allow GMs to edit their worlds" on public.worlds for update using
 create policy "Allow GMs to delete their worlds" on public.worlds for delete using ( auth.uid() = gm_id );
 
 -- Calendar policies
-create policy "Allow anonymous access to published calendars" on public.calendars
+create policy "Allow public access to published calendars" on public.calendars
     for select
+    to authenticated, anon
     using (
         exists (
             select 1
@@ -249,7 +251,7 @@ create policy "Allow GMs to add calendars to their world" on public.calendars fo
         and worlds.gm_id = auth.uid()
     )
 );
-create policy "Allow GMs to edit their calendars" on public.calendars for update with check (
+create policy "Allow GMs to edit their calendars" on public.calendars for update using (
     exists (
         select 1 from worlds
         where worlds.id = calendars.world_id
@@ -265,8 +267,9 @@ create policy "Allow GMs to delete their calendars" on public.calendars for dele
 );
 
 -- Month policies
-create policy "Allow anonymous access to months in published calendars" ON public.calendar_months
+create policy "Allow anonymous access to months in published calendars" on public.calendar_months
     for select
+    to authenticated, anon
     using (
         exists (
             select 1
@@ -332,8 +335,9 @@ create policy "Allow GMs to delete their calendar's months"
 );
 
 -- Event policies
-create policy "Allow anonymous access to non-hidden events in published calendars" ON public.calendar_events
+create policy "Allow anonymous access to non-hidden events in published calendars" on public.calendar_events
     for select
+    to authenticated, anon
     using (
         not hidden and exists (
             select 1
