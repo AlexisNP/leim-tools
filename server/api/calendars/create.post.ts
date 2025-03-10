@@ -29,6 +29,7 @@ export default defineEventHandler(async (event) => {
           name: bodyData.name,
           today: bodyData.today,
           color: bodyData.color,
+          state: bodyData.state,
           world_id: bodyData.worldId
         } as never
       )

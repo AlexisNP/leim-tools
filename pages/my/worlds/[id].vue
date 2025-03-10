@@ -47,27 +47,6 @@ function handleInsertedCalendar(newCalendar: CalendarChannelPayload) {
   }
 }
 
-/** Handles calendar insertion realtime events */
-function handleUpdatedCalendar(newCalendar: CalendarChannelPayload) {
-  if (!world.value) return
-
-  try {
-    world.value.data.calendars = world.value.data.calendars?.map(c => {
-      if (c.id === newCalendar.id) {
-        const eventNb = c.eventNb
-        c = newCalendar
-        c.createdAt = newCalendar.created_at
-        c.updatedAt = newCalendar.updated_at
-        c.eventNb = eventNb
-      }
-
-      return c
-    })
-  } catch (err) {
-    console.log(err)
-  }
-}
-
 /** Handles calendar deletion realtime events */
 function handleDeletedCalendar(id: number) {
   if (!world.value) return
@@ -84,7 +63,7 @@ onMounted(() => {
     .on(
       "postgres_changes",
       { event: "*", schema: "public", table: "calendars" },
-      (payload) => {
+      async (payload) => {
         switch (payload.eventType) {
           case "INSERT":
             handleInsertedCalendar(payload.new as Calendar)
@@ -94,8 +73,11 @@ onMounted(() => {
             handleDeletedCalendar(payload.old.id)
             break
 
+          // Maybe this case could be handled better than doing a separate API call
           case "UPDATE":
-            handleUpdatedCalendar(payload.new as Calendar)
+            if (!world.value?.data) return
+
+            world.value.data = (await $fetch<{ data: World }>("/api/worlds/query", { query: { id, full: true } })).data
             break
 
           default:
@@ -249,7 +231,7 @@ function hideEditModal() {
 
       <WorldDialogEdit :world="world.data" :modal-state="isEditWorldModalOpen" @on-close="hideEditModal" />
       <CalendarDialogCreate :world="world.data" :modal-state="isCreateCalendarModalOpen" @on-close="hideCreateDialog" />
-      <CalendarDialogUpdate v-if="markedCalendar?.id" :calendar-id="markedCalendar.id" :modal-state="isUpdateCalendarModalOpen" @on-close="hideUpdateDialog" />
+      <CalendarDialogUpdate v-if="markedCalendar?.id" :world="world.data" :calendar="markedCalendar" :modal-state="isUpdateCalendarModalOpen" @on-close="hideUpdateDialog" />
       <CalendarDialogDelete :calendar="markedCalendar" :modal-state="isDeleteCalendarModalOpen" @on-close="hideDeleteCalendarModal"/>
     </template>
     <template v-else>

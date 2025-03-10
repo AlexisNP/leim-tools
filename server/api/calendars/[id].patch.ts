@@ -23,6 +23,8 @@ export default defineEventHandler(async (event) => {
   }
 
   if (bodyError) {
+    console.log(bodyData)
+    console.log(bodyError)
     const error = createError({
       cause: "Utilisateur",
       fatal: false,

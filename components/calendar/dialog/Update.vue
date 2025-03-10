@@ -1,15 +1,15 @@
 <script lang="ts" setup>
 import { PhX } from "@phosphor-icons/vue";
 import type { Calendar } from "~/models/CalendarConfig";
+import type { World } from "~/models/World";
 
 const props = defineProps<{
-  calendarId: number,
+  calendar: Calendar | null,
+  world: World | null,
   modalState?: boolean
 }>()
 
-const { data: calendar } = await useFetch<{ data: Calendar }>("/api/calendars/query", { query: { id: props.calendarId } })
-
-const calendarSkeletonName = ref<string>("")
+const calendarSkeletonName = ref<string>(props.calendar?.name ?? "")
 
 function onChangedName(newName: string) {
   calendarSkeletonName.value = newName
@@ -28,7 +28,7 @@ function handleClose() {
     <UiAlertDialogContent class="grid grid-rows-[auto_1fr_auto] items-start min-h-[66vh] max-w-4xl gap-6" @close-auto-focus="(e) => e.preventDefault()">
       <UiAlertDialogTitle>
         <span class="text-2xl">
-          <strong class="font-bold">{{ calendar?.data.world?.name }}</strong>
+          <strong class="font-bold">{{ world?.name }}</strong>
           <span class="opacity-30"> — </span>
           <span v-if="calendarSkeletonName">
             {{ calendarSkeletonName }}
@@ -43,7 +43,7 @@ function handleClose() {
         <PhX size="20" />
       </UiButton>
 
-      <CalendarFormUpdate v-if="calendar?.data" :calendar="calendar.data" @on-changed-name="onChangedName" @on-close="handleClose" />
+      <CalendarFormUpdate v-if="calendar" :world="world" :calendar="calendar" @on-changed-name="onChangedName" @on-close="handleClose" />
     </UiAlertDialogContent>
   </UiAlertDialog>
 </template>

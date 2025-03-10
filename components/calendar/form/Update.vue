@@ -1,9 +1,11 @@
 <script lang="ts" setup>
 import type { Calendar } from "~/models/CalendarConfig";
 import { PhCircleNotch, PhWrench } from "@phosphor-icons/vue";
+import type { World } from "~/models/World";
 
 const props = defineProps<{
   calendar: Calendar | null,
+  world: World | null,
 }>()
 
 const calendarSkeleton = ref<Calendar>({ ...props.calendar } as Calendar)
@@ -34,7 +36,7 @@ const isUpdatingCalendar = ref<boolean>(false)
 async function handleSubmit() {
   try {
     isUpdatingCalendar.value = true
-    await $fetch(`/api/calendars/${calendarSkeleton.value.id}`, { method: "PATCH", body: { ...calendarSkeleton.value, worldId: props.calendar?.world?.id } })
+    await $fetch(`/api/calendars/${calendarSkeleton.value.id}`, { method: "PATCH", body: { ...calendarSkeleton.value, worldId: props.world?.id } })
 
     emit("on-close")
   } catch (err) {

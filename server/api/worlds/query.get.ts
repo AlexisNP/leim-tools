@@ -27,6 +27,7 @@ export default defineEventHandler(async (event) => {
       color,
       today,
       state,
+      months:calendar_months(*),
       createdAt:created_at,
       updatedAt:updated_at,
       eventNb:calendar_events(count)
@@ -43,6 +44,7 @@ export default defineEventHandler(async (event) => {
     calendars (
       createdAt:created_at,
       updatedAt:updated_at,
+      months:calendar_months(*),
       eventNb:calendar_events(count)
     )
   `
