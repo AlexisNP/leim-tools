@@ -48,7 +48,7 @@ function handleClose() {
         <PhX size="20" />
       </UiButton>
 
-      <WorldFormEdit :world @on-changed-name="onChangedName" @on-close="handleClose" />
+      <WorldFormUpdate :world @on-changed-name="onChangedName" @on-close="handleClose" />
     </UiAlertDialogContent>
   </UiAlertDialog>
 </template>

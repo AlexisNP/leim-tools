@@ -17,6 +17,7 @@ export default defineEventHandler(async (event) => {
     name,
     description,
     color,
+    state,
     createdAt:created_at,
     updatedAt:updated_at,
     gmId:gm_id,
@@ -25,6 +26,8 @@ export default defineEventHandler(async (event) => {
       name,
       color,
       today,
+      state,
+      months:calendar_months(*),
       createdAt:created_at,
       updatedAt:updated_at,
       eventNb:calendar_events(count)
@@ -35,11 +38,13 @@ export default defineEventHandler(async (event) => {
     name,
     description,
     color,
+    state,
     createdAt:created_at,
     updatedAt:updated_at,
     calendars (
       createdAt:created_at,
       updatedAt:updated_at,
+      months:calendar_months(*),
       eventNb:calendar_events(count)
     )
   `

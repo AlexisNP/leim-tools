@@ -17,6 +17,7 @@ export default defineI18nConfig(() => ({
           edit: "Edit",
         },
         colors: {
+          label: "Color",
           selectOne: "Select a color",
           red: "Red",
           orange: "Orange",
@@ -37,6 +38,13 @@ export default defineI18nConfig(() => ({
           rose: "Rose",
           black: "Black",
           white: "White",
+        },
+        contentState: {
+          label: "Status",
+          selectOne: "Select a publication state",
+          published: "Published",
+          draft: "Draft",
+          archived: "Archived",
         },
         greeting: "Connected as {user}",
         anonymousGreeting: "Preferences",
@@ -189,8 +197,7 @@ export default defineI18nConfig(() => ({
               title: "The event \"{event}\" has been successfuly deleted.",
             },
           },
-          createDialog: {
-            title: "Create a calendar",
+          actionDialog: {
             tabs: {
               general: {
                 title: "General",
@@ -202,6 +209,9 @@ export default defineI18nConfig(() => ({
                 title: "Today",
               },
             }
+          },
+          createDialog: {
+            title: "Create a calendar",
           },
           deleteDialog: {
             title: "Are you sure you want to delete this calendar ?",
@@ -272,6 +282,7 @@ export default defineI18nConfig(() => ({
           edit: "Modifier",
         },
         colors: {
+          label: "Couleur",
           selectOne: "Sélectionner une couleur",
           red: "Rouge",
           orange: "Orange",
@@ -292,6 +303,13 @@ export default defineI18nConfig(() => ({
           rose: "Magenta",
           black: "Noir",
           white: "Blanc",
+        },
+        contentState: {
+          label: "État de publication",
+          selectOne: "Modifier l'état de publication",
+          published: "Publié",
+          draft: "Brouillon",
+          archived: "Archivé",
         },
         greeting: "Connecté en tant que {user}",
         anonymousGreeting: "Préférences",
@@ -444,8 +462,7 @@ export default defineI18nConfig(() => ({
               title: "L'évènement \"{event}\" a été supprimé avec succès.",
             },
           },
-          createDialog: {
-            title: "Créer un calendrier",
+          actionDialog: {
             tabs: {
               general: {
                 title: "Général",
@@ -457,6 +474,12 @@ export default defineI18nConfig(() => ({
                 title: "Aujourd'hui",
               },
             }
+          },
+          createDialog: {
+            title: "Créer un calendrier",
+          },
+          updateDialog: {
+            title: "Modifier le calendrier",
           },
           deleteDialog: {
             title: "Êtes-vous sûr de supprimer ce calendrier ?",

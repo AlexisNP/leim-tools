@@ -1,6 +1,7 @@
 import { z } from "zod"
 import { serverSupabaseClient } from "#supabase/server"
-import { postWorldSchema, type World } from "~/models/World"
+import type { Calendar} from "~/models/CalendarConfig";
+import { postCalendarSchema } from "~/models/CalendarConfig"
 
 const paramsSchema = z.object({
   id: z.number({ coerce: true }).positive().int()
@@ -10,18 +11,20 @@ export default defineEventHandler(async (event) => {
   const client = await serverSupabaseClient(event)
 
   const { data: params, error: paramsError} = await getValidatedRouterParams(event, paramsSchema.safeParse)
-  const { data: bodyData, error: bodyError } = await readValidatedBody(event, body => postWorldSchema.safeParse(body))
+  const { data: bodyData, error: bodyError } = await readValidatedBody(event, body => postCalendarSchema.safeParse(body))
 
   if (paramsError) {
     throw createError({
       cause: "Utilisateur",
       fatal: false,
-      message: "L'identifiant du monde est manquant ou mal renseigné.",
+      message: "L'identifiant du calendrier est manquant ou mal renseigné.",
       status: 401,
     })
   }
 
   if (bodyError) {
+    console.log(bodyData)
+    console.log(bodyError)
     const error = createError({
       cause: "Utilisateur",
       fatal: false,
@@ -42,33 +45,32 @@ export default defineEventHandler(async (event) => {
 
   try {
     const { data, error } = await client
-      .from("worlds")
+      .from("calendars")
       .update(
         {
           name: bodyData.name,
-          description: bodyData.description,
+          world_id: bodyData.worldId,
+          today: bodyData.today,
           state: bodyData.state,
-          gm_id: bodyData.gmId,
-          color: bodyData.color
+          color: bodyData.color,
         } as never
       )
       .eq("id", params.id)
       .select(`
         id,
         name,
-        description,
         color,
+        state,
         createdAt:created_at,
-        updatedAt:updated_at,
-        gmId:gm_id,
-        state
+        updatedAt:updated_at
       `)
-      .single<World>()
+      .single<Calendar>()
 
     if (error) throw error
 
     return data
   } catch (err) {
+    console.log(err)
     throw createError({
       cause: "Serveur",
       status: 500,

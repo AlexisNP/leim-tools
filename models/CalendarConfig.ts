@@ -3,8 +3,9 @@ import type { CalendarEvent } from "./CalendarEvent"
 import { calendarMonthSchema, type CalendarMonth } from "./CalendarMonth"
 import { dateSchema, type RPGDate } from "./Date"
 import type { World } from "./World"
+import type { ContentState } from "./Entity"
+import type { RPGColor } from "./Color"
 
-export type CalendarState = "published" | "draft" | "archived"
 
 export interface CalendarConfig {
   months: CalendarMonth[]
@@ -17,12 +18,15 @@ export interface Calendar extends CalendarConfig {
   name: string
   events: CalendarEvent[]
   eventNb?: Array<{ count: number }>
-  state: CalendarState
-  color?: string
+  state: ContentState
+  color?: RPGColor
   world?: World
   createdAt?: string
   updatedAt?: string
 }
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type CalendarChannelPayload = Calendar & Record<string, any>
 
 export const postCalendarSchema = z.object({
   name: z.string(),
@@ -30,4 +34,5 @@ export const postCalendarSchema = z.object({
   color: z.string().optional().nullable(),
   months: z.array(calendarMonthSchema).min(1),
   worldId: z.number().int(),
+  state: z.string().optional().nullable().default("draft"),
 })

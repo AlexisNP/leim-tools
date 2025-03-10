@@ -2,12 +2,16 @@
 import { cn } from "@/lib/utils";
 import { type RPGColor, rpgColors } from "~/models/Color";
 
+defineProps<{
+  id: string
+}>();
+
 const model = defineModel<RPGColor>({ default: "white" });
 </script>
 
 <template>
   <UiSelect v-model="model">
-    <UiSelectTrigger>
+    <UiSelectTrigger :id>
       <UiSelectValue
         :placeholder="$t('ui.colors.selectOne')"
         class="input-color"

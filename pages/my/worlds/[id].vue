@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { RealtimeChannel } from "@supabase/supabase-js"
 import type { World } from "~/models/World";
-import type { Calendar } from "~/models/CalendarConfig";
+import type { Calendar, CalendarChannelPayload } from "~/models/CalendarConfig";
 import { PhArrowBendDoubleUpLeft, PhGlobeHemisphereWest, PhPencil } from "@phosphor-icons/vue";
 
 const supabase = useSupabaseClient()
@@ -24,12 +24,6 @@ watch(user, (n) => {
   }
 })
 
-const isCreateCalendarModalOpen = ref<boolean>(false)
-
-function hideCreateDialog() {
-  isCreateCalendarModalOpen.value = false
-}
-
 /**
  * === Subscriptions ===
  */
@@ -40,8 +34,11 @@ let calendarChannel: RealtimeChannel
 let worldChannel: RealtimeChannel
 
 /** Handles calendar insertion realtime events */
-function handleInsertedCalendar(newCalendar: Calendar) {
+function handleInsertedCalendar(newCalendar: CalendarChannelPayload) {
   if (!world.value) return
+
+  newCalendar.createdAt = newCalendar.created_at;
+  newCalendar.eventNb = [{ count: 0 }];
 
   try {
     world.value.data.calendars?.push(newCalendar)
@@ -66,7 +63,7 @@ onMounted(() => {
     .on(
       "postgres_changes",
       { event: "*", schema: "public", table: "calendars" },
-      (payload) => {
+      async (payload) => {
         switch (payload.eventType) {
           case "INSERT":
             handleInsertedCalendar(payload.new as Calendar)
@@ -74,6 +71,13 @@ onMounted(() => {
 
           case "DELETE":
             handleDeletedCalendar(payload.old.id)
+            break
+
+          // Maybe this case could be handled better than doing a separate API call
+          case "UPDATE":
+            if (!world.value?.data) return
+
+            world.value.data = (await $fetch<{ data: World }>("/api/worlds/query", { query: { id, full: true } })).data
             break
 
           default:
@@ -117,14 +121,28 @@ onUnmounted(() => {
 })
 
 const markedCalendar = ref<Calendar | null>(null)
-const isDeleteCalendarModalOpen = ref<boolean>(false)
 const isEditWorldModalOpen = ref<boolean>(false)
+
+const isCreateCalendarModalOpen = ref<boolean>(false)
+const isUpdateCalendarModalOpen = ref<boolean>(false)
+const isDeleteCalendarModalOpen = ref<boolean>(false)
+
+function hideCreateDialog() {
+  isCreateCalendarModalOpen.value = false
+}
+
+function deployUpdateDialog(calendar: Calendar) {
+  markedCalendar.value = calendar
+  isUpdateCalendarModalOpen.value = true
+}
+function hideUpdateDialog() {
+  isUpdateCalendarModalOpen.value = false
+}
 
 function deployDeleteCalendarModal(calendar: Calendar) {
   isDeleteCalendarModalOpen.value = true
   markedCalendar.value = calendar
 }
-
 function hideDeleteCalendarModal() {
   isDeleteCalendarModalOpen.value = false
   markedCalendar.value = null
@@ -133,7 +151,6 @@ function hideDeleteCalendarModal() {
 function deployEditModal() {
   isEditWorldModalOpen.value = true
 }
-
 function hideEditModal() {
   isEditWorldModalOpen.value = false
 }
@@ -190,7 +207,12 @@ function hideEditModal() {
 
           <ul class="grid md:grid-cols-3 gap-2">
             <li v-for="calendar in sortedCalendars" :key="calendar.id">
-              <CalendarPreviewCard :calendar="calendar" :gm-id="world.data.gmId" show-actions @on-delete="() => deployDeleteCalendarModal(calendar)" />
+              <CalendarPreviewCard
+                :calendar="calendar"
+                :gm-id="world.data.gmId"
+                show-actions
+                @on-edit="() => deployUpdateDialog(calendar)"
+                @on-delete="() => deployDeleteCalendarModal(calendar)" />
             </li>
 
             <li class="md:w-fit">
@@ -209,6 +231,7 @@ function hideEditModal() {
 
       <WorldDialogEdit :world="world.data" :modal-state="isEditWorldModalOpen" @on-close="hideEditModal" />
       <CalendarDialogCreate :world="world.data" :modal-state="isCreateCalendarModalOpen" @on-close="hideCreateDialog" />
+      <CalendarDialogUpdate v-if="markedCalendar?.id" :world="world.data" :calendar="markedCalendar" :modal-state="isUpdateCalendarModalOpen" @on-close="hideUpdateDialog" />
       <CalendarDialogDelete :calendar="markedCalendar" :modal-state="isDeleteCalendarModalOpen" @on-close="hideDeleteCalendarModal"/>
     </template>
     <template v-else>
