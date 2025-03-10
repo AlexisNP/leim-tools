@@ -51,7 +51,8 @@ export default defineEventHandler(async (event) => {
           name: bodyData.name,
           world_id: bodyData.worldId,
           today: bodyData.today,
-          state: bodyData.state
+          state: bodyData.state,
+          color: bodyData.color,
         } as never
       )
       .eq("id", params.id)
