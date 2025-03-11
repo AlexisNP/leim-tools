@@ -5,7 +5,7 @@ const { resetSkeleton } = useCalendar();
 // Watch the popover state
 watch(isEditEventModalOpen, (hasOpened, _o) => {
   if (hasOpened && lastActiveEvent.value) {
-    eventSkeleton.value = { ...lastActiveEvent.value }
+    eventSkeleton.value = structuredClone(toRaw(lastActiveEvent.value))
   }
 })
 
