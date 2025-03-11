@@ -23,13 +23,13 @@ const isPopoverDetailsOpen = ref<boolean>(false)
 
 function handleDoubleClick() {
   isPopoverDetailsOpen.value = false
-  lastActiveEvent.value = { ...props.event }
+  lastActiveEvent.value = structuredClone(toRaw(props.event))
   revealEditEventModal()
 }
 
 function handleDelete() {
   isPopoverDetailsOpen.value = false
-  lastActiveEvent.value = { ...props.event }
+  lastActiveEvent.value = structuredClone(toRaw(props.event))
   revealDeleteEventModal()
 }
 

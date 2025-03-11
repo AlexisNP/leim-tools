@@ -43,7 +43,7 @@ function handleJumpToDate(date: RPGDate) {
 const commandMenuOpened = ref(false)
 
 function deployEditModal() {
-  lastActiveEvent.value = { ...props.event }
+  lastActiveEvent.value = structuredClone(toRaw(props.event))
   revealEditEventModal()
   commandMenuOpened.value = false
   emit("query:close-popover")
@@ -53,7 +53,7 @@ function deployEditModal() {
  * Confirm event deletion
  */
 function deployDeleteModal() {
-  lastActiveEvent.value = { ...props.event }
+  lastActiveEvent.value = structuredClone(toRaw(props.event))
   revealDeleteEventModal()
   commandMenuOpened.value = false
   emit("query:close-popover")
