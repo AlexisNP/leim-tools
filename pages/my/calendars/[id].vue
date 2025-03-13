@@ -45,19 +45,24 @@ const isLoading = computed(() => calendarStatus.value === "pending" || categorie
 const { t } = useI18n()
 const { setCurrentMenu } = useUiStore()
 
-setCurrentMenu([
-  {
-    tooltip: t("entity.world.backToMy"),
-    to: "/my",
-    phIcon: "universe",
-    phIconWeight: "regular"
-  },
-  {
-    tooltip: t("entity.world.backToSingle", { world: calendar.value?.data.world?.name }),
-    to: `/my/worlds/${calendar.value?.data.world?.id}`,
-    phIcon: "world"
-  },
-])
+// Set menu once we have the calendar data
+watch(calendar, (n) => {
+  if (n?.data) {
+    setCurrentMenu([
+      {
+        tooltip: t("entity.world.backToMy"),
+        to: "/my",
+        phIcon: "universe",
+        phIconWeight: "regular"
+      },
+      {
+        tooltip: t("entity.world.backToSingle", { world: calendar.value?.data.world?.name }),
+        to: `/my/worlds/${calendar.value?.data.world?.id}`,
+        phIcon: "world"
+      },
+    ])
+  }
+}, { immediate: true })
 </script>
 
 <template>
