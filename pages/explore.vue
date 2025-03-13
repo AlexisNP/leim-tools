@@ -1,6 +1,10 @@
 <script lang="ts" setup>
 import type { Calendar } from "~/models/CalendarConfig";
 
+definePageMeta({
+  middleware: ["reset-menu"]
+})
+
 const { data: availableCalendars } = await useLazyFetch<{ data: Calendar[] }>("/api/calendars/query", { key: "explore-calendars", query: { full: true } })
 </script>
 
