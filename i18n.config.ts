@@ -8,6 +8,23 @@ export default defineI18nConfig(() => ({
         title: "Fantasy calendars for TTRPGs",
         description: "Tools for players and game masters to help them visualize fantasy worlds better.",
       },
+      error: {
+        default: {
+          title: "An error occured",
+          description: "An error occured while loading the page.",
+          descriptionSub: "Please try again later or contact the administrator !"
+        },
+        notFound: {
+          title: "Page not found",
+          description: "The page you're looking for doesn't exist.",
+          descriptionSub: "Maybe it has been deleted or moved ?"
+        },
+        unknownServer: {
+          title: "Internal server error",
+          description: "An error occured while loading the page.",
+          descriptionSub: "Please try again later or contact the administrator !"
+        },
+      },
       ui: {
         action: {
           back: "Back",
@@ -49,6 +66,7 @@ export default defineI18nConfig(() => ({
         greeting: "Connected as {user}",
         anonymousGreeting: "Preferences",
         backToProfile: "Back to profile",
+        backToHome: "Back to home",
         sidebarMenu: {
           profile: "Profile",
           appearance: "Appearance",
@@ -273,6 +291,23 @@ export default defineI18nConfig(() => ({
         title: "Calendriers fantasies pour JDR",
         description: "Outils destinés aux joueurs et maîtres de jeux pour visualiser plus facilement leurs univers.",
       },
+      error: {
+        default: {
+          title: "Une erreur est survenue",
+          descriptionMain: "Une erreur est survenue lors du chargement de la page.",
+          descriptionSub: "Merci de rééssayer plus tard ou de contacter l'administrateur !"
+        },
+        notFound: {
+          title: "Page introuvable",
+          descriptionMain: "La page que vous cherchez n'existe pas.",
+          descriptionSub: "Peut-être a t-elle été supprimée ou déplacée ?"
+        },
+        unknownServer: {
+          title: "Une erreur du serveur est survenue",
+          descriptionMain: "Une erreur est survenue lors du chargement de la page.",
+          descriptionSub: "Merci de rééssayer plus tard ou de contacter l'administrateur !"
+        },
+      },
       ui: {
         action: {
           back: "Retour",
@@ -314,6 +349,7 @@ export default defineI18nConfig(() => ({
         greeting: "Connecté en tant que {user}",
         anonymousGreeting: "Préférences",
         backToProfile: "Retour au profil",
+        backToHome: "Retourner à l'accueil",
         sidebarMenu: {
           profile: "Profil",
           appearance: "Apparence",
