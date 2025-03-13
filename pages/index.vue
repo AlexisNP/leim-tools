@@ -2,6 +2,10 @@
 useHead({
   titleTemplate: null
 })
+
+definePageMeta({
+  middleware: ["reset-menu"]
+})
 </script>
 
 <template>

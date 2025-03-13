@@ -69,7 +69,7 @@ switch (statusCode) {
             <Title>{{ $t(titleKey) }}</Title>
           </Head>
 
-          <div class="grid justify-items-center opacity-80">
+          <div class="grid text-center justify-items-center opacity-80">
             <PhImageBroken v-if="statusCode === 404" size="100" class="opacity-60" />
             <PhLinkBreak v-else-if="statusCode === 500" size="100" class="opacity-60" />
             <PhBugBeetle v-else size="100" class="opacity-60" />
@@ -78,7 +78,7 @@ switch (statusCode) {
               {{ $t(titleKey) }}
             </Heading>
 
-            <div class="mt-6 md:text-lg text-center">
+            <div class="mt-6 md:text-lg">
               <p>{{ $t(descriptionKey) }}</p>
               <p>{{ $t(subDescriptionKey) }}</p>
             </div>

@@ -40,6 +40,24 @@ const {
 )
 
 const isLoading = computed(() => calendarStatus.value === "pending" || categoriesStatus.value === "pending")
+
+// Set custom menu
+const { t } = useI18n()
+const { setCurrentMenu } = useUiStore()
+
+setCurrentMenu([
+  {
+    tooltip: t("entity.world.backToMy"),
+    to: "/my",
+    phIcon: "universe",
+    phIconWeight: "regular"
+  },
+  {
+    tooltip: t("entity.world.backToSingle", { world: calendar.value?.data.world?.name }),
+    to: `/my/worlds/${calendar.value?.data.world?.id}`,
+    phIcon: "world"
+  },
+])
 </script>
 
 <template>

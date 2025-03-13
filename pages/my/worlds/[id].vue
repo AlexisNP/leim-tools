@@ -4,6 +4,8 @@ import type { World } from "~/models/World";
 import type { Calendar, CalendarChannelPayload } from "~/models/CalendarConfig";
 import { PhArrowBendDoubleUpLeft, PhGlobeHemisphereWest, PhPencil } from "@phosphor-icons/vue";
 
+const { t } = useI18n()
+
 const supabase = useSupabaseClient()
 const route = useRoute()
 const id = route.params.id
@@ -23,6 +25,18 @@ watch(user, (n) => {
     navigateTo("/")
   }
 })
+
+// Set custom menu
+const { setCurrentMenu } = useUiStore()
+
+setCurrentMenu([
+  {
+    tooltip: t("entity.world.backToMy"),
+    to: "/my",
+    phIcon: "universe",
+    highlight: true
+  },
+])
 
 /**
  * === Subscriptions ===

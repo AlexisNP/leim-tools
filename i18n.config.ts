@@ -108,6 +108,8 @@ export default defineI18nConfig(() => ({
         world: {
           nameSingular: "World",
           namePlural: "Worlds",
+          backToMy: "Back to my universe",
+          backToSingle: "Back to {world}",
           addSingle: "Add a world",
           addSingleFirst: "Add your first world !",
           editSingle: "Edit world",
@@ -283,6 +285,10 @@ export default defineI18nConfig(() => ({
         explore: {
           menuLabel: "Explore",
           title: "Explore worlds",
+        },
+        profile: {
+          title: "{user} — My universe",
+          metaTitle: "My universe",
         }
       }
     },
@@ -391,6 +397,8 @@ export default defineI18nConfig(() => ({
         world: {
           nameSingular: "Monde",
           namePlural: "Mondes",
+          backToMy: "Retourner à mon univers",
+          backToSingle: "Retourner sur {world}",
           addSingle: "Ajouter un monde",
           addSingleFirst: "Ajouter votre premier monde !",
           editSingle: "Modifier le monde",
@@ -570,6 +578,10 @@ export default defineI18nConfig(() => ({
         explore: {
           menuLabel: "Explorer",
           title: "Explorer les mondes",
+        },
+        profile: {
+          title: "{user} — Mon univers",
+          metaTitle: "Mon univers",
         }
       }
     }

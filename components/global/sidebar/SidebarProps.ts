@@ -1,9 +1,11 @@
-import type { ShallowRef } from "vue"
-
 export type SidebarMenuActionType = "event-search"
 
+export type SidebarMenuIcon = "universe" | "world"
+
 export interface SidebarMenuItem {
-  phIcon: ShallowRef // use shallowRef to build phIcon
+  phIcon: SidebarMenuIcon,
+  phIconWeight?: "regular" | "light" | "fill" | "duotone" | "bold" | "thin"
+  highlight?: boolean
   tooltip: string
   action?: SidebarMenuActionType
   to?: string
