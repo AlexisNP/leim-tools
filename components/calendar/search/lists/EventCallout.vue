@@ -21,7 +21,7 @@ const dateDuration = computed<string | null>(() => props.event.endDate ? getRela
 
 <template>
   <button
-    class="event relative block w-full text-left py-3 px-4 rounded-sm transition-colors"
+    class="event group relative block w-full text-left py-3 px-4 rounded-sm transition-colors"
     :class="cn(
       event.category ? `event-${event.category.color}` : '',
       {
@@ -30,7 +30,7 @@ const dateDuration = computed<string | null>(() => props.event.endDate ? getRela
     @click="$emit('query:date-jump', event.startDate)"
   >
     <div class="flex gap-2 items-center mb-1">
-      <h2 class="font-bold text-lg">
+      <h2 class="font-bold text-lg underline-offset-4 group-hover:underline">
         {{ event.title }}
       </h2>
       <div v-if="event.wiki">

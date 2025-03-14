@@ -2,23 +2,26 @@
 import type { RPGDate } from "~/models/Date";
 import { PhAlarm, PhCircleNotch, PhEye, PhEyeClosed, PhMapPinArea, PhTag } from "@phosphor-icons/vue"
 
+const { t } = useI18n()
+
 const emit = defineEmits(["event-created"])
+
+const props = defineProps<{
+  date?: RPGDate
+  btnClass?: string
+}>()
 
 const { eventSkeleton } = storeToRefs(useCalendar())
 const { submitSkeleton, cancelLatestRequest } = useCalendar()
 
-const { t } = useI18n()
+const newEventTitle = shallowRef<HTMLInputElement>()
+useFocus(newEventTitle, { initialValue: true })
 
 const isLoading = ref(false)
 
 const formErrors = reactive<{ message: string | null }>({
   message: null
 })
-
-const props = defineProps<{
-  date?: RPGDate
-  btnClass?: string
-}>()
 
 async function handleSubmit() {
   // Prevent form submission if already loading
@@ -56,6 +59,7 @@ function handleCancel() {
       <div class="col-span-2 pl-8">
         <input
           id="new-event-title"
+          ref="newEventTitle"
           v-model="eventSkeleton.title"
           type="text"
           name="new-event-title"

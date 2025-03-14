@@ -29,6 +29,9 @@ import type { Category } from "~/models/Category"
 const { isAdvancedSearchOpen, allEvents } = storeToRefs(useCalendar())
 const { characters } = storeToRefs(useCharacters())
 
+const searchInput = shallowRef<HTMLInputElement>()
+useFocus(searchInput, { initialValue: true })
+
 const searchQuery = ref<string>("")
 // const searchEnough = computed<boolean>(() => searchQuery.value.length >= 2)
 
@@ -281,6 +284,7 @@ function handleCategoryUnselect(e: Category) {
         <div class="relative w-full h-fit">
           <UiInput
             id="search"
+            ref="searchInput"
             v-model:model-value="searchQuery"
             type="text"
             :placeholder="$t('entity.advancedSearch.ctaPlaceholder')"
@@ -321,7 +325,7 @@ function handleCategoryUnselect(e: Category) {
               <ComboboxRoot
                 v-model="selectedCategories"
                 v-model:open="categoryFilterOpened"
-                v-model:searchTerm="searchCategory"
+                v-model:search-term="searchCategory"
                 class="grow flex items-center gap-y-1 pr-2"
               >
                 <ComboboxAnchor as-child>
