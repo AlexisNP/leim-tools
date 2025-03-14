@@ -1,57 +1,57 @@
 insert into public.role_permissions (role, permission) values ('sa', 'events.see.hidden');
 insert into public.role_permissions (role, permission) values ('sa', 'users.ban');
 
--- Event categories
-insert into public.calendar_event_categories (name, color) values ('Naissance', 'white');
-insert into public.calendar_event_categories (name, color) values ('Mort', 'black');
-insert into public.calendar_event_categories (name, color) values ('Catastrophe', 'orange');
-insert into public.calendar_event_categories (name, color) values ('Catastrophe naturelle', 'red');
-insert into public.calendar_event_categories (name, color) values ('Inauguration', 'green');
-insert into public.calendar_event_categories (name, color) values ('Religion', 'violet');
-insert into public.calendar_event_categories (name, color) values ('Invention', 'teal');
-insert into public.calendar_event_categories (name, color) values ('Science', 'indigo');
-insert into public.calendar_event_categories (name, color) values ('Bénédiction', 'white');
-insert into public.calendar_event_categories (name, color) values ('Joueurs', 'white');
-insert into public.calendar_event_categories (name, color) values ('Découverte', 'purple');
-insert into public.calendar_event_categories (name, color) values ('Exploration', 'lime');
-insert into public.calendar_event_categories (name, color) values ('Construction', 'blue');
-insert into public.calendar_event_categories (name, color) values ('Arcanologie', 'cyan');
-insert into public.calendar_event_categories (name, color) values ('Criminalité', 'rose');
-insert into public.calendar_event_categories (name, color) values ('Scandale', 'pink');
-insert into public.calendar_event_categories (name, color) values ('Commerce', 'amber');
-insert into public.calendar_event_categories (name, color) values ('Législation', 'blue');
-
--- Character categories
-insert into public.character_categories (name, color) values ('Joueur', 'white');
-insert into public.character_categories (name, color) values ('Comte', 'emerald');
-insert into public.character_categories (name, color) values ('Scientifique', 'indigo');
-insert into public.character_categories (name, color) values ('Mage', 'cyan');
-insert into public.character_categories (name, color) values ('Professeur', 'teal');
-insert into public.character_categories (name, color) values ('Criminel', 'rose');
-insert into public.character_categories (name, color) values ('Étincelle', 'lime');
-insert into public.character_categories (name, color) values ('Buse blanche', 'yellow');
-insert into public.character_categories (name, color) values ('Ecclésiastique', 'violet');
-insert into public.character_categories (name, color) values ('Militaire', 'orange');
-insert into public.character_categories (name, color) values ('Activiste', 'sky');
-insert into public.character_categories (name, color) values ('Commerçant', 'amber');
-
 -- Worlds
 insert into public.worlds (name, description, color, state) values ('Léïm', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aliquet congue aliquet. Curabitur eu iaculis diam. Nunc iaculis nibh orci, eu semper nunc congue congue. Praesent euismod tortor eget metus tristique lobortis vel in risus. In volutpat ligula orci, id pharetra lectus egestas at.', 'black', 'published');
+
+-- Character categories
+insert into public.character_categories (name, color, world_id) values ('Joueur', 'white', 1);
+insert into public.character_categories (name, color, world_id) values ('Comte', 'emerald', 1);
+insert into public.character_categories (name, color, world_id) values ('Scientifique', 'indigo', 1);
+insert into public.character_categories (name, color, world_id) values ('Mage', 'cyan', 1);
+insert into public.character_categories (name, color, world_id) values ('Professeur', 'teal', 1);
+insert into public.character_categories (name, color, world_id) values ('Criminel', 'rose', 1);
+insert into public.character_categories (name, color, world_id) values ('Étincelle', 'lime', 1);
+insert into public.character_categories (name, color, world_id) values ('Buse blanche', 'yellow', 1);
+insert into public.character_categories (name, color, world_id) values ('Ecclésiastique', 'violet', 1);
+insert into public.character_categories (name, color, world_id) values ('Militaire', 'orange', 1);
+insert into public.character_categories (name, color, world_id) values ('Activiste', 'sky', 1);
+insert into public.character_categories (name, color, world_id) values ('Commerçant', 'amber', 1);
 
 -- Worlds' calendars
 insert into public.calendars (world_id, name, today, state) values (1, 'Calendrier solaire', '{ "day": 23, "month": 8, "year": 3209 }', 'published');
 
 -- Calendar's months
-insert into public.calendar_months (calendar_id, name, days, position) values (1, 'Jalen', 32, 1);
-insert into public.calendar_months (calendar_id, name, days, position) values (1, 'Malsen', 32, 2);
-insert into public.calendar_months (calendar_id, name, days, position) values (1, 'Verlys', 32, 3);
-insert into public.calendar_months (calendar_id, name, days, position) values (1, 'Nalys', 32, 4);
-insert into public.calendar_months (calendar_id, name, days, position) values (1, 'Verdore', 32, 5);
-insert into public.calendar_months (calendar_id, name, days, position) values (1, 'Sidore', 32, 6);
-insert into public.calendar_months (calendar_id, name, days, position) values (1, 'Lyllion', 32, 7);
-insert into public.calendar_months (calendar_id, name, days, position) values (1, 'Rion', 32, 8);
-insert into public.calendar_months (calendar_id, name, days, position) values (1, 'Farene', 32, 9);
-insert into public.calendar_months (calendar_id, name, days, position) values (1, 'Dalvene', 32, 10);
+insert into public.calendar_months (name, days, position, calendar_id) values ('Jalen', 32, 1, 1);
+insert into public.calendar_months (name, days, position, calendar_id) values ('Malsen', 32, 2, 1);
+insert into public.calendar_months (name, days, position, calendar_id) values ('Verlys', 32, 3, 1);
+insert into public.calendar_months (name, days, position, calendar_id) values ('Nalys', 32, 4, 1);
+insert into public.calendar_months (name, days, position, calendar_id) values ('Verdore', 32, 5, 1);
+insert into public.calendar_months (name, days, position, calendar_id) values ('Sidore', 32, 6, 1);
+insert into public.calendar_months (name, days, position, calendar_id) values ('Lyllion', 32, 7, 1);
+insert into public.calendar_months (name, days, position, calendar_id) values ('Rion', 32, 8, 1);
+insert into public.calendar_months (name, days, position, calendar_id) values ('Farene', 32, 9, 1);
+insert into public.calendar_months (name, days, position, calendar_id) values ('Dalvene', 32, 10, 1);
+
+-- Event categories
+insert into public.calendar_event_categories (name, color, calendar_id) values ('Naissance', 'white', 1);
+insert into public.calendar_event_categories (name, color, calendar_id) values ('Mort', 'black', 1);
+insert into public.calendar_event_categories (name, color, calendar_id) values ('Catastrophe', 'orange', 1);
+insert into public.calendar_event_categories (name, color, calendar_id) values ('Catastrophe naturelle', 'red', 1);
+insert into public.calendar_event_categories (name, color, calendar_id) values ('Inauguration', 'green', 1);
+insert into public.calendar_event_categories (name, color, calendar_id) values ('Religion', 'violet', 1);
+insert into public.calendar_event_categories (name, color, calendar_id) values ('Invention', 'teal', 1);
+insert into public.calendar_event_categories (name, color, calendar_id) values ('Science', 'indigo', 1);
+insert into public.calendar_event_categories (name, color, calendar_id) values ('Bénédiction', 'white', 1);
+insert into public.calendar_event_categories (name, color, calendar_id) values ('Joueurs', 'white', 1);
+insert into public.calendar_event_categories (name, color, calendar_id) values ('Découverte', 'purple', 1);
+insert into public.calendar_event_categories (name, color, calendar_id) values ('Exploration', 'lime', 1);
+insert into public.calendar_event_categories (name, color, calendar_id) values ('Construction', 'blue', 1);
+insert into public.calendar_event_categories (name, color, calendar_id) values ('Magie', 'cyan', 1);
+insert into public.calendar_event_categories (name, color, calendar_id) values ('Criminalité', 'rose', 1);
+insert into public.calendar_event_categories (name, color, calendar_id) values ('Scandale', 'pink', 1);
+insert into public.calendar_event_categories (name, color, calendar_id) values ('Commerce', 'amber', 1);
+insert into public.calendar_event_categories (name, color, calendar_id) values ('Législation', 'blue', 1);
 
 -- Events
 insert into public.calendar_events (title, description, start_date, category, hidden, wiki, calendar_id) values (
@@ -203,7 +203,7 @@ insert into public.calendar_events (title, description, start_date, end_date, ca
   'Celui qu''on surnomme la Bête d''Ambrose arrive à Handany, où il purgera sa peine.',
   '{ "day": 14, "month": 7, "year": 3209 }',
   null,
-  18,
+  15,
   false,
   'https://alexcreates.fr/leim/index.php/Tivian_Rodhus',
   1
@@ -221,7 +221,7 @@ insert into public.calendar_events (title, description, location, start_date, en
   'Tourgrise',
   '{ "day": 4, "month": 8, "year": 3209 }',
   null,
-  18,
+  15,
   false,
   null,
   1
@@ -245,7 +245,7 @@ insert into public.calendar_events (title, description, location, start_date, en
   '{ "day": 28, "month": 7, "year": 3209 }',
   null,
   2,
-  true,
+  false,
   null,
   1
 );
@@ -256,7 +256,7 @@ insert into public.calendar_events (title, description, location, start_date, en
   '{ "day": 32, "month": 7, "year": 3209 }',
   null,
   2,
-  true,
+  false,
   null,
   1
 );
@@ -267,7 +267,7 @@ insert into public.calendar_events (title, description, location, start_date, en
   '{ "day": 10, "month": 8, "year": 3209 }',
   null,
   2,
-  true,
+  false,
   null,
   1
 );
@@ -278,7 +278,7 @@ insert into public.calendar_events (title, description, location, start_date, en
   '{ "day": 19, "month": 8, "year": 3209 }',
   null,
   2,
-  true,
+  false,
   null,
   1
 );
@@ -289,7 +289,7 @@ insert into public.calendar_events (title, description, location, start_date, en
   '{ "day": 22, "month": 8, "year": 3209 }',
   null,
   2,
-  true,
+  false,
   null,
   1
 );
