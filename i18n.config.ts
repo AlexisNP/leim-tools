@@ -290,6 +290,13 @@ export default defineI18nConfig(() => ({
           title: "{user} — My universe",
           metaTitle: "My universe",
         }
+      },
+      breadcrumbs: {
+        home: "Home",
+        explore: "Explore",
+        profile: "Universe",
+        world: "World",
+        calendar: "Calendar"
       }
     },
     fr: {
@@ -583,6 +590,13 @@ export default defineI18nConfig(() => ({
           title: "{user} — Mon univers",
           metaTitle: "Mon univers",
         }
+      },
+      breadcrumbs: {
+        home: "Accueil",
+        explore: "Explorer",
+        profile: "Univers",
+        world: "Monde",
+        calendar: "Calendrier"
       }
     }
   }

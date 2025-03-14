@@ -42,27 +42,29 @@ const {
 const isLoading = computed(() => calendarStatus.value === "pending" || categoriesStatus.value === "pending")
 
 // Set custom menu
-const { t } = useI18n()
-const { setCurrentMenu } = useUiStore()
+// This should be reserved for actions, not for breadcrumbs
+//
+// const { t } = useI18n()
+// const { setCurrentMenu } = useUiStore()
 
-// Set menu once we have the calendar data
-watch(calendar, (n) => {
-  if (n?.data) {
-    setCurrentMenu([
-      {
-        tooltip: t("entity.world.backToMy"),
-        to: "/my",
-        phIcon: "universe",
-        phIconWeight: "regular"
-      },
-      {
-        tooltip: t("entity.world.backToSingle", { world: calendar.value?.data.world?.name }),
-        to: `/my/worlds/${calendar.value?.data.world?.id}`,
-        phIcon: "world"
-      },
-    ])
-  }
-}, { immediate: true })
+// // Set menu once we have the calendar data
+// watch(calendar, (n) => {
+//   if (n?.data) {
+//     setCurrentMenu([
+//       {
+//         tooltip: t("entity.world.backToMy"),
+//         to: "/my",
+//         phIcon: "universe",
+//         phIconWeight: "regular"
+//       },
+//       {
+//         tooltip: t("entity.world.backToSingle", { world: calendar.value?.data.world?.name }),
+//         to: `/my/worlds/${calendar.value?.data.world?.id}`,
+//         phIcon: "world"
+//       },
+//     ])
+//   }
+// }, { immediate: true })
 </script>
 
 <template>
@@ -84,7 +86,19 @@ watch(calendar, (n) => {
       <Title>{{ calendar.data.name }}</Title>
     </Head>
 
-    <Calendar :calendar-data="calendar.data" :categories="categories.data" />
+    <div class="h-full grid grid-rows-[auto_1fr] pt-8 gap-y-2">
+      <div class="px-8">
+        <Breadcrumb
+          v-if="calendar.data.world"
+          :items="[
+            { label: calendar.data.world.name, to: `/my/worlds/${calendar.data.world.id}` },
+            { label: calendar.data.name },
+          ]"
+        />
+      </div>
+
+      <Calendar :calendar-data="calendar.data" :categories="categories.data" />
+    </div>
   </div>
 
   <div v-else class="h-full w-full grid place-items-center">
