@@ -5,7 +5,9 @@ definePageMeta({
   middleware: ["reset-menu"]
 })
 
-const { data: availableCalendars } = await useLazyFetch<{ data: Calendar[] }>("/api/calendars/query", { key: "explore-calendars", query: { full: true } })
+const { data: availableCalendars, status: calendarStatus } = await useLazyFetch<{ data: Calendar[] }>("/api/calendars/query", { key: "explore-calendars", query: { full: true } })
+
+const isLoading = computed(() => calendarStatus.value === "pending")
 </script>
 
 <template>
@@ -24,11 +26,14 @@ const { data: availableCalendars } = await useLazyFetch<{ data: Calendar[] }>("/
           {{ $t("entity.calendar.namePublicPlural") }}
         </Heading>
 
-        <ul v-if="availableCalendars?.data" class="grid md:grid-cols-3 gap-2">
-          <li v-for="calendar in availableCalendars.data" :key="calendar.shortId">
-            <CalendarPreviewCard :calendar="calendar" :gm-id="calendar.world?.gmId" />
-          </li>
-        </ul>
+          <div v-if="isLoading" class="grid md:grid-cols-3 gap-2">
+            <LoadingCard />
+          </div>
+          <ul v-else-if="availableCalendars?.data" class="grid md:grid-cols-3 gap-2">
+            <li v-for="calendar in availableCalendars.data" :key="calendar.shortId">
+              <CalendarPreviewCard :calendar="calendar" :gm-id="calendar.world?.gmId" />
+            </li>
+          </ul>
       </Spacing>
     </Spacing>
   </main>

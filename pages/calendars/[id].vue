@@ -68,21 +68,21 @@ watch(user, () => {
     <div class="grid justify-items-center opacity-80">
       <PhCalendarX size="75" class="opacity-60" />
 
-      <Heading level="h1">
+      <LazyHeading level="h1">
         {{ $t("entity.calendar.notFound") }}
-      </Heading>
+      </LazyHeading>
 
       <p>
         {{ $t('entity.calendar.notFoundDescription') }}
       </p>
 
-      <UiButton variant="default" class="mt-4 gap-2" as-child>
+      <LazyUiButton variant="default" class="mt-4 gap-2" as-child>
         <RouterLink to="/explore">
           <PhArrowBendDoubleUpLeft size="24" />
 
           {{ $t('entity.calendar.backToList') }}
         </RouterLink>
-      </UiButton>
+      </LazyUiButton>
     </div>
   </div>
 </template>

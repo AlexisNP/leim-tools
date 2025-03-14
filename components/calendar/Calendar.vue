@@ -51,9 +51,9 @@ onMounted(() => {
 
       <component :is="currentViewComponent" />
 
-      <CalendarSearch />
-      <CalendarDialogUpdateEvent v-if="!isReadOnly" />
-      <CalendarDialogDeleteEvent v-if="!isReadOnly" />
+      <LazyCalendarSearch />
+      <LazyCalendarDialogUpdateEvent v-if="!isReadOnly" />
+      <LazyCalendarDialogDeleteEvent v-if="!isReadOnly" />
     </div>
   </div>
 </template>
