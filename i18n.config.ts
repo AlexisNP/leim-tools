@@ -8,6 +8,23 @@ export default defineI18nConfig(() => ({
         title: "Fantasy calendars for TTRPGs",
         description: "Tools for players and game masters to help them visualize fantasy worlds better.",
       },
+      error: {
+        default: {
+          title: "An error occured",
+          description: "An error occured while loading the page.",
+          descriptionSub: "Please try again later or contact the administrator !"
+        },
+        notFound: {
+          title: "Page not found",
+          description: "The page you're looking for doesn't exist.",
+          descriptionSub: "Maybe it has been deleted or moved ?"
+        },
+        unknownServer: {
+          title: "Internal server error",
+          description: "An error occured while loading the page.",
+          descriptionSub: "Please try again later or contact the administrator !"
+        },
+      },
       ui: {
         action: {
           back: "Back",
@@ -49,6 +66,7 @@ export default defineI18nConfig(() => ({
         greeting: "Connected as {user}",
         anonymousGreeting: "Preferences",
         backToProfile: "Back to profile",
+        backToHome: "Back to home",
         sidebarMenu: {
           profile: "Profile",
           appearance: "Appearance",
@@ -90,6 +108,8 @@ export default defineI18nConfig(() => ({
         world: {
           nameSingular: "World",
           namePlural: "Worlds",
+          backToMy: "Back to my universe",
+          backToSingle: "Back to {world}",
           addSingle: "Add a world",
           addSingleFirst: "Add your first world !",
           editSingle: "Edit world",
@@ -265,13 +285,41 @@ export default defineI18nConfig(() => ({
         explore: {
           menuLabel: "Explore",
           title: "Explore worlds",
+        },
+        profile: {
+          title: "{user} — My universe",
+          metaTitle: "My universe",
         }
+      },
+      breadcrumbs: {
+        home: "Home",
+        explore: "Explore",
+        profile: "Universe",
+        world: "World",
+        calendar: "Calendar"
       }
     },
     fr: {
       head: {
         title: "Calendriers fantasies pour JDR",
         description: "Outils destinés aux joueurs et maîtres de jeux pour visualiser plus facilement leurs univers.",
+      },
+      error: {
+        default: {
+          title: "Une erreur est survenue",
+          descriptionMain: "Une erreur est survenue lors du chargement de la page.",
+          descriptionSub: "Merci de rééssayer plus tard ou de contacter l'administrateur !"
+        },
+        notFound: {
+          title: "Page introuvable",
+          descriptionMain: "La page que vous cherchez n'existe pas.",
+          descriptionSub: "Peut-être a t-elle été supprimée ou déplacée ?"
+        },
+        unknownServer: {
+          title: "Une erreur du serveur est survenue",
+          descriptionMain: "Une erreur est survenue lors du chargement de la page.",
+          descriptionSub: "Merci de rééssayer plus tard ou de contacter l'administrateur !"
+        },
       },
       ui: {
         action: {
@@ -314,6 +362,7 @@ export default defineI18nConfig(() => ({
         greeting: "Connecté en tant que {user}",
         anonymousGreeting: "Préférences",
         backToProfile: "Retour au profil",
+        backToHome: "Retourner à l'accueil",
         sidebarMenu: {
           profile: "Profil",
           appearance: "Apparence",
@@ -355,6 +404,8 @@ export default defineI18nConfig(() => ({
         world: {
           nameSingular: "Monde",
           namePlural: "Mondes",
+          backToMy: "Retourner à mon univers",
+          backToSingle: "Retourner sur {world}",
           addSingle: "Ajouter un monde",
           addSingleFirst: "Ajouter votre premier monde !",
           editSingle: "Modifier le monde",
@@ -534,7 +585,18 @@ export default defineI18nConfig(() => ({
         explore: {
           menuLabel: "Explorer",
           title: "Explorer les mondes",
+        },
+        profile: {
+          title: "{user} — Mon univers",
+          metaTitle: "Mon univers",
         }
+      },
+      breadcrumbs: {
+        home: "Accueil",
+        explore: "Explorer",
+        profile: "Univers",
+        world: "Monde",
+        calendar: "Calendrier"
       }
     }
   }

@@ -1,15 +1,24 @@
 <script lang="ts" setup>
-import { PhCompass, PhList } from "@phosphor-icons/vue"
-import type { SidebarMenuActionType } from "./SidebarProps";
+import { PhCompass, PhGlobeHemisphereEast, PhHurricane, PhList } from "@phosphor-icons/vue"
+import type { SidebarMenuActionType, SidebarMenuIcon } from "./SidebarProps";
 
 const { revealAdvancedSearch } = useCalendar()
 const { currentMenu } = storeToRefs(useUiStore())
 
-// const user = useSupabaseUser()
-
 function handleMenuItemAction(actionType: SidebarMenuActionType) {
   if (actionType === "event-search") {
     revealAdvancedSearch()
+  }
+}
+
+function computeMenuItemIcon(iconString: SidebarMenuIcon) {
+  switch (iconString) {
+    case "universe":
+      return PhHurricane
+    case "world":
+      return PhGlobeHemisphereEast
+    default:
+      return PhCompass
   }
 }
 </script>
@@ -42,25 +51,39 @@ function handleMenuItemAction(actionType: SidebarMenuActionType) {
         </UiTooltipProvider>
       </li>
 
-      <li v-for="(item, i) in currentMenu" :key="i">
-        <UiTooltipProvider :delay-duration="50">
-          <UiTooltip>
-            <UiTooltipTrigger as-child>
-              <UiButton v-if="item.to" variant="ghost" size="icon" class="rounded-full" as-child>
-                <RouterLink :to="item.to">
-                  <component :is="item.phIcon" size="24" weight="fill" />
-                </RouterLink>
-              </UiButton>
-              <UiButton v-if="item.action" variant="ghost" size="icon" class="rounded-full" @click="handleMenuItemAction(item.action!)">
-                <component :is="item.phIcon" size="24" weight="fill" />
-              </UiButton>
-            </UiTooltipTrigger>
-            <UiTooltipContent :side="'right'" :side-offset="6">
-              <p>{{ item.tooltip }}</p>
-            </UiTooltipContent>
-          </UiTooltip>
-        </UiTooltipProvider>
-      </li>
+      <ClientOnly>
+        <li v-for="(item, i) in currentMenu" :key="i">
+          <UiTooltipProvider :delay-duration="50">
+            <UiTooltip>
+              <UiTooltipTrigger as-child>
+                <UiButton
+                  v-if="item.to"
+                  variant="ghost"
+                  size="icon"
+                  class="rounded-full"
+                  as-child
+                >
+                  <RouterLink :to="item.to">
+                    <component :is="computeMenuItemIcon(item.phIcon)" size="24" :weight="item.phIconWeight || 'fill'" />
+                  </RouterLink>
+                </UiButton>
+                <UiButton
+                  v-if="item.action"
+                  variant="ghost"
+                  size="icon"
+                  class="rounded-full"
+                  @click="handleMenuItemAction(item.action!)"
+                >
+                  <component :is="computeMenuItemIcon(item.phIcon)" size="24" :weight="item.phIconWeight || 'fill'" />
+                </UiButton>
+              </UiTooltipTrigger>
+              <UiTooltipContent :side="'right'" :side-offset="6">
+                <p>{{ item.tooltip }}</p>
+              </UiTooltipContent>
+            </UiTooltip>
+          </UiTooltipProvider>
+        </li>
+      </ClientOnly>
     </menu>
 
     <UserCTA />

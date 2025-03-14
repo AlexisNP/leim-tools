@@ -6,7 +6,7 @@ const supabase = useSupabaseClient()
 const user = useSupabaseUser()
 
 definePageMeta({
-  middleware: ["auth-guard"]
+  middleware: ["auth-guard", "reset-menu"]
 })
 
 const { data: worlds } = await useLazyFetch<{ data: World[] }>("/api/worlds/query", { query: { gmId:  user?.value!.id } })
@@ -30,7 +30,6 @@ function hideCreateDialog() {
  */
 /** Active world channel */
 let worldChannel: RealtimeChannel
-
 
 /** Handles world insertion realtime events */
 function handleInsertedWorld(newWorld: WorldChannelPayload) {
@@ -121,10 +120,12 @@ function hideEditModal() {
 <template>
   <main class="p-8">
     <Head>
-      <Title>{{ $t("entity.world.namePlural") }}</Title>
+      <Title>{{ $t("pages.profile.metaTitle") }}</Title>
     </Head>
 
-    <Heading level="h1">{{ user?.user_metadata.full_name }}</Heading>
+    <Heading level="h1">
+      {{ $t("pages.profile.title", { user: user?.user_metadata.full_name }) }}
+    </Heading>
 
     <section class="mt-4">
       <Spacing size="lg">

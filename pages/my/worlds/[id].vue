@@ -24,6 +24,20 @@ watch(user, (n) => {
   }
 })
 
+// Set custom menu
+// This should be reserved for actions, not for breadcrumbs
+//
+// const { setCurrentMenu } = useUiStore()
+
+// setCurrentMenu([
+//   {
+//     tooltip: t("entity.world.backToMy"),
+//     to: "/my",
+//     phIcon: "universe",
+//     highlight: true
+//   },
+// ])
+
 /**
  * === Subscriptions ===
  */
@@ -172,28 +186,36 @@ function hideEditModal() {
         <Title>{{ world.data.name }}</Title>
       </Head>
 
-      <header class="lg:w-1/2 mb-8">
-        <Spacing>
-          <div class="flex items-center gap-2">
-            <Heading level="h1">{{ world.data.name }}</Heading>
+      <header class="mb-8">
+        <Spacing size="lg">
+          <Breadcrumb
+            :items="[
+              { label: world.data.name }
+            ]"
+          />
 
-            <UiTooltipProvider :delay-duration="250">
-              <UiTooltip>
-                <UiTooltipTrigger as-child>
-                  <UiButton size="icon" class="rounded-full h-8 w-8" @click="deployEditModal">
-                    <PhPencil size="17" weight="fill" />
-                  </UiButton>
-                </UiTooltipTrigger>
-                <UiTooltipContent :side-offset="12" side="right">
-                  <p>
-                    {{ $t('entity.world.editSingle') }}
-                  </p>
-                </UiTooltipContent>
-              </UiTooltip>
-            </UiTooltipProvider>
+          <div class="lg:w-1/2">
+            <div class="flex items-center gap-2 mb-2">
+              <Heading level="h1">{{ world.data.name }}</Heading>
+
+              <UiTooltipProvider :delay-duration="250">
+                <UiTooltip>
+                  <UiTooltipTrigger as-child>
+                    <UiButton size="icon" class="rounded-full h-8 w-8" @click="deployEditModal">
+                      <PhPencil size="17" weight="fill" />
+                    </UiButton>
+                  </UiTooltipTrigger>
+                  <UiTooltipContent :side-offset="12" side="right">
+                    <p>
+                      {{ $t('entity.world.editSingle') }}
+                    </p>
+                  </UiTooltipContent>
+                </UiTooltip>
+              </UiTooltipProvider>
+            </div>
+
+            <p>{{ world.data.description }}</p>
           </div>
-
-          <p>{{ world.data.description }}</p>
         </Spacing>
       </header>
 

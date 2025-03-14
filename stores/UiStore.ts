@@ -7,8 +7,13 @@ export const useUiStore = defineStore("ui", () => {
     currentMenu.value = items
   }
 
+  function resetMenu() {
+    currentMenu.value = []
+  }
+
   return {
     currentMenu,
-    setCurrentMenu
+    setCurrentMenu,
+    resetMenu
   }
 })

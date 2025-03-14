@@ -38,7 +38,7 @@ function openEventCreatePopover() {
 function handleClosing(e: Event) {
   e.preventDefault()
   popoverOpen.value = false
-  setTimeout(() => resetSkeleton(), 100)
+  resetSkeleton()
 }
 </script>
 
