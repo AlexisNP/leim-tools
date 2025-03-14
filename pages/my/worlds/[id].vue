@@ -227,7 +227,7 @@ function hideEditModal() {
             </Heading>
           </div>
 
-          <ul class="grid md:grid-cols-3 gap-2">
+          <ul class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-2">
             <li v-for="calendar in sortedCalendars" :key="calendar.id">
               <CalendarPreviewCard
                 :calendar="calendar"
@@ -237,7 +237,7 @@ function hideEditModal() {
                 @on-delete="() => deployDeleteCalendarModal(calendar)" />
             </li>
 
-            <li class="md:w-fit">
+            <li class="xl:w-fit">
               <AddCard @on-click="() => isCreateCalendarModalOpen = true">
                 <template v-if="sortedCalendars.length > 0">
                   {{ $t('entity.calendar.addSingle') }}

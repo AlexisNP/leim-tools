@@ -135,11 +135,11 @@ function hideEditModal() {
           </Heading>
         </div>
 
-        <ul v-if="worlds?.data" class="grid lg:grid-cols-3 gap-2">
+        <ul v-if="worlds?.data" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-2">
           <li v-for="world in sortedWorlds" :key="world.id">
             <WorldPreviewCard :world="world" @on-edit="() => deployEditModal(world)" @on-delete="() => deployDeleteModal(world)" />
           </li>
-          <li class="md:w-fit">
+          <li class="xl:w-fit">
             <AddCard @on-click="() => isCreateWorldModalOpen = true">
               <template v-if="worlds?.data?.length > 0">
                 {{ $t('entity.world.addSingle') }}
