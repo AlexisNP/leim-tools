@@ -73,7 +73,7 @@ const eventsNotDisplayed: ComputedRef<number>  = computed<number>(() => eventsFo
 <template>
   <div
     ref="calendarTile"
-    class="tile relative text-xs p-2 border-slate-200 contrast-more:border-slate-500 dark:border-slate-700 dark:bg-black transition-colors"
+    class="tile relative text-xs p-2"
     :class="{
       'text-slate-300 dark:text-slate-500': props.faded,
       'text-slate-500 dark:text-slate-300': !props.faded
@@ -149,14 +149,11 @@ const eventsNotDisplayed: ComputedRef<number>  = computed<number>(() => eventsFo
 </template>
 
 <style lang="scss" scoped>
+// .tile are the direct children of the grid
+// We need to get, between each element, a 1px solid line to separate them, for columns and rows
 .tile {
-  &:not(:nth-child(10n)) {
-    border-right-width: 1px;
-  }
-
-  &:nth-child(n + 11) {
-    border-top-width: 1px;
-  }
+  border-right-width: 1px;
+  border-bottom-width: 1px;
 }
 
 .event-enter-active {
