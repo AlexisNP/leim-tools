@@ -8,7 +8,7 @@ const { isReadOnly } = storeToRefs(useCalendar())
 </script>
 
 <template>
-  <header class="border-slate-400 dark:border-slate-700 border-b-[1px]">
+  <header class="border-slate-200 contrast-more:border-slate-500 dark:border-slate-700 border-b-[1px]">
     <div class="px-8 flex justify-between">
       <menu class="flex items-center gap-2">
         <li v-if="!isReadOnly">

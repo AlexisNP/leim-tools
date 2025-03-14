@@ -73,7 +73,7 @@ const eventsNotDisplayed: ComputedRef<number>  = computed<number>(() => eventsFo
 <template>
   <div
     ref="calendarTile"
-    class="tile relative text-xs p-2 border-slate-400 dark:border-slate-700 dark:bg-black transition-colors"
+    class="tile relative text-xs p-2 border-slate-200 contrast-more:border-slate-500 dark:border-slate-700 dark:bg-black transition-colors"
     :class="{
       'text-slate-300 dark:text-slate-500': props.faded,
       'text-slate-500 dark:text-slate-300': !props.faded

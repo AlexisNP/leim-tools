@@ -36,7 +36,7 @@ function computeMenuItemIcon(iconString: SidebarMenuIcon) {
         <UiTooltipProvider :delay-duration="50">
           <UiTooltip>
             <UiTooltipTrigger as-child>
-              <UiButton variant="ghost" size="icon" class="rounded-full text-indigo-400" as-child>
+              <UiButton variant="ghost" size="icon" class="rounded-full" as-child>
                 <RouterLink to="/explore">
                   <PhCompass size="24" weight="fill" />
                 </RouterLink>
