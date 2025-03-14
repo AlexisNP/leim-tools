@@ -52,7 +52,7 @@ watch(user, () => {
     </div>
   </div>
 
-  <div v-else-if="calendar?.data && categories?.data" class="h-full w-full">
+  <div v-else-if="calendar?.data && categories?.data" class="h-full w-full pt-8">
     <Head>
       <Title>{{ calendar.data.name }}</Title>
     </Head>
