@@ -2,7 +2,7 @@ insert into public.role_permissions (role, permission) values ('sa', 'events.see
 insert into public.role_permissions (role, permission) values ('sa', 'users.ban');
 
 -- Worlds
-insert into public.worlds (name, description, color, state) values ('Léïm', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aliquet congue aliquet. Curabitur eu iaculis diam. Nunc iaculis nibh orci, eu semper nunc congue congue. Praesent euismod tortor eget metus tristique lobortis vel in risus. In volutpat ligula orci, id pharetra lectus egestas at.', 'black', 'published');
+insert into public.worlds (name, description, color, state) values ('Léïm', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aliquet congue aliquet. Curabitur eu iaculis diam. Nunc iaculis nibh orci, eu semper nunc congue congue. Praesent euismod tortor eget metus tristique lobortis vel in risus. In volutpat ligula orci, id pharetra lectus egestas at.', 'white', 'published');
 
 -- Character categories
 insert into public.character_categories (name, color, world_id) values ('Joueur', 'white', 1);
@@ -19,7 +19,7 @@ insert into public.character_categories (name, color, world_id) values ('Activis
 insert into public.character_categories (name, color, world_id) values ('Commerçant', 'amber', 1);
 
 -- Worlds' calendars
-insert into public.calendars (world_id, name, today, state) values (1, 'Calendrier solaire', '{ "day": 23, "month": 8, "year": 3209 }', 'published');
+insert into public.calendars (world_id, name, today, color, state) values (1, 'Calendrier solaire', '{ "day": 23, "month": 8, "year": 3209 }', 'white', 'published');
 
 -- Calendar's months
 insert into public.calendar_months (name, days, position, calendar_id) values ('Jalen', 32, 1, 1);
