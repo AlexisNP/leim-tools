@@ -2,7 +2,6 @@
 import { useCalendar } from "@/stores/CalendarStore"
 
 import { PhMagnifyingGlass } from "@phosphor-icons/vue"
-import CalendarOptions from "./CalendarOptions.vue"
 
 const { revealAdvancedSearch } = useCalendar()
 const { isReadOnly } = storeToRefs(useCalendar())
@@ -13,7 +12,7 @@ const { isReadOnly } = storeToRefs(useCalendar())
     <div class="px-8 flex items-center justify-between gap-2">
       <menu class="flex items-center gap-2">
         <li v-if="!isReadOnly">
-          <CalendarDialogQuickCreateEvent />
+          <LazyCalendarDialogQuickCreateEvent />
         </li>
         <li>
           <CalendarMenuToday />
@@ -33,7 +32,10 @@ const { isReadOnly } = storeToRefs(useCalendar())
           </UiButton>
         </li>
         <li>
-          <CalendarOptions />
+          <CalendarCategoriesCTA />
+        </li>
+        <li>
+          <CalendarOptionsCTA />
         </li>
       </menu>
     </div>

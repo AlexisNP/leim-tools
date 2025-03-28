@@ -819,7 +819,7 @@ export const useCalendar = defineStore("calendar", () => {
   }
 
   /**
-   * State for event modal edition
+   * State for event modal deletion
    */
   const isDeleteEventModalOpen = ref<boolean>(false)
 
@@ -910,6 +910,15 @@ export const useCalendar = defineStore("calendar", () => {
     }
   }
 
+  /**
+   * State for categories modal
+   */
+  const isCategoriesModalOpen = ref<boolean>(false)
+
+  function toggleCategoriesModal(state: boolean) {
+    isCategoriesModalOpen.value = state
+  }
+
   return {
     isReadOnly,
     setReadStatus,
@@ -969,6 +978,8 @@ export const useCalendar = defineStore("calendar", () => {
     isEditEventModalOpen,
     revealEditEventModal,
     isDeleteEventModalOpen,
-    revealDeleteEventModal
+    revealDeleteEventModal,
+    isCategoriesModalOpen,
+    toggleCategoriesModal
   }
 })

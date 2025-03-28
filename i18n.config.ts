@@ -148,6 +148,7 @@ export default defineI18nConfig(() => ({
           backToList: "Go back to calendars",
           isLoading: "Calendar is loading…",
           hasXEvents: "{count} available events",
+          seeCategories: "Modify categories",
           seeOptions: "Calendar options",
           date: {
             start: "Start date",
@@ -395,7 +396,7 @@ export default defineI18nConfig(() => ({
           search: "Rechercher les catégories",
           notFoundAny: "Aucune catégorie trouvée.",
           addPrimary: "Ajouter une catégorie principale",
-          addSecondaries: "Ajouter des catégories secondaires"
+          addSecondaries: "Ajouter des catégories secondaires",
         },
         isLoading: "Chargement en cours…",
         addDescription: "Ajouter une description",
@@ -450,6 +451,7 @@ export default defineI18nConfig(() => ({
           backToList: "Retourner aux calendriers",
           isLoading: "Chargement du calendrier…",
           hasXEvents: "{count} évènements disponibles",
+          seeCategories: "Gestion des catégories",
           seeOptions: "Options du calendrier",
           date: {
             start: "Date de début",
