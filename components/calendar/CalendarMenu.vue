@@ -2,6 +2,7 @@
 import { useCalendar } from "@/stores/CalendarStore"
 
 import { PhMagnifyingGlass } from "@phosphor-icons/vue"
+import CalendarOptions from "./CalendarOptions.vue"
 
 const { revealAdvancedSearch } = useCalendar()
 const { isReadOnly } = storeToRefs(useCalendar())
@@ -26,13 +27,13 @@ const { isReadOnly } = storeToRefs(useCalendar())
         <li>
           <UiButton search-slash @click="revealAdvancedSearch()">
             <PhMagnifyingGlass size="20" weight="light" />
-            {{ $t('entity.advancedSearch.title') }}
+            <span>
+              {{ $t('entity.advancedSearch.title') }}
+            </span>
           </UiButton>
         </li>
         <li>
-          <ClientOnly>
-            <CalendarSwitch />
-          </ClientOnly>
+          <CalendarOptions />
         </li>
       </menu>
     </div>

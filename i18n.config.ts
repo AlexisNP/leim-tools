@@ -79,7 +79,7 @@ export default defineI18nConfig(() => ({
         dark: "Dark",
         light: "Light",
         system: "System",
-        displayMode: "Display mode"
+        displayMode: "Display"
       },
       common: {
         title: "Title",
@@ -148,6 +148,7 @@ export default defineI18nConfig(() => ({
           backToList: "Go back to calendars",
           isLoading: "Calendar is loading…",
           hasXEvents: "{count} available events",
+          seeOptions: "Calendar options",
           date: {
             start: "Start date",
             end: "End date",
@@ -242,26 +243,31 @@ export default defineI18nConfig(() => ({
           },
           millennia: {
             nameSingular: "Millennia",
+            displayMode: "Millennial",
             nextSingular: "Next millennia",
             prevSingular: "Last millennia",
           },
           centuries: {
             nameSingular: "Century",
+            displayMode: "Centuries",
             nextSingular: "Next century",
             prevSingular: "Last century",
           },
           decades: {
             nameSingular: "Decade",
+            displayMode: "Decadal",
             nextSingular: "Next decade",
             prevSingular: "Last decade",
           },
           years: {
             nameSingular: "Year",
+            displayMode: "Yearly",
             nextSingular: "Next year",
             prevSingular: "Last year",
           },
           months: {
             nameSingular: "Month",
+            displayMode: "Monthly",
             nextSingular: "Next month",
             prevSingular: "Last month",
             inputName: "Month's name",
@@ -375,7 +381,7 @@ export default defineI18nConfig(() => ({
         dark: "Sombre",
         light: "Clair",
         system: "Système",
-        displayMode: "Mode d'affichage",
+        displayMode: "Affichage",
       },
       common: {
         title: "Titre",
@@ -444,6 +450,7 @@ export default defineI18nConfig(() => ({
           backToList: "Retourner aux calendriers",
           isLoading: "Chargement du calendrier…",
           hasXEvents: "{count} évènements disponibles",
+          seeOptions: "Options du calendrier",
           date: {
             start: "Date de début",
             end: "Date de fin",
@@ -541,26 +548,31 @@ export default defineI18nConfig(() => ({
           },
           millennia: {
             nameSingular: "Millénaire",
+            displayMode: "Par millénaire",
             nextSingular: "Millénaire suivant",
             prevSingular: "Millénaire précédent",
           },
           centuries: {
             nameSingular: "Siècle",
+            displayMode: "Par siècle",
             nextSingular: "Siècle suivant",
             prevSingular: "Siècle précédent",
           },
           decades: {
             nameSingular: "Décennie",
+            displayMode: "Par décennie",
             nextSingular: "Décennie suivante",
             prevSingular: "Décennie précédente",
           },
           years: {
             nameSingular: "Année",
+            displayMode: "Annuel",
             nextSingular: "Année suivante",
             prevSingular: "Année précédente",
           },
           months: {
             nameSingular: "Mois",
+            displayMode: "Mensuel",
             nextSingular: "Mois suivant",
             prevSingular: "Mois précédent",
             inputName: "Nom du mois",

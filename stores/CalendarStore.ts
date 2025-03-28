@@ -345,17 +345,17 @@ export const useCalendar = defineStore("calendar", () => {
   function getViewTypeTitle(viewType: CalendarViewType): string {
     switch (viewType) {
       case "year":
-        return t("entity.calendar.years.nameSingular")
+        return t("entity.calendar.years.displayMode")
 
       case "decade":
-        return "Décennie"
+        return t("entity.calendar.decades.displayMode")
 
       case "century":
-        return "Siècle"
+        return t("entity.calendar.centuries.displayMode")
 
       case "month":
       default:
-        return t("entity.calendar.months.nameSingular")
+        return t("entity.calendar.months.displayMode")
     }
   }
 
