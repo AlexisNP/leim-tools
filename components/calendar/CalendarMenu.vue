@@ -8,17 +8,14 @@ const { isReadOnly } = storeToRefs(useCalendar())
 </script>
 
 <template>
-  <header class="border-slate-200 contrast-more:border-slate-500 dark:border-slate-700 border-b-[1px]">
-    <div class="px-8 flex justify-between">
+  <header class="mt-2 grid gap-4 border-slate-200 contrast-more:border-slate-500 dark:border-slate-700 border-b-[1px]">
+    <div class="px-8 flex items-center justify-between gap-2">
       <menu class="flex items-center gap-2">
         <li v-if="!isReadOnly">
           <CalendarDialogQuickCreateEvent />
         </li>
         <li>
           <CalendarMenuToday />
-        </li>
-        <li>
-          <CalendarMenuNav />
         </li>
         <li class="ml-4">
           <CalendarCurrentDate />

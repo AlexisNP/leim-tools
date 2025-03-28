@@ -99,7 +99,7 @@ export default defineI18nConfig(() => ({
         addDescription: "Add a description",
         deleteOne: "Delete \"{entity}\"",
         advancedSearch: {
-          title: "Advanced search",
+          title: "Search",
           subtitle: "Search through calendar and world data",
           older: "Older",
           newer: "Newer",
@@ -395,7 +395,7 @@ export default defineI18nConfig(() => ({
         addDescription: "Ajouter une description",
         deleteOne: "Supprimer \"{entity}\"",
         advancedSearch: {
-          title: "Recherche avancée",
+          title: "Rechercher",
           subtitle: "Rechercher les données disponibles sur le calendrier",
           older: "Plus ancien",
           newer: "Plus récent",

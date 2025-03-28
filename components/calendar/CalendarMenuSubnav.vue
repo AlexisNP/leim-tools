@@ -1,66 +1,140 @@
 <script lang="ts" setup>
+import { PhCaretDoubleLeft, PhCaretDoubleRight, PhCaretLeft, PhCaretRight } from "@phosphor-icons/vue"
+
 const { currentDate } = useCalendar()
 
-// const { toast } = useToast()
-// const { t } = useI18n()
+const { t } = useI18n()
 
-// function handleGotoPreviousEventPage(position: "next" | "prev" = "next") {
-//   let fromDate: RPGDate
+interface DirectionLabels {
+  pastFar: string
+  pastNear: string
+  futureNear: string
+  futureFar: string
+}
 
-//   // To modify, obviously
-//   const daysPerMonth = 32
+const { currentConfig, decrementViewMonth, incrementViewMonth, decrementViewYear, incrementViewYear } =
+  useCalendar()
 
-//   const toDay = position === "next" ? daysPerMonth : 1
-//   const toMonth = position === "next" ? monthsPerYear : 0
+const activeDirectionLabels: ComputedRef<DirectionLabels> = computed(() => {
+  switch (currentConfig.viewType) {
+    case "month":
+      return {
+        pastFar: t("entity.calendar.years.prevSingular"),
+        pastNear: t("entity.calendar.months.prevSingular"),
+        futureNear: t("entity.calendar.months.nextSingular"),
+        futureFar: t("entity.calendar.years.nextSingular")
+      }
 
-//   switch (currentConfig.viewType) {
-//     case "month":
-//       fromDate = {
-//         day: toDay,
-//         month: currentDate.currentMonth,
-//         year: currentDate.currentYear
-//       }
-//       break
+    case "year":
+      return {
+        pastFar: t("entity.calendar.decades.prevSingular"),
+        pastNear: t("entity.calendar.years.prevSingular"),
+        futureNear: t("entity.calendar.years.nextSingular"),
+        futureFar: t("entity.calendar.decades.nextSingular")
+      }
 
-//     case "year":
-//       fromDate = {
-//         day: toDay,
-//         month: toMonth,
-//         year: currentDate.currentYear
-//       }
-//       break
+    case "decade":
+      return {
+        pastFar: t("entity.calendar.centuries.prevSingular"),
+        pastNear: t("entity.calendar.decades.prevSingular"),
+        futureNear: t("entity.calendar.decades.nextSingular"),
+        futureFar: t("entity.calendar.centuries.nextSingular")
+      }
 
-//     case "decade":
-//       fromDate = {
-//         day: toDay,
-//         month: currentDate.currentMonth,
-//         year: currentDate.currentYear
-//       }
-//       break
+    case "century":
+    default:
+      return {
+        pastFar: t("entity.calendar.millenias.prevSingular"),
+        pastNear: t("entity.calendar.centuries.prevSingular"),
+        futureNear: t("entity.calendar.centuries.nextSingular"),
+        futureFar: t("entity.calendar.millenias.nextSingular")
+      }
+  }
+})
 
-//     case "century":
-//     default:
-//       fromDate = {
-//         day: toDay,
-//         month: currentDate.currentMonth,
-//         year: currentDate.currentYear
-//       }
-//       break
-//   }
+function toPastFar(): void {
+  switch (currentConfig.viewType) {
+    case "month":
+      decrementViewYear()
+      break
 
-//   try {
-//     const { targetDate } = getRelativeEventFromDate(fromDate, position)
+    case "year":
+      decrementViewYear(10)
+      break
 
-//     jumpToDate(targetDate)
-//   } catch (err) {
-//     toast({
-//       title: t("entity.calendar.event.outOfBoundsTitle"),
-//       variant: "default",
-//       description: t("entity.calendar.event.outOfBoundsMessage"),
-//       duration: 4000,
-//     })
-//   }
-// }
+    case "decade":
+      decrementViewYear(100)
+      break
+
+    case "century":
+    default:
+      decrementViewYear(1000)
+      break
+  }
+}
+
+function toPastNear(): void {
+  switch (currentConfig.viewType) {
+    case "month":
+      decrementViewMonth()
+      break
+
+    case "year":
+      decrementViewYear()
+      break
+
+    case "decade":
+      decrementViewYear(10)
+      break
+
+    case "century":
+    default:
+      decrementViewYear(100)
+      break
+  }
+}
+
+function toFutureNear(): void {
+  switch (currentConfig.viewType) {
+    case "month":
+      incrementViewMonth()
+      break
+
+    case "year":
+      incrementViewYear()
+      break
+
+    case "decade":
+      incrementViewYear(10)
+      break
+
+    case "century":
+    default:
+      incrementViewYear(100)
+      break
+  }
+}
+
+function toFutureFar(): void {
+  switch (currentConfig.viewType) {
+    case "month":
+      incrementViewYear()
+      break
+
+    case "year":
+      incrementViewYear(10)
+      break
+
+    case "decade":
+      incrementViewYear(100)
+      break
+
+    case "century":
+    default:
+      incrementViewYear(1000)
+      break
+  }
+}
 </script>
 
 <template>
@@ -76,7 +150,7 @@ const { currentDate } = useCalendar()
         </template>
       </ClientOnly>
     </div>
-    <!-- <div>
+    <div>
       <UiTooltipProvider :delay-duration="250">
         <UiTooltip>
           <UiTooltipTrigger as-child>
@@ -84,15 +158,13 @@ const { currentDate } = useCalendar()
               variant="outline"
               size="icon"
               class="rounded-t-sm rounded-b-none border-b-0"
-              @click="handleGotoPreviousEventPage('prev')"
+              @click="toPastFar()"
             >
-              <PhArrowLineLeft size="22" />
+              <PhCaretDoubleLeft size="18" />
             </UiButton>
           </UiTooltipTrigger>
           <UiTooltipContent>
-            <p>
-              {{ $t('entity.calendar.event.prevPage') }}
-            </p>
+            <p>{{ activeDirectionLabels.pastFar }}</p>
           </UiTooltipContent>
         </UiTooltip>
       </UiTooltipProvider>
@@ -105,18 +177,54 @@ const { currentDate } = useCalendar()
               variant="outline"
               size="icon"
               class="rounded-t-sm rounded-b-none border-b-0"
-              @click="handleGotoPreviousEventPage('next')"
+              @click="toPastNear()"
             >
-              <PhArrowLineRight size="22" />
+              <PhCaretLeft size="18" />
             </UiButton>
           </UiTooltipTrigger>
           <UiTooltipContent>
-            <p>
-              {{ $t('entity.calendar.event.nextPage') }}
-            </p>
+            <p>{{ activeDirectionLabels.pastNear }}</p>
           </UiTooltipContent>
         </UiTooltip>
       </UiTooltipProvider>
-    </div> -->
+    </div>
+    <div>
+      <UiTooltipProvider :delay-duration="250">
+        <UiTooltip>
+          <UiTooltipTrigger as-child>
+            <UiButton
+              variant="outline"
+              size="icon"
+              class="rounded-t-sm rounded-b-none border-b-0"
+              @click="toFutureNear()"
+            >
+              <PhCaretRight size="18" />
+            </UiButton>
+          </UiTooltipTrigger>
+          <UiTooltipContent>
+            <p>{{ activeDirectionLabels.futureNear }}</p>
+          </UiTooltipContent>
+        </UiTooltip>
+      </UiTooltipProvider>
+    </div>
+    <div>
+      <UiTooltipProvider :delay-duration="250">
+        <UiTooltip>
+          <UiTooltipTrigger as-child>
+            <UiButton
+              variant="outline"
+              size="icon"
+              class="rounded-t-sm rounded-b-none border-b-0"
+              @click="toFutureFar()"
+            >
+              <PhCaretDoubleRight size="18" />
+            </UiButton>
+          </UiTooltipTrigger>
+          <UiTooltipContent>
+            <p>{{ activeDirectionLabels.futureFar }}</p>
+          </UiTooltipContent>
+        </UiTooltip>
+      </UiTooltipProvider>
+    </div>
   </div>
 </template>
