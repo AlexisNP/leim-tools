@@ -4,13 +4,23 @@ import { useCalendar } from "@/stores/CalendarStore"
 import { PhCalendarBlank, PhCheckCircle, PhGear, PhTag } from "@phosphor-icons/vue"
 import { computed } from "vue"
 
+const optionsOpened = ref<boolean>(false)
+
+const user = useSupabaseUser()
+
+function closeMenu() {
+  optionsOpened.value = false
+}
+watch(user, closeMenu)
+
 const { currentConfig, viewTypeOptions, getViewTypeTitle, setViewType } = useCalendar()
+const { isReadOnly } = storeToRefs(useCalendar())
 
 const viewTypeTitle = computed(() => getViewTypeTitle(currentConfig.viewType))
 </script>
 
 <template>
-  <UiDropdownMenu>
+  <UiDropdownMenu v-model:open="optionsOpened">
     <UiDropdownMenuTrigger as-child>
       <UiButton variant="secondary" size="icon">
         <PhGear size="20" weight="fill" />
@@ -45,13 +55,15 @@ const viewTypeTitle = computed(() => getViewTypeTitle(currentConfig.viewType))
         </UiDropdownMenuPortal>
       </UiDropdownMenuSub>
 
-      <UiDropdownMenuSeparator />
+      <template v-if="!isReadOnly">
+        <UiDropdownMenuSeparator />
 
-      <UiDropdownMenuItem class="flex gap-[1ch] justify-end items-center">
-        {{ $t('entity.category.namePlural') }}
+        <UiDropdownMenuItem class="flex gap-[1ch] justify-end items-center">
+          {{ $t('entity.category.namePlural') }}
 
-        <PhTag size="18" weight="fill" />
-      </UiDropdownMenuItem>
+          <PhTag size="18" weight="fill" />
+        </UiDropdownMenuItem>
+      </template>
     </UiDropdownMenuContent>
   </UiDropdownMenu>
 </template>
