@@ -14,7 +14,7 @@ const {
   refresh: calRefresh
 } = await useLazyFetch<{ data: Calendar }>("/api/calendars/query",
   {
-    key: `calendar-${shortId}`,
+    key: "active-calendar",
     query: {
       shortId,
       full: true
@@ -27,7 +27,7 @@ const {
   status: categoriesStatus,
   refresh: catRefresh
 } = await useLazyFetch<{ data: Category[] }>("/api/calendars/categories/query",
-  { key: `categories-${shortId}` }
+  { key: "active-categories" }
 )
 
 const isLoading = computed(() => calendarStatus.value === "pending" || categoriesStatus.value === "pending")

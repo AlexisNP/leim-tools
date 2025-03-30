@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { CalendarFormCategories } from "#components";
 import { PhX } from "@phosphor-icons/vue";
 
 const { toggleCategoriesModal } = useCalendar()
@@ -20,17 +21,23 @@ function handleClosing() {
       @interact-outside="handleClosing"
       @close-auto-focus="(e) => e.preventDefault()"
     >
-      <UiAlertDialogTitle>
-        <span class="text-2xl">
-          <strong class="font-bold">Gestion des catégories</strong>
-        </span>
-      </UiAlertDialogTitle>
+      <header>
+        <UiAlertDialogTitle>
+          <span class="text-2xl">
+            {{ $t('entity.category.manageDialog.title') }}
+          </span>
+        </UiAlertDialogTitle>
+
+        <UiAlertDialogDescription>
+          {{ $t('entity.category.manageDialog.subtitle') }}
+        </UiAlertDialogDescription>
+      </header>
 
       <UiButton size="icon" variant="ghost" class="absolute top-4 right-4" title="Fermer la fenêtre" @click="handleClosing">
         <PhX size="20" />
       </UiButton>
 
-      catégories là
+      <CalendarFormCategories />
     </UiAlertDialogContent>
   </UiAlertDialog>
 </template>

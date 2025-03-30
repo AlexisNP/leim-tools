@@ -16,12 +16,13 @@ export default defineEventHandler(async (event) => {
     .from("calendar_event_categories")
     .select(`
       id,
-      name
+      name,
+      color
     `)
 
   if (query.id) {
     return output.eq("id", query.id).limit(1).single<Category>()
   }
 
-  return output.returns<Category[]>()
+  return output.overrideTypes<Category[]>()
 })

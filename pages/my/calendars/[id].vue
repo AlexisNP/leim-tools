@@ -24,7 +24,7 @@ const {
   status: calendarStatus
 } = await useLazyFetch<{ data: Calendar }>("/api/calendars/query",
   {
-    key: `calendar-${id}`,
+    key: "active-calendar",
     query: {
       id,
       full: true
@@ -36,35 +36,10 @@ const {
   data: categories,
   status: categoriesStatus
 } = await useLazyFetch<{ data: Category[] }>("/api/calendars/categories/query",
-  { key: `categories-${id}` }
+  { key: "active-categories" }
 )
 
 const isLoading = computed(() => calendarStatus.value === "pending" || categoriesStatus.value === "pending")
-
-// Set custom menu
-// This should be reserved for actions, not for breadcrumbs
-//
-// const { t } = useI18n()
-// const { setCurrentMenu } = useUiStore()
-
-// // Set menu once we have the calendar data
-// watch(calendar, (n) => {
-//   if (n?.data) {
-//     setCurrentMenu([
-//       {
-//         tooltip: t("entity.world.backToMy"),
-//         to: "/my",
-//         phIcon: "universe",
-//         phIconWeight: "regular"
-//       },
-//       {
-//         tooltip: t("entity.world.backToSingle", { world: calendar.value?.data.world?.name }),
-//         to: `/my/worlds/${calendar.value?.data.world?.id}`,
-//         phIcon: "world"
-//       },
-//     ])
-//   }
-// }, { immediate: true })
 </script>
 
 <template>

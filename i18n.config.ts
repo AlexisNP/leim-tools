@@ -93,7 +93,11 @@ export default defineI18nConfig(() => ({
           search: "Search categories",
           notFoundAny: "No categories found.",
           addPrimary: "Add a primary category",
-          addSecondaries: "Add secondary categories"
+          addSecondaries: "Add secondary categories",
+          manageDialog: {
+            title: "Manage categories",
+            subtitle: "Add and change the categories of your calendar",
+          }
         },
         isLoading: "Loading in progress…",
         addDescription: "Add a description",
@@ -397,6 +401,10 @@ export default defineI18nConfig(() => ({
           notFoundAny: "Aucune catégorie trouvée.",
           addPrimary: "Ajouter une catégorie principale",
           addSecondaries: "Ajouter des catégories secondaires",
+          manageDialog: {
+            title: "Gestion des catégories",
+            subtitle: "Créer et modifier les catégories de votre calendrier",
+          }
         },
         isLoading: "Chargement en cours…",
         addDescription: "Ajouter une description",

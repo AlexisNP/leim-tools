@@ -61,6 +61,8 @@ export const useCalendar = defineStore("calendar", () => {
   const months = ref<CalendarMonth[]>([])
 
   function setActiveCalendar(calendarData: Calendar, categoryData: Category[]) {
+    console.log("proced")
+
     try {
       if (!calendarData.id) return
 
