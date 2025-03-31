@@ -13,10 +13,9 @@ function handleClosing() {
 <template>
   <UiAlertDialog :open="isCategoriesModalOpen">
     <UiAlertDialogContent
-      class="grid grid-rows-[auto_1fr_auto] items-start min-h-[66vh] max-w-4xl gap-6"
+      class="grid grid-rows-[auto_1fr_auto] items-start min-h-[66vh] max-w-4xl"
       :disable-outside-pointer-events="true"
       :trap-focus="true"
-      @escape-key-down="handleClosing"
       @focus-outside="handleClosing"
       @interact-outside="handleClosing"
       @close-auto-focus="(e) => e.preventDefault()"

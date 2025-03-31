@@ -9,7 +9,7 @@ defineProps<{
 <template>
   <ul>
     <li v-for="category in categories" :key="category.id">
-      <CalendarCategoryItem :category="category" />
+      <CalendarCategoryListItem :category="category" />
     </li>
   </ul>
 </template>

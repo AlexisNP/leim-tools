@@ -3,5 +3,5 @@ const { categories } = storeToRefs(useCalendar())
 </script>
 
 <template>
-  <CalendarCategoryList :categories />
+  <CalendarCategoryTable :categories />
 </template>

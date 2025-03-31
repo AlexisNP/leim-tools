@@ -7,7 +7,9 @@ defineProps<{
 </script>
 
 <template>
-  <UiButton variant="secondary" size="sm" class="w-full text-left">
-    {{ category }}
-  </UiButton>
+  <div class="flex items-center gap-2">
+    <span class="text-sm text-gray-700 dark:text-gray-300">
+      {{ category.name }}
+    </span>
+  </div>
 </template>
