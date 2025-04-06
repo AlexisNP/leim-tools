@@ -911,6 +911,28 @@ export const useCalendar = defineStore("calendar", () => {
   }
 
   /**
+   * Updates all events categories
+   * This is used when the user updates a category and we want to update all events in the client
+   * @param categories The new categories
+   * @returns void
+   */
+  function updateAllEventsCategories(categories: Category[]) {
+    baseEvents.value.forEach((event) => {
+      if (event.category?.id) {
+        const category = categories.find((c) => c.id === event.category?.id)
+        if (category) {
+          event.category = category
+        }
+      }
+    })
+  }
+
+  // Watch for categories changes
+  watch(categories, (n) => {
+    updateAllEventsCategories(n)
+  })
+
+  /**
    * State for categories modal
    */
   const isCategoriesModalOpen = ref<boolean>(false)
