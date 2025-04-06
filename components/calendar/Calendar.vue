@@ -8,17 +8,6 @@ import CenturyLayout from "./state/centennially/Layout.vue"
 import DecadeLayout from "./state/decennially/Layout.vue"
 import YearLayout from "./state/yearly/Layout.vue"
 
-import type { Calendar } from "~/models/CalendarConfig"
-import type { Category } from "~/models/Category"
-
-const props = defineProps<{
-  calendarData: Calendar,
-  categories: Category[]
-}>()
-
-const { setActiveCalendar } = useCalendar()
-setActiveCalendar(props.calendarData, props.categories)
-
 const { currentConfig, jumpToDate, selectedDate } = useCalendar()
 const { isReadOnly } = storeToRefs(useCalendar())
 

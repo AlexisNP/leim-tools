@@ -34,12 +34,19 @@ const {
 
 const {
   data: categories,
-  status: categoriesStatus
+  status: categoriesStatus,
 } = await useLazyFetch<{ data: Category[] }>("/api/calendars/categories/query",
   { key: "active-categories" }
 )
-
 const isLoading = computed(() => calendarStatus.value === "pending" || categoriesStatus.value === "pending")
+
+const { setActiveCalendar } = useCalendar()
+watch(isLoading, (n) => {
+  if (!n && calendar.value?.data && categories.value?.data) {
+    setActiveCalendar(calendar.value?.data, categories.value.data)
+  }
+}, { immediate: true }
+)
 </script>
 
 <template>
@@ -72,7 +79,7 @@ const isLoading = computed(() => calendarStatus.value === "pending" || categorie
         />
       </div>
 
-      <Calendar :calendar-data="calendar.data" :categories="categories.data" />
+      <Calendar />
     </div>
   </div>
 

@@ -36,6 +36,14 @@ watch(user, () => {
   calRefresh()
   catRefresh()
 })
+
+const { setActiveCalendar } = useCalendar()
+watch(isLoading, (n) => {
+  if (!n && calendar.value?.data && categories.value?.data) {
+    setActiveCalendar(calendar.value?.data, categories.value.data)
+  }
+}, { immediate: true }
+)
 </script>
 
 <template>
@@ -57,7 +65,7 @@ watch(user, () => {
       <Title>{{ calendar.data.name }}</Title>
     </Head>
 
-    <Calendar :calendar-data="calendar.data" :categories="categories.data" />
+    <Calendar />
   </div>
 
   <div v-else class="h-full w-full grid place-items-center">
