@@ -10,5 +10,5 @@ export interface Category {
 export const categorySchema = z.object({
   id: z.number().int(),
   name: z.string(),
-  color: z.string().default("black")
+  color: z.string().default("black"),
 })

@@ -2,9 +2,13 @@
 import type { Category } from "~/models/Category";
 import { ScrollAreaRoot, ScrollAreaViewport, ScrollAreaScrollbar, ScrollAreaThumb } from "radix-vue"
 
-defineProps<{
+const { categories } = defineProps<{
   categories: Category[]
 }>()
+
+const sortedCategories = computed(() => {
+  return categories.toSorted((a, b) => a.name.localeCompare(b.name))
+})
 </script>
 
 <template>
@@ -23,7 +27,7 @@ defineProps<{
       <ScrollAreaViewport class="w-full h-full pr-4" as-child>
         <div class="[&:last-child]:border-0">
           <CalendarCategoryTableRow
-            v-for="item in categories"
+            v-for="item in sortedCategories"
             :key="item.id"
             :category="item"
           />
