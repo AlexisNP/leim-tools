@@ -97,7 +97,11 @@ export default defineI18nConfig(() => ({
           manageDialog: {
             title: "Manage categories",
             subtitle: "Add and change the categories of your calendar",
-          }
+          },
+          updatedToast: {
+            title: "The category \"{category}\" has been successfuly updated.",
+            titleError: "An error has occured and the category \"{category}\" wasn't updated.",
+          },
         },
         isLoading: "Loading in progress…",
         addDescription: "Add a description",
@@ -404,7 +408,11 @@ export default defineI18nConfig(() => ({
           manageDialog: {
             title: "Gestion des catégories",
             subtitle: "Créer et modifier les catégories de votre calendrier",
-          }
+          },
+          updatedToast: {
+            title: "La catégorie \"{category}\" a été modifiée avec succès.",
+            titleError: "Une erreur s'est produite et la catégorie \"{category}\" n'a pas pu être modifiée.",
+          },
         },
         isLoading: "Chargement en cours…",
         addDescription: "Ajouter une description",

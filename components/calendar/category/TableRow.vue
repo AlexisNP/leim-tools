@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import { PhCheck } from "@phosphor-icons/vue"
+import { useToast } from "~/components/ui/toast"
+import { ToastLifetime } from "~/components/ui/toast/use-toast"
 import { cn } from "~/lib/utils"
 import type { Category } from "~/models/Category"
 
-const props = defineProps<{
+const { toast } = useToast()
+const { t } = useI18n()
+
+const { category } = defineProps<{
   category: Category
 }>()
 
@@ -42,7 +47,7 @@ function toggleView(options: ToggleViewOptions = { execution: "now" }) {
  */
 function toggleEdit() {
   currentMode.value = "edit";
-  categorySkeleton.value = structuredClone(toRaw(props.category))
+  categorySkeleton.value = structuredClone(toRaw(category))
 
   nextTick(() => {
     inputFocused.value = true;
@@ -66,9 +71,21 @@ onUnmounted(() => {
 async function submitUpdate() {
   const { error } = await tryCatch(updateCategoryFromSkeleton())
 
-  if (!error) {
-    toggleView({ execution: "now" })
+  if (error) {
+    toast({
+      title: t("entity.category.updatedToast.titleError", { category: category.name }),
+      variant: "destructive",
+      duration: ToastLifetime.LONG
+    })
+    return
   }
+
+  toggleView({ execution: "now" })
+  toast({
+    title: t("entity.category.updatedToast.title", { category: category.name }),
+    variant: "success",
+    duration: ToastLifetime.SHORT
+  })
 }
 </script>
 
