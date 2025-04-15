@@ -1,9 +1,8 @@
 <script lang="ts" setup>
-import { CalendarFormCategories } from "#components";
 import { PhX } from "@phosphor-icons/vue";
 
 const { toggleCategoriesModal } = useCalendar()
-const { isCategoriesModalOpen } = storeToRefs(useCalendar())
+const { categories, isCategoriesModalOpen } = storeToRefs(useCalendar())
 
 function handleClosing() {
   toggleCategoriesModal(false)
@@ -36,7 +35,7 @@ function handleClosing() {
         <PhX size="20" />
       </UiButton>
 
-      <CalendarFormCategories />
+      <CalendarCategoryTable :categories />
     </UiAlertDialogContent>
   </UiAlertDialog>
 </template>

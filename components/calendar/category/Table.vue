@@ -2,11 +2,23 @@
 import type { Category } from "~/models/Category";
 import { ScrollAreaRoot, ScrollAreaViewport, ScrollAreaScrollbar, ScrollAreaThumb } from "radix-vue"
 
+const { t } = useI18n()
+
 const { categories } = defineProps<{
   categories: Category[]
 }>()
 
 const sortedCategories = computed(() => categories.toSorted((a, b) => a.name.localeCompare(b.name)))
+
+const deleteDialogOpened = ref<boolean>(false)
+
+function openDeleteDialog() {
+  deleteDialogOpened.value = true
+}
+
+function closeDeleteDialog() {
+  deleteDialogOpened.value = false
+}
 </script>
 
 <template>
@@ -20,6 +32,7 @@ const sortedCategories = computed(() => categories.toSorted((a, b) => a.name.loc
             v-for="item in sortedCategories"
             :key="item.id"
             :category="item"
+            @on-delete-category="openDeleteDialog"
           />
         </div>
       </ScrollAreaViewport>
@@ -35,4 +48,25 @@ const sortedCategories = computed(() => categories.toSorted((a, b) => a.name.loc
 
     <CalendarCategoryTableFooter />
   </div>
+
+  <UiDialog v-model:open="deleteDialogOpened">
+    <UiDialogContent
+      :disable-outside-pointer-events="true"
+      :trap-focus="true"
+      class="min-w-96 border-indigo-200 dark:bg-slate-950 dark:border-indigo-950"
+      @escape-key-down="closeDeleteDialog"
+      @focus-outside="closeDeleteDialog"
+      @interact-outside="closeDeleteDialog"
+      @pointer-down-outside="closeDeleteDialog"
+    >
+      <UiDialogTitle>
+        {{ $t('entity.category.deleteDialog.title') }}
+      </UiDialogTitle>
+      <UiDialogDescription>
+        {{ $t('entity.category.deleteDialog.subtitle') }}
+      </UiDialogDescription>
+
+      <CalendarFormDeleteCategory />
+    </UiDialogContent>
+  </UiDialog>
 </template>

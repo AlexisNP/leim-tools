@@ -106,7 +106,7 @@ create table public.calendar_events (
   location          text,
   start_date        json not null,
   end_date          json,
-  category          bigint references public.calendar_event_categories on delete cascade,
+  category          bigint references public.calendar_event_categories on delete set null,
   hidden            boolean default false,
   wiki              text,
   created_at        timestamptz default now(),
@@ -150,7 +150,7 @@ create table public.characters (
   description     text,
   birth           json not null,
   death           json,
-  category        bigint references public.character_categories on delete cascade,
+  category        bigint references public.character_categories on delete set null,
   hidden_birth    boolean,
   hidden_death    boolean,
   wiki            text,
@@ -457,6 +457,20 @@ create policy "Allow GMs to add new events categories"
 create policy "Allow GMs to update their events categories"
   on public.calendar_event_categories
   for update
+  using (
+    exists (
+      select 1
+      from public.calendars c
+      join public.worlds w on w.id = c.world_id
+      where
+        c.id = calendar_event_categories.calendar_id
+        and w.gm_id = auth.uid()
+    )
+);
+
+create policy "Allow GMs to delete their events categories"
+  on public.calendar_event_categories
+  for delete
   using (
     exists (
       select 1

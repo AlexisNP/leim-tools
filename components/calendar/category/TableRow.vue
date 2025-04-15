@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { PhCheck } from "@phosphor-icons/vue"
+import { PhCheck, PhTrash } from "@phosphor-icons/vue"
 import { useToast } from "~/components/ui/toast"
 import { ToastLifetime } from "~/components/ui/toast/use-toast"
 import { cn } from "~/lib/utils"
@@ -12,12 +12,17 @@ const { category } = defineProps<{
   category: Category
 }>()
 
+const emit = defineEmits<{
+  (e: "on-delete-category", payload: Category): void
+}>()
+
 type RowMode = "edit" | "view"
 const currentMode = ref<RowMode>("view")
 
 const rowRef = ref<HTMLDivElement | null>(null)
 const inputRef = ref<HTMLInputElement | null>(null)
 const { focused: inputFocused } = useFocus(inputRef)
+const rowHovered = useElementHover(rowRef)
 
 /**
  * Toggle view mode options
@@ -86,6 +91,11 @@ async function submitUpdate() {
     duration: ToastLifetime.SHORT
   })
 }
+
+function handleQueryDelete() {
+  categorySkeleton.value = structuredClone(toRaw(category))
+  emit("on-delete-category", category)
+}
 </script>
 
 <template>
@@ -148,17 +158,28 @@ async function submitUpdate() {
       </div>
     </form>
     <menu class="w-fit absolute top-1/2 -translate-y-1/2 right-2 flex items-center gap-2">
-      <li>
+      <li
+        v-if="currentMode === 'edit' && categorySkeleton"
+      >
         <UiButton
-          v-if="currentMode === 'edit' && categorySkeleton"
           variant="secondary"
           size="icon"
           class="w-6 h-6 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white"
-          :to="{ name: 'calendar.category.edit', params: { id: category.id } }"
           :title="$t('ui.actions.edit')"
           @click="submitUpdate"
         >
           <PhCheck size="14" weight="bold" />
+        </UiButton>
+      </li>
+      <li v-else-if="rowHovered">
+        <UiButton
+          variant="secondary"
+          size="icon"
+          class="w-6 h-6 rounded-full hover:bg-red-600 hover:text-white"
+          :title="$t('ui.actions.delete')"
+          @click="handleQueryDelete"
+        >
+          <PhTrash size="14" weight="bold" />
         </UiButton>
       </li>
     </menu>

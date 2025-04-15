@@ -73,6 +73,35 @@ export const useCategoryStore = defineStore("calendar-category", () => {
     resetSkeleton()
   }
 
+  async function deleteCategoryFromSkeleton() {
+    if (!categorySkeleton.value) return
+
+    abortController = new AbortController()
+    isDeletingCategory.value = true
+
+    const { error } = await tryCatch(
+      $fetch<Category>(`/api/calendars/categories/${categorySkeleton.value.id}`, { method: "DELETE", signal: abortController.signal })
+    )
+
+    if (error) {
+      isDeletingCategory.value = false
+      throw error
+    }
+
+    const categoryIndex = categories.value.findIndex(c => c.id === categorySkeleton.value!.id)
+    categories.value.splice(categoryIndex, 1)
+
+    abortController = null
+    isDeletingCategory.value = false
+    resetSkeleton()
+  }
+
+  function cancelLatestRequest() {
+    if (abortController) {
+      abortController.abort()
+    }
+  }
+
   return {
     isCreatingCategory,
     isUpdatingCategory,
@@ -81,6 +110,8 @@ export const useCategoryStore = defineStore("calendar-category", () => {
     categorySkeleton,
     resetSkeleton,
     addCategoryFromSkeleton,
-    updateCategoryFromSkeleton
+    updateCategoryFromSkeleton,
+    deleteCategoryFromSkeleton,
+    cancelLatestRequest
   }
 })

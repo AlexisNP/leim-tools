@@ -98,6 +98,10 @@ export default defineI18nConfig(() => ({
             title: "Manage categories",
             subtitle: "Add and change the categories of your calendar",
           },
+          deleteDialog: {
+            title: "Delete this category ?",
+            subtitle: "The events attached to this category won't be deleted, but you'll lose the category for this calendar.",
+          },
           addedToast: {
             title: "The category \"{category}\" has been added to the calendar.",
             titleError: "An error has occured and the category \"{category}\" wasn't added to the calendar.",
@@ -412,6 +416,10 @@ export default defineI18nConfig(() => ({
           manageDialog: {
             title: "Gestion des catégories",
             subtitle: "Créer et modifier les catégories de votre calendrier",
+          },
+          deleteDialog: {
+            title: "Supprimer cette catégorie ?",
+            subtitle: "Les évènements l'utilisant ne seront pas supprimés.",
           },
           addedToast: {
             title: "La catégorie \"{category}\" a été ajoutée au calendrier.",
