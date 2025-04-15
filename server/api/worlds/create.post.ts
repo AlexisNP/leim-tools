@@ -8,7 +8,6 @@ export default defineEventHandler(async (event) => {
   const { data: bodyData, error: schemaError } = await readValidatedBody(event, body => postWorldSchema.safeParse(body))
 
   if (schemaError) {
-    console.log(schemaError)
     throw createError({
       cause: "Utilisateur",
       fatal: false,
