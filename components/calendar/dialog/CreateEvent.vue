@@ -35,8 +35,7 @@ function openEventCreatePopover() {
  *
  * @param e The closing event (can be keydown or click)
  */
-function handleClosing(e: Event) {
-  e.preventDefault()
+function handleClosing() {
   popoverOpen.value = false
   resetSkeleton()
 }
@@ -54,8 +53,8 @@ function handleClosing(e: Event) {
       :disable-outside-pointer-events="true"
       :trap-focus="true"
       class="pl-3 w-[30rem] max-w-full border-indigo-200 dark:bg-slate-950 dark:border-indigo-950"
-      @escape-key-down="handleClosing"
-      @pointer-down-outside="handleClosing"
+      @escape-key-down.prevent="handleClosing"
+      @pointer-down-outside.prevent="handleClosing"
     >
       <CalendarFormCreateEvent @event-created="handleClosing" />
     </UiPopoverContent>
