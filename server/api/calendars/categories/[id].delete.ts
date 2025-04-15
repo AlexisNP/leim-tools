@@ -27,8 +27,6 @@ export default defineEventHandler(async (event) => {
       .eq("id", params.id)
       .maybeSingle<Category>()
 
-    console.log(error)
-
     if (error) throw error
 
     return data
