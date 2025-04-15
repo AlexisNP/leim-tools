@@ -1,26 +1,10 @@
-import { z } from "zod"
-import { serverSupabaseClient } from "#supabase/server"
-import type { Category} from "~/models/Category";
-import { categorySchema } from "~/models/Category"
-
-const paramsSchema = z.object({
-  id: z.number({ coerce: true }).positive().int()
-})
+import { serverSupabaseClient } from "#supabase/server";
+import { type Category, categorySchema } from "@/models/Category";
 
 export default defineEventHandler(async (event) => {
   const client = await serverSupabaseClient(event)
 
-  const { data: params, error: paramsError} = await getValidatedRouterParams(event, paramsSchema.safeParse)
   const { data: bodyData, error: bodyError } = await readValidatedBody(event, body => categorySchema.safeParse(body))
-
-  if (paramsError) {
-    throw createError({
-      cause: "Utilisateur",
-      fatal: false,
-      message: "L'identifiant de la catégorie est manquant ou mal renseigné.",
-      status: 401,
-    })
-  }
 
   if (bodyError) {
     const error = createError({
@@ -44,14 +28,13 @@ export default defineEventHandler(async (event) => {
   try {
     const { data, error } = await client
       .from("calendar_event_categories")
-      .update(
+      .insert(
         {
           name: bodyData.category.name,
           color: bodyData.category.color,
           calendar_id: bodyData.calendarId
         } as never
       )
-      .eq("id", params.id)
       .select(`
         id,
         name,

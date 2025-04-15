@@ -1,7 +1,7 @@
 import type { Category } from "~/models/Category";
 
 export const useCategoryStore = defineStore("calendar-category", () => {
-  const { categories } = storeToRefs(useCalendar())
+  const { activeCalendar, categories } = storeToRefs(useCalendar())
 
   /**
    * Dummy event to hold creation data
@@ -21,16 +21,38 @@ export const useCategoryStore = defineStore("calendar-category", () => {
     categorySkeleton.value = null
   }
 
+  async function addCategoryFromSkeleton() {
+    if (!categorySkeleton.value) return
+
+    abortController = new AbortController()
+
+    isCreatingCategory.value = true
+
+    const { data, error } = await tryCatch(
+      $fetch<Category>("/api/calendars/categories/create", { method: "POST", body: { category: categorySkeleton.value, calendarId: activeCalendar.value?.id }, signal: abortController.signal })
+    )
+
+    if (error) {
+      isCreatingCategory.value = false
+      throw error
+    }
+
+    // Update the category in the store
+    categories.value.push(data)
+
+    abortController = null
+    isCreatingCategory.value = false
+    resetSkeleton()
+  }
+
   async function updateCategoryFromSkeleton() {
     if (!categorySkeleton.value) return
 
     abortController = new AbortController()
     isUpdatingCategory.value = true
 
-    const body = categorySkeleton.value
-
     const { data, error } = await tryCatch(
-      $fetch<Category>(`/api/calendars/categories/${categorySkeleton.value.id}`, { method: "PATCH", body, signal: abortController.signal })
+      $fetch<Category>(`/api/calendars/categories/${categorySkeleton.value.id}`, { method: "PATCH", body: { category: categorySkeleton.value, calendarId: activeCalendar.value?.id }, signal: abortController.signal })
     )
 
     if (error) {
@@ -48,6 +70,7 @@ export const useCategoryStore = defineStore("calendar-category", () => {
 
     abortController = null
     isUpdatingCategory.value = false
+    resetSkeleton()
   }
 
   return {
@@ -57,6 +80,7 @@ export const useCategoryStore = defineStore("calendar-category", () => {
     operationInProgress,
     categorySkeleton,
     resetSkeleton,
+    addCategoryFromSkeleton,
     updateCategoryFromSkeleton
   }
 })

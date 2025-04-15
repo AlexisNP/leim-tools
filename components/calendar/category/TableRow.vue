@@ -34,10 +34,10 @@ function toggleView(options: ToggleViewOptions = { execution: "now" }) {
   currentMode.value = "view"
 
   if (options.execution === "now") {
-    inputFocused.value = false;
+    inputFocused.value = false
   } else {
     nextTick(() => {
-      inputFocused.value = false;
+      inputFocused.value = false
     })
   }
 }
@@ -46,11 +46,11 @@ function toggleView(options: ToggleViewOptions = { execution: "now" }) {
  * Toggle edit mode
  */
 function toggleEdit() {
-  currentMode.value = "edit";
+  currentMode.value = "edit"
   categorySkeleton.value = structuredClone(toRaw(category))
 
   nextTick(() => {
-    inputFocused.value = true;
+    inputFocused.value = true
   })
 }
 
@@ -66,7 +66,6 @@ onUnmounted(() => {
 
 /**
  * Submit the update
- * TODO: Implement the update logic
  */
 async function submitUpdate() {
   const { error } = await tryCatch(updateCategoryFromSkeleton())
@@ -90,18 +89,20 @@ async function submitUpdate() {
 </script>
 
 <template>
-  <div class="relative">
+  <div ref="rowRef" class="relative">
     <form
-      ref="rowRef"
-      class="grid grid-cols-12 items-center gap-4 p-1"
+      class="grid grid-cols-12 items-center gap-4 p-1 border-b-[1px] border-b-foreground/10"
       :class="cn(
         { 'bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800': currentMode === 'edit' },
         { 'bg-transparent hover:bg-slate-50 dark:bg-transparent dark:hover:bg-slate-900': currentMode !== 'edit' }
       )"
       @submit.prevent="submitUpdate"
     >
+      <div class="col-span-1 pointer-events-none">
+        <span class="opacity-50 p-2">{{ category.id }}</span>
+      </div>
       <div
-        class="col-span-6"
+        class="col-span-5"
       >
         <template v-if="currentMode === 'view'">
           <button
@@ -134,7 +135,7 @@ async function submitUpdate() {
             </span>
           </button>
         </template>
-        <template v-else-if="currentMode === 'edit'  && categorySkeleton">
+        <template v-else-if="currentMode === 'edit' && categorySkeleton">
           <div class="-mx-2">
             <InputColor
               id="category-color"

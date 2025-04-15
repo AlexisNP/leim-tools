@@ -11,15 +11,7 @@ const sortedCategories = computed(() => categories.toSorted((a, b) => a.name.loc
 
 <template>
   <div class="flex flex-col h-full">
-    <header class="grid grid-cols-12 gap-4 px-2 py-4 border-b-[1px] border-b-foreground/10 font-bold">
-      <div class="col-span-6">
-        Nom
-      </div>
-      <div class="col-span-4">
-        Couleur
-      </div>
-      <div class="col-span-2" />
-    </header>
+    <CalendarCategoryTableHeader />
 
     <ScrollAreaRoot class="h-36 grow overflow-hidden ">
       <ScrollAreaViewport class="w-full h-full pr-4" as-child>
@@ -40,5 +32,7 @@ const sortedCategories = computed(() => categories.toSorted((a, b) => a.name.loc
         />
       </ScrollAreaScrollbar>
     </ScrollAreaRoot>
+
+    <CalendarCategoryTableFooter />
   </div>
 </template>

@@ -440,6 +440,20 @@ create policy "Allow anonymous access to published event categories" on public.c
         )
     );
 
+create policy "Allow GMs to add new events categories"
+  on public.calendar_event_categories
+  for insert
+  with check (
+    exists (
+      select 1
+      from public.calendars c
+      join public.worlds w on w.id = c.world_id
+      where
+        c.id = calendar_event_categories.calendar_id
+        and w.gm_id = auth.uid()
+    )
+);
+
 create policy "Allow GMs to update their events categories"
   on public.calendar_event_categories
   for update
