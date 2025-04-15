@@ -6,9 +6,7 @@ const { categories } = defineProps<{
   categories: Category[]
 }>()
 
-const sortedCategories = computed(() => {
-  return categories.toSorted((a, b) => a.name.localeCompare(b.name))
-})
+const sortedCategories = computed(() => categories.toSorted((a, b) => a.name.localeCompare(b.name)))
 </script>
 
 <template>

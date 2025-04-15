@@ -918,11 +918,10 @@ export const useCalendar = defineStore("calendar", () => {
    */
   function updateAllEventsCategories(categories: Category[]) {
     baseEvents.value.forEach((event) => {
-      if (event.category?.id) {
-        const category = categories.find((c) => c.id === event.category?.id)
-        if (category) {
-          event.category = category
-        }
+      const category = categories.find((c) => c.id === event.category?.id)
+
+      if (category && event.category?.id) {
+        event.category = category
       }
     })
   }

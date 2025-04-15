@@ -41,12 +41,11 @@ const {
 const isLoading = computed(() => calendarStatus.value === "pending" || categoriesStatus.value === "pending")
 
 const { setActiveCalendar } = useCalendar()
-watch(isLoading, (n) => {
-  if (!n && calendar.value?.data && categories.value?.data) {
+watch([calendar, categories], () => {
+  if (calendar.value?.data && categories.value?.data) {
     setActiveCalendar(calendar.value?.data, categories.value.data)
   }
-}, { immediate: true }
-)
+}, { immediate: true })
 </script>
 
 <template>
