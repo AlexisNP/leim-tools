@@ -1,3 +1,5 @@
+import tailwindcss from "@tailwindcss/vite";
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
@@ -6,7 +8,6 @@ export default defineNuxtConfig({
     "@nuxtjs/supabase",
     "@pinia/nuxt",
     "@vueuse/nuxt",
-    "@nuxtjs/tailwindcss",
     "@nuxtjs/color-mode",
     "@nuxt/eslint",
     "shadcn-nuxt",
@@ -15,6 +16,12 @@ export default defineNuxtConfig({
   ],
 
   css: ["~/assets/main.css"],
+
+  vite: {
+    plugins: [
+      tailwindcss(),
+    ]
+  },
 
   i18n: {
     vueI18n: "./i18n.config.ts",
@@ -46,13 +53,6 @@ export default defineNuxtConfig({
     }
   },
 
-  postcss: {
-    plugins: {
-      tailwindcss: {},
-      autoprefixer: {},
-    },
-  },
-
   shadcn: {
     prefix: "Ui",
     componentDir: "./components/ui"
@@ -65,5 +65,5 @@ export default defineNuxtConfig({
   },
 
   eslint: {},
-  compatibilityDate: "2025-02-27"
+  compatibilityDate: "2025-04-16",
 })
