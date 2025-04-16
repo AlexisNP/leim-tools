@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { PhArrowBendDoubleUpLeft, PhCalendarX, PhCircleNotch } from "@phosphor-icons/vue";
 import type { Calendar } from "~/models/CalendarConfig";
-import type { Category } from "~/models/Category";
 
 const route = useRoute()
 const shortId = route.params.id
@@ -14,7 +13,7 @@ const {
   refresh: calRefresh
 } = await useLazyFetch<{ data: Calendar }>("/api/calendars/query",
   {
-    key: `calendar-${shortId}`,
+    key: "active-calendar",
     query: {
       shortId,
       full: true
@@ -22,20 +21,17 @@ const {
   }
 )
 
-const {
-  data: categories,
-  status: categoriesStatus,
-  refresh: catRefresh
-} = await useLazyFetch<{ data: Category[] }>("/api/calendars/categories/query",
-  { key: `categories-${shortId}` }
+const isLoading = computed(() => calendarStatus.value === "pending")
+
+watch(user, () => calRefresh())
+
+const { setActiveCalendar } = useCalendar()
+watch(isLoading, (n) => {
+  if (!n && calendar.value?.data) {
+    setActiveCalendar(calendar.value?.data)
+  }
+}, { immediate: true }
 )
-
-const isLoading = computed(() => calendarStatus.value === "pending" || categoriesStatus.value === "pending")
-
-watch(user, () => {
-  calRefresh()
-  catRefresh()
-})
 </script>
 
 <template>
@@ -52,12 +48,12 @@ watch(user, () => {
     </div>
   </div>
 
-  <div v-else-if="calendar?.data && categories?.data" class="h-full w-full pt-8">
+  <div v-else-if="calendar?.data" class="h-full w-full pt-8">
     <Head>
       <Title>{{ calendar.data.name }}</Title>
     </Head>
 
-    <Calendar :calendar-data="calendar.data" :categories="categories.data" />
+    <Calendar />
   </div>
 
   <div v-else class="h-full w-full grid place-items-center">

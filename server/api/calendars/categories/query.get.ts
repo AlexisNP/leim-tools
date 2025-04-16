@@ -4,6 +4,7 @@ import type { Category } from "~/models/Category";
 
 const querySchema = z.object({
   id: z.number({ coerce: true }).positive().int().optional(),
+  calendarId: z.number({ coerce: true }).positive().int()
 })
 
 export default defineEventHandler(async (event) => {
@@ -16,12 +17,17 @@ export default defineEventHandler(async (event) => {
     .from("calendar_event_categories")
     .select(`
       id,
-      name
+      name,
+      color
     `)
 
   if (query.id) {
     return output.eq("id", query.id).limit(1).single<Category>()
   }
 
-  return output.returns<Category[]>()
+  if (query.calendarId) {
+    output.eq("calendar_id", query.calendarId)
+  }
+
+  return output.overrideTypes<Category[]>()
 })

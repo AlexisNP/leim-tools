@@ -22,7 +22,7 @@
     --primary: 245 58% 51%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
+    --secondary: 210 50% 95%;
     --secondary-foreground: 222.2 47.4% 11.2%;
 
     --accent: 210 40% 96.1%;
@@ -336,6 +336,81 @@
 .dark .event-details {
   --bg-color: color-mix(in srgb, var(--base-color), var(--color-slate-950) 80%);
   --border-color: color-mix(in srgb, var(--base-color), var(--color-slate-800) 50%);
+}
+
+.bgc {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.bgc::before {
+  content: "";
+  display: inline-block;
+  width: .75rem;
+  aspect-ratio: 1;
+  margin-right: 0.5em;
+  border-radius: .25rem;
+  background-color: red;
+  border: 1px solid transparent;
+}
+
+.bgc-red::before {
+  @apply bg-red-500;
+}
+.bgc-orange::before {
+  @apply bg-orange-500;
+}
+.bgc-amber::before {
+  @apply bg-amber-500;
+}
+.bgc-yellow::before {
+  @apply bg-yellow-500;
+}
+.bgc-lime::before {
+  @apply bg-lime-500;
+}
+.bgc-green::before {
+  @apply bg-green-500;
+}
+.bgc-emerald::before {
+  @apply bg-emerald-600;
+}
+.bgc-teal::before {
+  @apply bg-teal-600;
+}
+.bgc-cyan::before {
+  @apply bg-cyan-600;
+}
+.bgc-sky::before {
+  @apply bg-sky-600;
+}
+.bgc-blue::before {
+  @apply bg-blue-600;
+}
+.bgc-indigo::before {
+  @apply bg-indigo-600;
+}
+.bgc-violet::before {
+  @apply bg-violet-600;
+}
+.bgc-purple::before {
+  @apply bg-purple-600;
+}
+.bgc-fuchsia::before {
+  @apply bg-fuchsia-600;
+}
+.bgc-pink::before {
+  @apply bg-pink-600;
+}
+.bgc-rose::before {
+  @apply bg-rose-600;
+}
+.bgc-black::before {
+  @apply bg-black dark:border-[1px] dark:border-slate-300;
+}
+.bgc-white::before {
+  @apply bg-white border-[1px] border-slate-700;
 }
 
 .fade-enter-active,

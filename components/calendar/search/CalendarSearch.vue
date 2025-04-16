@@ -26,7 +26,7 @@ import {
 import SearchList from "./lists/SearchList.vue"
 import type { Category } from "~/models/Category"
 
-const { isAdvancedSearchOpen, allEvents } = storeToRefs(useCalendar())
+const { isAdvancedSearchOpen, allEvents, categories } = storeToRefs(useCalendar())
 const { characters } = storeToRefs(useCharacters())
 
 const searchInput = shallowRef<HTMLInputElement>()
@@ -207,8 +207,7 @@ watch([currentPage, selectedEntity], () => {
 })
 
 // Compute categories based on current selectedEntity
-const { data: resCategories } = await useFetch("/api/calendars/categories/query")
-const currentCategories = ref<Category[]>(resCategories.value?.data as Category[])
+const currentCategories = computed(() => categories.value)
 
 const selectedCategories = ref<(Category)[]>([])
 const categoryFilterOpened = ref<boolean>(false)

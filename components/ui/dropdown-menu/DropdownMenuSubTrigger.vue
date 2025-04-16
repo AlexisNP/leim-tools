@@ -5,10 +5,10 @@ import {
   type DropdownMenuSubTriggerProps,
   useForwardProps
 } from "radix-vue"
-import { ChevronRight } from "lucide-vue-next"
 import { cn } from "@/lib/utils"
+import { PhCaretLeft, PhCaretRight } from "@phosphor-icons/vue";
 
-const props = defineProps<DropdownMenuSubTriggerProps & { class?: HTMLAttributes["class"] }>()
+const props = defineProps<DropdownMenuSubTriggerProps & { class?: HTMLAttributes["class"], arrowDirection?: "left" | "right" }>()
 
 const delegatedProps = computed(() => {
   const { class: _, ...delegated } = props
@@ -29,7 +29,17 @@ const forwardedProps = useForwardProps(delegatedProps)
       )
     "
   >
-    <slot />
-    <ChevronRight class="ml-auto h-4 w-4" />
+    <template v-if="props.arrowDirection === 'left'">
+      <PhCaretLeft class="mr-auto h-4 w-4" />
+
+      <span class="inline-block">
+        <slot />
+      </span>
+    </template>
+    <template v-else>
+      <slot />
+
+      <PhCaretRight class="ml-auto h-4 w-4" />
+    </template>
   </DropdownMenuSubTrigger>
 </template>

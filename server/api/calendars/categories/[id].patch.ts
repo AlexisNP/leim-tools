@@ -1,7 +1,7 @@
 import { z } from "zod"
 import { serverSupabaseClient } from "#supabase/server"
-import type { Calendar} from "~/models/CalendarConfig";
-import { postCalendarSchema } from "~/models/CalendarConfig"
+import type { Category} from "~/models/Category";
+import { categorySchema } from "~/models/Category"
 
 const paramsSchema = z.object({
   id: z.number({ coerce: true }).positive().int()
@@ -11,13 +11,13 @@ export default defineEventHandler(async (event) => {
   const client = await serverSupabaseClient(event)
 
   const { data: params, error: paramsError} = await getValidatedRouterParams(event, paramsSchema.safeParse)
-  const { data: bodyData, error: bodyError } = await readValidatedBody(event, body => postCalendarSchema.safeParse(body))
+  const { data: bodyData, error: bodyError } = await readValidatedBody(event, body => categorySchema.safeParse(body))
 
   if (paramsError) {
     throw createError({
       cause: "Utilisateur",
       fatal: false,
-      message: "L'identifiant du calendrier est manquant ou mal renseigné.",
+      message: "L'identifiant de la catégorie est manquant ou mal renseigné.",
       status: 401,
     })
   }
@@ -43,32 +43,26 @@ export default defineEventHandler(async (event) => {
 
   try {
     const { data, error } = await client
-      .from("calendars")
+      .from("calendar_event_categories")
       .update(
         {
-          name: bodyData.name,
-          world_id: bodyData.worldId,
-          today: bodyData.today,
-          state: bodyData.state,
-          color: bodyData.color,
+          name: bodyData.category.name,
+          color: bodyData.category.color,
+          calendar_id: bodyData.calendarId
         } as never
       )
       .eq("id", params.id)
       .select(`
         id,
         name,
-        color,
-        state,
-        createdAt:created_at,
-        updatedAt:updated_at
+        color
       `)
-      .single<Calendar>()
+      .single<Category>()
 
     if (error) throw error
 
     return data
   } catch (err) {
-    console.log(err)
     throw createError({
       cause: "Serveur",
       status: 500,

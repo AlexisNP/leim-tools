@@ -11,11 +11,8 @@ function toggleDialog() {
 
 /**
  * Prevents the modal from closing if's still loading
- *
- * @param e The closing event (can be keydown or click)
  */
-function handleClosing(e: Event) {
-  e.preventDefault()
+function handleClosing() {
   setTimeout(() => resetSkeleton(), 100)
 }
 </script>
@@ -32,8 +29,8 @@ function handleClosing(e: Event) {
   <UiDialog v-model:open="isDialogOpen">
     <UiDialogContent
       class="border-indigo-200 dark:bg-slate-950 dark:border-indigo-950"
-      @escape-key-down="handleClosing"
-      @pointer-down-outside="handleClosing"
+      @escape-key-down.prevent="handleClosing"
+      @pointer-down-outside.prevent="handleClosing"
     >
       <UiDialogTitle>
         {{ $t("entity.calendar.event.addSingle") }}

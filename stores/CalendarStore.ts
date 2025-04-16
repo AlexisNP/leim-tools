@@ -60,7 +60,7 @@ export const useCalendar = defineStore("calendar", () => {
    */
   const months = ref<CalendarMonth[]>([])
 
-  function setActiveCalendar(calendarData: Calendar, categoryData: Category[]) {
+  function setActiveCalendar(calendarData: Calendar) {
     try {
       if (!calendarData.id) return
 
@@ -88,7 +88,7 @@ export const useCalendar = defineStore("calendar", () => {
       months.value = calendarData.months
 
       baseEvents.value = calendarData.events
-      categories.value = categoryData
+      categories.value = calendarData.categories
     } catch (err) {
       console.log(err)
     }
@@ -345,17 +345,17 @@ export const useCalendar = defineStore("calendar", () => {
   function getViewTypeTitle(viewType: CalendarViewType): string {
     switch (viewType) {
       case "year":
-        return t("entity.calendar.years.nameSingular")
+        return t("entity.calendar.years.displayMode")
 
       case "decade":
-        return "Décennie"
+        return t("entity.calendar.decades.displayMode")
 
       case "century":
-        return "Siècle"
+        return t("entity.calendar.centuries.displayMode")
 
       case "month":
       default:
-        return t("entity.calendar.months.nameSingular")
+        return t("entity.calendar.months.displayMode")
     }
   }
 
@@ -819,7 +819,7 @@ export const useCalendar = defineStore("calendar", () => {
   }
 
   /**
-   * State for event modal edition
+   * State for event modal deletion
    */
   const isDeleteEventModalOpen = ref<boolean>(false)
 
@@ -910,6 +910,36 @@ export const useCalendar = defineStore("calendar", () => {
     }
   }
 
+  /**
+   * Updates all events categories
+   * This is used when the user updates a category and we want to update all events in the client
+   * @param categories The new categories
+   * @returns void
+   */
+  function updateAllEventsCategories(categories: Category[]) {
+    baseEvents.value.forEach((event) => {
+      const category = categories.find((c) => c.id === event.category?.id)
+
+      if (category && event.category?.id) {
+        event.category = category
+      }
+    })
+  }
+
+  // Watch for categories changes
+  watch(categories, (n) => {
+    updateAllEventsCategories(n)
+  })
+
+  /**
+   * State for categories modal
+   */
+  const isCategoriesModalOpen = ref<boolean>(false)
+
+  function toggleCategoriesModal(state: boolean) {
+    isCategoriesModalOpen.value = state
+  }
+
   return {
     isReadOnly,
     setReadStatus,
@@ -969,6 +999,8 @@ export const useCalendar = defineStore("calendar", () => {
     isEditEventModalOpen,
     revealEditEventModal,
     isDeleteEventModalOpen,
-    revealDeleteEventModal
+    revealDeleteEventModal,
+    isCategoriesModalOpen,
+    toggleCategoriesModal
   }
 })

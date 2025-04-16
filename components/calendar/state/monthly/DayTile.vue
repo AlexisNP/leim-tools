@@ -5,7 +5,7 @@ import { useElementBounding } from "@vueuse/core"
 import { storeToRefs } from "pinia"
 import { computed, ref, type ComputedRef } from "vue"
 
-import CalendarEventButton from "../../CalendarEvent.vue"
+import CalendarEventButton from "../../event/Event.vue"
 
 const props = defineProps<{
   date: RPGDate

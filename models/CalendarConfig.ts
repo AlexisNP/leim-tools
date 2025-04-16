@@ -5,7 +5,7 @@ import { dateSchema, type RPGDate } from "./Date"
 import type { World } from "./World"
 import type { ContentState } from "./Entity"
 import type { RPGColor } from "./Color"
-
+import type { Category } from "./Category"
 
 export interface CalendarConfig {
   months: CalendarMonth[]
@@ -16,7 +16,8 @@ export interface Calendar extends CalendarConfig {
   id?: number
   shortId?: string
   name: string
-  events: CalendarEvent[]
+  events: CalendarEvent[],
+  categories: Category[]
   eventNb?: Array<{ count: number }>
   state: ContentState
   color?: RPGColor

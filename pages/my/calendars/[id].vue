@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { PhArrowBendDoubleUpLeft, PhCalendarX, PhCircleNotch } from "@phosphor-icons/vue";
 import type { Calendar } from "~/models/CalendarConfig";
-import type { Category } from "~/models/Category";
 
 definePageMeta({
   middleware: ["auth-guard"]
@@ -24,7 +23,7 @@ const {
   status: calendarStatus
 } = await useLazyFetch<{ data: Calendar }>("/api/calendars/query",
   {
-    key: `calendar-${id}`,
+    key: "active-calendar",
     query: {
       id,
       full: true
@@ -32,39 +31,14 @@ const {
   }
 )
 
-const {
-  data: categories,
-  status: categoriesStatus
-} = await useLazyFetch<{ data: Category[] }>("/api/calendars/categories/query",
-  { key: `categories-${id}` }
-)
+const isLoading = computed(() => calendarStatus.value === "pending")
 
-const isLoading = computed(() => calendarStatus.value === "pending" || categoriesStatus.value === "pending")
-
-// Set custom menu
-// This should be reserved for actions, not for breadcrumbs
-//
-// const { t } = useI18n()
-// const { setCurrentMenu } = useUiStore()
-
-// // Set menu once we have the calendar data
-// watch(calendar, (n) => {
-//   if (n?.data) {
-//     setCurrentMenu([
-//       {
-//         tooltip: t("entity.world.backToMy"),
-//         to: "/my",
-//         phIcon: "universe",
-//         phIconWeight: "regular"
-//       },
-//       {
-//         tooltip: t("entity.world.backToSingle", { world: calendar.value?.data.world?.name }),
-//         to: `/my/worlds/${calendar.value?.data.world?.id}`,
-//         phIcon: "world"
-//       },
-//     ])
-//   }
-// }, { immediate: true })
+const { setActiveCalendar } = useCalendar()
+watch([calendar], () => {
+  if (calendar.value?.data) {
+    setActiveCalendar(calendar.value?.data)
+  }
+}, { immediate: true })
 </script>
 
 <template>
@@ -81,7 +55,7 @@ const isLoading = computed(() => calendarStatus.value === "pending" || categorie
     </div>
   </div>
 
-  <div v-else-if="calendar?.data && categories?.data" class="h-full w-full">
+  <div v-else-if="calendar?.data" class="h-full w-full">
     <Head>
       <Title>{{ calendar.data.name }}</Title>
     </Head>
@@ -97,7 +71,7 @@ const isLoading = computed(() => calendarStatus.value === "pending" || categorie
         />
       </div>
 
-      <Calendar :calendar-data="calendar.data" :categories="categories.data" />
+      <Calendar />
     </div>
   </div>
 

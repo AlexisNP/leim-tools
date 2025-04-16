@@ -52,6 +52,11 @@ export default defineEventHandler(async (event) => {
       category:calendar_event_categories!calendar_events_category_fkey (*),
       secondaryCategories:calendar_event_categories!calendar_event_categories_links (*)
     ),
+    categories:calendar_event_categories (
+      id,
+      name,
+      color
+    ),
     eventNb:calendar_events(count),
     world:worlds (
       id,

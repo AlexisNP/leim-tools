@@ -79,7 +79,7 @@ export default defineI18nConfig(() => ({
         dark: "Dark",
         light: "Light",
         system: "System",
-        displayMode: "Display mode"
+        displayMode: "Display"
       },
       common: {
         title: "Title",
@@ -93,13 +93,32 @@ export default defineI18nConfig(() => ({
           search: "Search categories",
           notFoundAny: "No categories found.",
           addPrimary: "Add a primary category",
-          addSecondaries: "Add secondary categories"
+          addSecondaries: "Add secondary categories",
+          manageDialog: {
+            title: "Manage categories",
+            subtitle: "Add and change the categories of your calendar",
+          },
+          deleteDialog: {
+            title: "Delete this category ?",
+            subtitle: "The events attached to this category won't be deleted, but you'll lose the category for this calendar.",
+          },
+          addedToast: {
+            title: "The category \"{category}\" has been added to the calendar.",
+            titleError: "An error has occured and the category \"{category}\" wasn't added to the calendar.",
+          },
+          updatedToast: {
+            title: "The category \"{category}\" has been successfuly updated.",
+            titleError: "An error has occured and the category \"{category}\" wasn't updated.",
+          },
+          deletedToast: {
+            title: "The category \"{category}\" has been successfuly deleted.",
+          },
         },
         isLoading: "Loading in progress…",
         addDescription: "Add a description",
         deleteOne: "Delete \"{entity}\"",
         advancedSearch: {
-          title: "Advanced search",
+          title: "Search",
           subtitle: "Search through calendar and world data",
           older: "Older",
           newer: "Newer",
@@ -147,7 +166,10 @@ export default defineI18nConfig(() => ({
           notFoundForWorld: "No calendar for this world… yet !",
           backToList: "Go back to calendars",
           isLoading: "Calendar is loading…",
+          hasXEvent: "{count} available event",
           hasXEvents: "{count} available events",
+          seeCategories: "Modify categories",
+          seeOptions: "Calendar options",
           date: {
             start: "Start date",
             end: "End date",
@@ -183,8 +205,8 @@ export default defineI18nConfig(() => ({
             title: "Event title",
             isStart: "Start",
             isEnd: "End",
-            isHidden: "Hidden event",
-            isPublic: "Public event",
+            isHidden: "Hidden",
+            isPublic: "Public",
             hiddenTooltip: "This event is visible only to game masters.",
             addLocation: "Add a place",
             prevPage: "Previous page with events",
@@ -242,26 +264,31 @@ export default defineI18nConfig(() => ({
           },
           millennia: {
             nameSingular: "Millennia",
+            displayMode: "Millennial",
             nextSingular: "Next millennia",
             prevSingular: "Last millennia",
           },
           centuries: {
             nameSingular: "Century",
+            displayMode: "Centuries",
             nextSingular: "Next century",
             prevSingular: "Last century",
           },
           decades: {
             nameSingular: "Decade",
+            displayMode: "Decadal",
             nextSingular: "Next decade",
             prevSingular: "Last decade",
           },
           years: {
             nameSingular: "Year",
+            displayMode: "Yearly",
             nextSingular: "Next year",
             prevSingular: "Last year",
           },
           months: {
             nameSingular: "Month",
+            displayMode: "Monthly",
             nextSingular: "Next month",
             prevSingular: "Last month",
             inputName: "Month's name",
@@ -375,7 +402,7 @@ export default defineI18nConfig(() => ({
         dark: "Sombre",
         light: "Clair",
         system: "Système",
-        displayMode: "Mode d'affichage",
+        displayMode: "Affichage",
       },
       common: {
         title: "Titre",
@@ -389,13 +416,32 @@ export default defineI18nConfig(() => ({
           search: "Rechercher les catégories",
           notFoundAny: "Aucune catégorie trouvée.",
           addPrimary: "Ajouter une catégorie principale",
-          addSecondaries: "Ajouter des catégories secondaires"
+          addSecondaries: "Ajouter des catégories secondaires",
+          manageDialog: {
+            title: "Gestion des catégories",
+            subtitle: "Créer et modifier les catégories de votre calendrier",
+          },
+          deleteDialog: {
+            title: "Supprimer cette catégorie ?",
+            subtitle: "Les évènements l'utilisant ne seront pas supprimés.",
+          },
+          addedToast: {
+            title: "La catégorie \"{category}\" a été ajoutée au calendrier.",
+            titleError: "Une erreur s'est produite et la catégorie \"{category}\" n'a pas pu être ajoutée.",
+          },
+          updatedToast: {
+            title: "La catégorie \"{category}\" a été modifiée avec succès.",
+            titleError: "Une erreur s'est produite et la catégorie \"{category}\" n'a pas pu être modifiée.",
+          },
+          deletedToast: {
+            title: "La catégorie \"{category}\" a été supprimée avec succès.",
+          },
         },
         isLoading: "Chargement en cours…",
         addDescription: "Ajouter une description",
         deleteOne: "Supprimer \"{entity}\"",
         advancedSearch: {
-          title: "Recherche avancée",
+          title: "Rechercher",
           subtitle: "Rechercher les données disponibles sur le calendrier",
           older: "Plus ancien",
           newer: "Plus récent",
@@ -443,7 +489,10 @@ export default defineI18nConfig(() => ({
           notFoundForWorld: "Aucun calendrier pour ce monde… pour l'instant !",
           backToList: "Retourner aux calendriers",
           isLoading: "Chargement du calendrier…",
+          hasXEvent: "{count} évènement disponible",
           hasXEvents: "{count} évènements disponibles",
+          seeCategories: "Gestion des catégories",
+          seeOptions: "Options du calendrier",
           date: {
             start: "Date de début",
             end: "Date de fin",
@@ -479,8 +528,8 @@ export default defineI18nConfig(() => ({
             title: "Titre de l'évènement",
             isStart: "Début",
             isEnd: "Fin",
-            isHidden: "Évènement privé",
-            isPublic: "Évènement public",
+            isHidden: "Privé",
+            isPublic: "Public",
             hiddenTooltip: "Cet évènement est uniquement visible pour les maîtres du jeu.",
             addLocation: "Ajouter un endroit",
             prevPage: "Précédente page à évènements",
@@ -541,26 +590,31 @@ export default defineI18nConfig(() => ({
           },
           millennia: {
             nameSingular: "Millénaire",
+            displayMode: "Par millénaire",
             nextSingular: "Millénaire suivant",
             prevSingular: "Millénaire précédent",
           },
           centuries: {
             nameSingular: "Siècle",
+            displayMode: "Par siècle",
             nextSingular: "Siècle suivant",
             prevSingular: "Siècle précédent",
           },
           decades: {
             nameSingular: "Décennie",
+            displayMode: "Par décennie",
             nextSingular: "Décennie suivante",
             prevSingular: "Décennie précédente",
           },
           years: {
             nameSingular: "Année",
+            displayMode: "Annuel",
             nextSingular: "Année suivante",
             prevSingular: "Année précédente",
           },
           months: {
             nameSingular: "Mois",
+            displayMode: "Mensuel",
             nextSingular: "Mois suivant",
             prevSingular: "Mois précédent",
             inputName: "Nom du mois",

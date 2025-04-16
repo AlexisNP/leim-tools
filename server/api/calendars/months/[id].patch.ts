@@ -13,7 +13,6 @@ export default defineEventHandler(async (event) => {
   const { data: bodyData, error: bodyError } = await readValidatedBody(event, body => calendarMonthSchema.safeParse(body))
 
   if (paramsError) {
-    console.log(paramsError)
     throw createError({
       cause: "Utilisateur",
       fatal: false,
@@ -23,7 +22,6 @@ export default defineEventHandler(async (event) => {
   }
 
   if (bodyError) {
-    console.log(bodyData)
     throw createError({
       cause: "Utilisateur",
       fatal: false,
