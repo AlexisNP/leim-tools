@@ -68,7 +68,8 @@ const calendarLink = computed(() => isOwner.value ? `/my/calendars/${props.calen
     <UiCardContent class="grow">
       <p class="flex items-center gap-1">
         <PhCalendarDots size="24" weight="fill" />
-        <span>{{ $t("entity.calendar.hasXEvents", { count: calendar.eventNb?.[0].count }) }}</span>
+        <span v-if="calendar.eventNb?.[0].count! > 1">{{ $t("entity.calendar.hasXEvents", { count: calendar.eventNb?.[0].count }) }}</span>
+        <span v-else>{{ $t("entity.calendar.hasXEvent", { count: calendar.eventNb?.[0].count }) }}</span>
       </p>
 
       <div
