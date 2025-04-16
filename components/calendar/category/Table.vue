@@ -27,7 +27,7 @@ function closeDeleteDialog() {
 
     <ScrollAreaRoot class="h-36 grow overflow-hidden ">
       <ScrollAreaViewport class="w-full h-full pr-4" as-child>
-        <div class="[&:last-child]:border-0">
+        <div class="last:border-0">
           <CalendarCategoryTableRow
             v-for="item in sortedCategories"
             :key="item.id"

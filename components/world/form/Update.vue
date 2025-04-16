@@ -79,7 +79,7 @@ function handleFormCancel() {
           name="new-world-name"
           required
           :placeholder="$t('common.title')"
-          class="w-full -my-1 py-2 -mx-1 px-1 text-xl border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600"
+          class="w-full -my-1 py-2 -mx-1 px-1 text-xl border-b-[1px] bg-transparent focus-visible:outline-hidden focus-visible:border-blue-600"
           @input="handleNameChange"
         >
 
@@ -88,7 +88,7 @@ function handleFormCancel() {
           v-model="worldSkeleton.description"
           name="new-world-description"
           :placeholder="$t('entity.addDescription')"
-          class="w-full -my-1 py-1 -mx-1 px-1 min-h-24 max-h-36 text-sm border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600"
+          class="w-full -my-1 py-1 -mx-1 px-1 min-h-24 max-h-36 text-sm border-b-[1px] bg-transparent focus-visible:outline-hidden focus-visible:border-blue-600"
         />
 
         <div class="-mx-1 grid gap-3">

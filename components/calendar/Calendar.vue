@@ -35,7 +35,7 @@ onMounted(() => {
 
 <template>
   <div class="h-full w-full relative">
-    <div class="h-full grid grid-rows-[auto,1fr]">
+    <div class="h-full grid grid-rows-[auto_1fr]">
       <CalendarMenu />
 
       <component :is="currentViewComponent" />
