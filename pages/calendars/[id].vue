@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { PhArrowBendDoubleUpLeft, PhCalendarX, PhCircleNotch } from "@phosphor-icons/vue";
 import type { Calendar } from "~/models/CalendarConfig";
-import type { Category } from "~/models/Category";
 
 const route = useRoute()
 const shortId = route.params.id
@@ -22,25 +21,14 @@ const {
   }
 )
 
-const {
-  data: categories,
-  status: categoriesStatus,
-  refresh: catRefresh
-} = await useLazyFetch<{ data: Category[] }>("/api/calendars/categories/query",
-  { key: "active-categories" }
-)
+const isLoading = computed(() => calendarStatus.value === "pending")
 
-const isLoading = computed(() => calendarStatus.value === "pending" || categoriesStatus.value === "pending")
-
-watch(user, () => {
-  calRefresh()
-  catRefresh()
-})
+watch(user, () => calRefresh())
 
 const { setActiveCalendar } = useCalendar()
 watch(isLoading, (n) => {
-  if (!n && calendar.value?.data && categories.value?.data) {
-    setActiveCalendar(calendar.value?.data, categories.value.data)
+  if (!n && calendar.value?.data) {
+    setActiveCalendar(calendar.value?.data)
   }
 }, { immediate: true }
 )
@@ -60,7 +48,7 @@ watch(isLoading, (n) => {
     </div>
   </div>
 
-  <div v-else-if="calendar?.data && categories?.data" class="h-full w-full pt-8">
+  <div v-else-if="calendar?.data" class="h-full w-full pt-8">
     <Head>
       <Title>{{ calendar.data.name }}</Title>
     </Head>
