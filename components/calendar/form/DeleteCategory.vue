@@ -26,7 +26,7 @@ async function handleAction(): Promise<void> {
     await deleteCategoryFromSkeleton()
 
     toast({
-      title: t("entity.calendar.category.deletedToast.title", { category: categoryName }),
+      title: t("entity.category.deletedToast.title", { category: categoryName }),
       variant: "success",
       duration: ToastLifetime.MEDIUM
     })

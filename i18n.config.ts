@@ -110,6 +110,9 @@ export default defineI18nConfig(() => ({
             title: "The category \"{category}\" has been successfuly updated.",
             titleError: "An error has occured and the category \"{category}\" wasn't updated.",
           },
+          deletedToast: {
+            title: "The category \"{category}\" has been successfuly deleted.",
+          },
         },
         isLoading: "Loading in progress…",
         addDescription: "Add a description",
@@ -428,6 +431,9 @@ export default defineI18nConfig(() => ({
           updatedToast: {
             title: "La catégorie \"{category}\" a été modifiée avec succès.",
             titleError: "Une erreur s'est produite et la catégorie \"{category}\" n'a pas pu être modifiée.",
+          },
+          deletedToast: {
+            title: "La catégorie \"{category}\" a été supprimée avec succès.",
           },
         },
         isLoading: "Chargement en cours…",
