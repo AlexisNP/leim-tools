@@ -62,17 +62,14 @@ function deployDeleteModal() {
 
 <template>
   <UiPopoverContent
-    class="w-96"
+    class="w-96 event-popover"
     :align="'center'"
     :align-offset="50"
     :side="'left'"
     :collision-padding="60"
     :hide-when-detached="true"
     :class="cn(
-      event.category ? `event-details-${event.category.color}` : '',
-      {
-        'event-details': event.category
-      }
+      event.category ? `element-${event.category.color}` : '',
     )"
     @focus-outside.prevent
   >

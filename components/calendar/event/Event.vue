@@ -55,10 +55,10 @@ onMounted(() => {
   <UiPopover v-model:open="isPopoverDetailsOpen">
     <UiPopoverTrigger as-child>
       <button
-        class="event text-xs px-2 py-1 block w-full text-left rounded-sm transition-colors outline-offset-1"
+        class="event-button text-xs px-2 py-1 block w-full text-left rounded-sm transition-colors outline-offset-1 cursor-pointer"
         :class="
           cn(
-            event.category ? `event-${event.category.color}` : '',
+            `element-${event.category?.color}`,
             {
               'is-hidden': event.hidden,
               'rounded-r-none': isStartEvent,
