@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { PhArrowBendDoubleUpLeft, PhCalendarX, PhCircleNotch } from "@phosphor-icons/vue";
 import type { Calendar } from "~/models/CalendarConfig";
-import type { Category } from "~/models/Category";
 
 definePageMeta({
   middleware: ["auth-guard"]
@@ -32,18 +31,12 @@ const {
   }
 )
 
-const {
-  data: categories,
-  status: categoriesStatus,
-} = await useLazyFetch<{ data: Category[] }>("/api/calendars/categories/query",
-  { key: "active-categories" }
-)
-const isLoading = computed(() => calendarStatus.value === "pending" || categoriesStatus.value === "pending")
+const isLoading = computed(() => calendarStatus.value === "pending")
 
 const { setActiveCalendar } = useCalendar()
-watch([calendar, categories], () => {
-  if (calendar.value?.data && categories.value?.data) {
-    setActiveCalendar(calendar.value?.data, categories.value.data)
+watch([calendar], () => {
+  if (calendar.value?.data) {
+    setActiveCalendar(calendar.value?.data)
   }
 }, { immediate: true })
 </script>
@@ -62,7 +55,7 @@ watch([calendar, categories], () => {
     </div>
   </div>
 
-  <div v-else-if="calendar?.data && categories?.data" class="h-full w-full">
+  <div v-else-if="calendar?.data" class="h-full w-full">
     <Head>
       <Title>{{ calendar.data.name }}</Title>
     </Head>

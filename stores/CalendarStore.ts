@@ -60,7 +60,7 @@ export const useCalendar = defineStore("calendar", () => {
    */
   const months = ref<CalendarMonth[]>([])
 
-  function setActiveCalendar(calendarData: Calendar, categoryData: Category[]) {
+  function setActiveCalendar(calendarData: Calendar) {
     try {
       if (!calendarData.id) return
 
@@ -88,7 +88,7 @@ export const useCalendar = defineStore("calendar", () => {
       months.value = calendarData.months
 
       baseEvents.value = calendarData.events
-      categories.value = categoryData
+      categories.value = calendarData.categories
     } catch (err) {
       console.log(err)
     }
