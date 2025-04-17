@@ -3,19 +3,19 @@ import { useCalendar } from "@/stores/CalendarStore"
 
 import { PhMagnifyingGlass } from "@phosphor-icons/vue"
 
-const { revealAdvancedSearch } = useCalendar()
-const { isReadOnly } = storeToRefs(useCalendar())
+const { revealAdvancedSearch, } = useCalendar()
+const { isReadOnly, defaultDate } = storeToRefs(useCalendar())
 </script>
 
 <template>
   <header class="mt-2 grid gap-4 border-border border-b-[1px]">
     <div class="px-8 flex items-center justify-between gap-2">
       <menu class="flex items-center gap-2">
-        <li v-if="!isReadOnly">
-          <LazyCalendarDialogQuickCreateEvent />
+        <li>
+          <LazyCalendarDialogQuickCreateEvent v-if="!isReadOnly" />
         </li>
         <li>
-          <CalendarMenuToday />
+          <LazyCalendarMenuToday v-if="defaultDate" />
         </li>
         <li class="ml-4">
           <CalendarCurrentDate />
