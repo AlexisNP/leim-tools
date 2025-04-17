@@ -30,7 +30,7 @@ const forwardedProps = useForwardProps(delegatedProps)
     "
   >
     <template v-if="props.arrowDirection === 'left'">
-      <PhCaretLeft class="mr-auto h-4 w-4" />
+      <PhCaretLeft class="mr-auto size-4" />
 
       <span class="inline-block">
         <slot />
@@ -39,7 +39,7 @@ const forwardedProps = useForwardProps(delegatedProps)
     <template v-else>
       <slot />
 
-      <PhCaretRight class="ml-auto h-4 w-4" />
+      <PhCaretRight class="ml-auto size-4" />
     </template>
   </DropdownMenuSubTrigger>
 </template>

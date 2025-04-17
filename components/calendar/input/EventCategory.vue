@@ -42,7 +42,7 @@ const filteredCategories = computed(() =>
           {{ model.name }}
         </template>
 
-        <PhCaretDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
+        <PhCaretDown class="ml-2 size-4 shrink-0 opacity-50" />
       </UiButton>
     </UiPopoverTrigger>
     <UiPopoverContent
@@ -51,7 +51,7 @@ const filteredCategories = computed(() =>
       :collision-padding="50"
       class="w-fit h-[33vh] p-0"
     >
-      <UiCommand v-model="model" v-model:searchTerm="searchTerm">
+      <UiCommand v-model="model" v-model:search-term="searchTerm">
         <UiCommandInput :placeholder="$t('entity.category.search')" />
         <UiCommandEmpty>{{ $t('entity.category.notFoundAny') }}</UiCommandEmpty>
         <UiCommandList>

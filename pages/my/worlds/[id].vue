@@ -201,7 +201,7 @@ function hideEditModal() {
               <UiTooltipProvider :delay-duration="250">
                 <UiTooltip>
                   <UiTooltipTrigger as-child>
-                    <UiButton size="icon" class="rounded-full h-8 w-8" @click="deployEditModal">
+                    <UiButton size="icon" class="rounded-full size-8" @click="deployEditModal">
                       <PhPencil size="17" weight="fill" />
                     </UiButton>
                   </UiTooltipTrigger>
