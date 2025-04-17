@@ -17,7 +17,7 @@ const model = defineModel<RPGColor>({ default: "white" });
       <UiSelectValue
         :placeholder="$t('ui.colors.selectOne')"
         class="bgc"
-        :class="cn(`bgc-${model}`)"
+        :class="cn(`element-${model}`)"
       />
     </UiSelectTrigger>
     <UiSelectContent :position>
@@ -29,7 +29,7 @@ const model = defineModel<RPGColor>({ default: "white" });
           class="bgc"
           :class="
             cn(
-              `bgc-${color}`,
+              `element-${color}`,
             )
           "
         >

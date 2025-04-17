@@ -139,7 +139,7 @@ function handleQueryDelete() {
           >
             <span
               class="bgc"
-              :class="cn(`bgc-${category.color}`)"
+              :class="cn(`element-${category.color}`)"
             >
               {{ $t(`ui.colors.${category.color}`) }}
             </span>

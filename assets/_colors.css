@@ -9,7 +9,7 @@
   --event-amber-background: var(--color-amber-500);
 
   --event-yellow-foreground: var(--color-slate-900);
-  --event-yellow-background: var(--color-yellow-600);
+  --event-yellow-background: var(--color-yellow-500);
 
   --event-lime-foreground: var(--color-slate-900);
   --event-lime-background: var(--color-lime-500);
@@ -54,7 +54,7 @@
   --event-black-background: var(--color-stone-500);
 
   --event-white-foreground: var(--color-slate-900);
-  --event-white-background: var(--color-yellow-200);
+  --event-white-background: var(--color-lime-100);
 }
 
 @theme inline {
@@ -204,6 +204,23 @@
 }
 .event-callout.is-hidden:is(:hover, :focus-visible)::before {
   background-color: color-mix(in srgb, var(--bg-color) 50%, var(--color-background));
+}
+
+.bgc {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.bgc::before {
+  content: "";
+  display: inline-block;
+  width: .75rem;
+  aspect-ratio: 1;
+  margin-right: 0.5em;
+  border-radius: .25rem;
+  background-color: var(--bg-color);
+  border: 1px solid transparent;
 }
 
 .element-red {
