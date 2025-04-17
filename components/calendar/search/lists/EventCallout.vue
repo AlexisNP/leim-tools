@@ -21,9 +21,9 @@ const dateDuration = computed<string | null>(() => props.event.endDate ? getRela
 
 <template>
   <button
-    class="event group relative block w-full text-left py-3 px-4 rounded-sm transition-colors"
+    class="event-callout group relative block w-full text-left py-3 px-4 cursor-pointer transition-colors"
     :class="cn(
-      event.category ? `event-${event.category.color}` : '',
+      event.category ? `element-${event.category.color}` : '',
       {
         'pt-4 is-hidden': event.hidden,
       })"

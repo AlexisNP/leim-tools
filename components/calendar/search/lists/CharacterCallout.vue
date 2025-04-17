@@ -21,7 +21,7 @@ console.log(props.character.birth)
 </script>
 
 <template>
-  <div class="block w-full text-left py-3 px-4 border-[1px] border-slate-700 rounded-sm">
+  <div class="block w-full text-left py-3 px-4 border-[1px] border-border rounded-sm">
     <div class="grid gap-2">
       <div class="flex gap-2">
         <h2 class="font-bold">
@@ -37,7 +37,7 @@ console.log(props.character.birth)
         </div>
       </div>
 
-      <menu class="flex gap-2 border-[1px] border-slate-700 rounded-sm w-fit">
+      <menu class="flex gap-2 border-[1px] border-border rounded-sm w-fit">
         <li v-if="character.birth">
           <TooltipProvider :delay-duration="100">
             <Tooltip>

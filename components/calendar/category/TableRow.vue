@@ -127,7 +127,7 @@ function handleQueryDelete() {
             ref="inputRef"
             v-model="categorySkeleton.name"
             type="text"
-            class="p-1 h-full w-full bg-transparent focus-visible:outline-none italic"
+            class="p-1 h-full w-full bg-transparent focus-visible:outline-hidden italic"
           >
         </template>
       </div>
@@ -139,7 +139,7 @@ function handleQueryDelete() {
           >
             <span
               class="bgc"
-              :class="cn(`bgc-${category.color}`)"
+              :class="cn(`element-${category.color}`)"
             >
               {{ $t(`ui.colors.${category.color}`) }}
             </span>

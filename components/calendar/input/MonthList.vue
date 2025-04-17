@@ -97,7 +97,7 @@ useSortable(monthSortableList, model.value, { animation: 150, handle: ".handle" 
     </div>
     <div class="md:col-span-full">
       <div
-        class="border-[1px] dark:border-slate-800 p-4 rounded-sm max-h-80 overflow-y-auto"
+        class="border-[1px] border-border p-4 rounded-sm max-h-80 overflow-y-auto"
         :class="model.length ? 'md:grid md:grid-cols-12 md:gap-4 md:items-center' : ''"
       >
           <div v-if="model.length" class="hidden md:block col-span-1">

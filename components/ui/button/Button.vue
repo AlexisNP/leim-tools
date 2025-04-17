@@ -20,13 +20,13 @@ const props = withDefaults(defineProps<Props>(), {
   <Primitive
     :as="as"
     :as-child="asChild"
-    :class="cn(buttonVariants({ variant, size }), props.class, 'group')"
+    :class="cn(buttonVariants({ variant, size }), props.class, 'group cursor-pointer')"
   >
     <slot />
 
     <span
       v-if="props.searchSlash"
-      class="h-4 p-1 ml-1 grid place-items-center text-[0.7em] leading-none font-semibold text-slate-500 bg-slate-100 border-slate-300 border-[1px] rounded-[3px] shadow-sm group-hover:text-slate-600 group-hover:bg-slate-200 group-hover:border-slate-400 transition-colors"
+      class="h-4 p-1 ml-1 grid place-items-center text-[0.7em] leading-none font-semibold text-slate-500 bg-slate-100 border-slate-300 border-[1px] rounded-[3px] shadow-xs group-hover:text-slate-600 group-hover:bg-slate-200 group-hover:border-slate-400 transition-colors"
     >
       <kbd class="-mt-[2px]">CTRL + :</kbd>
     </span>

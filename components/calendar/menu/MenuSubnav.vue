@@ -139,7 +139,7 @@ function toFutureFar(): void {
 
 <template>
   <div class="flex gap-2">
-    <div class="grid items-end w-40 px-4 py-2 border-slate-200 bg-white dark:bg-black dark:border-slate-700 border-x-[1px] border-t-[1px] rounded-t-sm text-sm transition-colors">
+    <div class="grid items-end w-40 px-4 py-2 bg-white dark:bg-black border-border border-x-[1px] border-t-[1px] rounded-t-sm text-sm transition-colors">
       <ClientOnly>
         <span>{{ currentDate.currentDateTitle }}</span>
 

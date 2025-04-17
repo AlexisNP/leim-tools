@@ -105,7 +105,7 @@ function handleFormCancel() {
             name="new-calendar-name"
             required
             :placeholder="$t('common.title')"
-            class="w-full py-2 -mx-1 px-1 text-xl border-b-[1px] bg-transparent focus-visible:outline-none focus-visible:border-blue-600"
+            class="w-full py-2 -mx-1 px-1 text-xl border-b-[1px] bg-transparent focus-visible:outline-hidden focus-visible:border-blue-600"
             @input="handleNameChange"
           >
 

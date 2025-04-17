@@ -109,7 +109,7 @@ async function submitNew() {
             ref="inputRef"
             v-model="categorySkeleton.name"
             type="text"
-            class="p-1 h-full w-full bg-transparent focus-visible:outline-none italic"
+            class="p-1 h-full w-full bg-transparent focus-visible:outline-hidden italic"
           >
         </template>
       </div>

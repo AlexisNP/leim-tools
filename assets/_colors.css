@@ -1,0 +1,301 @@
+:root {
+  --event-red-foreground: var(--color-slate-900);
+  --event-red-background: var(--color-red-500);
+
+  --event-orange-foreground: var(--color-slate-900);
+  --event-orange-background: var(--color-orange-500);
+
+  --event-amber-foreground: var(--color-slate-900);
+  --event-amber-background: var(--color-amber-500);
+
+  --event-yellow-foreground: var(--color-slate-900);
+  --event-yellow-background: var(--color-yellow-500);
+
+  --event-lime-foreground: var(--color-slate-900);
+  --event-lime-background: var(--color-lime-500);
+
+  --event-green-foreground: var(--color-white);
+  --event-green-background: var(--color-green-600);
+
+  --event-emerald-foreground: var(--color-white);
+  --event-emerald-background: var(--color-emerald-600);
+
+  --event-teal-foreground: var(--color-white);
+  --event-teal-background: var(--color-teal-600);
+
+  --event-cyan-foreground: var(--color-white);
+  --event-cyan-background: var(--color-cyan-600);
+
+  --event-sky-foreground: var(--color-white);
+  --event-sky-background: var(--color-sky-600);
+
+  --event-blue-foreground: var(--color-white);
+  --event-blue-background: var(--color-blue-600);
+
+  --event-indigo-foreground: var(--color-white);
+  --event-indigo-background: var(--color-indigo-600);
+
+  --event-violet-foreground: var(--color-white);
+  --event-violet-background: var(--color-violet-600);
+
+  --event-purple-foreground: var(--color-white);
+  --event-purple-background: var(--color-purple-600);
+
+  --event-fuchsia-foreground: var(--color-white);
+  --event-fuchsia-background: var(--color-fuchsia-700);
+
+  --event-pink-foreground: var(--color-white);
+  --event-pink-background: var(--color-pink-700);
+
+  --event-rose-foreground: var(--color-white);
+  --event-rose-background: var(--color-pink-700);
+
+  --event-black-foreground: var(--color-white);
+  --event-black-background: var(--color-stone-500);
+
+  --event-white-foreground: var(--color-slate-900);
+  --event-white-background: var(--color-lime-100);
+}
+
+@theme inline {
+  --color-event-red-foreground: var(--event-red-foreground);
+  --color-event-red-background: var(--event-red-background);
+
+  --color-event-orange-foreground: var(--event-orange-foreground);
+  --color-event-orange-background: var(--event-orange-background);
+
+  --color-event-amber-foreground: var(--event-amber-foreground);
+  --color-event-amber-background: var(--event-amber-background);
+
+  --color-event-yellow-foreground: var(--event-yellow-foreground);
+  --color-event-yellow-background: var(--event-yellow-background);
+
+  --color-event-lime-foreground: var(--event-lime-foreground);
+  --color-event-lime-background: var(--event-lime-background);
+
+  --color-event-green-foreground: var(--event-green-foreground);
+  --color-event-green-background: var(--event-green-background);
+
+  --color-event-emerald-foreground: var(--event-emerald-foreground);
+  --color-event-emerald-background: var(--event-emerald-background);
+
+  --color-event-teal-foreground: var(--event-teal-foreground);
+  --color-event-teal-background: var(--event-teal-background);
+
+  --color-event-cyan-foreground: var(--event-cyan-foreground);
+  --color-event-cyan-background: var(--event-cyan-background);
+
+  --color-event-sky-foreground: var(--event-sky-foreground);
+  --color-event-sky-background: var(--event-sky-background);
+
+  --color-event-blue-foreground: var(--event-blue-foreground);
+  --color-event-blue-background: var(--event-blue-background);
+
+  --color-event-indigo-foreground: var(--event-indigo-foreground);
+  --color-event-indigo-background: var(--event-indigo-background);
+
+  --color-event-violet-foreground: var(--event-violet-foreground);
+  --color-event-violet-background: var(--event-violet-background);
+
+  --color-event-purple-foreground: var(--event-purple-foreground);
+  --color-event-purple-background: var(--event-purple-background);
+
+  --color-event-fuchsia-foreground: var(--event-fuchsia-foreground);
+  --color-event-fuchsia-background: var(--event-fuchsia-background);
+
+  --color-event-pink-foreground: var(--event-pink-foreground);
+  --color-event-pink-background: var(--event-pink-background);
+
+  --color-event-rose-foreground: var(--event-rose-foreground);
+  --color-event-rose-background: var(--event-rose-background);
+
+  --color-event-black-foreground: var(--event-black-foreground);
+  --color-event-black-background: var(--event-black-background);
+
+  --color-event-white-foreground: var(--event-white-foreground);
+  --color-event-white-background: var(--event-white-background);
+}
+
+.event-button,
+.event-popover,
+.event-callout {
+  --fg-color: var(--color-foreground);
+  --bg-color: var(--color-background);
+
+  transition-duration: var(--default-transition-duration);
+  transition-timing-function: var(--default-transition-timing-function);
+}
+
+.event-button {
+  color: var(--fg-color);
+  background-color: var(--bg-color);
+  text-underline-offset: .15rem;
+  transition-property: background-color, color;
+}
+.event-button:hover {
+  text-decoration: underline;
+  background-color: color-mix(in srgb, var(--bg-color) 70%, var(--color-background));
+}
+.event-button.is-hidden {
+  background-color: transparent;
+  color: var(--bg-color);
+  border: 1px dashed var(--bg-color);
+  transition-property: background-color, color, border-color;
+}
+.event-button.is-hidden:is(:hover, :focus-visible) {
+  background-color: color-mix(in srgb, var(--bg-color) 70%, var(--color-background));
+  color: var(--fg-color);
+}
+
+.event-popover {
+  background-color: color-mix(in srgb, var(--bg-color) 10%, var(--color-background));
+  border-color: color-mix(in srgb, var(--bg-color) 50%, var(--color-background));
+  transition-property: background-color, color;
+
+  hr {
+    border-color: var(--bg-color);
+  }
+}
+
+.event-callout {
+  position: relative;
+  background-color: color-mix(in srgb, var(--bg-color) 10%, var(--color-background));
+  border-top-right-radius: .2rem;
+  border-bottom-right-radius: .2rem;
+  transition-property: background-color, color;
+
+  hr {
+    border-color: var(--bg-color);
+  }
+}
+.event-callout::before {
+  display: block;
+  content: '';
+  position: absolute;
+  height: 100%;
+  inset-block: 0;
+  left: -0.5rem;
+  width: .5rem;
+  background-color: color-mix(in srgb, var(--bg-color) 70%, var(--color-background));
+  border-top-left-radius: .2rem;
+  border-bottom-left-radius: .2rem;
+  transition-property: background-color;
+  transition-duration: var(--default-transition-duration);
+  transition-timing-function: var(--default-transition-timing-function);
+}
+.event-callout:is(:hover, :focus-visible) {
+  background-color: color-mix(in srgb, var(--bg-color) 30%, var(--color-background));
+}
+.event-callout:is(:hover, :focus-visible)::before {
+  background-color: color-mix(in srgb, var(--bg-color) 90%, var(--color-background));
+}
+
+.event-callout.is-hidden {
+  border: 1px dashed var(--bg-color);
+  background-color: transparent;
+}
+.event-callout.is-hidden::before {
+  inset-block: -2px;
+  height: calc(100% + 3px);
+  background-color: color-mix(in srgb, var(--bg-color) 40%, var(--color-background));
+}
+.event-callout.is-hidden:is(:hover, :focus-visible) {
+  background-color: color-mix(in srgb, var(--bg-color) 5%, var(--color-background));
+}
+.event-callout.is-hidden:is(:hover, :focus-visible)::before {
+  background-color: color-mix(in srgb, var(--bg-color) 50%, var(--color-background));
+}
+
+.bgc {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.bgc::before {
+  content: "";
+  display: inline-block;
+  width: .75rem;
+  aspect-ratio: 1;
+  margin-right: 0.5em;
+  border-radius: .25rem;
+  background-color: var(--bg-color);
+  border: 1px solid transparent;
+}
+
+.element-red {
+  --fg-color: var(--color-event-red-foreground);
+  --bg-color: var(--color-event-red-background);
+}
+.element-orange {
+  --fg-color: var(--color-event-orange-foreground);
+  --bg-color: var(--color-event-orange-background);
+}
+.element-amber {
+  --fg-color: var(--color-event-amber-foreground);
+  --bg-color: var(--color-event-amber-background);
+}
+.element-yellow {
+  --fg-color: var(--color-event-yellow-foreground);
+  --bg-color: var(--color-event-yellow-background);
+}
+.element-lime {
+  --fg-color: var(--color-event-lime-foreground);
+  --bg-color: var(--color-event-lime-background);
+}
+.element-green {
+  --fg-color: var(--color-event-green-foreground);
+  --bg-color: var(--color-event-green-background);
+}
+.element-emerald {
+  --fg-color: var(--color-event-emerald-foreground);
+  --bg-color: var(--color-event-emerald-background);
+}
+.element-teal {
+  --fg-color: var(--color-event-teal-foreground);
+  --bg-color: var(--color-event-teal-background);
+}
+.element-cyan {
+  --fg-color: var(--color-event-cyan-foreground);
+  --bg-color: var(--color-event-cyan-background);
+}
+.element-sky {
+  --fg-color: var(--color-event-sky-foreground);
+  --bg-color: var(--color-event-sky-background);
+}
+.element-blue {
+  --fg-color: var(--color-event-blue-foreground);
+  --bg-color: var(--color-event-blue-background);
+}
+.element-indigo {
+  --fg-color: var(--color-event-indigo-foreground);
+  --bg-color: var(--color-event-indigo-background);
+}
+.element-violet {
+  --fg-color: var(--color-event-violet-foreground);
+  --bg-color: var(--color-event-violet-background);
+}
+.element-purple {
+  --fg-color: var(--color-event-purple-foreground);
+  --bg-color: var(--color-event-purple-background);
+}
+.element-fuchsia {
+  --fg-color: var(--color-event-fuchsia-foreground);
+  --bg-color: var(--color-event-fuchsia-background);
+}
+.element-pink {
+  --fg-color: var(--color-event-pink-foreground);
+  --bg-color: var(--color-event-pink-background);
+}
+.element-rose {
+  --fg-color: var(--color-event-rose-foreground);
+  --bg-color: var(--color-event-rose-background);
+}
+.element-black {
+  --fg-color: var(--color-event-black-foreground);
+  --bg-color: var(--color-event-black-background);
+}
+.element-white {
+  --fg-color: var(--color-event-white-foreground);
+  --bg-color: var(--color-event-white-background);
+}
