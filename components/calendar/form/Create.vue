@@ -2,7 +2,11 @@
 import type { Calendar } from "~/models/CalendarConfig";
 import { PhAlarm, PhCalendarDots, PhCircleNotch, PhWrench } from "@phosphor-icons/vue";
 
-const defaultSkeleton: Calendar = { name: "", today: { day: 1, month: 0, year: 0 }, months: [], events: [], state: "draft", color: "white" }
+const props = defineProps<{
+  worldId: number
+}>()
+
+const defaultSkeleton: Calendar = { name: "", today: { day: 1, month: 0, year: 0 }, months: [], events: [], categories: [], state: "draft", color: "white" }
 const calendarSkeleton = ref<Calendar>({ ...defaultSkeleton })
 
 onMounted(() => {
@@ -38,16 +42,18 @@ const validSkeleton = computed(() => validSkeletonGeneral.value && validSkeleton
 const isCreatingCalendar = ref<boolean>(false)
 
 async function handleSubmit() {
-  try {
-    isCreatingCalendar.value = true
-    await $fetch("/api/calendars/create", { method: "POST", body: { ...calendarSkeleton.value, worldId: 1 } })
+  isCreatingCalendar.value = true
 
-    emit("on-close")
-  } catch (err) {
-    console.log(err)
-  } finally {
+  const { error } = await tryCatch($fetch("/api/calendars/create", { method: "POST", body: { ...calendarSkeleton.value, worldId: props.worldId } }))
+
+  if (error) {
+    console.log(error)
     isCreatingCalendar.value = false
+    return
   }
+
+  emit("on-close")
+  isCreatingCalendar.value = false
 }
 
 /**
