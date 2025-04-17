@@ -159,7 +159,7 @@
 
 .event-callout {
   position: relative;
-  background-color: color-mix(in srgb, var(--bg-color) 20%, var(--color-background));
+  background-color: color-mix(in srgb, var(--bg-color) 10%, var(--color-background));
   border-top-right-radius: .2rem;
   border-bottom-right-radius: .2rem;
   transition-property: background-color, color;
@@ -187,7 +187,7 @@
   background-color: color-mix(in srgb, var(--bg-color) 30%, var(--color-background));
 }
 .event-callout:is(:hover, :focus-visible)::before {
-  background-color: color-mix(in srgb, var(--bg-color) 80%, var(--color-background));
+  background-color: color-mix(in srgb, var(--bg-color) 90%, var(--color-background));
 }
 
 .event-callout.is-hidden {
@@ -197,9 +197,13 @@
 .event-callout.is-hidden::before {
   inset-block: -2px;
   height: calc(100% + 3px);
+  background-color: color-mix(in srgb, var(--bg-color) 40%, var(--color-background));
 }
 .event-callout.is-hidden:is(:hover, :focus-visible) {
-  background-color: color-mix(in srgb, var(--bg-color) 10%, var(--color-background));
+  background-color: color-mix(in srgb, var(--bg-color) 5%, var(--color-background));
+}
+.event-callout.is-hidden:is(:hover, :focus-visible)::before {
+  background-color: color-mix(in srgb, var(--bg-color) 50%, var(--color-background));
 }
 
 .element-red {

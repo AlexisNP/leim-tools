@@ -3,7 +3,7 @@ import { PhListBullets } from "@phosphor-icons/vue";
 </script>
 
 <template>
-  <header class="grid grid-cols-12 gap-4 px-2 py-4 border-b-[1px] border-b-foreground/10 font-bold mr-4">
+  <header class="grid grid-cols-12 gap-4 px-2 py-4 border-b-[1px] border-b-border font-bold mr-4">
     <div class="col-span-1 flex items-end">
       <PhListBullets size="20" />
     </div>
