@@ -40,7 +40,7 @@ onMounted(() => {
 
       <component :is="currentViewComponent" />
 
-      <LazyCalendarSearch />
+      <CalendarSearch />
       <LazyCalendarDialogCategories v-if="!isReadOnly" />
       <LazyCalendarDialogUpdateEvent v-if="!isReadOnly" />
       <LazyCalendarDialogDeleteEvent v-if="!isReadOnly" />

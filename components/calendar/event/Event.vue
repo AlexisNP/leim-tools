@@ -75,7 +75,7 @@ onMounted(() => {
       </button>
     </UiPopoverTrigger>
 
-    <LazyCalendarEventDetails
+    <CalendarEventDetails
       :event
       :spans-multiple-days
       :is-start-event

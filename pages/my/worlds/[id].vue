@@ -251,10 +251,10 @@ function hideEditModal() {
         </Spacing>
       </section>
 
-      <LazyWorldDialogEdit :world="world.data" :modal-state="isEditWorldModalOpen" @on-close="hideEditModal" />
-      <LazyCalendarDialogCreate :world="world.data" :modal-state="isCreateCalendarModalOpen" @on-close="hideCreateDialog" />
-      <LazyCalendarDialogUpdate v-if="markedCalendar?.id" :world="world.data" :calendar="markedCalendar" :modal-state="isUpdateCalendarModalOpen" @on-close="hideUpdateDialog" />
-      <LazyCalendarDialogDelete :calendar="markedCalendar" :modal-state="isDeleteCalendarModalOpen" @on-close="hideDeleteCalendarModal"/>
+      <WorldDialogEdit :world="world.data" :modal-state="isEditWorldModalOpen" @on-close="hideEditModal" />
+      <CalendarDialogCreate :world="world.data" :modal-state="isCreateCalendarModalOpen" @on-close="hideCreateDialog" />
+      <CalendarDialogUpdate :world="world.data" :calendar="markedCalendar" :modal-state="isUpdateCalendarModalOpen" @on-close="hideUpdateDialog" />
+      <CalendarDialogDelete :calendar="markedCalendar" :modal-state="isDeleteCalendarModalOpen" @on-close="hideDeleteCalendarModal"/>
     </template>
     <template v-else>
       <div class="h-full w-full grid place-items-center">

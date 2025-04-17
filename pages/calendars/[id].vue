@@ -64,21 +64,21 @@ watch(isLoading, (n) => {
     <div class="grid justify-items-center opacity-80">
       <PhCalendarX size="75" class="opacity-60" />
 
-      <LazyHeading level="h1">
+      <Heading level="h1">
         {{ $t("entity.calendar.notFound") }}
-      </LazyHeading>
+      </Heading>
 
       <p>
         {{ $t('entity.calendar.notFoundDescription') }}
       </p>
 
-      <LazyUiButton variant="default" class="mt-4 gap-2" as-child>
+      <UiButton variant="default" class="mt-4 gap-2" as-child>
         <RouterLink to="/explore">
           <PhArrowBendDoubleUpLeft size="24" />
 
           {{ $t('entity.calendar.backToList') }}
         </RouterLink>
-      </LazyUiButton>
+      </UiButton>
     </div>
   </div>
 </template>

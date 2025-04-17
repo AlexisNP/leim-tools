@@ -153,8 +153,8 @@ function hideEditModal() {
       </Spacing>
     </section>
 
-    <LazyWorldDialogCreate :modal-state="isCreateWorldModalOpen" @on-close="hideCreateDialog" />
-    <LazyWorldDialogEdit :world="markedWorld" :modal-state="isEditWorldModalOpen" @on-close="hideEditModal" />
-    <LazyWorldDialogDelete :world="markedWorld" :modal-state="isDeleteWorldModalOpen" @on-close="hideDeleteModal" />
+    <WorldDialogCreate :modal-state="isCreateWorldModalOpen" @on-close="hideCreateDialog" />
+    <WorldDialogEdit :world="markedWorld" :modal-state="isEditWorldModalOpen" @on-close="hideEditModal" />
+    <WorldDialogDelete :world="markedWorld" :modal-state="isDeleteWorldModalOpen" @on-close="hideDeleteModal" />
   </main>
 </template>
