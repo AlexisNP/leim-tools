@@ -2,13 +2,13 @@
 import {
   isCharacter,
   type Character,
-} from "@/models/Characters"
-import type { RPGDateOrder } from "@/models/Date"
+} from "~/models/Characters"
+import type { RPGDateOrder } from "~/models/Date"
 import {
   isCalendarEvent,
   type CalendarEvent,
 } from "~/models/CalendarEvent"
-import { capitalize } from "@/utils/Strings"
+import { capitalize } from "~/utils/Strings"
 import { useMagicKeys, useScroll, useStorage, whenever } from "@vueuse/core"
 import { computed, ref, watch } from "vue"
 import { searchUnifier, type SearchMode } from "../SearchMode"

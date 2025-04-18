@@ -5,7 +5,7 @@ import {
   type DropdownMenuSubTriggerProps,
   useForwardProps
 } from "radix-vue"
-import { cn } from "@/lib/utils"
+import { cn } from "~/lib/utils"
 import { PhCaretLeft, PhCaretRight } from "@phosphor-icons/vue";
 
 const props = defineProps<DropdownMenuSubTriggerProps & { class?: HTMLAttributes["class"], arrowDirection?: "left" | "right" }>()

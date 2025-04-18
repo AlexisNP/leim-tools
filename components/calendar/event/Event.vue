@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { cn } from "@/lib/utils"
-import type { RPGDate } from "@/models/Date"
+import { cn } from "~/lib/utils"
+import type { RPGDate } from "~/models/Date"
 import type { CalendarEvent } from "~/models/CalendarEvent"
 
 const props = defineProps<{

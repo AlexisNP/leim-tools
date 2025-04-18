@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import type { RPGDate } from "@/models/Date"
-import type { CalendarEvent } from "@/models/CalendarEvent"
+import type { RPGDate } from "~/models/Date"
+import type { CalendarEvent } from "~/models/CalendarEvent"
 import { useElementBounding } from "@vueuse/core"
 import { storeToRefs } from "pinia"
 import { computed, ref, type ComputedRef } from "vue"

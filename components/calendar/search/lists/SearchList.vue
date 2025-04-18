@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { isCharacter, type Character } from "@/models/Characters"
-import type { RPGDate, RPGDateOrder } from "@/models/Date"
-import { useCalendar } from "@/stores/CalendarStore"
+import { isCharacter, type Character } from "~/models/Characters"
+import type { RPGDate, RPGDateOrder } from "~/models/Date"
+import { useCalendar } from "~/stores/CalendarStore"
 import { computed } from "vue"
 import { isCalendarEvent, type CalendarEvent } from "~/models/CalendarEvent"
 import type { SearchMode } from "../../SearchMode"

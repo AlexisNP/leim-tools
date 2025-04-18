@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { cn } from "@/lib/utils";
+import { cn } from "~/lib/utils";
 import { type RPGColor, rpgColors } from "~/models/Color";
 
 const { id, theme = "normal", position = "popper" } = defineProps<{

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { cn } from "@/lib/utils"
-import { useCalendar } from "@/stores/CalendarStore"
+import { cn } from "~/lib/utils"
+import { useCalendar } from "~/stores/CalendarStore"
 import { PhCalendarBlank, PhCheckCircle, PhGear } from "@phosphor-icons/vue"
 import { computed } from "vue"
 

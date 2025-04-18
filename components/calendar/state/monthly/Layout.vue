@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useCalendar } from "@/stores/CalendarStore"
+import { useCalendar } from "~/stores/CalendarStore"
 import { useThrottleFn } from "@vueuse/core"
 
 const { currentDate, decrementViewMonth, incrementViewMonth } = useCalendar()

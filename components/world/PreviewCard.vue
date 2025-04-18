@@ -2,7 +2,7 @@
 import { PhArchive, PhFile, PhFileDashed, PhFilePlus, PhPencil, PhPencilSimpleLine, PhTrash } from "@phosphor-icons/vue";
 import type { World } from "~/models/World";
 import { DateTime } from "luxon";
-import { cn } from "@/lib/utils";
+import { cn } from "~/lib/utils";
 
 const props = defineProps<{
   world: World

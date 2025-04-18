@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { cn } from "@/lib/utils";
+import { cn } from "~/lib/utils";
 import { PhArchive, PhCalendarDots, PhFile, PhFileDashed, PhFilePlus, PhPencil, PhPencilSimpleLine, PhTrash } from "@phosphor-icons/vue";
 import { DateTime } from "luxon";
 import type { Calendar } from "~/models/CalendarConfig";

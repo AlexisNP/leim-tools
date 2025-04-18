@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { RPGDate } from "@/models/Date"
+import type { RPGDate } from "~/models/Date"
 import { storeToRefs } from "pinia"
 import { computed, type ComputedRef } from "vue"
 
