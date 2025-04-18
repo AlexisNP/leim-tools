@@ -47,7 +47,7 @@ async function handleSubmit() {
   const { error } = await tryCatch($fetch("/api/calendars/create", { method: "POST", body: { ...calendarSkeleton.value, worldId: props.worldId } }))
 
   if (error) {
-    console.log(error)
+    console.log(error.message)
     isCreatingCalendar.value = false
     return
   }

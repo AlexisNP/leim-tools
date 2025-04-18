@@ -22,21 +22,20 @@ async function handleAction(): Promise<void> {
 
   const categoryName = categorySkeleton.value?.name
 
-  try {
-    await deleteCategoryFromSkeleton()
+  const { error } = await tryCatch(deleteCategoryFromSkeleton())
 
-    toast({
-      title: t("entity.category.deletedToast.title", { category: categoryName }),
-      variant: "success",
-      duration: ToastLifetime.MEDIUM
-    })
-  } catch (err) {
-    if (err instanceof Error) {
-      formErrors.message = err.message
-    }
-  } finally {
+  if (error) {
+    formErrors.message = error.message
     isLoading.value = false
+    return
   }
+
+  toast({
+    title: t("entity.category.deletedToast.title", { category: categoryName }),
+    variant: "success",
+    duration: ToastLifetime.MEDIUM
+  })
+  isLoading.value = false
 }
 
 /**

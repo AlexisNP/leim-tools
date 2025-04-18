@@ -17,31 +17,30 @@ const isLoading = ref<boolean>(false)
 const emit = defineEmits(["on-close"])
 
 async function handleAction(): Promise<void> {
-  if (isLoading.value) return
-  if (!props.world) return
+  if (isLoading.value || !props.world) return
 
   isLoading.value = true
 
-  try {
-    await $fetch(`/api/worlds/${props.world.id}`, { method: "DELETE" })
-    emit("on-close")
+  const { error } = await tryCatch(
+    $fetch(`/api/worlds/${props.world.id}`, { method: "DELETE" })
+  )
 
+  if (error) {
     toast({
-      title: t("entity.world.deletedToast.title", { world: props.world.name }),
-      variant: "success",
-      duration: ToastLifetime.SHORT
+      title: error.message,
+      variant: "destructive"
     })
-  } catch (err) {
-    console.log(err)
-    if (err instanceof Error) {
-      toast({
-        title: err.message,
-        variant: "destructive"
-      })
-    }
-  } finally {
     isLoading.value = false
+    return
   }
+
+  toast({
+    title: t("entity.world.deletedToast.title", { world: props.world.name }),
+    variant: "success",
+    duration: ToastLifetime.SHORT
+  })
+  emit("on-close")
+  isLoading.value = false
 }
 
 /**

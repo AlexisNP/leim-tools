@@ -38,22 +38,14 @@ function handleInsertedWorld(newWorld: WorldChannelPayload) {
   newWorld.createdAt = newWorld.created_at;
   newWorld.gmId = newWorld.gm_id;
 
-  try {
-    worlds.value?.data.push(newWorld)
-  } catch (err) {
-    console.log(err)
-  }
+  worlds.value?.data.push(newWorld)
 }
 
 /** Handles world deletion realtime events */
 function handleDeletedWorld(id: number) {
   if (!worlds.value?.data) return
 
-  try {
-    worlds.value.data.splice(worlds.value.data.findIndex(w => w.id === id), 1)
-  } catch (err) {
-    console.log(err)
-  }
+  worlds.value.data.splice(worlds.value.data.findIndex(w => w.id === id), 1)
 }
 
 onMounted(() => {

@@ -51,25 +51,17 @@ let worldChannel: RealtimeChannel
 function handleInsertedCalendar(newCalendar: CalendarChannelPayload) {
   if (!world.value) return
 
-  newCalendar.createdAt = newCalendar.created_at;
-  newCalendar.eventNb = [{ count: 0 }];
+  newCalendar.createdAt = newCalendar.created_at
+  newCalendar.eventNb = [{ count: 0 }]
 
-  try {
-    world.value.data.calendars?.push(newCalendar)
-  } catch (err) {
-    console.log(err)
-  }
+  world.value.data.calendars?.push(newCalendar)
 }
 
 /** Handles calendar deletion realtime events */
 function handleDeletedCalendar(id: number) {
   if (!world.value) return
 
-  try {
-    world.value.data.calendars?.splice(world.value.data.calendars.findIndex(c => c.id === id), 1)
-  } catch (err) {
-    console.log(err)
-  }
+  world.value.data.calendars?.splice(world.value.data.calendars.findIndex(c => c.id === id), 1)
 }
 
 onMounted(() => {

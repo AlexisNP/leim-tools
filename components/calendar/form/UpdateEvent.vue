@@ -23,19 +23,11 @@ async function handleAction() {
 
   isLoading.value = true
 
-  try {
-    await updateEventFromSkeleton()
+  const { error } = await tryCatch(updateEventFromSkeleton())
 
-    emit("event-updated")
-
-    toast({
-      title: t("entity.calendar.event.updatedToast.title", { event: eventSkeleton.value.title }),
-      variant: "success",
-      duration: ToastLifetime.SHORT
-    })
-  } catch (err) {
+  if (error) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const apiError = (err as any).data as APIError
+    const apiError = (error as any).data as APIError
 
     apiError.data.errors.forEach((error) => {
       toast({
@@ -45,10 +37,21 @@ async function handleAction() {
         duration: ToastLifetime.MEDIUM,
       })
     })
-  } finally {
-    resetSkeleton()
+
     isLoading.value = false
+    return
   }
+
+  emit("event-updated")
+
+  toast({
+    title: t("entity.calendar.event.updatedToast.title", { event: eventSkeleton.value.title }),
+    variant: "success",
+    duration: ToastLifetime.SHORT
+  })
+
+  isLoading.value = false
+  resetSkeleton()
 }
 
 /**

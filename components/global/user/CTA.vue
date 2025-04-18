@@ -21,29 +21,27 @@ function closeMenu() {
 watch(user, closeMenu)
 
 async function handleGoogleLogin() {
-  try {
-    auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        queryParams: {
-          access_type: "offline",
-          prompt: "consent"
-        },
-        redirectTo: profileUrl
-      }
-    })
-  } catch (err) {
-    console.log(err)
+  const { error } = await auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      queryParams: {
+        access_type: "offline",
+        prompt: "consent"
+      },
+      redirectTo: profileUrl
+    }
+  })
+
+  if (error) {
+    console.log(error.message)
   }
 }
 
 async function handleLogout() {
-  try {
-    const { error } = await auth.signOut()
+  const { error } = await auth.signOut()
 
-    if (error) throw error
-  } catch (err) {
-    console.log(err)
+  if (error) {
+    console.log(error.message)
   }
 }
 
