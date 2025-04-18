@@ -265,9 +265,9 @@ function handleCategoryUnselect(e: Category) {
 <template>
   <UiDialog v-model:open="isAdvancedSearchOpen" @update:open="resetSearch()">
     <UiDialogContent
-      class="flex flex-col flex-nowrap top-16 -translate-y-0 data-[state=closed]:slide-out-to-top-[5%] data-[state=open]:slide-in-from-top-[5%]"
+      class="flex flex-col flex-nowrap top-10 -translate-y-0 data-[state=closed]:slide-out-to-top-[5%] data-[state=open]:slide-in-from-top-[5%]"
       :class="{
-        'bottom-16': searchResults.length > 0
+        'bottom-10': searchResults.length > 0
       }"
     >
       <VisuallyHidden>
