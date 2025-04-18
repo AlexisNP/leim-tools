@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { PhCaretDown } from "@phosphor-icons/vue";
+import { cn } from "~/lib/utils";
 import type { Category } from "~/models/Category";
 
 const isPopoverOpen = ref<boolean>(false)
@@ -39,7 +40,12 @@ const filteredCategories = computed(() =>
           {{ props.placeholder }}
         </template>
         <template v-else>
-          {{ model.name }}
+          <span
+            class="bgc"
+            :class="cn(`element-${model.color}`)"
+          >
+            {{ capitalize(model.name) }}
+          </span>
         </template>
 
         <PhCaretDown class="ml-2 size-4 shrink-0 opacity-50" />
@@ -63,7 +69,12 @@ const filteredCategories = computed(() =>
               class="cursor-pointer"
               @select="handleCatSelect"
             >
-              {{ category.name }}
+              <span
+                class="bgc"
+                :class="cn(`element-${category.color}`)"
+              >
+                {{ capitalize(category.name) }}
+              </span>
             </UiCommandItem>
           </UiCommandGroup>
         </UiCommandList>
