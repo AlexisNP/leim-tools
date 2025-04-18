@@ -25,11 +25,11 @@ const emit = defineEmits(["on-click"])
     <NuxtLink
       v-if="props.link"
       :to="props.link"
-      class="absolute inset-0 z-10 focus-visible:outline-hidden"
+      class="absolute inset-0 z-10 focus-visible:outline-hidden cursor-pointer"
     />
     <button
       v-if="props.hasClick"
-      class="absolute inset-0 z-10 focus-visible:outline-hidden"
+      class="absolute inset-0 z-10 focus-visible:outline-hidden cursor-pointer"
       @click="emit('on-click')" />
   </div>
 </template>
