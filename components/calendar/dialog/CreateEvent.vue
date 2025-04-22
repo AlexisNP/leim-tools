@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { RPGDate } from "~/models/Date";
 
-const { eventSkeleton, operationInProgress } = storeToRefs(useCalendar())
+const { eventSkeleton, operationInProgress, currentRPGDate } = storeToRefs(useCalendar())
 const { resetSkeleton } = useCalendar()
 const popoverOpen = ref(false)
 
@@ -39,6 +39,13 @@ function handleClosing() {
   popoverOpen.value = false
   resetSkeleton()
 }
+
+// If the date changes, the popover should close
+// Only for months for now (because it's the only view)
+watch(currentRPGDate, () => {
+  if (!popoverOpen.value) return
+  handleClosing()
+})
 </script>
 
 <template>
