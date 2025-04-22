@@ -24,7 +24,7 @@ const calendarLink = computed(() => isOwner.value ? `/my/calendars/${props.calen
 
 <template>
   <UiCard
-    class="w-full h-full flex flex-col transition-all hover:bg-slate-50 dark:bg-gray-950 dark:hover:bg-indigo-950 dark:focus-within:outline-gray-900"
+    class="w-full h-full flex flex-col transition-all"
     :link="calendarLink"
     :class="cn(
       calendar.color ? `card-color element-${calendar.color}` : '',
