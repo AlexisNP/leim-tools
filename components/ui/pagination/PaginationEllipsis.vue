@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { type HTMLAttributes, computed } from "vue"
 import { PaginationEllipsis, type PaginationEllipsisProps } from "radix-vue"
-import { MoreHorizontal } from "lucide-vue-next"
 import { cn } from "~/lib/utils"
+import { PhArrowsHorizontal } from "@phosphor-icons/vue";
 
 const props = defineProps<PaginationEllipsisProps & { class?: HTMLAttributes["class"] }>()
 
@@ -16,10 +16,10 @@ const delegatedProps = computed(() => {
 <template>
   <PaginationEllipsis
     v-bind="delegatedProps"
-    :class="cn('w-9 h-9 flex items-center justify-center', props.class)"
+    :class="cn('size-9 flex items-center justify-center', props.class)"
   >
     <slot>
-      <MoreHorizontal />
+      <PhArrowsHorizontal />
     </slot>
   </PaginationEllipsis>
 </template>
