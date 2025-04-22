@@ -39,7 +39,7 @@
   --background: hsl(180 0 4.9%);
   --foreground: hsl(210 40% 98%);
 
-  --muted: hsl(244 47% 20%);
+  --muted: hsl(0, 0%, 12%);
   --muted-foreground: hsl(215 20.2% 65.1%);
 
   --popover: hsl(180 0 4.9%);
