@@ -122,7 +122,7 @@ export default defineI18nConfig(() => ({
           subtitle: "Search through calendar and world data",
           older: "Older",
           newer: "Newer",
-          ctaPlaceholder: "Search an event, characters…"
+          ctaPlaceholder: "Search an event"
         },
         world: {
           nameSingular: "World",
@@ -445,7 +445,7 @@ export default defineI18nConfig(() => ({
           subtitle: "Rechercher les données disponibles sur le calendrier",
           older: "Plus ancien",
           newer: "Plus récent",
-          ctaPlaceholder: "Rechercher un évènement, personnage…"
+          ctaPlaceholder: "Rechercher un évènement"
         },
         world: {
           nameSingular: "Monde",
