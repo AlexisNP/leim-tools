@@ -61,37 +61,33 @@ export const useCalendar = defineStore("calendar", () => {
   const months = ref<CalendarMonth[]>([])
 
   function setActiveCalendar(calendarData: Calendar) {
-    try {
-      if (!calendarData.id) return
+    if (!calendarData.id) return
 
-      activeCalendar.value = {
-        id: calendarData.id,
-        name: calendarData.name,
-        today: calendarData.today,
-        gmId: calendarData.world?.gmId
-      }
-
-      setDefaultDate(activeCalendar.value.today)
-      selectDate(activeCalendar.value.today)
-      setReadStatus(activeCalendar.value.gmId!)
-
-      if (!params.day) {
-        params.day = defaultDate.value.day.toString()
-      }
-      if (!params.month) {
-        params.month = defaultDate.value.month.toString()
-      }
-      if (!params.year) {
-        params.year = defaultDate.value.year.toString()
-      }
-
-      months.value = calendarData.months
-
-      baseEvents.value = calendarData.events
-      categories.value = calendarData.categories
-    } catch (err) {
-      console.log(err)
+    activeCalendar.value = {
+      id: calendarData.id,
+      name: calendarData.name,
+      today: calendarData.today,
+      gmId: calendarData.world?.gmId
     }
+
+    setDefaultDate(activeCalendar.value.today)
+    selectDate(activeCalendar.value.today)
+    setReadStatus(activeCalendar.value.gmId!)
+
+    if (!params.day) {
+      params.day = defaultDate.value.day.toString()
+    }
+    if (!params.month) {
+      params.month = defaultDate.value.month.toString()
+    }
+    if (!params.year) {
+      params.year = defaultDate.value.year.toString()
+    }
+
+    months.value = calendarData.months
+
+    baseEvents.value = calendarData.events
+    categories.value = calendarData.categories
   }
 
   const params = useUrlSearchParams("history", {

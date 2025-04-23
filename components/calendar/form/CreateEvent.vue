@@ -29,17 +29,16 @@ async function handleSubmit() {
 
   isLoading.value = true
 
-  try {
-    await submitSkeleton()
+  const { error } = await tryCatch(submitSkeleton())
 
-    emit("event-created")
-  } catch (err) {
-    if (err instanceof Error) {
-      formErrors.message = err.message
-    }
-  } finally {
+  if (error) {
+    formErrors.message = error.message
     isLoading.value = false
+    return
   }
+
+  emit("event-created")
+  isLoading.value = false
 }
 
 /**

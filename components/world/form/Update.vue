@@ -30,22 +30,24 @@ const validSkeleton = computed(() => worldSkeleton.value.name)
 async function handleSubmit() {
   if (!user.value || !worldSkeleton.value) return
 
-  try {
-    isLoading.value = true
-    await $fetch(`/api/worlds/${worldSkeleton.value.id}`, { method: "PATCH", body: { ...worldSkeleton.value } })
+  isLoading.value = true
 
-    toast({
-      title: t("entity.world.updatedToast.title", { world: worldSkeleton.value.name }),
-      variant: "success",
-      duration: ToastLifetime.SHORT
-    })
+  const { error } = await tryCatch(
+    $fetch(`/api/worlds/${worldSkeleton.value.id}`, { method: "PATCH", body: { ...worldSkeleton.value } })
+  )
 
-    emit("on-close")
-  } catch (err) {
-    console.log(err)
-  } finally {
-    isLoading.value = false
+  if (error) {
+    console.log(error.message)
   }
+
+  toast({
+    title: t("entity.world.updatedToast.title", { world: worldSkeleton.value.name }),
+    variant: "success",
+    duration: ToastLifetime.SHORT
+  })
+
+  emit("on-close")
+  isLoading.value = false
 }
 
 /**

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { HTMLAttributes } from "vue"
-import { cn } from "@/lib/utils"
-import { ChevronRight } from "lucide-vue-next"
+import { cn } from "~/lib/utils"
+import { PhCaretRight } from "@phosphor-icons/vue";
 
 const props = defineProps<{
   class?: HTMLAttributes["class"]
@@ -15,7 +15,7 @@ const props = defineProps<{
     :class="cn('[&>svg]:w-3 [&>svg]:h-3', props.class)"
   >
     <slot>
-      <ChevronRight />
+      <PhCaretRight />
     </slot>
   </li>
 </template>

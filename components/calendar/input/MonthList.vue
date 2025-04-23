@@ -91,7 +91,7 @@ useSortable(monthSortableList, model.value, { animation: 150, handle: ".handle" 
       />
     </div>
     <div class="md:col-span-1">
-      <UiButton size="icon" class="rounded-full h-8 w-8" :disabled="!validNewMonth" @click.prevent="addMonthToModel">
+      <UiButton size="icon" class="rounded-full size-8" :disabled="!validNewMonth" @click.prevent="addMonthToModel">
         <PhPlus size="17"/>
       </UiButton>
     </div>
@@ -103,7 +103,7 @@ useSortable(monthSortableList, model.value, { animation: 150, handle: ".handle" 
           <div v-if="model.length" class="hidden md:block col-span-1">
             <ul class="grid gap-y-4 justify-center">
               <li v-for="(m, i) in model" :key="`num-${m.name}`">
-                <UiButton size="icon" variant="secondary" class="h-8 w-8 rounded-full">
+                <UiButton size="icon" variant="secondary" class="size-8 rounded-full">
                   <span class="font-bold text-sm">{{ i + 1 }}</span>
                 </UiButton>
               </li>
@@ -115,7 +115,7 @@ useSortable(monthSortableList, model.value, { animation: 150, handle: ".handle" 
               <template v-if="model.length">
                 <li v-for="(m, i) in model" :key="m.name" class="grid md:grid-cols-12 gap-4 md:items-center text-slate-900 bg-slate-200 rounded-md">
                   <div class="md:col-span-1 text-right duration-200 ease-out transition transform origin-top-right">
-                    <UiButton type="button" variant="ghost" size="icon" class="handle rounded-full h-8 w-8">
+                    <UiButton type="button" variant="ghost" size="icon" class="handle rounded-full size-8">
                       <PhList size="17" />
                     </UiButton>
                   </div>
@@ -145,7 +145,7 @@ useSortable(monthSortableList, model.value, { animation: 150, handle: ".handle" 
                     <UiTooltipProvider>
                       <UiTooltip>
                         <UiTooltipTrigger as-child>
-                          <UiButton type="button" variant="ghost" size="icon" class="rounded-full h-8 w-8" @click="removeMonthFromModel(i)">
+                          <UiButton type="button" variant="ghost" size="icon" class="rounded-full size-8" @click="removeMonthFromModel(i)">
                             <PhTrash size="17" />
                           </UiButton>
                         </UiTooltipTrigger>

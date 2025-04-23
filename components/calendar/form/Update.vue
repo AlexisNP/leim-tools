@@ -34,16 +34,20 @@ const validSkeleton = computed(() => validSkeletonGeneral.value && validSkeleton
 const isUpdatingCalendar = ref<boolean>(false)
 
 async function handleSubmit() {
-  try {
-    isUpdatingCalendar.value = true
-    await $fetch(`/api/calendars/${calendarSkeleton.value.id}`, { method: "PATCH", body: { ...calendarSkeleton.value, worldId: props.world?.id } })
+  isUpdatingCalendar.value = true
 
-    emit("on-close")
-  } catch (err) {
-    console.log(err)
-  } finally {
+  const { error } = await tryCatch(
+    $fetch(`/api/calendars/${calendarSkeleton.value.id}`, { method: "PATCH", body: { ...calendarSkeleton.value, worldId: props.world?.id } })
+  )
+
+  if (error) {
+    console.log(error.message)
     isUpdatingCalendar.value = false
+    return
   }
+
+  emit("on-close")
+  isUpdatingCalendar.value = false
 }
 
 /**

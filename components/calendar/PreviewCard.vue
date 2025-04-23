@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { cn } from "~/lib/utils";
 import { PhArchive, PhCalendarDots, PhFile, PhFileDashed, PhFilePlus, PhPencil, PhPencilSimpleLine, PhTrash } from "@phosphor-icons/vue";
 import { DateTime } from "luxon";
 import type { Calendar } from "~/models/CalendarConfig";
@@ -23,30 +24,11 @@ const calendarLink = computed(() => isOwner.value ? `/my/calendars/${props.calen
 
 <template>
   <UiCard
-    class="w-full h-full flex flex-col transition-all hover:bg-slate-50 dark:bg-gray-950 dark:hover:bg-indigo-950 dark:focus-within:outline-gray-900"
+    class="w-full h-full flex flex-col transition-all"
     :link="calendarLink"
-    :class="{
-      'hover:bg-slate-50 dark:hover:bg-sky-950 dark:focus-within:outline-sky-900': !calendar.color,
-      'bg-red-100 dark:bg-red-950 border-red-200 hover:bg-red-50 dark:hover:bg-red-900 dark:border-red-900 dark:focus-within:outline-red-900': calendar.color === 'red',
-      'bg-orange-100 dark:bg-orange-950 border-orange-200 hover:bg-orange-50 dark:hover:bg-orange-900 dark:border-orange-900 dark:focus-within:outline-orange-900': calendar.color === 'orange',
-      'bg-amber-100 dark:bg-amber-950 border-amber-200 hover:bg-amber-50 dark:hover:bg-amber-900 dark:border-amber-900 dark:focus-within:outline-amber-900': calendar.color === 'amber',
-      'bg-yellow-100 dark:bg-yellow-950 border-yellow-200 hover:bg-yellow-50 dark:hover:bg-yellow-900 dark:border-yellow-900 dark:focus-within:outline-yellow-900': calendar.color === 'yellow',
-      'bg-lime-100 dark:bg-lime-950 border-lime-200 hover:bg-lime-50 dark:hover:bg-lime-900 dark:border-lime-900 dark:focus-within:outline-lime-900': calendar.color === 'lime',
-      ' bg-green-100 dark:bg-green-950 border-green-200 hover:bg-green-50 dark:hover:bg-green-900 dark:border-green-900 dark:focus-within:outline-green-900': calendar.color === 'green',
-      'bg-emerald-100 dark:bg-emerald-950 border-emerald-200 hover:bg-emerald-50 dark:hover:bg-emerald-900 dark:border-emerald-900 dark:focus-within:outline-emerald-900': calendar.color === 'emerald',
-      'bg-teal-100 dark:bg-teal-950 border-teal-200 hover:bg-teal-50 dark:hover:bg-teal-900 dark:border-teal-900 dark:focus-within:outline-teal-900': calendar.color === 'teal',
-      'bg-cyan-100 dark:bg-cyan-950 border-cyan-200 hover:bg-cyan-50 dark:hover:bg-cyan-900 dark:border-cyan-900 dark:focus-within:outline-cyan-900': calendar.color === 'cyan',
-      'bg-sky-100 dark:bg-sky-950 border-sky-200 hover:bg-sky-50 dark:hover:bg-sky-900 dark:border-sky-900 dark:focus-within:outline-sky-900': calendar.color === 'sky',
-      'bg-blue-100 dark:bg-blue-950 border-blue-200 hover:bg-blue-50 dark:hover:bg-blue-900 dark:border-blue-900 dark:focus-within:outline-blue-900': calendar.color === 'blue',
-      'bg-indigo-100 dark:bg-indigo-950 border-indigo-200 hover:bg-indigo-50 dark:hover:bg-indigo-900 dark:border-indigo-900 dark:focus-within:outline-indigo-900': calendar.color === 'indigo',
-      'bg-violet-100 dark:bg-violet-950 border-violet-200 hover:bg-violet-50 dark:hover:bg-violet-900 dark:border-violet-900 dark:focus-within:outline-violet-900': calendar.color === 'violet',
-      'bg-purple-100 dark:bg-purple-950 border-purple-200 hover:bg-purple-50 dark:hover:bg-purple-900 dark:border-purple-900 dark:focus-within:outline-purple-900': calendar.color === 'purple',
-      'bg-fuchsia-100 dark:bg-fuchsia-950 border-fuchsia-200 hover:bg-fuchsia-50 dark:hover:bg-fuchsia-900 dark:border-fuchsia-900 dark:focus-within:outline-fuchsia-900': calendar.color === 'fuchsia',
-      'bg-pink-100 dark:bg-pink-950 border-pink-200 hover:bg-pink-50 dark:hover:bg-pink-900 dark:border-pink-900 dark:focus-within:outline-pink-900': calendar.color === 'pink',
-      'bg-pink-100 dark:bg-rose-950 border-rose-200 hover:bg-rose-50 dark:hover:bg-rose-900 dark:border-rose-900 dark:focus-within:outline-rose-900': calendar.color === 'rose',
-      'text-slate-100 bg-slate-900 border-slate-700 hover:bg-slate-700 dark:hover:bg-slate-800 dark:border-slate-900 dark:focus-within:outline-slate-900': calendar.color === 'black',
-      ' hover:bg-slate-50 dark:hover:text-slate-900 dark:hover:bg-slate-200 dark:border-slate-700 dark:focus-within:outline-slate-100': calendar.color === 'white',
-    }"
+    :class="cn(
+      calendar.color ? `card-color element-${calendar.color}` : '',
+    )"
   >
     <UiCardHeader class="gap-4">
       <UiCardTitle class="text-xl pr-12">{{ calendar.name }}</UiCardTitle>
@@ -86,7 +68,9 @@ const calendarLink = computed(() => isOwner.value ? `/my/calendars/${props.calen
       </div>
     </UiCardContent>
 
-    <UiCardFooter>
+    <hr>
+
+    <UiCardFooter class="border-t-0">
       <ul class="grid gap-1 text-sm">
         <li class="flex gap-1 items-center">
           <PhFilePlus size="18" />

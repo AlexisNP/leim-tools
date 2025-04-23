@@ -2,13 +2,13 @@
 import {
   isCharacter,
   type Character,
-} from "@/models/Characters"
-import type { RPGDateOrder } from "@/models/Date"
+} from "~/models/Characters"
+import type { RPGDateOrder } from "~/models/Date"
 import {
   isCalendarEvent,
   type CalendarEvent,
 } from "~/models/CalendarEvent"
-import { capitalize } from "@/utils/Strings"
+import { capitalize } from "~/utils/Strings"
 import { useMagicKeys, useScroll, useStorage, whenever } from "@vueuse/core"
 import { computed, ref, watch } from "vue"
 import { searchUnifier, type SearchMode } from "../SearchMode"
@@ -25,6 +25,7 @@ import {
 
 import SearchList from "./lists/SearchList.vue"
 import type { Category } from "~/models/Category"
+import { cn } from "~/lib/utils"
 
 const { isAdvancedSearchOpen, allEvents, categories } = storeToRefs(useCalendar())
 const { characters } = storeToRefs(useCharacters())
@@ -264,9 +265,9 @@ function handleCategoryUnselect(e: Category) {
 <template>
   <UiDialog v-model:open="isAdvancedSearchOpen" @update:open="resetSearch()">
     <UiDialogContent
-      class="flex flex-col flex-nowrap top-16 -translate-y-0 data-[state=closed]:slide-out-to-top-[5%] data-[state=open]:slide-in-from-top-[5%]"
+      class="flex flex-col flex-nowrap top-10 -translate-y-0 data-[state=closed]:slide-out-to-top-[5%] data-[state=open]:slide-in-from-top-[5%]"
       :class="{
-        'bottom-16': searchResults.length > 0
+        'bottom-10': searchResults.length > 0
       }"
     >
       <VisuallyHidden>
@@ -316,8 +317,14 @@ function handleCategoryUnselect(e: Category) {
           <div class="grow flex justify-end items-center gap-1">
             <UiTagsInput class="grow px-0 gap-y-1 w-80">
               <div v-if="selectedCategories.length > 0" class="flex gap-2 flex-wrap items-center px-3">
-                <UiTagsInputItem v-for="item in selectedCategories" :key="item.id" :value="item.name">
-                  <UiTagsInputItemText class="capitalize cursor-pointer" @click="handleCategoryUnselect(item)" />
+                <UiTagsInputItem v-for="cat in selectedCategories" :key="cat.id" :value="cat.name">
+                  <button
+                    class="bgc px-2 capitalize cursor-pointer"
+                    :class="cn(`element-${cat.color}`)"
+                    @click="handleCategoryUnselect(cat)"
+                  >
+                    {{ capitalize(cat.name) }}
+                  </button>
                 </UiTagsInputItem>
               </div>
 
@@ -356,7 +363,12 @@ function handleCategoryUnselect(e: Category) {
                         :value="cat"
                         @select.prevent="handleCategorySelect(cat)"
                       >
-                        {{ capitalize(cat.name) }}
+                        <span
+                          class="bgc"
+                          :class="cn(`element-${cat.color}`)"
+                        >
+                          {{ capitalize(cat.name) }}
+                        </span>
                       </UiCommandItem>
                     </UiCommandGroup>
                   </UiCommandList>
@@ -401,7 +413,7 @@ function handleCategoryUnselect(e: Category) {
         </div>
       </div>
 
-      <hr >
+      <hr>
 
       <div v-if="searchResults.length > 0" ref="searchResultsRef" class="grow overflow-y-auto">
         <SearchList

@@ -41,7 +41,7 @@ function handleClose() {
         <PhX size="20" />
       </UiButton>
 
-      <CalendarFormCreate @on-changed-name="onChangedName" @on-close="handleClose" />
+      <CalendarFormCreate v-if="world.id" :world-id="world.id" @on-changed-name="onChangedName" @on-close="handleClose" />
     </UiAlertDialogContent>
   </UiAlertDialog>
 </template>

@@ -22,16 +22,20 @@ const validSkeleton = computed(() => worldSkeleton.value.name)
 async function handleSubmit() {
   if (!user.value) return
 
-  try {
-    isLoading.value = true
-    await $fetch("/api/worlds/create", { method: "POST", body: { ...worldSkeleton.value } })
+  isLoading.value = true
 
-    emit("on-close")
-  } catch (err) {
-    console.log(err)
-  } finally {
+  const { error } = await tryCatch(
+    $fetch("/api/worlds/create", { method: "POST", body: { ...worldSkeleton.value } })
+  )
+
+  if (error) {
+    console.log(error.message)
     isLoading.value = false
+    return
   }
+
+  emit("on-close")
+  isLoading.value = false
 }
 
 /**

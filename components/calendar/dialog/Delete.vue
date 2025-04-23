@@ -22,26 +22,25 @@ async function handleAction(): Promise<void> {
 
   isLoading.value = true
 
-  try {
-    await $fetch(`/api/calendars/${props.calendar.id}`, { method: "DELETE" })
-    emit("on-close")
+  const { error } = await tryCatch($fetch(`/api/calendars/${props.calendar.id}`, { method: "DELETE" }))
 
+  if (error) {
     toast({
-      title: t("entity.calendar.deletedToast.title", { calendar: props.calendar.name }),
-      variant: "success",
-      duration: ToastLifetime.SHORT
+      title: error.message,
+      variant: "destructive"
     })
-  } catch (err) {
-    console.log(err)
-    if (err instanceof Error) {
-      toast({
-        title: err.message,
-        variant: "destructive"
-      })
-    }
-  } finally {
     isLoading.value = false
+    return
   }
+
+  toast({
+    title: t("entity.calendar.deletedToast.title", { calendar: props.calendar.name }),
+    variant: "success",
+    duration: ToastLifetime.SHORT
+  })
+
+  emit("on-close")
+  isLoading.value = false
 }
 
 /**

@@ -22,24 +22,23 @@ async function handleAction(): Promise<void> {
 
   const eventTitle = eventSkeleton.value.title
 
-  try {
-    await deleteEventFromSkeleton()
+  const { error } = await tryCatch(deleteEventFromSkeleton())
 
-    isDeleteEventModalOpen.value = false
-    resetSkeleton()
-
-    toast({
-      title: t("entity.calendar.event.deletedToast.title", { event: eventTitle }),
-      variant: "success",
-      duration: ToastLifetime.MEDIUM
-    })
-  } catch (err) {
-    if (err instanceof Error) {
-      formErrors.message = err.message
-    }
-  } finally {
+  if (error) {
+    formErrors.message = error.message
     isLoading.value = false
+    return
   }
+
+  isDeleteEventModalOpen.value = false
+  resetSkeleton()
+
+  toast({
+    title: t("entity.calendar.event.deletedToast.title", { event: eventTitle }),
+    variant: "success",
+    duration: ToastLifetime.MEDIUM
+  })
+  isLoading.value = false
 }
 
 /**

@@ -50,7 +50,7 @@ const filteredCategories = computed(() =>
           </ul>
         </template>
 
-        <PhCaretDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
+        <PhCaretDown class="ml-2 size-4 shrink-0 opacity-50" />
       </UiButton>
     </UiPopoverTrigger>
     <UiPopoverContent

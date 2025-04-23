@@ -118,10 +118,18 @@
 
 .event-button,
 .event-popover,
-.event-callout {
+.event-callout,
+.card-color {
   --fg-color: var(--color-foreground);
   --bg-color: var(--color-background);
 
+  transition-duration: var(--default-transition-duration);
+  transition-timing-function: var(--default-transition-timing-function);
+}
+
+.event-callout hr,
+.card-color hr {
+  transition-property: border-color;
   transition-duration: var(--default-transition-duration);
   transition-timing-function: var(--default-transition-timing-function);
 }
@@ -204,6 +212,23 @@
 }
 .event-callout.is-hidden:is(:hover, :focus-visible)::before {
   background-color: color-mix(in srgb, var(--bg-color) 50%, var(--color-background));
+}
+
+.card-color {
+  border-color: color-mix(in srgb, var(--bg-color) 30%, var(--color-background));
+  background-color: color-mix(in srgb, var(--bg-color) 10%, var(--color-background));
+
+  hr {
+    border-color: color-mix(in srgb, var(--bg-color) 30%, var(--color-background))
+  }
+}
+.card-color:is(:hover, :focus-visible) {
+  border-color: color-mix(in srgb, var(--bg-color) 40%, var(--color-background));
+  background-color: color-mix(in srgb, var(--bg-color) 20%, var(--color-background));
+
+  hr {
+    border-color: color-mix(in srgb, var(--bg-color) 40%, var(--color-background))
+  }
 }
 
 .bgc {

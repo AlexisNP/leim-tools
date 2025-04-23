@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useCalendar } from "@/stores/CalendarStore"
+import { useCalendar } from "~/stores/CalendarStore"
 import { computed, type Component, type ComputedRef } from "vue"
 
 // import { PhMagnifyingGlass } from '@phosphor-icons/vue'
@@ -40,7 +40,7 @@ onMounted(() => {
 
       <component :is="currentViewComponent" />
 
-      <LazyCalendarSearch />
+      <CalendarSearch />
       <LazyCalendarDialogCategories v-if="!isReadOnly" />
       <LazyCalendarDialogUpdateEvent v-if="!isReadOnly" />
       <LazyCalendarDialogDeleteEvent v-if="!isReadOnly" />

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { PhCaretDown } from "@phosphor-icons/vue";
+import { cn } from "~/lib/utils";
 import type { Category } from "~/models/Category";
 
 const isPopoverOpen = ref<boolean>(false)
@@ -39,10 +40,15 @@ const filteredCategories = computed(() =>
           {{ props.placeholder }}
         </template>
         <template v-else>
-          {{ model.name }}
+          <span
+            class="bgc"
+            :class="cn(`element-${model.color}`)"
+          >
+            {{ capitalize(model.name) }}
+          </span>
         </template>
 
-        <PhCaretDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
+        <PhCaretDown class="ml-2 size-4 shrink-0 opacity-50" />
       </UiButton>
     </UiPopoverTrigger>
     <UiPopoverContent
@@ -51,7 +57,7 @@ const filteredCategories = computed(() =>
       :collision-padding="50"
       class="w-fit h-[33vh] p-0"
     >
-      <UiCommand v-model="model" v-model:searchTerm="searchTerm">
+      <UiCommand v-model="model" v-model:search-term="searchTerm">
         <UiCommandInput :placeholder="$t('entity.category.search')" />
         <UiCommandEmpty>{{ $t('entity.category.notFoundAny') }}</UiCommandEmpty>
         <UiCommandList>
@@ -63,7 +69,12 @@ const filteredCategories = computed(() =>
               class="cursor-pointer"
               @select="handleCatSelect"
             >
-              {{ category.name }}
+              <span
+                class="bgc"
+                :class="cn(`element-${category.color}`)"
+              >
+                {{ capitalize(category.name) }}
+              </span>
             </UiCommandItem>
           </UiCommandGroup>
         </UiCommandList>

@@ -2,7 +2,7 @@
 import { type HTMLAttributes, computed } from "vue"
 import { TagsInputItem, type TagsInputItemProps, useForwardProps } from "radix-vue"
 
-import { cn } from "@/lib/utils"
+import { cn } from "~/lib/utils"
 
 const props = defineProps<TagsInputItemProps & { class?: HTMLAttributes["class"] }>()
 
@@ -20,7 +20,7 @@ const forwardedProps = useForwardProps(delegatedProps)
     v-bind="forwardedProps"
     :class="
       cn(
-        'flex h-6 items-center rounded bg-secondary data-[state=active]:ring-ring data-[state=active]:ring-2 data-[state=active]:ring-offset-2 ring-offset-background',
+        'flex h-6 items-center rounded bg-secondary hover:bg-primary/20 data-[state=active]:ring-ring data-[state=active]:ring-2 data-[state=active]:ring-offset-2 ring-offset-background transition-colors',
         props.class
       )
     "
