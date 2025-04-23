@@ -37,7 +37,7 @@ const useIdFunction = () => useId()
         <div class="h-full grid grid-cols-[auto_1fr] dark:bg-black transition-colors">
           <Sidebar />
 
-          <div class="wrapper shadow-body-light dark:shadow-body-dark transition-all">
+          <div class="wrapper max-h-screen shadow-body-light dark:shadow-body-dark transition-all">
             <NuxtPage />
           </div>
         </div>

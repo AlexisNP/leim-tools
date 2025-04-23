@@ -1,10 +1,15 @@
 <script lang="ts" setup>
+import { breakpointsTailwind, useBreakpoints } from "@vueuse/core"
 import { useCalendar } from "~/stores/CalendarStore"
 
 import { PhMagnifyingGlass } from "@phosphor-icons/vue"
 
 const { revealAdvancedSearch, } = useCalendar()
 const { isReadOnly, defaultDate } = storeToRefs(useCalendar())
+
+const breakpoints = useBreakpoints(
+  breakpointsTailwind
+)
 </script>
 
 <template>
@@ -24,9 +29,14 @@ const { isReadOnly, defaultDate } = storeToRefs(useCalendar())
 
       <menu class="flex items-center gap-2">
         <li>
-          <UiButton search-slash @click="revealAdvancedSearch()">
+          <UiButton
+            :search-slash="breakpoints.lg.value"
+            :size="breakpoints.lg.value ? 'default' : 'icon'"
+            @click="revealAdvancedSearch()"
+          >
             <PhMagnifyingGlass size="20" weight="light" />
-            <span>
+
+            <span class="max-lg:hidden">
               {{ $t('entity.advancedSearch.title') }}
             </span>
           </UiButton>

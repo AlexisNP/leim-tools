@@ -6,6 +6,9 @@ const { currentDate, decrementViewMonth, incrementViewMonth } = useCalendar()
 const { currentMonthData } = storeToRefs(useCalendar())
 
 function handleWheel(e: WheelEvent) {
+  // Prevent scrolling
+  e.preventDefault()
+
   const isMovingUp = e.deltaY < 0
   if (isMovingUp) {
     moveCalendarLeft()
@@ -24,7 +27,7 @@ const moveCalendarRight = useThrottleFn(() => {
 </script>
 
 <template>
-  <div class="grid grid-cols-10" @wheel="handleWheel">
+  <div class="grid grid-cols-5 md:grid-cols-7 lg:grid-cols-10" @wheel="handleWheel">
     <template v-if="currentMonthData">
       <CalendarStateMonthlyDayTile
         v-for="day in currentMonthData?.days"

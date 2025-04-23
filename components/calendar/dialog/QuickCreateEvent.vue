@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { breakpointsTailwind, useBreakpoints } from "@vueuse/core"
 import { PhPlus } from "@phosphor-icons/vue";
 
 const isDialogOpen = ref<boolean>(false);
@@ -15,13 +16,21 @@ function toggleDialog() {
 function handleClosing() {
   setTimeout(() => resetSkeleton(), 100)
 }
+
+const breakpoints = useBreakpoints(
+  breakpointsTailwind
+)
 </script>
 
 <template>
-  <UiButton @click="toggleDialog">
-    <PhPlus size="18" weight="bold" />
+  <UiButton
+    class="max-md:fixed max-md:bottom-16 max-md:right-8 max-md:z-50 max-md:size-12 max-md:shadow"
+    :size="breakpoints.lg.value ? 'default' : 'icon'"
+    @click="toggleDialog"
+  >
+    <PhPlus :size="breakpoints.md.value ? 18 : 24" weight="bold" />
 
-    <strong class="font-semibold">
+    <strong class="font-semibold max-lg:hidden">
       {{ $t("entity.calendar.event.newEvent") }}
     </strong>
   </UiButton>

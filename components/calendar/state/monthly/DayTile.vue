@@ -149,8 +149,6 @@ const eventsNotDisplayed: ComputedRef<number>  = computed<number>(() => eventsFo
 </template>
 
 <style lang="scss" scoped>
-// .tile are the direct children of the grid
-// We need to get, between each element, a 1px solid line to separate them, for columns and rows
 .tile {
   border-right-width: 1px;
   border-bottom-width: 1px;
