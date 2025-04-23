@@ -3,6 +3,7 @@ import { cn } from "~/lib/utils"
 import type { RPGDate } from "~/models/Date"
 import type { CalendarEvent } from "~/models/CalendarEvent"
 import { useCalendar } from "~/stores/CalendarStore"
+import { breakpointsTailwind, useBreakpoints } from "@vueuse/core"
 
 import {
   PhHourglassMedium,
@@ -23,6 +24,10 @@ const props = defineProps<{
   isStartEvent?: boolean
   isEndEvent?: boolean
 }>()
+
+const breakpoints = useBreakpoints(
+  breakpointsTailwind
+)
 
 // Ref for the popover
 const eventDetails = ref<HTMLElement>()
@@ -64,9 +69,9 @@ function deployDeleteModal() {
   <UiPopoverContent
     class="w-96 event-popover"
     :align="'center'"
-    :align-offset="50"
-    :side="'left'"
-    :collision-padding="60"
+    :align-offset="breakpoints.lg.value ? 50 : 25"
+    :side="breakpoints.lg.value ? 'left' : 'top'"
+    :collision-padding="breakpoints.lg.value ? 50 : 25"
     :hide-when-detached="true"
     :class="cn(
       event.category ? `element-${event.category.color}` : '',

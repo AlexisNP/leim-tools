@@ -24,7 +24,7 @@ const breakpoints = useBreakpoints(
 
 <template>
   <UiButton
-    class="max-md:fixed max-md:bottom-16 max-md:right-8 max-md:z-50 max-md:size-12 max-md:shadow"
+    class="max-md:fixed max-md:bottom-8 max-md:right-8 max-md:z-50 max-md:size-14 max-md:rounded-xl"
     :size="breakpoints.lg.value ? 'default' : 'icon'"
     @click="toggleDialog"
   >
