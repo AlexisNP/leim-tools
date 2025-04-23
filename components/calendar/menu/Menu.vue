@@ -13,9 +13,9 @@ const breakpoints = useBreakpoints(
 </script>
 
 <template>
-  <header class="mt-2 grid gap-4 border-border border-b-[1px]">
-    <div class="px-8 flex items-center justify-between gap-2">
-      <menu class="flex items-center gap-2">
+  <header class="mt-2 grid gap-3 md:gap-4 border-border border-b-[1px]">
+    <div class="px-4 md:px-8 flex items-center justify-between gap-2">
+      <menu class="flex items-center md:gap-2">
         <li>
           <LazyCalendarDialogQuickCreateEvent v-if="!isReadOnly" />
         </li>
@@ -50,7 +50,7 @@ const breakpoints = useBreakpoints(
       </menu>
     </div>
 
-    <div class="ml-8">
+    <div class="ml-4 md:ml-8">
       <CalendarMenuSubnav />
     </div>
   </header>

@@ -3,9 +3,14 @@ import { storeToRefs } from "pinia"
 import { computed } from "vue"
 
 import { PhMapPin } from "@phosphor-icons/vue"
+import { breakpointsTailwind } from "@vueuse/core"
 
 const { defaultDate, getFormattedDateTitle, getRelativeString, getDifferenceInDays } = useCalendar()
 const { selectedDate } = storeToRefs(useCalendar())
+
+const breakpoints = useBreakpoints(
+  breakpointsTailwind
+)
 
 const mainDateTitle = computed(() => getFormattedDateTitle(selectedDate.value, true))
 // const mainDateTitle = computed(() => convertDateToDays(selectedDate.value))
@@ -16,12 +21,17 @@ const isToday = computed(() => getDifferenceInDays(defaultDate, selectedDate.val
 
 <template>
   <ClientOnly>
-    <div class="flex gap-2 items-center">
-      <h1 class="text-2xl font-bold flex items-center gap-1">
-        <PhMapPin size="26" weight="bold" /> {{ mainDateTitle }}
+    <div class="grid md:flex md:gap-2 items-center">
+      <h1 class="text-lg md:text-2xl max-md:leading-tight font-bold flex items-center gap-1">
+        <PhMapPin
+          :size="breakpoints.md.value ? 26 : 18"
+          class="max-md:hidden"
+          weight="light"
+        />
+        {{ mainDateTitle }}
       </h1>
-      <h2 v-if="!isToday" class="text-xl italic opacity-75">
-        – {{ dateDifference }}
+      <h2 v-if="!isToday" class="text-sm max-md:leading-tight md:text-xl italic opacity-75">
+      <span class="max-md:hidden">–</span> {{ dateDifference }}
       </h2>
     </div>
 
