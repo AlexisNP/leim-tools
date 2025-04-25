@@ -36,8 +36,10 @@ const isUpdatingCalendar = ref<boolean>(false)
 async function handleSubmit() {
   isUpdatingCalendar.value = true
 
+  const fetchBody = { ...calendarSkeleton.value, worldId: props.world?.id }
+
   const { error } = await tryCatch(
-    $fetch(`/api/calendars/${calendarSkeleton.value.id}`, { method: "PATCH", body: { ...calendarSkeleton.value, worldId: props.world?.id } })
+    $fetch(`/api/calendars/${calendarSkeleton.value.id}`, { method: "PATCH", body: fetchBody })
   )
 
   if (error) {
