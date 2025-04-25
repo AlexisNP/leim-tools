@@ -42,6 +42,7 @@ const breakpoints = useBreakpoints(
   <UiDialog v-model:open="isDialogOpen">
     <UiDialogContent
       class="border-indigo-200 dark:bg-slate-950 dark:border-indigo-950"
+      :trap-focus="true"
       @escape-key-down.prevent="handleClosing"
       @pointer-down-outside.prevent="handleClosing"
     >

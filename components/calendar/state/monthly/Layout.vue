@@ -77,11 +77,9 @@ function handleClosing() {
       <UiDialog v-model:open="isDialogOpen">
         <UiDialogContent
           class="border-indigo-200 dark:bg-slate-950 dark:border-indigo-950"
-          :disable-outside-pointer-events="true"
           :trap-focus="true"
-          @focus-outside="handleClosing"
-          @interact-outside="handleClosing"
-          @close-auto-focus="(e) => e.preventDefault()"
+          @escape-key-down.prevent="handleClosing"
+          @pointer-down-outside.prevent="null"
         >
           <UiDialogTitle>
             {{ $t("entity.calendar.event.addSingle") }}
