@@ -1,9 +1,10 @@
 <script lang="ts" setup>
 import { useCalendar } from "~/stores/CalendarStore"
 import { useThrottleFn } from "@vueuse/core"
+import type { RPGDate } from "~/models/Date"
 
-const { currentDate, decrementViewMonth, incrementViewMonth } = useCalendar()
-const { currentMonthData } = storeToRefs(useCalendar())
+const { currentDate, decrementViewMonth, incrementViewMonth, resetSkeleton } = useCalendar()
+const { currentMonthData, operationInProgress, eventSkeleton } = storeToRefs(useCalendar())
 
 function handleWheel(e: WheelEvent) {
   // Prevent scrolling
@@ -24,6 +25,39 @@ const moveCalendarLeft = useThrottleFn(() => {
 const moveCalendarRight = useThrottleFn(() => {
   incrementViewMonth()
 }, 100)
+
+const isDialogOpen = ref<boolean>(false);
+
+/**
+ * Opens event creation's popover
+ */
+function handleDialogOpen(date: RPGDate) {
+  // If another operation is in progress, whether it's another create popup or a modal, don't bother opening it
+  if (operationInProgress.value) {
+    isDialogOpen.value = false
+    return
+  }
+
+  resetSkeleton()
+
+  isDialogOpen.value = true
+
+  // Set skeleton initial startDate if it's known
+  if (date) {
+    eventSkeleton.value.startDate = date
+  }
+}
+
+function toggleDialog() {
+  isDialogOpen.value = !isDialogOpen.value;
+};
+
+/**
+ * Prevents the modal from closing if's still loading
+ */
+function handleClosing() {
+  setTimeout(() => resetSkeleton(), 100)
+}
 </script>
 
 <template>
@@ -37,7 +71,24 @@ const moveCalendarRight = useThrottleFn(() => {
           month: currentDate.currentMonth,
           year: currentDate.currentYear
         }"
+        @on-open-create-dialog="handleDialogOpen"
       />
+
+      <UiDialog v-model:open="isDialogOpen">
+        <UiDialogContent
+          class="border-indigo-200 dark:bg-slate-950 dark:border-indigo-950"
+          :disable-outside-pointer-events="true"
+          :trap-focus="true"
+          @focus-outside="handleClosing"
+          @interact-outside="handleClosing"
+          @close-auto-focus="(e) => e.preventDefault()"
+        >
+          <UiDialogTitle>
+            {{ $t("entity.calendar.event.addSingle") }}
+          </UiDialogTitle>
+          <CalendarFormCreateEvent @event-created="toggleDialog" />
+        </UiDialogContent>
+      </UiDialog>
     </template>
   </div>
 </template>

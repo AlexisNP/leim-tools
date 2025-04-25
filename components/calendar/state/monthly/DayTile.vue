@@ -12,6 +12,10 @@ const props = defineProps<{
   faded?: boolean
 }>()
 
+const emit = defineEmits<{
+  (e: "on-open-create-dialog", date: RPGDate): void
+}>()
+
 const calendarTile = ref()
 const calendarEventsList = ref()
 
@@ -153,7 +157,12 @@ const eventsNotDisplayed: ComputedRef<number>  = computed<number>(() => eventsFo
     </ClientOnly>
 
     <ClientOnly>
-      <LazyCalendarDialogCreateEvent v-if="!isReadOnly" :date btn-class="absolute inset-0 w-full h-full cursor-default z-0" />
+      <LazyCalendarDialogCreateEvent v-if="!isReadOnly && breakpoints.lg.value" :date btn-class="absolute inset-0 w-full h-full cursor-default z-0" />
+      <button
+        v-else-if="!isReadOnly && !breakpoints.lg.value"
+        class="absolute inset-0 w-full h-full cursor-default z-0"
+        @click="emit('on-open-create-dialog', props.date)"
+      />
     </ClientOnly>
   </div>
 </template>
