@@ -41,12 +41,12 @@ const breakpoints = useBreakpoints(
 
   <UiDialog v-model:open="isDialogOpen">
     <UiDialogContent
-      class="border-indigo-200 dark:bg-slate-950 dark:border-indigo-950"
+      class="max-md:translate-0 max-md:inset-0 max-md:w-full max-md:block"
       :trap-focus="true"
-      @escape-key-down.prevent="handleClosing"
+      @escape-key-down="handleClosing"
       @pointer-down-outside.prevent="handleClosing"
     >
-      <UiDialogTitle>
+      <UiDialogTitle class="max-md:mb-8">
         {{ $t("entity.calendar.event.addSingle") }}
       </UiDialogTitle>
       <CalendarFormCreateEvent @event-created="toggleDialog" />
