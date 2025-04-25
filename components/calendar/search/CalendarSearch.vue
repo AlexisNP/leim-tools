@@ -265,10 +265,10 @@ function handleCategoryUnselect(e: Category) {
 <template>
   <UiDialog v-model:open="isAdvancedSearchOpen" @update:open="resetSearch()">
     <UiDialogContent
-      class="flex flex-col flex-nowrap top-10 -translate-y-0 data-[state=closed]:slide-out-to-top-[5%] data-[state=open]:slide-in-from-top-[5%]"
-      :class="{
-        'bottom-10': searchResults.length > 0
-      }"
+      class="flex flex-col flex-nowrap top-10 -translate-y-0 data-[state=closed]:slide-out-to-top-[5%] data-[state=open]:slide-in-from-top-[5%] max-md:rounded-none"
+      :class="cn({
+        'max-md:w-full bottom-0 md:bottom-10 top-0 md:top-10': searchResults.length > 0
+      })"
     >
       <VisuallyHidden>
         <UiDialogTitle> {{ $t('entity.advancedSearch.title') }} </UiDialogTitle>
@@ -447,7 +447,7 @@ function handleCategoryUnselect(e: Category) {
                 as-child
               >
                 <UiButton
-                  class="w-10 h-10 p-0"
+                  class="size-8 md:size-10 p-0"
                   :variant="item.value === currentPage ? 'default' : 'outline'"
                 >
                   {{ item.value }}
