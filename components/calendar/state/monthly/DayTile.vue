@@ -96,7 +96,7 @@ const eventsNotDisplayed: ComputedRef<number>  = computed<number>(() => eventsFo
           class="inline-flex size-7 md:size-8 aspect-square items-center justify-center rounded-full border-1 md:border-2 border-transparent font-bold transition-colors group-hover:border-indigo-300 dark:group-hover:border-indigo-700"
           :class="{
             'text-background bg-slate-600 dark:bg-slate-800': isDefaultDate && !isSelectedDate,
-            'text-background bg-indigo-500': isSelectedDate
+            'text-white bg-indigo-500': isSelectedDate
           }"
         >
           {{ date.day }}
