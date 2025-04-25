@@ -23,17 +23,19 @@ const breakpoints = useBreakpoints(
 </script>
 
 <template>
-  <UiButton
-    class="max-md:fixed max-md:bottom-8 max-md:right-8 max-md:z-50 max-md:size-14 max-md:rounded-xl"
-    :size="breakpoints.lg.value ? 'default' : 'icon'"
-    @click="toggleDialog"
-  >
-    <PhPlus :size="breakpoints.md.value ? 18 : 24" weight="bold" />
+  <ClientOnly>
+    <UiButton
+      class="max-md:fixed max-md:bottom-8 max-md:right-8 max-md:z-50 max-md:size-14 max-md:rounded-xl"
+      :size="breakpoints.lg.value ? 'default' : 'icon'"
+      @click="toggleDialog"
+    >
+      <PhPlus :size="breakpoints.md.value ? 18 : 24" weight="bold" />
 
-    <strong class="font-semibold max-lg:hidden">
-      {{ $t("entity.calendar.event.newEvent") }}
-    </strong>
-  </UiButton>
+      <strong class="font-semibold max-lg:hidden">
+        {{ $t("entity.calendar.event.newEvent") }}
+      </strong>
+    </UiButton>
+  </ClientOnly>
 
   <UiDialog v-model:open="isDialogOpen">
     <UiDialogContent
