@@ -19,7 +19,7 @@ const breakpoints = useBreakpoints(
       >
         <PhMagnifyingGlass size="20" weight="light" />
 
-        <span class="max-lg:hidden">
+        <span v-if="breakpoints.lg.value">
           {{ $t('entity.advancedSearch.title') }}
         </span>
       </UiButton>

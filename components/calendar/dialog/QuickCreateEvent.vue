@@ -27,12 +27,12 @@ const breakpoints = useBreakpoints(
     <Transition name="fade" appear>
       <UiButton
         class="max-md:fixed max-md:bottom-8 max-md:right-8 max-md:z-50 max-md:size-14 max-md:rounded-xl"
-        :size="breakpoints.lg.value ? 'default' : 'icon'"
+        :size="breakpoints.md.value ? 'default' : 'icon'"
         @click="toggleDialog"
       >
         <PhPlus :size="breakpoints.md.value ? 18 : 24" weight="bold" />
 
-        <strong class="font-semibold max-lg:hidden">
+        <strong v-if="breakpoints.md.value" class="font-semibold">
           {{ $t("entity.calendar.event.newEvent") }}
         </strong>
       </UiButton>
