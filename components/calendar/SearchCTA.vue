@@ -11,16 +11,18 @@ const breakpoints = useBreakpoints(
 
 <template>
   <ClientOnly>
-    <UiButton
-      :search-slash="breakpoints.lg.value"
-      :size="breakpoints.lg.value ? 'default' : 'icon'"
-      @click="revealAdvancedSearch()"
-    >
-      <PhMagnifyingGlass size="20" weight="light" />
+    <Transition name="fade" appear>
+      <UiButton
+        :search-slash="breakpoints.lg.value"
+        :size="breakpoints.lg.value ? 'default' : 'icon'"
+        @click="revealAdvancedSearch()"
+      >
+        <PhMagnifyingGlass size="20" weight="light" />
 
-      <span class="max-lg:hidden">
-        {{ $t('entity.advancedSearch.title') }}
-      </span>
-    </UiButton>
+        <span class="max-lg:hidden">
+          {{ $t('entity.advancedSearch.title') }}
+        </span>
+      </UiButton>
+    </Transition>
   </ClientOnly>
 </template>
