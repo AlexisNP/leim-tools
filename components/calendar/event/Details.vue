@@ -14,6 +14,7 @@ import {
   PhDotsThreeOutlineVertical,
   PhEye
 } from "@phosphor-icons/vue"
+import type { CollisionPadding } from "~/models/Popover"
 
 const { defaultDate, getFormattedDateTitle, jumpToDate, getRelativeString, revealEditEventModal, revealDeleteEventModal } = useCalendar()
 const { lastActiveEvent, isReadOnly } = storeToRefs(useCalendar())
@@ -28,6 +29,18 @@ const props = defineProps<{
 const breakpoints = useBreakpoints(
   breakpointsTailwind
 )
+const collisionPadLg: CollisionPadding = {
+  top: 50,
+  bottom: 50,
+  left: 50,
+  right: 50,
+}
+const collisionPad: CollisionPadding = {
+  top: 80,
+  bottom: 80,
+  left: 12.5,
+  right: 12.5,
+}
 
 // Ref for the popover
 const eventDetails = ref<HTMLElement>()
@@ -67,12 +80,12 @@ function deployDeleteModal() {
 
 <template>
   <UiPopoverContent
-    class="w-96 event-popover"
+    class="max-w-full w-96 event-popover"
     :align="'center'"
     :align-offset="breakpoints.lg.value ? 50 : 25"
+    :side-offset="8"
     :side="breakpoints.lg.value ? 'left' : 'top'"
-    :collision-padding="breakpoints.lg.value ? 50 : 25"
-    :hide-when-detached="true"
+    :collision-padding="breakpoints.lg.value ? collisionPadLg : collisionPad"
     :class="cn(
       event.category ? `element-${event.category.color}` : '',
     )"
