@@ -15,21 +15,22 @@ const emit = defineEmits(["on-click"])
   <div
     :class="
       cn('rounded-lg border bg-card text-card-foreground shadow-xs transition-all isolate', props.class, {
-        'relative outline outline-2 outline-offset-4 outline-transparent hover:-translate-y-[.2rem]':
+        'relative hover:-translate-y-[.2rem]':
           props.link || props.hasClick
       })
     "
   >
-    <slot />
-
     <NuxtLink
       v-if="props.link"
       :to="props.link"
-      class="absolute inset-0 z-10 focus-visible:outline-hidden cursor-pointer"
+      class="rounded-lg focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 absolute inset-0 z-10 cursor-pointer"
     />
     <button
       v-if="props.hasClick"
-      class="absolute inset-0 z-10 focus-visible:outline-hidden cursor-pointer"
-      @click="emit('on-click')" />
+      class="rounded-lg focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 absolute inset-0 z-10 cursor-pointer"
+      @click="emit('on-click')"
+    />
+
+    <slot />
   </div>
 </template>

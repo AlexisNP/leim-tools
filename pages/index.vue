@@ -9,7 +9,7 @@ definePageMeta({
 </script>
 
 <template>
-  <main class="p-8">
+  <main class="py-8 px-5 md:px-8">
     <Head>
       <Title>
         TTTools — {{ $t('head.title') }}

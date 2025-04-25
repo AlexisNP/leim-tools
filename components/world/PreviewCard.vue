@@ -1,23 +1,28 @@
 <script lang="ts" setup>
-import { PhArchive, PhFile, PhFileDashed, PhFilePlus, PhPencil, PhPencilSimpleLine, PhTrash } from "@phosphor-icons/vue";
-import type { World } from "~/models/World";
-import { DateTime } from "luxon";
-import { cn } from "~/lib/utils";
+import { PhArchive, PhFile, PhFileDashed, PhFilePlus, PhPencil, PhPencilSimpleLine, PhTrash } from "@phosphor-icons/vue"
+import type { World } from "~/models/World"
+import { DateTime } from "luxon"
+import { cn } from "~/lib/utils"
 
 const props = defineProps<{
   world: World
-}>();
+}>()
 
-const emit = defineEmits(["on-edit", "on-delete"]);
+const emit = defineEmits(["on-edit", "on-delete"])
 
-const { locale } = useI18n();
-const createdAt = DateTime.fromISO(props.world.createdAt!).toLocaleString(DateTime.DATETIME_MED, { locale: locale.value });
-const updatedAt = computed<string>(() => props.world.updatedAt ? DateTime.fromISO(props.world.updatedAt).toLocaleString(DateTime.DATETIME_MED, { locale: locale.value }) : "");
+const cardRef = ref(null)
+const isCardHovered = useElementHover(cardRef)
+const { focused: isCardFocused } = useFocusWithin(cardRef)
+
+const { locale } = useI18n()
+const createdAt = DateTime.fromISO(props.world.createdAt!).toLocaleString(DateTime.DATETIME_MED, { locale: locale.value })
+const updatedAt = computed<string>(() => props.world.updatedAt ? DateTime.fromISO(props.world.updatedAt).toLocaleString(DateTime.DATETIME_MED, { locale: locale.value }) : "")
 </script>
 
 <template>
   <UiCard
-    class="w-full h-full flex flex-col transition-all"
+    ref="cardRef"
+    class="w-full h-full flex flex-col"
     :link="`/my/worlds/${world.id}`"
     :class="cn(
       world.color ? `card-color element-${world.color}` : '',
@@ -44,14 +49,20 @@ const updatedAt = computed<string>(() => props.world.updatedAt ? DateTime.fromIS
     <UiCardContent class="grow">
       <p class="italic">{{ world.description }}</p>
 
-      <div class="flex gap-1 absolute top-4 right-4 z-20">
-        <UiButton size="icon" variant="ghost" class=" hover:text-white hover:bg-indigo-400 dark:hover:bg-indigo-700" @click="emit('on-edit')">
-          <PhPencil size="16" />
-        </UiButton>
-
-        <UiButton size="icon" variant="ghost" class=" hover:text-white hover:bg-rose-400 dark:hover:bg-rose-700" @click="emit('on-delete')">
-          <PhTrash size="16" />
-        </UiButton>
+      <div
+        v-if="isCardHovered || isCardFocused"
+        class="flex gap-2 absolute top-4 right-4 z-20"
+      >
+        <Transition name="fade" appear>
+          <UiButton size="icon" variant="outline" class="size-8 border-foreground/20 group-hover:border-foreground/30 hover:text-background hover:border-foreground hover:bg-foreground" @click="emit('on-edit')">
+            <PhPencil size="15" weight="fill" />
+          </UiButton>
+        </Transition>
+        <Transition name="fade" appear>
+          <UiButton size="icon" variant="outline" class="size-8 border-foreground/25 group-hover:border-foreground/40 hover:text-background hover:border-rose-500 hover:bg-rose-500" @click="emit('on-delete')">
+            <PhTrash size="15" weight="fill" />
+          </UiButton>
+        </Transition>
       </div>
     </UiCardContent>
 

@@ -11,7 +11,7 @@ const isLoading = computed(() => calendarStatus.value === "pending")
 </script>
 
 <template>
-  <main class="p-8">
+  <main class="py-8 px-5 md:px-8">
     <Head>
       <Title>{{ $t("pages.explore.title") }}</Title>
     </Head>
@@ -26,10 +26,10 @@ const isLoading = computed(() => calendarStatus.value === "pending")
           {{ $t("entity.calendar.namePublicPlural") }}
         </Heading>
 
-          <div v-if="isLoading" class="grid md:grid-cols-3 gap-2">
+          <div v-if="isLoading" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-2">
             <LoadingCard />
           </div>
-          <ul v-else-if="availableCalendars?.data" class="grid md:grid-cols-3 gap-2">
+          <ul v-else-if="availableCalendars?.data" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-2">
             <li v-for="calendar in availableCalendars.data" :key="calendar.shortId">
               <CalendarPreviewCard :calendar="calendar" :gm-id="calendar.world?.gmId" />
             </li>
