@@ -297,7 +297,7 @@ function handleCategoryUnselect(e: Category) {
         </div>
 
         <div class="flex items-center justify-between gap-8">
-          <div>
+          <div class="hidden">
             <UiToggleGroup
               v-model="selectedEntity"
               type="single"
@@ -315,7 +315,7 @@ function handleCategoryUnselect(e: Category) {
           </div>
 
           <div class="grow flex justify-end items-center gap-1">
-            <UiTagsInput class="grow px-0 gap-y-1 w-80">
+            <UiTagsInput class="grow px-0 gap-y-1 md:w-80">
               <div v-if="selectedCategories.length > 0" class="flex gap-2 flex-wrap items-center px-3">
                 <UiTagsInputItem v-for="cat in selectedCategories" :key="cat.id" :value="cat.name">
                   <button
