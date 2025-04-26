@@ -2,6 +2,7 @@
 import { useCalendar } from "~/stores/CalendarStore"
 import { useThrottleFn } from "@vueuse/core"
 import type { RPGDate } from "~/models/Date"
+import { VisuallyHidden } from "radix-vue"
 
 const { currentDate, decrementViewMonth, incrementViewMonth, resetSkeleton } = useCalendar()
 const { currentMonthData, operationInProgress, eventSkeleton } = storeToRefs(useCalendar())
@@ -84,6 +85,13 @@ function handleClosing() {
           <UiDialogTitle class="max-md:mb-8">
             {{ $t("entity.calendar.event.addSingle") }}
           </UiDialogTitle>
+
+          <VisuallyHidden>
+            <UiDialogDescription>
+              {{ $t("entity.calendar.event.addSingleDescription") }}
+            </UiDialogDescription>
+          </VisuallyHidden>
+
           <CalendarFormCreateEvent @event-created="toggleDialog" />
         </UiDialogContent>
       </UiDialog>

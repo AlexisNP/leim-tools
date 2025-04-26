@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { breakpointsTailwind, useBreakpoints } from "@vueuse/core"
 import { PhPlus } from "@phosphor-icons/vue";
+import { VisuallyHidden } from "radix-vue";
 
 const isDialogOpen = ref<boolean>(false);
 const { resetSkeleton } = useCalendar();
@@ -49,6 +50,13 @@ const breakpoints = useBreakpoints(
       <UiDialogTitle class="max-md:mb-8">
         {{ $t("entity.calendar.event.addSingle") }}
       </UiDialogTitle>
+
+      <VisuallyHidden>
+        <UiDialogDescription>
+          {{ $t("entity.calendar.event.addSingleDescription") }}
+        </UiDialogDescription>
+      </VisuallyHidden>
+
       <CalendarFormCreateEvent @event-created="toggleDialog" />
     </UiDialogContent>
   </UiDialog>
