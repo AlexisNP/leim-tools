@@ -81,7 +81,7 @@ const eventsNotDisplayed: ComputedRef<number>  = computed<number>(() => eventsFo
 <template>
   <div
     ref="calendarTile"
-    class="tile relative p-1 md:p-2"
+    class="tile relative p-1 md:p-2 transition-colors"
     :class="{
       'text-slate-300 dark:text-slate-500': props.faded,
       'text-slate-500 dark:text-slate-300': !props.faded
