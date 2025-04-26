@@ -6,7 +6,7 @@ export default defineI18nConfig(() => ({
     en: {
       head: {
         title: "Fantasy calendars for TTRPGs",
-        description: "Tools for players and game masters to help them visualize fantasy worlds better.",
+        description: "Tools for players and game masters to help them visualize their own worlds.",
       },
       error: {
         default: {
