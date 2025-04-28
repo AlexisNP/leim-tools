@@ -2,7 +2,7 @@
 import { breakpointsTailwind, useBreakpoints } from "@vueuse/core"
 import { PhMagnifyingGlass } from "@phosphor-icons/vue"
 
-const { revealAdvancedSearch, } = useCalendar()
+const { revealAdvancedSearch } = useCalendar()
 
 const breakpoints = useBreakpoints(
   breakpointsTailwind

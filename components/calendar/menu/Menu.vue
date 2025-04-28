@@ -16,7 +16,10 @@ const { isReadOnly, defaultDate } = storeToRefs(useCalendar())
         <li>
           <LazyCalendarDialogQuickCreateEvent v-if="!isReadOnly" />
         </li>
-        <li>
+        <li class="md:hidden">
+          <SidebarToggle />
+        </li>
+        <li class="max-md:hidden">
           <LazyCalendarMenuToday v-if="defaultDate" />
         </li>
         <li class="ml-4">

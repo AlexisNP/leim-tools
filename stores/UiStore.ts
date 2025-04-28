@@ -1,7 +1,13 @@
+import { breakpointsTailwind } from "@vueuse/core"
 import type { SidebarMenuItem } from "~/components/global/sidebar/SidebarProps"
 
+const breakpoints = useBreakpoints(
+  breakpointsTailwind
+)
+
 export const useUiStore = defineStore("ui", () => {
-  const currentMenu: Ref<SidebarMenuItem[]> = ref<SidebarMenuItem[]>([])
+  const currentMenu = ref<SidebarMenuItem[]>([])
+  const isSidebarOpened = ref<boolean>(false)
 
   function setCurrentMenu(items: SidebarMenuItem[]) {
     currentMenu.value = items
@@ -11,9 +17,35 @@ export const useUiStore = defineStore("ui", () => {
     currentMenu.value = []
   }
 
+  function openSidebar() {
+    if (breakpoints.isGreater("md")) return
+
+    isSidebarOpened.value = true
+  }
+
+  function closeSidebar() {
+    if (breakpoints.isGreater("md")) return
+
+    isSidebarOpened.value = false
+  }
+
+  function toggleSidebar() {
+    if (breakpoints.isGreater("md")) return
+
+    isSidebarOpened.value = !isSidebarOpened.value
+  }
+
+  watch(breakpoints.md, () => {
+    isSidebarOpened.value = false
+  })
+
   return {
     currentMenu,
     setCurrentMenu,
-    resetMenu
+    resetMenu,
+    isSidebarOpened,
+    openSidebar,
+    closeSidebar,
+    toggleSidebar
   }
 })
