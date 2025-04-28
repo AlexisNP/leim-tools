@@ -180,11 +180,13 @@ function hideEditModal() {
 
       <header class="mb-8">
         <Spacing size="lg">
-          <Breadcrumb
-            :items="[
-              { label: world.data.name }
-            ]"
-          />
+          <div class="max-md:hidden">
+            <Breadcrumb
+              :items="[
+                { label: world.data.name }
+              ]"
+            />
+          </div>
 
           <div class="lg:w-1/2">
             <div class="flex items-center gap-2 mb-2">

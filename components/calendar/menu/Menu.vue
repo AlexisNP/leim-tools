@@ -10,7 +10,7 @@ const { isReadOnly, defaultDate } = storeToRefs(useCalendar())
 </script>
 
 <template>
-  <header class="mt-2 grid gap-3 md:gap-4 border-border border-b-[1px] transition-colors">
+  <header class="md:mt-2 grid gap-3 md:gap-4 border-border border-b-[1px] transition-colors">
     <div class="px-4 md:px-8 flex items-center justify-between gap-2">
       <menu class="flex items-center md:gap-2">
         <li>
