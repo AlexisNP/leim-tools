@@ -1,5 +1,10 @@
 <script lang="ts" setup>
 import { useCalendar } from "~/stores/CalendarStore"
+import { breakpointsTailwind } from "@vueuse/core"
+
+const breakpoints = useBreakpoints(
+  breakpointsTailwind
+)
 
 const { isReadOnly, defaultDate } = storeToRefs(useCalendar())
 </script>
@@ -23,9 +28,11 @@ const { isReadOnly, defaultDate } = storeToRefs(useCalendar())
         <li>
           <CalendarSearchCTA />
         </li>
-        <li>
-          <CalendarCategoriesCTA />
-        </li>
+        <ClientOnly>
+          <li v-if="breakpoints.md.value">
+            <CalendarCategoriesCTA />
+          </li>
+        </ClientOnly>
         <li>
           <CalendarOptionsCTA />
         </li>

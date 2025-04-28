@@ -168,7 +168,7 @@ export default defineI18nConfig(() => ({
           isLoading: "Calendar is loading…",
           hasXEvent: "{count} available event",
           hasXEvents: "{count} available events",
-          seeCategories: "Modify categories",
+          seeCategories: "Categories",
           seeOptions: "Calendar options",
           date: {
             start: "Start date",
@@ -492,7 +492,7 @@ export default defineI18nConfig(() => ({
           isLoading: "Chargement du calendrier…",
           hasXEvent: "{count} évènement disponible",
           hasXEvents: "{count} évènements disponibles",
-          seeCategories: "Gestion des catégories",
+          seeCategories: "Catégories",
           seeOptions: "Options du calendrier",
           date: {
             start: "Date de début",
