@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { RPGDate } from "~/models/Date"
 import type { CalendarEvent } from "~/models/CalendarEvent"
-import { useElementBounding } from "@vueuse/core"
+import { breakpointsTailwind, useElementBounding } from "@vueuse/core"
 import { storeToRefs } from "pinia"
 import { computed, ref, type ComputedRef } from "vue"
 
@@ -12,11 +12,19 @@ const props = defineProps<{
   faded?: boolean
 }>()
 
+const emit = defineEmits<{
+  (e: "on-open-create-dialog", date: RPGDate): void
+}>()
+
 const calendarTile = ref()
 const calendarEventsList = ref()
 
-const { defaultDate, selectDate, areDatesIdentical } = useCalendar()
+const { defaultDate, selectDate, areDatesIdentical, getFormattedDateTitle } = useCalendar()
 const { selectedDate, currentEvents, isReadOnly } = storeToRefs(useCalendar())
+
+const breakpoints = useBreakpoints(
+  breakpointsTailwind
+)
 
 /**
  * All events with a startDate / endDate that starts or ends on the tile
@@ -73,19 +81,19 @@ const eventsNotDisplayed: ComputedRef<number>  = computed<number>(() => eventsFo
 <template>
   <div
     ref="calendarTile"
-    class="tile relative text-xs p-2"
+    class="tile relative p-1 md:p-2 transition-colors"
     :class="{
       'text-slate-300 dark:text-slate-500': props.faded,
       'text-slate-500 dark:text-slate-300': !props.faded
     }"
   >
     <button
-      class="relative z-10 group block w-full text-center cursor-pointer"
+      class="relative z-10 group block w-full text-2xs md:text-xs text-center cursor-pointer"
       @click="selectDate(date)"
     >
       <ClientOnly>
         <span
-          class="inline-flex w-8 h-8 aspect-square items-center justify-center rounded-full border-2 border-transparent font-bold transition-colors group-hover:border-indigo-300 dark:group-hover:border-indigo-700"
+          class="inline-flex size-7 md:size-8 aspect-square items-center justify-center rounded-full border-1 md:border-2 border-transparent font-bold transition-colors group-hover:border-indigo-300 dark:group-hover:border-indigo-700"
           :class="{
             'text-white bg-slate-600 dark:bg-slate-800': isDefaultDate && !isSelectedDate,
             'text-white bg-indigo-500': isSelectedDate
@@ -99,7 +107,7 @@ const eventsNotDisplayed: ComputedRef<number>  = computed<number>(() => eventsFo
     <ClientOnly>
       <ul
         ref="calendarEventsList"
-        class="absolute top-12 bottom-2 inset-x-2 grid auto-rows-min gap-1 z-10 pointer-events-none transition-opacity"
+        class="absolute top-9 md:top-12 bottom-1 md:bottom-2 inset-x-2 grid auto-rows-min gap-1 z-10 pointer-events-none transition-opacity"
         :class="{
           'opacity-40': props.faded && !isSelectedDate
         }"
@@ -114,17 +122,23 @@ const eventsNotDisplayed: ComputedRef<number>  = computed<number>(() => eventsFo
           <UiPopover>
             <UiPopoverTrigger as-child>
               <button
-                class="text-xs px-2 py-1 block w-full text-left font-bold rounded-sm whitespace-nowrap overflow-hidden text-ellipsis cursor-pointer transition-colors hover:bg-slate-800"
+                class="text-2xs md:text-xs px-[5px] py-[5px] md:px-2 md:py-1 block w-full text-left font-bold rounded-sm whitespace-nowrap overflow-hidden text-ellipsis cursor-pointer transition-colors hover:text-foreground hover:bg-foreground/10"
               >
                 {{ eventsNotDisplayed }} autre{{ eventsNotDisplayed > 1 ? 's' : '' }}
               </button>
             </UiPopoverTrigger>
-            <UiPopoverContent class="w-80" :align="'center'" :side="'right'">
-              <div class="text-center mb-4">
+            <UiPopoverContent
+              class="w-80"
+              :align="'center'"
+              :align-offset="breakpoints.lg.value ? 50 : 25"
+              :collision-padding="breakpoints.lg.value ? 50 : 25"
+              :side="breakpoints.lg.value ? 'left' : 'bottom'"
+              >
+              <div class="text-center mb-2">
                 <span
-                  class="inline-flex w-12 h-12 aspect-square items-center justify-center text-lg font-semibold text-slate-300 bg-slate-800 rounded-full"
+                  class="text-lg font-semibold rounded-full"
                 >
-                  {{ date.day }}
+                  {{ getFormattedDateTitle(date, true) }}
                 </span>
               </div>
               <ul class="grid auto-rows-min gap-1 z-10 pointer-events-none transition-opacity">
@@ -143,14 +157,17 @@ const eventsNotDisplayed: ComputedRef<number>  = computed<number>(() => eventsFo
     </ClientOnly>
 
     <ClientOnly>
-      <LazyCalendarDialogCreateEvent v-if="!isReadOnly" :date btn-class="absolute inset-0 w-full h-full cursor-default z-0" />
+      <LazyCalendarDialogCreateEvent v-if="!isReadOnly && breakpoints.lg.value" :date btn-class="absolute inset-0 w-full h-full cursor-default z-0" />
+      <button
+        v-else-if="!isReadOnly && !breakpoints.lg.value"
+        class="absolute inset-0 w-full h-full cursor-default z-0"
+        @click="emit('on-open-create-dialog', props.date)"
+      />
     </ClientOnly>
   </div>
 </template>
 
 <style lang="scss" scoped>
-// .tile are the direct children of the grid
-// We need to get, between each element, a 1px solid line to separate them, for columns and rows
 .tile {
   border-right-width: 1px;
   border-bottom-width: 1px;

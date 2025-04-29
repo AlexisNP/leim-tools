@@ -6,7 +6,7 @@ export default defineI18nConfig(() => ({
     en: {
       head: {
         title: "Fantasy calendars for TTRPGs",
-        description: "Tools for players and game masters to help them visualize fantasy worlds better.",
+        description: "Tools for players and game masters to help them visualize their own worlds.",
       },
       error: {
         default: {
@@ -168,7 +168,7 @@ export default defineI18nConfig(() => ({
           isLoading: "Calendar is loading…",
           hasXEvent: "{count} available event",
           hasXEvents: "{count} available events",
-          seeCategories: "Modify categories",
+          seeCategories: "Categories",
           seeOptions: "Calendar options",
           date: {
             start: "Start date",
@@ -201,6 +201,7 @@ export default defineI18nConfig(() => ({
             nameSingular: "Event",
             namePlural: "Events",
             addSingle: "Add an event",
+            addSingleDescription: "This will add the event to the calendar",
             newEvent: "New event",
             title: "Event title",
             isStart: "Start",
@@ -491,7 +492,7 @@ export default defineI18nConfig(() => ({
           isLoading: "Chargement du calendrier…",
           hasXEvent: "{count} évènement disponible",
           hasXEvents: "{count} évènements disponibles",
-          seeCategories: "Gestion des catégories",
+          seeCategories: "Catégories",
           seeOptions: "Options du calendrier",
           date: {
             start: "Date de début",
@@ -524,6 +525,7 @@ export default defineI18nConfig(() => ({
             nameSingular: "Évènement",
             namePlural: "Évènements",
             addSingle: "Ajouter un évènement",
+            addSingleDescription: "L'évènement sera ajouté au calendrier en cours",
             newEvent: "Nouvel évènement",
             title: "Titre de l'évènement",
             isStart: "Début",

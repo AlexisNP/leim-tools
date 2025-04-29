@@ -163,7 +163,7 @@ function hideEditModal() {
 </script>
 
 <template>
-  <main class="p-8">
+  <main class="py-8 px-5 md:px-8">
     <template v-if="status === 'pending'">
       <Head>
         <Title>{{ $t("entity.world.namePlural") }}</Title>
@@ -188,7 +188,9 @@ function hideEditModal() {
 
           <div class="lg:w-1/2">
             <div class="flex items-center gap-2 mb-2">
-              <Heading level="h1">{{ world.data.name }}</Heading>
+              <div class="flex items-center gap-3">
+                <Heading level="h1">{{ world.data.name }}</Heading>
+              </div>
 
               <UiTooltipProvider :delay-duration="250">
                 <UiTooltip>

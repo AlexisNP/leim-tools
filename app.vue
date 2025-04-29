@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ConfigProvider } from "radix-vue"
+import { cn } from "./lib/utils";
 
 useHead({
   titleTemplate: (titleChunk) => {
@@ -26,6 +27,8 @@ useHead({
 })
 
 const useIdFunction = () => useId()
+
+const { isSidebarOpened } = storeToRefs(useUiStore())
 </script>
 
 <template>
@@ -34,10 +37,18 @@ const useIdFunction = () => useId()
 
     <NuxtLayout>
       <ConfigProvider :use-id="useIdFunction">
-        <div class="h-full grid grid-cols-[auto_1fr] dark:bg-black transition-colors">
+        <div
+          class="h-full grid md:grid-cols-[auto_1fr] dark:bg-black shadow-body-light dark:shadow-body-dark transition-colors after:absolute after:transition-colors"
+          :class="cn({
+            'max-md:after:bg-transparent': isSidebarOpened,
+            'has-sidebar max-md:after:bg-black/20 md:after:opacity-0 md:after:pointer-events-none': isSidebarOpened
+          })"
+        >
           <Sidebar />
 
-          <div class="wrapper shadow-body-light dark:shadow-body-dark transition-all">
+          <div
+            class="wrapper max-h-screen transition-all"
+          >
             <NuxtPage />
           </div>
         </div>
@@ -53,5 +64,18 @@ const useIdFunction = () => useId()
 <style lang="scss" scoped>
 .wrapper > * {
   height: 100%;
+}
+
+.has-sidebar {
+  position: relative;
+  isolation: isolate;
+
+  &::after {
+    content: '';
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 30;
+  }
 }
 </style>

@@ -2,8 +2,6 @@
 import type { Category } from "~/models/Category";
 import { ScrollAreaRoot, ScrollAreaViewport, ScrollAreaScrollbar, ScrollAreaThumb } from "radix-vue"
 
-const { t } = useI18n()
-
 const { categories } = defineProps<{
   categories: Category[]
 }>()

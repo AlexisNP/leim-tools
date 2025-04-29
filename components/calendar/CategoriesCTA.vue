@@ -9,9 +9,11 @@ const { isReadOnly } = storeToRefs(useCalendar())
   <UiTooltipProvider :delay-duration="250">
     <UiTooltip>
       <UiTooltipTrigger as-child>
-        <UiButton v-if="!isReadOnly" variant="secondary" size="icon" @click="toggleCategoriesModal(true)">
-          <PhTag size="20" weight="light" />
-        </UiButton>
+        <ClientOnly>
+          <UiButton v-if="!isReadOnly" variant="secondary" size="icon" @click="toggleCategoriesModal(true)">
+            <PhTag size="20" weight="light" />
+          </UiButton>
+        </ClientOnly>
       </UiTooltipTrigger>
       <UiTooltipContent>
         <p>

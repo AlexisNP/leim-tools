@@ -21,7 +21,7 @@ const dateDuration = computed<string | null>(() => props.event.endDate ? getRela
 
 <template>
   <button
-    class="event-callout group relative block w-full text-left py-3 px-4 cursor-pointer transition-colors"
+    class="event-callout group relative block w-full text-left py-2 px-3 md:py-3 md:px-4 cursor-pointer transition-colors"
     :class="cn(
       event.category ? `element-${event.category.color}` : '',
       {
@@ -30,7 +30,7 @@ const dateDuration = computed<string | null>(() => props.event.endDate ? getRela
     @click="$emit('query:date-jump', event.startDate)"
   >
     <div class="flex gap-2 items-center mb-1">
-      <h2 class="font-bold text-lg underline-offset-4 group-hover:underline">
+      <h2 class="font-semibold md:font-bold md:text-lg underline-offset-4 group-hover:underline">
         {{ event.title }}
       </h2>
       <div v-if="event.wiki">
@@ -43,7 +43,7 @@ const dateDuration = computed<string | null>(() => props.event.endDate ? getRela
       </div>
     </div>
 
-    <div class="flex gap-2 items-center justify-between mb-1">
+    <div class="flex gap-2 items-center justify-between mb-2 md:mb-1">
       <template v-if="!event.endDate">
         <p class="font-semibold text-sm opacity-75">
           {{ getFormattedDateTitle(event.startDate, true) }}
@@ -81,15 +81,15 @@ const dateDuration = computed<string | null>(() => props.event.endDate ? getRela
 
     <div class="mb-1 flex gap-x-2 items-center">
       <template v-if="event.location">
-        <p class="w-fit text-sm italic opacity-75 flex items-center gap-1">
+        <p class="w-fit text-xs md:text-sm italic opacity-75 flex items-center gap-1">
           <PhMapPinArea size="16" weight="fill" /> {{ event.location }}
         </p>
       </template>
-      <p class="w-fit text-sm italic opacity-75 flex items-center gap-1">
+      <p class="w-fit text-xs md:text-sm italic opacity-75 flex items-center gap-1">
         <PhAlarm size="16" weight="fill" /> {{ dateDifference }}
       </p>
       <template v-if="dateDuration">
-        <p class="w-fit text-sm italic opacity-75 flex items-center gap-1">
+        <p class="w-fit text-xs md:text-sm italic opacity-75 flex items-center gap-1">
           <PhHourglassMedium size="16" weight="fill" /> {{ $t('entity.calendar.date.while', { duration: dateDuration } )}}
         </p>
       </template>
@@ -111,8 +111,8 @@ const dateDuration = computed<string | null>(() => props.event.endDate ? getRela
       </ul>
     </div>
 
-    <div v-if="event.description" class="text-sm">
-      <hr class="my-2 border-white opacity-50" >
+    <div v-if="event.description" class="text-xs md:text-sm">
+      <hr class="my-3 md:my-2 border-white opacity-50" >
       <span class="opacity-75">
         {{ event.description }}
       </span>

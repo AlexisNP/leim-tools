@@ -1,5 +1,7 @@
 <script setup lang="ts">
+import { breakpointsTailwind, useBreakpoints } from "@vueuse/core"
 import { PhPlus } from "@phosphor-icons/vue";
+import { VisuallyHidden } from "radix-vue";
 
 const isDialogOpen = ref<boolean>(false);
 const { resetSkeleton } = useCalendar();
@@ -15,26 +17,46 @@ function toggleDialog() {
 function handleClosing() {
   setTimeout(() => resetSkeleton(), 100)
 }
+
+const breakpoints = useBreakpoints(
+  breakpointsTailwind
+)
 </script>
 
 <template>
-  <UiButton @click="toggleDialog">
-    <PhPlus size="18" weight="bold" />
+  <ClientOnly>
+    <Transition name="fade" appear>
+      <UiButton
+        class="max-md:fixed max-md:bottom-8 max-md:right-8 max-md:z-50 max-md:size-14 max-md:rounded-xl"
+        :size="breakpoints.md.value ? 'default' : 'icon'"
+        @click="toggleDialog"
+      >
+        <PhPlus :size="breakpoints.md.value ? 18 : 24" weight="bold" />
 
-    <strong class="font-semibold">
-      {{ $t("entity.calendar.event.newEvent") }}
-    </strong>
-  </UiButton>
+        <strong v-if="breakpoints.md.value" class="font-semibold">
+          {{ $t("entity.calendar.event.newEvent") }}
+        </strong>
+      </UiButton>
+    </Transition>
+  </ClientOnly>
 
   <UiDialog v-model:open="isDialogOpen">
     <UiDialogContent
-      class="border-indigo-200 dark:bg-slate-950 dark:border-indigo-950"
-      @escape-key-down.prevent="handleClosing"
+      class="max-md:translate-0 max-md:inset-0 max-md:w-full max-md:block"
+      :trap-focus="true"
+      @escape-key-down="handleClosing"
       @pointer-down-outside.prevent="handleClosing"
     >
-      <UiDialogTitle>
+      <UiDialogTitle class="max-md:mb-8">
         {{ $t("entity.calendar.event.addSingle") }}
       </UiDialogTitle>
+
+      <VisuallyHidden>
+        <UiDialogDescription>
+          {{ $t("entity.calendar.event.addSingleDescription") }}
+        </UiDialogDescription>
+      </VisuallyHidden>
+
       <CalendarFormCreateEvent @event-created="toggleDialog" />
     </UiDialogContent>
   </UiDialog>

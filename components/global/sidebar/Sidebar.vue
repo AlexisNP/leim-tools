@@ -1,9 +1,12 @@
 <script lang="ts" setup>
-import { PhCompass, PhGlobeHemisphereEast, PhHurricane, PhList } from "@phosphor-icons/vue"
+import { PhCompass, PhGlobeHemisphereEast, PhHurricane, PhX } from "@phosphor-icons/vue"
 import type { SidebarMenuActionType, SidebarMenuIcon } from "./SidebarProps";
+import { cn } from "~/lib/utils";
+import { breakpointsTailwind } from "@vueuse/core"
 
 const { revealAdvancedSearch } = useCalendar()
-const { currentMenu } = storeToRefs(useUiStore())
+const { toggleSidebar } = useUiStore()
+const { currentMenu, isSidebarOpened } = storeToRefs(useUiStore())
 
 function handleMenuItemAction(actionType: SidebarMenuActionType) {
   if (actionType === "event-search") {
@@ -21,26 +24,68 @@ function computeMenuItemIcon(iconString: SidebarMenuIcon) {
       return PhCompass
   }
 }
+
+const breakpoints = useBreakpoints(
+  breakpointsTailwind
+)
+
+// const sidebarRef = ref(null)
+
+// onClickOutside(sidebarRef, () => {
+//   isSidebarOpened.value = false
+// })
 </script>
 
 <template>
-  <nav class="w-16 py-6 border-r-[1px] bg-indigo-700 dark:bg-black text-white border-r-indigo-700 dark:border-r-indigo-950 grid grid-rows-[1fr_auto] justify-center transition-colors after:opacity-50 after:contrast-125 dark:after:opacity-75 dark:after:contrast-175 after:-hue-rotate-60">
-    <menu class="flex flex-col gap-4">
-      <li class="mb-12">
-        <UiButton variant="ghost" size="icon" class="rounded-full" @click="console.log">
-          <PhList size="27" />
+  <nav
+    ref="sidebarRef"
+    :class="cn(
+      ['md:relative md:isolate w-16 py-6 grid gap-4 grid-rows-[1fr_auto] justify-center transition-all'], // Base appearance
+      ['after:opacity-50 after:contrast-125 dark:after:opacity-75 dark:after:contrast-175 after:-hue-rotate-60'], // After styling
+      ['border-r-[1px] bg-indigo-700 dark:bg-black text-white border-r-indigo-700 dark:border-r-indigo-950 shadow-navbar-light dark:shadow-navbar-dark'], // Colours
+      ['max-md:justify-stretch max-md:px-4 max-md:py-4 max-md:absolute max-md:left-0 max-md:inset-0 max-md:z-50 max-md:w-30 max-md:max-w-full'], // Responsive behaviours
+      {
+        'max-md:-translate-x-30': !isSidebarOpened,
+        'max-md:-translate-x-0 shadow-navbar-dark dark:bg-slate-950': isSidebarOpened
+      }
+    )"
+  >
+    <menu class="flex flex-col gap-4 max-md:items-center">
+      <li class="mb-12 mt-4 max-md:self-start">
+        <UiButton
+          variant="outline"
+          size="icon"
+          class="md:hidden size-9 border-background/30"
+          @click="toggleSidebar"
+        >
+          <PhX size="19" />
         </UiButton>
       </li>
 
-      <li>
-        <UiTooltipProvider :delay-duration="50">
+      <li class="max-md:self-start">
+        <UiTooltipProvider :delay-duration="50" :disabled="!breakpoints.md.value">
           <UiTooltip>
             <UiTooltipTrigger as-child>
-              <UiButton variant="ghost" size="icon" class="rounded-full" as-child>
+              <UiButton
+                variant="ghost"
+                size="icon"
+                class="rounded-full max-md:hidden"
+                as-child
+              >
                 <RouterLink to="/explore">
                   <PhCompass size="24" weight="fill" />
                 </RouterLink>
               </UiButton>
+              <RouterLink
+                to="/explore"
+                class="md:hidden flex items-center gap-[.6ch] underline-offset-4 hover:underline"
+              >
+                <PhCompass size="22" weight="fill" />
+
+                <span class="text-[.9em]">
+                  {{ $t('pages.explore.menuLabel') }}
+                </span>
+              </RouterLink>
             </UiTooltipTrigger>
             <UiTooltipContent :side="'right'" :side-offset="6">
               <p>
@@ -92,9 +137,6 @@ function computeMenuItemIcon(iconString: SidebarMenuIcon) {
 
 <style lang="scss" scoped>
 nav {
-  position: relative;
-  isolation: isolate;
-
   &::after {
     display: block;
     content: '';

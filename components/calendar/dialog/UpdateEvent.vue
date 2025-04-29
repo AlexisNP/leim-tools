@@ -25,13 +25,13 @@ function handleClosing() {
     <UiDialogContent
       :disable-outside-pointer-events="true"
       :trap-focus="true"
-      class="pl-3 min-w-96 border-border"
+      class="pl-3 md:min-w-96 max-md:translate-0 max-md:inset-0 max-md:w-full max-md:block"
       @escape-key-down="handleClosing"
       @focus-outside="handleClosing"
       @interact-outside="handleClosing"
       @pointer-down-outside="(e) => e.preventDefault()"
     >
-      <header class="pl-8 grid gap-y-2">
+      <header class="pl-8 grid gap-y-2 max-md:mb-8">
         <UiDialogTitle>
           {{ $t('entity.calendar.event.editDialog.title') }}
         </UiDialogTitle>

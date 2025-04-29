@@ -66,6 +66,8 @@ module.exports = {
       boxShadow: {
         "body-dark": "hsla(250, 50%, 10%, 0.75) 0 0 32px 2px inset",
         "body-light": "hsl(250, 60%, 85%) 0 0 18px 3px inset",
+        "navbar-dark": "hsla(250, 50%, 10%, 0.75) 0 0 32px 2px",
+        "navbar-light": "hsl(250, 60%, 85%) 0 0 18px 3px",
       },
       borderRadius: {
         xl: "calc(var(--radius) + 4px)",

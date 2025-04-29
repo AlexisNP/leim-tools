@@ -146,7 +146,7 @@
 }
 .event-button.is-hidden {
   background-color: transparent;
-  color: var(--bg-color);
+  color: var(--color-foreground);
   border: 1px dashed var(--bg-color);
   transition-property: background-color, color, border-color;
 }

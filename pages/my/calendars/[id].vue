@@ -60,8 +60,8 @@ watch([calendar], () => {
       <Title>{{ calendar.data.name }}</Title>
     </Head>
 
-    <div class="h-full grid grid-rows-[auto_1fr] pt-8 gap-y-2">
-      <div class="px-8">
+    <div class="h-full grid grid-rows-[auto_1fr] pt-8 md:gap-y-2">
+      <div class="px-5 md:px-8 max-md:mb-2">
         <Breadcrumb
           v-if="calendar.data.world"
           :items="[
