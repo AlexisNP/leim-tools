@@ -9,8 +9,10 @@ definePageMeta({
   middleware: ["auth-guard", "reset-menu"]
 })
 
-const { data: worlds } = await useLazyFetch<{ data: World[] }>("/api/worlds/query", { query: { gmId:  user?.value!.id } })
+const { data: worlds, status: worldStatus } = await useLazyFetch<{ data: World[] }>("/api/worlds/query", { query: { gmId:  user?.value!.id }, key: "user-worlds", keepalive: true })
 const sortedWorlds = computed(() => worlds.value?.data ? [...worlds.value.data].sort((a, b) => (a.id ?? 0) - (b.id ?? 0)) : [])
+
+const isLoading = computed(() => worldStatus.value === "idle")
 
 // Redirect user back home when they log out on the page
 watch(user, (n) => {
@@ -115,9 +117,15 @@ function hideEditModal() {
       <Title>{{ $t("pages.profile.metaTitle") }}</Title>
     </Head>
 
-    <Heading level="h1">
-      {{ $t("pages.profile.title", { user: user?.user_metadata.full_name }) }}
-    </Heading>
+    <div class="flex items-center gap-3">
+      <div class="md:hidden">
+        <SidebarToggle />
+      </div>
+
+      <Heading level="h1">
+        {{ $t("pages.profile.title", { user: user?.user_metadata.full_name }) }}
+      </Heading>
+    </div>
 
     <section class="mt-4">
       <Spacing size="lg">
@@ -127,7 +135,10 @@ function hideEditModal() {
           </Heading>
         </div>
 
-        <ul v-if="worlds?.data" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-2">
+        <div v-if="isLoading" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-2">
+          <LoadingCard />
+        </div>
+        <ul v-else-if="worlds?.data" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-2">
           <li v-for="world in sortedWorlds" :key="world.id">
             <WorldPreviewCard :world="world" @on-edit="() => deployEditModal(world)" @on-delete="() => deployDeleteModal(world)" />
           </li>

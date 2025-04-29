@@ -11,18 +11,15 @@ const { isReadOnly, defaultDate } = storeToRefs(useCalendar())
 
 <template>
   <header class="md:mt-2 grid gap-3 md:gap-4 border-border border-b-[1px] transition-colors">
-    <div class="px-4 md:px-8 flex items-center justify-between gap-2">
+    <div class="px-5 md:px-8 flex items-center justify-between gap-2">
       <menu class="flex items-center md:gap-2">
         <li>
           <LazyCalendarDialogQuickCreateEvent v-if="!isReadOnly" />
         </li>
-        <li class="md:hidden">
-          <SidebarToggle />
-        </li>
         <li class="max-md:hidden">
           <LazyCalendarMenuToday v-if="defaultDate" />
         </li>
-        <li class="ml-4">
+        <li class="ml-2 md:ml-4">
           <CalendarCurrentDate />
         </li>
       </menu>

@@ -180,17 +180,17 @@ function hideEditModal() {
 
       <header class="mb-8">
         <Spacing size="lg">
-          <div class="max-md:hidden">
-            <Breadcrumb
-              :items="[
-                { label: world.data.name }
-              ]"
-            />
-          </div>
+          <Breadcrumb
+            :items="[
+              { label: world.data.name }
+            ]"
+          />
 
           <div class="lg:w-1/2">
             <div class="flex items-center gap-2 mb-2">
-              <Heading level="h1">{{ world.data.name }}</Heading>
+              <div class="flex items-center gap-3">
+                <Heading level="h1">{{ world.data.name }}</Heading>
+              </div>
 
               <UiTooltipProvider :delay-duration="250">
                 <UiTooltip>
