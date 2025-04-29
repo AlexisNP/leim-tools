@@ -37,8 +37,8 @@ const isToday = computed(() => getDifferenceInDays(defaultDate, selectedDate.val
 
     <template #fallback>
       <div class="flex items-center gap-1">
-        <UiSkeleton class="h-8 w-64" />
-        <UiSkeleton class="h-6 w-28" />
+        <UiSkeleton class="h-8 w-64 max-md:max-w-full" />
+        <UiSkeleton class="max-md:hidden h-6 w-28" />
       </div>
     </template>
   </ClientOnly>
