@@ -836,13 +836,13 @@ export const useCalendar = defineStore("calendar", () => {
   /**
    * Dummy event to hold creation data
    */
-  const eventSkeleton = ref<CalendarEvent>({ title: "", startDate: defaultDate.value })
+  const eventSkeleton = ref<CalendarEvent>({ title: "", startDate: defaultDate.value, hidden: false })
 
   /**
    * Resets the dummy event data
    */
   function resetSkeleton() {
-    eventSkeleton.value = { title: "", startDate: defaultDate.value }
+    eventSkeleton.value = { title: "", startDate: defaultDate.value, hidden: false }
   }
 
   /**
