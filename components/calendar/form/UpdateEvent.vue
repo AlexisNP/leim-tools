@@ -178,14 +178,9 @@ function handleCancel() {
           <PhEyeClosed v-else size="18" />
 
           <div class="flex items-center gap-x-2">
-            <UiSwitch id="new-event-visibility" v-model:checked="eventSkeleton.hidden" />
+            <UiCheckbox id="new-event-visibility" v-model:checked="eventSkeleton.hidden" />
             <UiLabel for="new-event-visibility">
-              <template v-if="!eventSkeleton.hidden">
-                {{ $t('entity.calendar.event.isPublic') }}
-              </template>
-              <template v-else>
-                {{ $t('entity.calendar.event.isHidden') }}
-              </template>
+              {{ $t('entity.calendar.event.hiddenLabel') }}
             </UiLabel>
           </div>
         </div>
