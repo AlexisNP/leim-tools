@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { PhCompass, PhGlobeHemisphereEast, PhHurricane, PhX } from "@phosphor-icons/vue"
+import { PhCompass, PhGlobeHemisphereEast, PhHurricane, PhInfo, PhX } from "@phosphor-icons/vue"
 import type { SidebarMenuActionType, SidebarMenuIcon } from "./SidebarProps";
 import { cn } from "~/lib/utils";
 import { breakpointsTailwind } from "@vueuse/core"
@@ -90,6 +90,40 @@ const breakpoints = useBreakpoints(
             <UiTooltipContent :side="'right'" :side-offset="6">
               <p>
                 {{ $t('pages.explore.menuLabel') }}
+              </p>
+            </UiTooltipContent>
+          </UiTooltip>
+        </UiTooltipProvider>
+      </li>
+
+      <li class="max-md:self-start">
+        <UiTooltipProvider :delay-duration="50" :disabled="!breakpoints.md.value">
+          <UiTooltip>
+            <UiTooltipTrigger as-child>
+              <UiButton
+                variant="ghost"
+                size="icon"
+                class="rounded-full max-md:hidden"
+                as-child
+              >
+                <RouterLink to="/about">
+                  <PhInfo size="24" weight="fill" />
+                </RouterLink>
+              </UiButton>
+              <RouterLink
+                to="/about"
+                class="md:hidden flex items-center gap-[.6ch] underline-offset-4 hover:underline"
+              >
+                <PhInfo size="22" weight="fill" />
+
+                <span class="text-[.9em]">
+                  {{ $t('pages.about.menuLabel') }}
+                </span>
+              </RouterLink>
+            </UiTooltipTrigger>
+            <UiTooltipContent :side="'right'" :side-offset="6">
+              <p>
+                {{ $t('pages.about.menuLabel') }}
               </p>
             </UiTooltipContent>
           </UiTooltip>
