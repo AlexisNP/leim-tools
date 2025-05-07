@@ -34,6 +34,8 @@ const filteredCategories = computed(() =>
       <UiButton
         variant="outline"
         role="combobox"
+        :aria-expanded="isPopoverOpen"
+        aria-controls="event-category"
         class="w-full max-w-full justify-between"
       >
         <template v-if="!model">
@@ -52,6 +54,7 @@ const filteredCategories = computed(() =>
       </UiButton>
     </UiPopoverTrigger>
     <UiPopoverContent
+      id="event-category"
       align="start"
       side="bottom"
       :collision-padding="50"

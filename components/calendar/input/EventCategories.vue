@@ -35,6 +35,8 @@ const filteredCategories = computed(() =>
       <UiButton
         variant="outline"
         role="combobox"
+        :aria-expanded="isPopoverOpen"
+        aria-controls="event-categories"
         class="relative w-full max-w-full h-fit justify-between"
       >
         <template v-if="!model.length">
@@ -54,12 +56,13 @@ const filteredCategories = computed(() =>
       </UiButton>
     </UiPopoverTrigger>
     <UiPopoverContent
+      id="event-categories"
       align="start"
       side="bottom"
       :collision-padding="50"
       class="w-fit h-[33vh] p-0"
     >
-      <UiCommand v-model="modelBuffer" v-model:searchTerm="searchTerm" :multiple="true">
+      <UiCommand v-model="modelBuffer" v-model:search-term="searchTerm" :multiple="true">
         <UiCommandInput :placeholder="$t('entity.category.search')" />
         <UiCommandEmpty>{{ $t('entity.category.notFoundAny') }}</UiCommandEmpty>
         <UiCommandList>
