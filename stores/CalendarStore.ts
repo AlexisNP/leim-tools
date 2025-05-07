@@ -922,7 +922,6 @@ export const useCalendar = defineStore("calendar", () => {
     })
   }
 
-  // Watch for categories changes
   watch(categories, (n) => {
     updateAllEventsCategories(n)
   })
