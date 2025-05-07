@@ -1,5 +1,4 @@
 import { serverSupabaseClient } from "#supabase/server";
-// import type { Calendar} from "~/models/CalendarConfig";
 import type { Calendar} from "~/models/CalendarConfig";
 import { postCalendarSchema } from "~/models/CalendarConfig";
 
@@ -63,7 +62,7 @@ export default defineEventHandler(async (event) => {
       .insert(bodyData.months as never)
 
     if (error) throw error
-  } catch (err) {
+  } catch {
     // If we found an error, rollback the calendar
     if (calendarId) {
       await client
@@ -89,7 +88,7 @@ export default defineEventHandler(async (event) => {
         .eq("id", calendarId)
         .limit(1)
         .single<Calendar>()
-    } catch (err) {
+    } catch {
       throw createError({
         cause: "Serveur",
         fatal: false,
