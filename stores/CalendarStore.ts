@@ -520,7 +520,7 @@ export const useCalendar = defineStore("calendar", () => {
       years: "xYearsAgoCompact",
       yearsAndMonths: "xYearsAndMonthsAgoCompact",
     }
-    let directionKeys: DateDirectionTranslationKeys = pastKeys
+    let directionKeys: DateDirectionTranslationKeys
 
     // Check whether it's a past or future date
     if (differenceInDays > 0) {
