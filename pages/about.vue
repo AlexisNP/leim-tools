@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 const { locale } = useI18n()
 
-const { data: page, refresh } = await useAsyncData(locale, () => {
+const { data: page, refresh } = await useAsyncData(`about-content-${locale}`, () => {
   return queryCollection("sections").path(`/sections/${locale.value}/legal`).first()
 })
 

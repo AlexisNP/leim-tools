@@ -12,23 +12,23 @@
     font-weight: var(--font-weight-bold);
 
     @variant md {
-      font-size: var(--text-5xl);
-    }
-  }
-  h2 {
-    font-size: var(--text-2xl);
-    font-weight: var(--font-weight-bold);
-
-    @variant md {
       font-size: var(--text-4xl);
     }
   }
-  h3 {
+  h2 {
     font-size: var(--text-xl);
     font-weight: var(--font-weight-bold);
 
     @variant md {
       font-size: var(--text-2xl);
+    }
+  }
+  h3 {
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-bold);
+
+    @variant md {
+      font-size: var(--text-xl);
     }
   }
   h4 {
@@ -38,5 +38,33 @@
     @variant md {
       font-size: var(--text-lg);
     }
+  }
+
+  /* Normal link */
+  p a:not([class]) {
+    color: var(--color-sky-600);
+    text-underline-offset: .25rem;
+
+    &:hover {
+      color: var(--color-sky-500);
+      text-decoration: underline;
+    }
+
+    @variant dark {
+      color: var(--color-teal-500);
+
+      &:hover {
+        color: var(--color-teal-300);
+      }
+    }
+  }
+
+  ul {
+    list-style-type: square;
+    padding-inline-start: 1.5rem;
+  }
+
+  hr {
+    margin-block: 2rem;
   }
 }
