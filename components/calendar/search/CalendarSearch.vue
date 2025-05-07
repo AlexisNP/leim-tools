@@ -88,7 +88,7 @@ const searchResults = computed<(Character | CalendarEvent)[]>(() => {
   results = dataToFilter.filter((item) => {
     // Filter calendar events
     if (isCalendarEvent(item)) {
-      const queryString = new String(searchQuery.value)
+      const queryString = (searchQuery.value as string)
         .replace(searchUnifier, "")
         .toLocaleLowerCase()
 
@@ -126,7 +126,7 @@ const searchResults = computed<(Character | CalendarEvent)[]>(() => {
 
     // Filter characters
     if (isCharacter(item)) {
-      const queryString = new String(searchQuery.value)
+      const queryString = (searchQuery.value as string)
         .replace(searchUnifier, "")
         .toLocaleLowerCase()
 
