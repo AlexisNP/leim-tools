@@ -184,12 +184,6 @@ function pushRoute(to: AvailableRoutes) {
         <UiDropdownMenuSeparator />
 
         <template v-if="user">
-          <!-- <UiDropdownMenuItem class="flex gap-[.5ch] items-center rounded-none" @click="pushRoute('/my/settings')">
-            <PhGear size="20" weight="fill" />
-            <span>
-              {{ $t('ui.sidebarMenu.account') }}
-            </span>
-          </UiDropdownMenuItem> -->
           <UiDropdownMenuItem class="flex gap-[.5ch] items-center rounded-none" @click="handleLogout">
             <PhSignOut size="20" weight="fill" />
             <span>

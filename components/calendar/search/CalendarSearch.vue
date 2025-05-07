@@ -279,7 +279,6 @@ function handleCategoryUnselect(e: Category) {
         </UiDialogDescription>
       </VisuallyHidden>
 
-      <!-- UiDialog header -->
       <div id="searchForm" class="grid gap-3">
         <div class="relative w-full h-fit">
           <UiInput
@@ -307,10 +306,6 @@ function handleCategoryUnselect(e: Category) {
               <UiToggleGroupItem value="events" aria-label="Uniquement les évènements">
                 {{ $t('entity.calendar.event.namePlural') }}
               </UiToggleGroupItem>
-              <!-- Not used for now -->
-              <!-- <UiToggleGroupItem value="characters" aria-label="Uniquement les personnages">
-                {{ $t('entity.character.namePlural') }}
-              </UiToggleGroupItem> -->
             </UiToggleGroup>
           </div>
 

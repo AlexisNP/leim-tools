@@ -82,20 +82,6 @@ function handleFormCancel() {
               {{ $t('entity.calendar.actionDialog.tabs.general.title') }}
             </div>
           </UiTabsTrigger>
-          <!-- <UiTabsTrigger value="months" class="font-bold">
-            <div class="flex items-center gap-1">
-              <PhCalendarDots size="18" weight="fill" />
-
-              {{ $t('entity.calendar.actionDialog.tabs.months.title') }}
-            </div>
-          </UiTabsTrigger>
-          <UiTabsTrigger value="today" class="font-bold">
-            <div class="flex items-center gap-1">
-              <PhAlarm size="18" weight="fill" />
-
-              {{ $t('entity.calendar.actionDialog.tabs.today.title') }}
-            </div>
-          </UiTabsTrigger> -->
         </UiTabsList>
         <UiTabsContent value="global" class="grid gap-4">
           <input
@@ -125,12 +111,6 @@ function handleFormCancel() {
             <InputColor id="new-calendar-color" v-model="calendarSkeleton.color" />
           </div>
         </UiTabsContent>
-        <!-- <UiTabsContent value="months">
-          <CalendarInputMonthList v-model:model-value="calendarSkeleton.months" />
-        </UiTabsContent>
-        <UiTabsContent value="today">
-          <CalendarInputTodaySelect v-model:model-value="calendarSkeleton.today" :available-months="calendarSkeleton.months"/>
-        </UiTabsContent> -->
       </UiTabs>
 
       <footer class="flex justify-end gap-2 mt-6">
