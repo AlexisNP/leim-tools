@@ -53,13 +53,11 @@ async function handleSubmit() {
 }
 
 /**
- * === Watch for name changes to display above ===
+ * Watch for name changes to display above
  */
 const emit = defineEmits<{
-  // eslint-disable-next-line no-unused-vars
-  (e: "on-changed-name", calendarName: string): void
-    // eslint-disable-next-line no-unused-vars
-  (e: "on-close"): void
+  "on-changed-name": [calendarName: string]
+  "on-close": []
 }>()
 
 /** Hook to emit a debounced event for the changed skeleton name */

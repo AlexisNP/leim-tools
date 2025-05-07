@@ -13,7 +13,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (e: "on-open-create-dialog", date: RPGDate): void
+  "on-open-create-dialog": [date: RPGDate]
 }>()
 
 const calendarTile = ref()

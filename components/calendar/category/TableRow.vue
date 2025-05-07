@@ -13,7 +13,7 @@ const { category } = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (e: "on-delete-category", payload: Category): void
+  "on-delete-category": [payload: Category]
 }>()
 
 type RowMode = "edit" | "view"

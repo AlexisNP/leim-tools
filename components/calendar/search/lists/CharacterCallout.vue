@@ -12,7 +12,7 @@ const props = defineProps<{
 }>()
 
 defineEmits<{
-  (e: "query:date-jump", payload: RPGDate): void
+  "query:date-jump": [payload: RPGDate]
 }>()
 
 const { getFormattedDateTitle } = useCalendar()
