@@ -6,26 +6,29 @@ Alexis Pelé
 
 **Email de support** — rpg@alexcreates.fr
 
+### Hébergeur
+Cloudflare US INC
+
+**Adresse** — Townsend Street 101 San Francisco, Californie, États-Unis
+
 -----
 
 ## Conditions Générales d'Utilisation
-
-### Application de Création de Mondes Fantastiques
 
 **Date d'entrée en vigueur : 5 mai 2025**
 
 ### 1. Acceptation des Conditions
 
-En accédant à notre application de création de mondes fantastiques (ci-après dénommée "l'Application"), vous acceptez d'être lié par les présentes Conditions Générales d'Utilisation. Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser l'Application.
+En accédant à notre application de gestion d'univers de fiction (ci-après dénommée "l'Application"), vous acceptez d'être lié par les présentes Conditions Générales d'Utilisation. Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser l'Application.
 
 En utilisant notre Application, vous reconnaissez avoir lu, compris et accepté les présentes Conditions Générales d'Utilisation.
 
 ### 2. Description du Service
 
-L'Application permet aux utilisateurs de créer, gérer et partager des calendriers et des mondes imaginaires pour leurs univers fantastiques. Les fonctionnalités incluent, sans s'y limiter :
+L'Application permet aux utilisateurs de créer, gérer et partager des calendriers et des univers de fiction. Les fonctionnalités incluent, sans s'y limiter :
 - La création de comptes utilisateurs
-- La conception de calendriers personnalisés 
-- La création d'univers fantastiques
+- La conception de calendriers personnalisés
+- La création et gestion d'univers de fiction
 - Le partage de contenus avec d'autres utilisateurs
 
 ### 3. Inscription et Compte Utilisateur
@@ -37,7 +40,7 @@ Vous êtes responsable du maintien de la confidentialité de vos identifiants de
 ### 4. Contenus de l'Utilisateur
 
 #### 4.1 Propriété intellectuelle
-Vous conservez tous vos droits de propriété intellectuelle sur les contenus que vous créez via l'Application (calendriers, descriptions de mondes, etc.). Cependant, vous nous accordez une licence mondiale, non exclusive, gratuite, transférable et pouvant faire l'objet d'une sous-licence pour utiliser, reproduire, modifier, adapter, publier et afficher ces contenus dans le cadre de la fourniture de l'Application.
+Vous conservez tous vos droits de propriété intellectuelle sur les contenus que vous créez via l'Application. Cependant, vous nous accordez une licence mondiale, non exclusive, gratuite, transférable et pouvant faire l'objet d'une sous-licence pour utiliser, reproduire, adapter, publier et afficher ces contenus dans le cadre de la fourniture de l'Application et de ses services.
 
 #### 4.2 Contenus prohibés
 Vous vous engagez à ne pas créer ou partager de contenus qui :
@@ -91,3 +94,15 @@ Si une disposition des présentes conditions est jugée invalide ou inapplicable
 Vous ne pouvez pas céder vos droits ou obligations en vertu des présentes conditions sans notre consentement écrit préalable.
 
 Pour toute question concernant ces conditions d'utilisation, veuillez nous contacter à : rpg@alexcreates.fr
+
+### 10. Cookies & informations personnelles
+
+L’utilisateur est informé que lors de ses visites sur le site, un cookie peut s’installer automatiquement sur son logiciel de navigation.
+
+Le cookie est un bloc de données qui ne permet pas d’identifier les utilisateurs mais sert à enregistrer des informations relatives à la navigation de celui-ci sur le site.
+
+Le paramétrage du logiciel de navigation permet d’informer de la présence de cookie et éventuellement, de la refuser.
+
+L’utilisateur dispose de l’ensemble des droits susvisés s’agissant des données à caractère personnel communiquées par le biais des cookies dans les conditions indiquées ci-dessus.
+
+Nous n'utilisons pas de cookie d'analyses, de tracking ou de régies publicitaires. Les cookies présents sur le site sont purement fonctionnels et ne sont pas partagés avec des tiers dans des buts commerciaux. Les cookies de l'application ne permettent pas de vous identifier.

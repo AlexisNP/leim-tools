@@ -14,11 +14,17 @@ watch(locale, () => refresh())
       <Title>{{ $t("pages.about.title") }}</Title>
     </Head>
 
-    <div class="container">
+    <div class="container max-md:px-0">
       <Spacing size="lg">
-        <Heading level="h1">
-          {{ $t("pages.about.title") }}
-        </Heading>
+        <div class="flex items-center gap-3">
+          <div class="md:hidden">
+            <SidebarToggle />
+          </div>
+
+          <Heading level="h1">
+            {{ $t("pages.about.title") }}
+          </Heading>
+        </div>
 
         <ContentRenderer v-if="page" :value="page" class="content" />
       </Spacing>

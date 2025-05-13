@@ -17,9 +17,15 @@ const isLoading = computed(() => calendarStatus.value === "pending")
     </Head>
 
     <Spacing size="lg">
-      <Heading level="h1">
-        {{ $t("pages.explore.title") }}
-      </Heading>
+      <div class="flex items-center gap-3">
+        <div class="md:hidden">
+          <SidebarToggle />
+        </div>
+
+        <Heading level="h1">
+          {{ $t("pages.explore.title") }}
+        </Heading>
+      </div>
 
       <Spacing size="lg">
         <Heading level="h2">

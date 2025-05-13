@@ -40,12 +40,12 @@ const breakpoints = useBreakpoints(
   <nav
     ref="sidebarRef"
     :class="cn(
-      ['md:relative md:isolate w-16 py-6 grid gap-4 grid-rows-[1fr_auto] justify-center transition-all'], // Base appearance
+      ['md:relative md:isolate w-16 py-6 grid gap-4 grid-rows-[1fr_auto] justify-center md:transition-none'], // Base appearance
       ['after:opacity-50 after:contrast-125 dark:after:opacity-75 dark:after:contrast-175 after:-hue-rotate-60'], // After styling
       ['border-r-[1px] bg-indigo-700 dark:bg-black text-white border-r-indigo-700 dark:border-r-indigo-950 shadow-navbar-light dark:shadow-navbar-dark'], // Colours
-      ['max-md:justify-stretch max-md:px-4 max-md:py-4 max-md:absolute max-md:left-0 max-md:inset-0 max-md:z-50 max-md:w-30 max-md:max-w-full'], // Responsive behaviours
+      ['max-md:justify-stretch max-md:px-4 max-md:py-4 max-md:absolute max-md:left-0 max-md:inset-0 max-md:z-50 max-md:w-40 max-md:max-w-full max-md:transition-all'], // Responsive behaviours
       {
-        'max-md:-translate-x-30': !isSidebarOpened,
+        'max-md:-translate-x-40': !isSidebarOpened,
         'max-md:-translate-x-0 shadow-navbar-dark dark:bg-slate-950': isSidebarOpened
       }
     )"
