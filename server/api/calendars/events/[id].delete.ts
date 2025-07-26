@@ -3,7 +3,7 @@ import { serverSupabaseClient } from "#supabase/server"
 import type { CalendarEvent } from "~/models/CalendarEvent"
 
 const paramsSchema = z.object({
-  id: z.number({ coerce: true }).positive().int()
+  id: z.coerce.number().positive().int()
 })
 
 export default defineEventHandler(async (event) => {

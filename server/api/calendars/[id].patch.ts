@@ -4,7 +4,7 @@ import type { Calendar} from "~/models/CalendarConfig";
 import { postCalendarSchema } from "~/models/CalendarConfig"
 
 const paramsSchema = z.object({
-  id: z.number({ coerce: true }).positive().int()
+  id: z.coerce.number().positive().int()
 })
 
 export default defineEventHandler(async (event) => {

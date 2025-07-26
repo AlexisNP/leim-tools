@@ -3,8 +3,8 @@ import { z } from "zod"
 import type { Category } from "~/models/Category";
 
 const querySchema = z.object({
-  id: z.number({ coerce: true }).positive().int().optional(),
-  calendarId: z.number({ coerce: true }).positive().int()
+  id: z.coerce.number().positive().int().optional(),
+  calendarId: z.coerce.number().positive().int()
 })
 
 export default defineEventHandler(async (event) => {

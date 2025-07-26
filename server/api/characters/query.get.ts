@@ -3,7 +3,7 @@ import { serverSupabaseClient } from "#supabase/server";
 import type { Character } from "~/models/Characters";
 
 const querySchema = z.object({
-  worldId: z.number({ coerce: true }).positive().int()
+  worldId: z.coerce.number().positive().int()
 })
 
 export default defineEventHandler(async (event) => {

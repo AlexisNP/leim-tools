@@ -3,8 +3,8 @@ import { serverSupabaseClient } from "#supabase/server";
 import type { World } from "~/models/World";
 
 const querySchema = z.object({
-  id: z.number({ coerce: true }).positive().int().optional(),
-  full: z.boolean({ coerce: true }).optional(),
+  id: z.coerce.number().positive().int().optional(),
+  full: z.coerce.boolean().optional(),
   gmId: z.string().optional(),
 })
 
