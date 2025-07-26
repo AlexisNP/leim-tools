@@ -24,7 +24,7 @@ const moveCalendarRight = useThrottleFn(() => {
 </script>
 
 <template>
-  <div class="container mt-[10vh] mb-auto" @wheel="handleWheel">
+  <div class="container mx-auto mt-[10vh] mb-auto" @wheel="handleWheel">
     <div class="grid grid-cols-5 gap-x-8 gap-y-16">
       <CalendarStateYearlyMonthTile
         v-for="month in months"

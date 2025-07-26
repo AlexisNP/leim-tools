@@ -12,7 +12,8 @@ export default defineNuxtConfig({
     "@nuxt/eslint",
     "shadcn-nuxt",
     "@nuxtjs/i18n",
-    "@nuxthub/core"
+    "@nuxthub/core",
+    "@nuxt/content",
   ],
 
   css: ["~/assets/main.css"],
@@ -48,7 +49,8 @@ export default defineNuxtConfig({
       callback: "/my/",
       exclude: [
         "/calendars(/*)?",
-        "/explore(/*)?"
+        "/explore(/*)?",
+        "/about(/*)?"
       ]
     }
   },

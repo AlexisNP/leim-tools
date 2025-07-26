@@ -76,14 +76,6 @@ function handleClosing() {
       </UiAlertDialogDescription>
 
       <form @submit.prevent="handleAction">
-        <div class="grid grid-cols-2 gap-y-4">
-          <div class="text-red-500 ml-8">
-            <span class="text-sm">
-              <!-- {{ formErrors.message }} -->
-            </span>
-          </div>
-        </div>
-
         <footer class="flex gap-2 justify-between">
           <UiButton type="button" size="sm" variant="outline" @click="handleClosing">
             {{ $t('ui.action.back') }}

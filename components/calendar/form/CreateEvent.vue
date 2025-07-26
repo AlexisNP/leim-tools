@@ -119,14 +119,6 @@ function handleCancel() {
         </div>
       </div>
 
-      <!-- <div class="col-span-2">
-        <div class="flex items-center gap-4">
-          <PhTag size="18" weight="fill" />
-
-          <CalendarInputEventCategories v-model="eventSkeleton.secondaryCategories" :placeholder="$t('entity.category.addSecondaries')" />
-        </div>
-      </div> -->
-
       <div class="col-span-2 mb-2">
         <div class="flex items-center gap-4">
           <PhMapPinArea size="18" weight="fill" />

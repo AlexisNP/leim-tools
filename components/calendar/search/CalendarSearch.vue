@@ -88,7 +88,7 @@ const searchResults = computed<(Character | CalendarEvent)[]>(() => {
   results = dataToFilter.filter((item) => {
     // Filter calendar events
     if (isCalendarEvent(item)) {
-      const queryString = new String(searchQuery.value)
+      const queryString = (searchQuery.value as string)
         .replace(searchUnifier, "")
         .toLocaleLowerCase()
 
@@ -126,7 +126,7 @@ const searchResults = computed<(Character | CalendarEvent)[]>(() => {
 
     // Filter characters
     if (isCharacter(item)) {
-      const queryString = new String(searchQuery.value)
+      const queryString = (searchQuery.value as string)
         .replace(searchUnifier, "")
         .toLocaleLowerCase()
 
@@ -279,7 +279,6 @@ function handleCategoryUnselect(e: Category) {
         </UiDialogDescription>
       </VisuallyHidden>
 
-      <!-- UiDialog header -->
       <div id="searchForm" class="grid gap-3">
         <div class="relative w-full h-fit">
           <UiInput
@@ -307,10 +306,6 @@ function handleCategoryUnselect(e: Category) {
               <UiToggleGroupItem value="events" aria-label="Uniquement les évènements">
                 {{ $t('entity.calendar.event.namePlural') }}
               </UiToggleGroupItem>
-              <!-- Not used for now -->
-              <!-- <UiToggleGroupItem value="characters" aria-label="Uniquement les personnages">
-                {{ $t('entity.character.namePlural') }}
-              </UiToggleGroupItem> -->
             </UiToggleGroup>
           </div>
 

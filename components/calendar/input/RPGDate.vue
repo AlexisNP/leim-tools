@@ -135,15 +135,6 @@ function handleValueReset() {
 
         <UiInput v-model="model.year" type="number" />
 
-        <!-- <nav class="flex items-center justify-end gap-2">
-          <UiButton variant="outline" size="icon" class="w-8 h-8" @click="decrementModelMonth()">
-            <PhCaretLeft size="14" />
-          </UiButton>
-          <UiButton variant="outline" size="icon" class="w-8 h-8" @click="incrementModelMonth()">
-            <PhCaretRight size="14" />
-          </UiButton>
-        </nav> -->
-
         <hr class="col-span-2" >
 
         <div class="col-span-2">

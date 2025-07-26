@@ -318,6 +318,11 @@ export default defineI18nConfig(() => ({
         profile: {
           title: "{user} — My universe",
           metaTitle: "My universe",
+        },
+        about: {
+          title: "About this app",
+          metaTitle: "About this app",
+          menuLabel: "About",
         }
       },
       breadcrumbs: {
@@ -647,6 +652,11 @@ export default defineI18nConfig(() => ({
         profile: {
           title: "{user} — Mon univers",
           metaTitle: "Mon univers",
+        },
+        about: {
+          title: "À propos",
+          metaTitle: "À propos",
+          menuLabel: "À propos",
         }
       },
       breadcrumbs: {

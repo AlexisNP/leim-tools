@@ -47,7 +47,7 @@ const { isSidebarOpened } = storeToRefs(useUiStore())
           <Sidebar />
 
           <div
-            class="wrapper max-h-screen transition-all"
+            class="wrapper max-h-screen transition-all overflow-y-auto"
           >
             <NuxtPage />
           </div>

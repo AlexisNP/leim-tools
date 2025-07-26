@@ -1,5 +1,4 @@
 import { serverSupabaseClient } from "#supabase/server";
-// import type { Calendar} from "~/models/CalendarConfig";
 import type { World } from "~/models/World";
 import { postWorldSchema } from "~/models/World";
 
@@ -41,7 +40,7 @@ export default defineEventHandler(async (event) => {
     if (error) throw error
 
     return data
-  } catch (err) {
+  } catch {
     throw createError({
       cause: "Serveur",
       status: 500,

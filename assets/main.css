@@ -7,6 +7,8 @@
 @import "./_colors.css" layer(theme);
 @import "./_colors.css" layer(utilities);
 
+@import "./_content.css";
+
 /*
   The default border color has changed to `currentcolor` in Tailwind CSS v4,
   so we've added these compatibility styles to make sure everything still

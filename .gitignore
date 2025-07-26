@@ -26,3 +26,5 @@ logs
 # Supabase
 .branches
 .temp
+
+.scannerwork/

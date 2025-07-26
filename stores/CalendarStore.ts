@@ -97,7 +97,7 @@ export const useCalendar = defineStore("calendar", () => {
   /**
    * Sorted month data using the raw months
    */
-  const sortedMonths = computed<CalendarMonth[]>(() => months.value.sort((a, b) => a.position - b.position))
+  const sortedMonths = computed<CalendarMonth[]>(() => months.value.toSorted((a, b) => a.position - b.position))
   const monthsPerYear = computed<number>(() => months.value.length)
   const daysPerYear = computed<number>(() => months.value.reduce((acc, o) => acc + o.days, 0))
 
@@ -520,7 +520,7 @@ export const useCalendar = defineStore("calendar", () => {
       years: "xYearsAgoCompact",
       yearsAndMonths: "xYearsAndMonthsAgoCompact",
     }
-    let directionKeys: DateDirectionTranslationKeys = pastKeys
+    let directionKeys: DateDirectionTranslationKeys
 
     // Check whether it's a past or future date
     if (differenceInDays > 0) {
@@ -922,7 +922,6 @@ export const useCalendar = defineStore("calendar", () => {
     })
   }
 
-  // Watch for categories changes
   watch(categories, (n) => {
     updateAllEventsCategories(n)
   })

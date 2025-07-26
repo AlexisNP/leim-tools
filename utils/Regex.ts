@@ -5,7 +5,7 @@
  * @returns Result of the test
  */
 export function isDigit(str: string) {
-  return RegExp(/^\d{1}$/g).test(str)
+  return RegExp(/^\d$/g).test(str)
 }
 
 /**
