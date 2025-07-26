@@ -49,7 +49,8 @@ export default defineNuxtConfig({
       callback: "/my/",
       exclude: [
         "/calendars(/*)?",
-        "/explore(/*)?"
+        "/explore(/*)?",
+        "/about(/*)?"
       ]
     }
   },
