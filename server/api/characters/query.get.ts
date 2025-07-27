@@ -1,6 +1,6 @@
 import { z } from "zod"
 import { serverSupabaseClient } from "#supabase/server";
-import type { Character } from "~/models/Characters";
+import type { Character } from "@@/models/Characters";
 
 const querySchema = z.object({
   worldId: z.coerce.number().positive().int()

@@ -1,6 +1,6 @@
 import { z } from "zod"
 import { serverSupabaseClient } from "#supabase/server"
-import { postWorldSchema, type World } from "~/models/World"
+import { postWorldSchema, type World } from "@@/models/World"
 
 const paramsSchema = z.object({
   id: z.coerce.number().positive().int()

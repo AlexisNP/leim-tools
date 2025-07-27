@@ -28,7 +28,7 @@
     "clsx": "^2.1.1",
     "lucide-vue-next": "^0.526.0",
     "luxon": "^3.7.1",
-    "nuxt": "^3.17.7",
+    "nuxt": "^4.0.1",
     "pinia": "^3.0.3",
     "radix-vue": "^1.9.17",
     "shadcn-nuxt": "^2.2.0",

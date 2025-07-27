@@ -1,7 +1,7 @@
 import { z } from "zod"
 import { serverSupabaseClient } from "#supabase/server"
-import type { Category} from "~/models/Category";
-import { categorySchema } from "~/models/Category"
+import type { Category} from "@@/models/Category";
+import { categorySchema } from "@@/models/Category"
 
 const paramsSchema = z.object({
   id: z.coerce.number().positive().int()

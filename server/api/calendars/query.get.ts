@@ -1,6 +1,6 @@
 import { serverSupabaseClient } from "#supabase/server";
 import { z } from "zod"
-import type { Calendar } from "~/models/CalendarConfig";
+import type { Calendar } from "@@/models/CalendarConfig";
 
 const querySchema = z.object({
   id: z.coerce.number().positive().int().optional(),

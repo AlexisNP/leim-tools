@@ -1,6 +1,6 @@
 import { z } from "zod"
 import { serverSupabaseClient } from "#supabase/server"
-import { calendarMonthSchema, type CalendarMonth } from "~/models/CalendarMonth"
+import { calendarMonthSchema, type CalendarMonth } from "@@/models/CalendarMonth"
 
 const paramsSchema = z.object({
   id: z.coerce.number().positive().int()
