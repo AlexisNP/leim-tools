@@ -5,7 +5,7 @@ definePageMeta({
   middleware: ["reset-menu"]
 })
 
-const { data: availableCalendars, status: calendarStatus } = await useLazyFetch<{ data: Calendar[] }>("/api/calendars/query", { key: "explore-calendars", query: { full: true } })
+const { data: availableCalendars, status: calendarStatus } = useLazyFetch<{ data: Calendar[] }>("/api/calendars/query", { key: "explore-calendars", query: { full: true } })
 
 const isLoading = computed(() => calendarStatus.value === "pending")
 </script>

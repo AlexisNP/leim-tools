@@ -44,7 +44,7 @@ watch(isLoading, (n) => {
       <p>
         {{ $t('entity.calendar.isLoading') }}
       </p>
-      <PhCircleNotch size="50" class="animate-spin"/>
+      <PhCircleNotch size="50" class="opacity-33 animate-spin"/>
     </div>
   </div>
 
