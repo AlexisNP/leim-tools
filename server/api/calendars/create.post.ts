@@ -1,6 +1,6 @@
 import { serverSupabaseClient } from "#supabase/server";
-import type { Calendar} from "~/models/CalendarConfig";
-import { postCalendarSchema } from "~/models/CalendarConfig";
+import type { Calendar} from "@@/models/CalendarConfig";
+import { postCalendarSchema } from "@@/models/CalendarConfig";
 
 export default defineEventHandler(async (event) => {
   const client = await serverSupabaseClient(event)

@@ -1,6 +1,6 @@
 import { serverSupabaseClient } from "#supabase/server";
-import type { World } from "~/models/World";
-import { postWorldSchema } from "~/models/World";
+import type { World } from "@@/models/World";
+import { postWorldSchema } from "@@/models/World";
 
 export default defineEventHandler(async (event) => {
   const client = await serverSupabaseClient(event)

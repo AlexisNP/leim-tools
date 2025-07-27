@@ -1,5 +1,5 @@
 import { serverSupabaseClient } from "#supabase/server";
-import { type Category, categorySchema } from "@/models/Category";
+import { type Category, categorySchema } from "@@/models/Category";
 
 export default defineEventHandler(async (event) => {
   const client = await serverSupabaseClient(event)

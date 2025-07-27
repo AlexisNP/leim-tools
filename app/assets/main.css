@@ -1,0 +1,50 @@
+@import 'tailwindcss';
+
+@config '../../tailwind.config.js';
+
+@import "./theme.css" layer(theme);
+@import "./_typography.css" layer(theme);
+@import "./_colors.css" layer(theme);
+@import "./_colors.css" layer(utilities);
+
+@import "./_content.css";
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-border, currentcolor);
+  }
+}
+
+body {
+  color: var(--color-foreground);
+  background-color: var(--color-background);
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: all .5s ease;
+}
+.fade-delay-enter-active,
+.fade-delay-leave-active {
+  transition: all .5s ease 1s;
+}
+
+.fade-enter-from,
+.fade-leave-to,
+.fade-delay-enter-from,
+.fade-delay-leave-to {
+  opacity: 0;
+  visibility: hidden;
+}

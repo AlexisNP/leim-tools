@@ -1,9 +1,9 @@
 import { z } from "zod"
 import { serverSupabaseClient } from "#supabase/server"
-import type { Category } from "~/models/Category"
+import type { Category } from "@@/models/Category"
 
 const paramsSchema = z.object({
-  id: z.number({ coerce: true }).positive().int()
+  id: z.coerce.number().positive().int()
 })
 
 export default defineEventHandler(async (event) => {

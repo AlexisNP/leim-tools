@@ -1,5 +1,5 @@
 import { serverSupabaseClient } from "#supabase/server";
-import { calendarMonthSchema, type CalendarMonth } from "~/models/CalendarMonth"
+import { calendarMonthSchema, type CalendarMonth } from "@@/models/CalendarMonth"
 
 export default defineEventHandler(async (event) => {
   const client = await serverSupabaseClient(event)

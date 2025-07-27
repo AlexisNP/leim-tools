@@ -16,7 +16,7 @@ export default defineNuxtConfig({
     "@nuxt/content",
   ],
 
-  css: ["~/assets/main.css"],
+  css: ["@/assets/main.css"],
 
   vite: {
     plugins: [
@@ -57,7 +57,7 @@ export default defineNuxtConfig({
 
   shadcn: {
     prefix: "Ui",
-    componentDir: "./components/ui"
+    componentDir: "./app/components/ui"
   },
 
   colorMode: {
