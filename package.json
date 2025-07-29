@@ -22,15 +22,15 @@
     "@phosphor-icons/vue": "^2.2.1",
     "@pinia/nuxt": "^0.11.2",
     "@tailwindcss/vite": "^4.1.11",
-    "@vueuse/core": "^13.5.0",
-    "@vueuse/integrations": "^13.5.0",
-    "@vueuse/nuxt": "^13.5.0",
+    "@vueuse/core": "^13.6.0",
+    "@vueuse/integrations": "^13.6.0",
+    "@vueuse/nuxt": "^13.6.0",
     "better-sqlite3": "^12.2.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "lucide-vue-next": "^0.526.0",
+    "lucide-vue-next": "^0.534.0",
     "luxon": "^3.7.1",
-    "nuxt": "^4.0.1",
+    "nuxt": "^4.0.2",
     "pinia": "^3.0.3",
     "radix-vue": "^1.9.17",
     "shadcn-nuxt": "^2.2.0",
@@ -39,14 +39,14 @@
     "tailwindcss-animate": "^1.0.7",
     "vue": "^3.5.18",
     "vue-router": "^4.5.1",
-    "zod": "^4.0.10"
+    "zod": "^4.0.13"
   },
   "devDependencies": {
     "@nuxtjs/color-mode": "^3.5.2",
     "@nuxtjs/supabase": "^1.6.0",
     "@nuxtjs/tailwindcss": "^6.14.0",
     "@stylistic/eslint-plugin-js": "^4.4.1",
-    "@types/luxon": "^3.6.2",
+    "@types/luxon": "^3.7.0",
     "@typescript-eslint/eslint-plugin": "^8.38.0",
     "@typescript-eslint/parser": "^8.38.0",
     "eslint": "^9.32.0",
@@ -56,9 +56,9 @@
     "postcss": "^8.5.6",
     "prettier": "^3.6.2",
     "sass": "^1.89.2",
-    "supabase": "^2.31.8",
+    "supabase": "^2.33.5",
     "tailwindcss": "^4.1.11",
     "typescript": "^5.8.3",
-    "wrangler": "^4.26.0"
+    "wrangler": "^4.26.1"
   }
 }
