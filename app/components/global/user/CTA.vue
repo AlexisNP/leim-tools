@@ -58,19 +58,21 @@ function pushRoute(to: AvailableRoutes) {
   <ClientOnly>
     <UiDropdownMenu v-model:open="menuOpened">
       <UiDropdownMenuTrigger>
-        <UiAvatar v-if="user" id="user-avatar" class="ring-[.2rem] ring-indigo-700 dark:ring-neutral-900 cursor-pointer">
-          <UiAvatarImage
-            :src="userMeta?.avatar_url"
-            :alt="userMeta?.full_name"
-            referrerpolicy="no-referrer"
-          />
-          <UiAvatarFallback>
-            {{ $t('ui.sidebarMenu.avatarFallback') }}
-          </UiAvatarFallback>
-        </UiAvatar>
-        <UiButton v-else variant="outline" size="icon" class="rounded-full border-indigo-200 bg-indigo-700 dark:border-slate-300 dark:bg-neutral-950 dark:hover:bg-slate-50 dark:hover:text-slate-950 cursor-pointer">
-          <PhUserCircle size="24" />
-        </UiButton>
+        <TransitionGroup name="fade-group" class="transition-group" appear>
+          <UiAvatar v-if="user" id="user-avatar" class="aspect-square ring-[.2rem] ring-indigo-700 dark:ring-neutral-900 cursor-pointer">
+            <UiAvatarImage
+              :src="userMeta?.avatar_url"
+              :alt="userMeta?.full_name"
+              referrerpolicy="no-referrer"
+            />
+            <UiAvatarFallback>
+              {{ $t('ui.sidebarMenu.avatarFallback') }}
+            </UiAvatarFallback>
+          </UiAvatar>
+          <UiButton v-else variant="outline" size="icon" class="aspect-square ring-[.2rem] ring-indigo-700 dark:ring-neutral-900 rounded-full border-indigo-200 bg-indigo-700 dark:border-slate-300 dark:bg-neutral-950 dark:hover:bg-slate-50 dark:hover:text-slate-950 cursor-pointer">
+            <PhUserCircle size="24" />
+          </UiButton>
+        </TransitionGroup>
       </UiDropdownMenuTrigger>
 
       <UiDropdownMenuContent class="w-72 p-0 pb-1" :align="'start'" :side="'top'" :side-offset="10" :align-offset="25" :collision-padding="40">
