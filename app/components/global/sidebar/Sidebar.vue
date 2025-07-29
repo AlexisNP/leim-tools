@@ -166,12 +166,16 @@ const breakpoints = useBreakpoints(
     </menu>
 
     <UserCTA />
+
+    <div class="sidebar-backdrop">
+      <NuxtImg src="/images/sidebar-min.webp" width="160" :preload="true" />
+    </div>
   </nav>
 </template>
 
 <style lang="scss" scoped>
 nav {
-  &::after {
+  .sidebar-backdrop {
     display: block;
     content: '';
     position: absolute;
@@ -179,12 +183,12 @@ nav {
     inset-inline: 0;
     height: 25rem;
     max-height: 100%;
-    background-image: url("/images/sidebar.png");
-    background-position: bottom;
-    background-size: cover;
-    background-repeat: no-repeat;
-    mask-image: linear-gradient(to top, black 25%, transparent 50%, transparent);
+    display: grid;
+    align-items: end;
+    mask-image: linear-gradient(to top, var(--color-black) 25%, transparent 50%, transparent);
     z-index: -1;
+    opacity: .5;
+    filter: saturate(200%);
   }
 }
 </style>

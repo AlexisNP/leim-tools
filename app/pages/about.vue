@@ -15,7 +15,7 @@ watch(locale, () => refresh())
     <Title>{{ $t("pages.about.title") }}</Title>
   </Head>
 
-  <main class="container overflow-y-auto py-8 px-5 md:px-8 grid gap-4 grid-rows-[auto_1fr]">
+  <main class="overflow-y-auto py-8 px-5 md:px-8 grid gap-4 grid-rows-[auto_1fr]">
     <div class="flex items-center gap-3">
       <div class="md:hidden">
         <SidebarToggle />
@@ -30,6 +30,6 @@ watch(locale, () => refresh())
       <PhCircleNotch size="50" class="opacity-33 animate-spin"/>
     </div>
 
-    <LazyContentRenderer v-else-if="status === 'success' && page" :value="page" class="content" />
+    <LazyContentRenderer v-else-if="status === 'success' && page" :value="page" class="content max-w-5xl" />
   </main>
 </template>
