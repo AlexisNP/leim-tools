@@ -57,9 +57,9 @@ function pushRoute(to: AvailableRoutes) {
 <template>
   <ClientOnly>
     <UiDropdownMenu v-model:open="menuOpened">
-      <UiDropdownMenuTrigger>
-        <TransitionGroup name="fade-group" class="transition-group" appear>
-          <UiAvatar v-if="user" id="user-avatar" class="aspect-square ring-[.2rem] ring-indigo-700 dark:ring-neutral-900 cursor-pointer">
+      <UiDropdownMenuTrigger class="aspect-square">
+        <TransitionGroup name="fade-group" appear>
+          <UiAvatar v-if="user" id="user-avatar" class="ring-[.2rem] ring-indigo-700 dark:ring-neutral-900 cursor-pointer">
             <UiAvatarImage
               :src="userMeta?.avatar_url"
               :alt="userMeta?.full_name"
@@ -69,7 +69,7 @@ function pushRoute(to: AvailableRoutes) {
               {{ $t('ui.sidebarMenu.avatarFallback') }}
             </UiAvatarFallback>
           </UiAvatar>
-          <UiButton v-else variant="outline" size="icon" class="aspect-square ring-[.2rem] ring-indigo-700 dark:ring-neutral-900 rounded-full border-indigo-200 bg-indigo-700 dark:border-slate-300 dark:bg-neutral-950 dark:hover:bg-slate-50 dark:hover:text-slate-950 cursor-pointer">
+          <UiButton v-else variant="outline" size="icon" class="ring-[.2rem] ring-indigo-700 dark:ring-neutral-900 rounded-full border-indigo-200 bg-indigo-700 dark:border-slate-300 dark:bg-neutral-950 dark:hover:bg-slate-50 dark:hover:text-slate-950 cursor-pointer">
             <PhUserCircle size="24" />
           </UiButton>
         </TransitionGroup>

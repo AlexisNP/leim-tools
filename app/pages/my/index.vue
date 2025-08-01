@@ -9,10 +9,10 @@ definePageMeta({
   middleware: ["auth-guard", "reset-menu"]
 })
 
-const { data: worlds, status: worldStatus } = await useLazyFetch<{ data: World[] }>("/api/worlds/query", { query: { gmId:  user?.value!.id }, key: "user-worlds", keepalive: true })
-const sortedWorlds = computed(() => worlds.value?.data ? [...worlds.value.data].sort((a, b) => (a.id ?? 0) - (b.id ?? 0)) : [])
+const { data: worlds, status: worldStatus, refresh } = await useLazyFetch<{ data: World[] }>("/api/worlds/query", { query: { gmId:  user?.value!.id }, key: "user-worlds", keepalive: true })
+const sortedWorlds = computed(() => worlds.value?.data ? worlds.value.data.sort((a, b) => (a.id ?? 0) - (b.id ?? 0)) : [])
 
-const isLoading = computed(() => worldStatus.value === "idle")
+const isLoading = computed(() => worldStatus.value === "pending")
 
 // Redirect user back home when they log out on the page
 watch(user, (n) => {
@@ -33,49 +33,13 @@ function hideCreateDialog() {
 /** Active world channel */
 let worldChannel: RealtimeChannel
 
-/** Handles world insertion realtime events */
-function handleInsertedWorld(newWorld: WorldChannelPayload) {
-  if (!worlds.value?.data) return
-
-  newWorld.createdAt = newWorld.created_at;
-  newWorld.gmId = newWorld.gm_id;
-
-  worlds.value?.data.push(newWorld)
-}
-
-/** Handles world deletion realtime events */
-function handleDeletedWorld(id: number) {
-  if (!worlds.value?.data) return
-
-  worlds.value.data.splice(worlds.value.data.findIndex(w => w.id === id), 1)
-}
-
 onMounted(() => {
-  worldChannel = supabase.channel("realtime-world-channel")
+  worldChannel = supabase.channel("realtime-worlds-channel")
     .on(
       "postgres_changes",
       { event: "*", schema: "public", table: "worlds" },
       async (payload) => {
-        switch (payload.eventType) {
-          case "INSERT":
-            handleInsertedWorld(payload.new as World)
-            break
-
-          case "DELETE":
-            handleDeletedWorld(payload.old.id)
-            break
-
-          case "UPDATE":
-            if (!worlds.value?.data) return
-
-            worlds.value.data = (await $fetch("/api/worlds/query", { query: { gmId: user?.value!.id } })).data as World[]
-            break
-
-          default:
-            console.log("Unknown event has been triggered. This should not happen unless Supabase added one somehow.")
-            console.log(payload)
-            break
-        }
+        refresh()
       }
     )
     .subscribe()

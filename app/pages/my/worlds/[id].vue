@@ -8,7 +8,7 @@ const supabase = useSupabaseClient()
 const route = useRoute()
 const id = route.params.id
 
-const { data: world, status } = await useFetch<{ data: World }>("/api/worlds/query", { query: { id, full: true } })
+const { data: world, status, refresh } = await useLazyFetch<{ data: World }>("/api/worlds/query", { query: { id, full: true }, key: "user-world", keepalive: true })
 const sortedCalendars = computed(() => world.value?.data.calendars ? [...world.value.data.calendars].sort((a, b) => (a.id ?? 0) - (b.id ?? 0)) : [])
 
 definePageMeta({
@@ -24,45 +24,13 @@ watch(user, (n) => {
   }
 })
 
-// Set custom menu
-// This should be reserved for actions, not for breadcrumbs
-//
-// const { setCurrentMenu } = useUiStore()
-
-// setCurrentMenu([
-//   {
-//     tooltip: t("entity.world.backToMy"),
-//     to: "/my",
-//     phIcon: "universe",
-//     highlight: true
-//   },
-// ])
-
 /**
  * === Subscriptions ===
  */
-
 /** Active calendar channel */
 let calendarChannel: RealtimeChannel
 /** Active world channel */
 let worldChannel: RealtimeChannel
-
-/** Handles calendar insertion realtime events */
-function handleInsertedCalendar(newCalendar: CalendarChannelPayload) {
-  if (!world.value) return
-
-  newCalendar.createdAt = newCalendar.created_at
-  newCalendar.eventNb = [{ count: 0 }]
-
-  world.value.data.calendars?.push(newCalendar)
-}
-
-/** Handles calendar deletion realtime events */
-function handleDeletedCalendar(id: number) {
-  if (!world.value) return
-
-  world.value.data.calendars?.splice(world.value.data.calendars.findIndex(c => c.id === id), 1)
-}
 
 onMounted(() => {
   calendarChannel = supabase.channel("realtime-calendar-channel")
@@ -70,26 +38,8 @@ onMounted(() => {
       "postgres_changes",
       { event: "*", schema: "public", table: "calendars" },
       async (payload) => {
-        switch (payload.eventType) {
-          case "INSERT":
-            handleInsertedCalendar(payload.new as Calendar)
-            break
-
-          case "DELETE":
-            handleDeletedCalendar(payload.old.id)
-            break
-
-          // Maybe this case could be handled better than doing a separate API call
-          case "UPDATE":
-            if (!world.value?.data) return
-
-            world.value.data = (await $fetch<{ data: World }>("/api/worlds/query", { query: { id, full: true } })).data
-            break
-
-          default:
-            console.log("Unknown event has been triggered. This should not happen unless Supabase added one somehow.")
-            break
-        }
+        console.log("refresh")
+        refresh()
       }
     )
     .subscribe()
@@ -105,18 +55,7 @@ onMounted(() => {
       "postgres_changes",
       { event: "*", schema: "public", table: "worlds" },
       async (payload) => {
-        switch (payload.eventType) {
-          case "UPDATE":
-            if (!world.value?.data) return
-
-            world.value.data = (await $fetch<{ data: World }>("/api/worlds/query", { query: { id, full: true } })).data
-            break
-
-          default:
-            console.log("Unknown event has been triggered. This should not happen unless Supabase added one somehow.")
-            console.log(payload)
-            break
-        }
+        refresh()
       }
     )
     .subscribe()
