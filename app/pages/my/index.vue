@@ -100,21 +100,21 @@ function hideEditModal() {
         </div>
 
         <div v-if="isLoading" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-2">
-          <LoadingCard />
+          <LazyCardLoading />
         </div>
         <ul v-else-if="worlds?.data" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-2">
           <li v-for="world in sortedWorlds" :key="world.id">
             <WorldPreviewCard :world="world" @on-edit="() => deployEditModal(world)" @on-delete="() => deployDeleteModal(world)" />
           </li>
           <li class="xl:w-fit">
-            <AddCard @on-click="() => isCreateWorldModalOpen = true">
+            <LazyCardAdd @on-click="() => isCreateWorldModalOpen = true">
               <template v-if="worlds?.data?.length > 0">
                 {{ $t('entity.world.addSingle') }}
               </template>
               <template v-else>
                 {{ $t('entity.world.addSingleFirst') }}
               </template>
-            </AddCard>
+            </LazyCardAdd>
           </li>
         </ul>
       </Spacing>

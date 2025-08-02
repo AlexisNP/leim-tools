@@ -8,13 +8,6 @@ const supabase = useSupabaseClient()
 const route = useRoute()
 const id = route.params.id
 
-const { data: world, status, refresh } = await useLazyFetch<{ data: World }>("/api/worlds/query", { query: { id, full: true }, key: "user-world", keepalive: true })
-const sortedCalendars = computed(() => world.value?.data.calendars ? [...world.value.data.calendars].sort((a, b) => (a.id ?? 0) - (b.id ?? 0)) : [])
-
-definePageMeta({
-  middleware: ["auth-guard"]
-})
-
 const user = useSupabaseUser()
 
 // Redirect user back home when they log out on the page
@@ -24,44 +17,45 @@ watch(user, (n) => {
   }
 })
 
+definePageMeta({
+  middleware: ["auth-guard"]
+})
+
+const { data: world, status, refresh } = await useAsyncData<{ data: World }>('user-world', () => {
+  return $fetch("/api/worlds/query", { query: { id }})
+})
+const worldGmId = world.value?.data.gmId
+
+const { data: calendars, status: calendarStatus, refresh: refreshCalendars } = useLazyFetch<{ data: Calendar[] }>('/api/calendars/query', { query: { worldId: world.value?.data.id, full: true }})
+const sortedCalendars = computed(() => calendars.value?.data ? calendars.value.data.sort((a, b) => (a.id ?? 0) - (b.id ?? 0)) : [])
+
 /**
  * === Subscriptions ===
  */
-/** Active calendar channel */
 let calendarChannel: RealtimeChannel
-/** Active world channel */
 let worldChannel: RealtimeChannel
 
-onMounted(() => {
-  calendarChannel = supabase.channel("realtime-calendar-channel")
-    .on(
-      "postgres_changes",
-      { event: "*", schema: "public", table: "calendars" },
-      async (payload) => {
-        console.log("refresh")
-        refresh()
-      }
-    )
-    .subscribe()
-})
-onUnmounted(() => {
-  // Unsubscribe from realtime
-  supabase.removeChannel(calendarChannel)
-})
-
+// Register channels
 onMounted(() => {
   worldChannel = supabase.channel("realtime-world-channel")
     .on(
       "postgres_changes",
       { event: "*", schema: "public", table: "worlds" },
-      async (payload) => {
-        refresh()
-      }
+      async () => refresh()
+    )
+    .subscribe()
+  calendarChannel = supabase.channel("realtime-calendar-channel")
+    .on(
+      "postgres_changes",
+      { event: "*", schema: "public", table: "calendars" },
+      async () => refreshCalendars()
     )
     .subscribe()
 })
+
+// Unsubscribe from realtime
 onUnmounted(() => {
-  // Unsubscribe from realtime
+  supabase.removeChannel(calendarChannel)
   supabase.removeChannel(worldChannel)
 })
 
@@ -108,11 +102,60 @@ function hideEditModal() {
         <Title>{{ $t("entity.world.namePlural") }}</Title>
       </Head>
 
-      <Heading level="h1">
-        {{ $t('entity.isLoading') }}
-      </Heading>
+      <header class="mb-8">
+        <Spacing size="lg">
+          <Breadcrumb
+            :items="[]"
+          />
+
+          <div class="lg:w-1/2">
+            <div class="flex items-center gap-2 mb-2">
+              <div class="flex items-center gap-3">
+                <UiSkeleton class="h-10 w-32 max-md:max-w-full" />
+              </div>
+
+              <UiButton size="icon" class="rounded-full size-8" disabled>
+                <PhPencil size="17" weight="fill" />
+              </UiButton>
+            </div>
+
+            <div class="grid gap-1">
+              <UiSkeleton class="h-6 w-full max-md:max-w-full" />
+              <UiSkeleton class="h-6 w-8/12 max-md:max-w-full" />
+              <UiSkeleton class="h-6 w-7/12 max-md:max-w-full" />
+            </div>
+          </div>
+        </Spacing>
+      </header>
     </template>
-    <template v-else-if="world?.data">
+    <template v-else-if="!world?.data && status === 'error'">
+      <div class="h-full w-full grid place-items-center">
+        <Head>
+          <Title>{{ $t("entity.world.notFound") }}</Title>
+        </Head>
+
+        <div class="grid justify-items-center opacity-80">
+          <PhGlobeHemisphereWest size="75" class="opacity-60" weight="fill" />
+
+          <Heading level="h1">
+            {{ $t("entity.world.notFound") }}
+          </Heading>
+
+          <p>
+            {{ $t('entity.world.notFoundDescription') }}
+          </p>
+
+          <UiButton variant="default" class="mt-4 gap-2" as-child>
+            <RouterLink to="/my">
+              <PhArrowBendDoubleUpLeft size="24" />
+
+              {{ $t('entity.world.backToList') }}
+            </RouterLink>
+          </UiButton>
+        </div>
+      </div>
+    </template>
+    <template v-else-if="world?.data && status === 'success'">
       <Head>
         <Title>{{ world.data.name }}</Title>
       </Head>
@@ -151,70 +194,71 @@ function hideEditModal() {
           </div>
         </Spacing>
       </header>
+    </template>
 
-      <section>
-        <Spacing size="lg">
-          <div class="flex items-center gap-3">
-            <Heading level="h2">
-              {{ $t('entity.calendar.namePlural') }}
-            </Heading>
+    <template v-if="world?.data">
+      <LazyWorldDialogEdit :world="world.data" :modal-state="isEditWorldModalOpen" @on-close="hideEditModal" />
+      <LazyCalendarDialogCreate :world="world.data" :modal-state="isCreateCalendarModalOpen" @on-close="hideCreateDialog" />
+      <LazyCalendarDialogUpdate :world="world.data" :calendar="markedCalendar" :modal-state="isUpdateCalendarModalOpen" @on-close="hideUpdateDialog" />
+      <LazyCalendarDialogDelete :calendar="markedCalendar" :modal-state="isDeleteCalendarModalOpen" @on-close="hideDeleteCalendarModal"/>
+    </template>
+
+    <section>
+      <Spacing size="lg">
+        <div class="flex items-center gap-3">
+          <Heading level="h2">
+            {{ $t('entity.calendar.namePlural') }}
+          </Heading>
+        </div>
+
+        <template v-if="calendarStatus === 'pending'">
+          <ul class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-2">
+            <li>
+              <LazyCardLoading />
+            </li>
+            <li class="w-64 max-w-full">
+              <LazyCardLoading />
+            </li>
+          </ul>
+        </template>
+
+        <template v-else-if="!calendars?.data && calendarStatus === 'error'">
+          <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
+            <LazyCardError>
+              <template #title>
+                {{ $t('error.default.title') }}
+              </template>
+              <template #content>
+                {{ $t('entity.calendar.error.cannotFindAny') }}
+              </template>
+            </LazyCardError>
           </div>
+        </template>
 
+        <template v-else-if="calendars?.data && calendarStatus === 'success' && worldGmId">
           <ul class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-2">
             <li v-for="calendar in sortedCalendars" :key="calendar.id">
-              <CalendarPreviewCard
+              <LazyCalendarPreviewCard
                 :calendar="calendar"
-                :gm-id="world.data.gmId"
+                :gm-id="worldGmId"
                 show-actions
                 @on-edit="() => deployUpdateDialog(calendar)"
                 @on-delete="() => deployDeleteCalendarModal(calendar)" />
             </li>
 
             <li class="xl:w-fit">
-              <AddCard @on-click="() => isCreateCalendarModalOpen = true">
+              <LazyCardAdd @on-click="() => isCreateCalendarModalOpen = true">
                 <template v-if="sortedCalendars.length > 0">
                   {{ $t('entity.calendar.addSingle') }}
                 </template>
                 <template v-else>
                   {{ $t('entity.calendar.addSingleFirst') }}
                 </template>
-              </AddCard>
+              </LazyCardAdd>
             </li>
           </ul>
-        </Spacing>
-      </section>
-
-      <WorldDialogEdit :world="world.data" :modal-state="isEditWorldModalOpen" @on-close="hideEditModal" />
-      <CalendarDialogCreate :world="world.data" :modal-state="isCreateCalendarModalOpen" @on-close="hideCreateDialog" />
-      <CalendarDialogUpdate :world="world.data" :calendar="markedCalendar" :modal-state="isUpdateCalendarModalOpen" @on-close="hideUpdateDialog" />
-      <CalendarDialogDelete :calendar="markedCalendar" :modal-state="isDeleteCalendarModalOpen" @on-close="hideDeleteCalendarModal"/>
-    </template>
-    <template v-else>
-      <div class="h-full w-full grid place-items-center">
-        <Head>
-          <Title>{{ $t("entity.world.notFound") }}</Title>
-        </Head>
-
-        <div class="grid justify-items-center opacity-80">
-          <PhGlobeHemisphereWest size="75" class="opacity-60" weight="fill" />
-
-          <Heading level="h1">
-            {{ $t("entity.world.notFound") }}
-          </Heading>
-
-          <p>
-            {{ $t('entity.world.notFoundDescription') }}
-          </p>
-
-          <UiButton variant="default" class="mt-4 gap-2" as-child>
-            <RouterLink to="/my">
-              <PhArrowBendDoubleUpLeft size="24" />
-
-              {{ $t('entity.world.backToList') }}
-            </RouterLink>
-          </UiButton>
-        </div>
-      </div>
-    </template>
+        </template>
+      </Spacing>
+    </section>
   </main>
 </template>

@@ -38,6 +38,8 @@ async function handleSubmit() {
 
   if (error) {
     console.log(error.message)
+    isLoading.value = false
+    return
   }
 
   toast({

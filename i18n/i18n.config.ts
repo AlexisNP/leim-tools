@@ -241,6 +241,9 @@ export default defineI18nConfig(() => ({
               title: "The event \"{event}\" has been successfuly deleted.",
             },
           },
+          error: {
+            cannotFindAny: "We couldn't fetch your calendars…"
+          },
           actionDialog: {
             tabs: {
               general: {
@@ -570,6 +573,9 @@ export default defineI18nConfig(() => ({
             deletedToast: {
               title: "L'évènement \"{event}\" a été supprimé avec succès.",
             },
+          },
+          error: {
+            cannotFindAny: "Nous n'avons pas pu récupérer vos calendriers…"
           },
           actionDialog: {
             tabs: {

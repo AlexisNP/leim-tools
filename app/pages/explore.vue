@@ -34,7 +34,7 @@ const { data: calendars, status } = useLazyAsyncData<{ data: Calendar[] }>("expl
         </Heading>
 
           <div v-if="status === 'pending'" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-2">
-            <LazyLoadingCard />
+            <LazyCardLoading />
           </div>
 
           <template v-else-if="status === 'success' && calendars?.data">
