@@ -4,6 +4,7 @@
 
 @import "./theme.css" layer(theme);
 @import "./_typography.css" layer(theme);
+@import "./_typography.css" layer(utilities);
 @import "./_colors.css" layer(theme);
 @import "./_colors.css" layer(utilities);
 

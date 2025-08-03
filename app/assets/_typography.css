@@ -2,3 +2,9 @@
   --text-2xs: 0.7rem;
   --text-2xs--line-height: 0.75rem;
 }
+
+@layer utilities {
+  .flow > * + * {
+    margin-top: 1em;
+  }
+}

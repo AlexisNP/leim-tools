@@ -59,7 +59,12 @@ function pushRoute(to: AvailableRoutes) {
     <UiDropdownMenu v-model:open="menuOpened">
       <UiDropdownMenuTrigger class="aspect-square">
         <TransitionGroup name="fade-group" appear>
-          <UiAvatar v-if="user" id="user-avatar" class="ring-[.2rem] ring-indigo-700 dark:ring-neutral-900 cursor-pointer">
+          <UiAvatar
+            v-if="user"
+            id="user-avatar"
+            class="ring-[.2rem] ring-primary hover:bg-accent hover:ring-accent transition-all cursor-pointer"
+            :class="cn({ 'ring-accent bg-accent dark:bg-accent': menuOpened })"
+          >
             <UiAvatarImage
               :src="userMeta?.avatar_url"
               :alt="userMeta?.full_name"
@@ -69,7 +74,13 @@ function pushRoute(to: AvailableRoutes) {
               {{ $t('ui.sidebarMenu.avatarFallback') }}
             </UiAvatarFallback>
           </UiAvatar>
-          <UiButton v-else variant="outline" size="icon" class="ring-[.2rem] ring-indigo-700 dark:ring-neutral-900 rounded-full border-indigo-200 bg-indigo-700 dark:border-slate-300 dark:bg-neutral-950 dark:hover:bg-slate-50 dark:hover:text-slate-950 cursor-pointer">
+          <UiButton
+            v-else
+            variant="outline"
+            size="icon"
+            class="ring-[.2rem] ring-primary hover:bg-accent hover:ring-accent border-none dark:bg-background rounded-full bg-primary transition-all cursor-pointer"
+            :class="cn({ 'ring-accent bg-accent dark:bg-accent': menuOpened })"
+          >
             <PhUserCircle size="24" />
           </UiButton>
         </TransitionGroup>

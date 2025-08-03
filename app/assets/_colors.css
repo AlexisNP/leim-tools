@@ -116,6 +116,11 @@
   --color-event-white-background: var(--event-white-background);
 }
 
+::selection {
+  color: var(--color-background);
+  background: color-mix(in srgb, var(--color-primary), var(--color-foreground) 20%)
+}
+
 .event-button,
 .event-popover,
 .event-callout,

@@ -2,7 +2,7 @@
 import type { Calendar } from "@@/models/CalendarConfig";
 
 definePageMeta({
-  middleware: ["reset-menu"]
+  layout: "public"
 })
 
 // const { data: availableCalendars, status: calendarStatus } = useLazyFetch<{ data: Calendar[] }>("/api/calendars/query", { key: "explore-calendars", query: { full: true } })

@@ -3,6 +3,10 @@ import { PhCircleNotch } from '@phosphor-icons/vue'
 
 const { locale } = useI18n()
 
+definePageMeta({
+  layout: "public"
+})
+
 const { data: page, refresh, status } = useLazyAsyncData(`about-content-${locale}`, () => {
   return queryCollection("sections").path(`/sections/${locale.value}/legal`).first()
 })

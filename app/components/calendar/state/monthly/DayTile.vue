@@ -93,10 +93,10 @@ const eventsNotDisplayed: ComputedRef<number>  = computed<number>(() => eventsFo
     >
       <ClientOnly>
         <span
-          class="inline-flex size-7 md:size-8 aspect-square items-center justify-center rounded-full border-1 md:border-2 border-transparent font-bold transition-colors group-hover:border-indigo-300 dark:group-hover:border-indigo-700"
+          class="inline-flex size-7 md:size-8 aspect-square items-center justify-center rounded-full border-1 md:border-2 border-transparent font-bold transition-colors group-hover:border-primary dark:group-hover:border-primary"
           :class="{
-            'text-white bg-slate-600 dark:bg-slate-800': isDefaultDate && !isSelectedDate,
-            'text-white bg-indigo-500': isSelectedDate
+            'bg-secondary dark:bg-slate-700': isDefaultDate && !isSelectedDate,
+            'bg-primary text-primary-foreground': isSelectedDate
           }"
         >
           {{ date.day }}
