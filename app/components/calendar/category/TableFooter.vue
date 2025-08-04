@@ -86,7 +86,7 @@ async function submitNew() {
   <div class="border-y-[1px] border-b-foreground/10 mr-4">
     <form
       ref="rowRef"
-      class="grid grid-cols-12 items-center gap-4 p-1 bg-transparent hover:bg-slate-50 dark:bg-transparent dark:hover:bg-slate-900"
+      class="grid grid-cols-12 items-center gap-4 p-1 bg-primary/0 hover:bg-primary/15"
       @submit.prevent="submitNew"
     >
       <div v-if="currentMode === 'add'" class="col-span-1" />

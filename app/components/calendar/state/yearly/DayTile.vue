@@ -2,6 +2,7 @@
 import type { RPGDate } from "@@/models/Date"
 import { storeToRefs } from "pinia"
 import { computed, type ComputedRef } from "vue"
+import { cn } from "~/lib/utils"
 
 const { currentDate, defaultDate, selectDate, areDatesIdentical } = useCalendar()
 const { selectedDate, currentEvents } = storeToRefs(useCalendar())
@@ -38,14 +39,14 @@ const hasAtLeastOneEvent = computed<boolean>(() => {
 
 <template>
   <button
-    class="relative grid place-items-center aspect-square rounded-full border-2 border-transparent transition-colors after:content-[''] after:absolute after:top-1 after:right-1 after:w-[.3rem] after:h-[.3rem] after:rounded-full after:transition-colors"
-    :class="{
-      'text-slate-500 hover:border-indigo-300 hover:text-slate-900': !isDefaultDate && !isSelectedDate,
-      'font-semibold text-white bg-slate-600 dark:bg-slate-800 hover:border-indigo-400': isDefaultDate && !isSelectedDate,
-      'font-semibold text-white bg-indigo-500 hover:bg-indigo-600 hover:border-indigo-500': isSelectedDate,
-      'after:bg-green-600': hasAtLeastOneEvent,
-      'after:bg-slate-950': hasAtLeastOneEvent && isSelectedDate
-    }"
+    class="relative grid place-items-center aspect-square rounded-full border-2 border-transparent transition-colors after:content-[''] after:absolute after:top-1 after:right-1 after:w-[.3rem] after:h-[.3rem] after:rounded-full after:transition-colors cursor-pointer"
+    :class="cn({
+      'text-foreground/75 hover:border-primary hover:text-foreground': !isDefaultDate && !isSelectedDate,
+      'font-semibold text-foreground bg-secondary hover:border-primary/70': isDefaultDate && !isSelectedDate,
+      'font-semibold text-primary-foreground bg-primary hover:border-primary/70': isSelectedDate,
+      'after:bg-primary': hasAtLeastOneEvent,
+      'after:bg-primary-foreground': hasAtLeastOneEvent && isSelectedDate
+    })"
     @click="selectDate(tileDate)"
   >
     <span ref="tileRef" class="text-[.85em]">{{ dayNumber }}</span>

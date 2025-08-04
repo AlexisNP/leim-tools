@@ -51,7 +51,7 @@ function closeDeleteDialog() {
     <UiDialogContent
       :disable-outside-pointer-events="true"
       :trap-focus="true"
-      class="min-w-96 border-indigo-200 dark:bg-slate-950 dark:border-indigo-950"
+      class="min-w-96"
       @escape-key-down="closeDeleteDialog"
       @focus-outside="closeDeleteDialog"
       @interact-outside="closeDeleteDialog"

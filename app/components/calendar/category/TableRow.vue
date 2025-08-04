@@ -103,8 +103,8 @@ function handleQueryDelete() {
     <form
       class="grid grid-cols-12 items-center gap-4 p-1 border-b-[1px] border-b-foreground/10"
       :class="cn(
-        { 'bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800': currentMode === 'edit' },
-        { 'bg-transparent hover:bg-slate-50 dark:bg-transparent dark:hover:bg-slate-900': currentMode !== 'edit' }
+        { 'bg-primary/10 hover:bg-primary/20': currentMode === 'edit' },
+        { 'bg-primary/0 hover:bg-primary/15': currentMode !== 'edit' }
       )"
       @submit.prevent="submitUpdate"
     >
@@ -162,9 +162,9 @@ function handleQueryDelete() {
         v-if="currentMode === 'edit' && categorySkeleton"
       >
         <UiButton
-          variant="secondary"
+          variant="default"
           size="icon"
-          class="w-6 h-6 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white"
+          class="w-6 h-6 rounded-full"
           :title="$t('ui.actions.edit')"
           @click="submitUpdate"
         >
@@ -173,9 +173,9 @@ function handleQueryDelete() {
       </li>
       <li v-else-if="rowHovered">
         <UiButton
-          variant="secondary"
+          variant="destructive"
           size="icon"
-          class="w-6 h-6 rounded-full hover:bg-red-600 hover:text-white"
+          class="w-6 h-6 rounded-full"
           :title="$t('ui.actions.delete')"
           @click="handleQueryDelete"
         >

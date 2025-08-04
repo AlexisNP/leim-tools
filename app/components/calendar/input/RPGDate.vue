@@ -117,7 +117,6 @@ function handleValueReset() {
       v-if="model"
       align="start"
       side="bottom"
-      class="border-indigo-200 dark:bg-slate-950 dark:border-indigo-950"
     >
       <div class="grid grid-cols-2 items-center gap-x-2 gap-y-3">
         <UiSelect @update:model-value="handleMonthChange">

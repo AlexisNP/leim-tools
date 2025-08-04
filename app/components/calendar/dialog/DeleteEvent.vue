@@ -27,7 +27,7 @@ function handleClosing(e: Event): void {
     <UiAlertDialogContent
       :disable-outside-pointer-events="true"
       :trap-focus="true"
-      class="min-w-96 border-indigo-200 dark:bg-slate-950 dark:border-indigo-950"
+      class="min-w-96"
       @escape-key-down="handleClosing"
       @focus-outside="handleClosing"
       @interact-outside="handleClosing"
