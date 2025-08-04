@@ -13,7 +13,15 @@ const model = defineModel<RPGColor>({ default: "white" });
 
 <template>
   <UiSelect v-model="model">
-    <UiSelectTrigger :id :class="cn({ 'h-9': theme === 'subtle' })">
+    <UiSelectTrigger
+      :id
+      :class="cn(
+        ['hover:bg-secondary hover:text-primary-foreground'],
+        {
+          'h-9': theme === 'subtle'
+        }
+      )"
+    >
       <UiSelectValue
         :placeholder="$t('ui.colors.selectOne')"
         class="bgc"
