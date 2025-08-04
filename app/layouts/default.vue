@@ -6,7 +6,7 @@ const { isSidebarOpened } = storeToRefs(useUiStore())
 
 <template>
   <div
-    class="h-full grid md:grid-cols-[auto_1fr] dark:bg-black transition-colors after:absolute after:transition-colors"
+    class="h-full grid md:grid-cols-[auto_1fr] bg-background transition-colors after:absolute after:transition-colors"
     :class="cn({
       'max-md:after:bg-transparent': isSidebarOpened,
       'has-sidebar max-md:after:bg-black/20 md:after:opacity-0 md:after:pointer-events-none': isSidebarOpened

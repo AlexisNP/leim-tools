@@ -40,7 +40,7 @@ const breakpoints = useBreakpoints(
   <nav
     ref="sidebarRef"
     :class="cn(
-      ['md:relative md:isolate w-16 py-6 grid gap-4 grid-rows-[1fr_auto] justify-center md:transition-none'], // Base appearance
+      ['md:relative md:isolate w-16 py-6 grid gap-4 grid-rows-[1fr_auto] justify-center md:transition-colors'], // Base appearance
       ['after:opacity-50 after:contrast-125 dark:after:opacity-75'], // After styling
       ['border-r-[1px] border-r-border dark:border-r-border'], // Colours
       ['max-md:justify-stretch max-md:px-4 max-md:py-4 max-md:absolute max-md:left-0 max-md:inset-0 max-md:z-50 max-md:w-40 max-md:max-w-full max-md:transition-all'], // Responsive behaviours
