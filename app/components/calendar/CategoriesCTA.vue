@@ -6,20 +6,20 @@ const { isReadOnly } = storeToRefs(useCalendar())
 </script>
 
 <template>
-  <UiTooltipProvider :delay-duration="250">
-    <UiTooltip>
-      <UiTooltipTrigger as-child>
-        <ClientOnly>
+  <ClientOnly>
+    <UiTooltipProvider :delay-duration="250">
+      <UiTooltip>
+        <UiTooltipTrigger as-child>
           <UiButton v-if="!isReadOnly" variant="secondary" size="icon" @click="toggleCategoriesModal(true)">
             <PhTag size="20" weight="light" />
           </UiButton>
-        </ClientOnly>
-      </UiTooltipTrigger>
-      <UiTooltipContent>
-        <p>
-          {{ $t('entity.calendar.seeCategories') }}
-        </p>
-      </UiTooltipContent>
-    </UiTooltip>
-  </UiTooltipProvider>
+        </UiTooltipTrigger>
+        <UiTooltipContent>
+          <p>
+            {{ $t('entity.calendar.seeCategories') }}
+          </p>
+        </UiTooltipContent>
+      </UiTooltip>
+    </UiTooltipProvider>
+  </ClientOnly>
 </template>
