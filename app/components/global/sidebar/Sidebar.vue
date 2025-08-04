@@ -40,13 +40,13 @@ const breakpoints = useBreakpoints(
   <nav
     ref="sidebarRef"
     :class="cn(
-      ['md:relative md:isolate w-16 py-6 grid gap-4 grid-rows-[1fr_auto] justify-center md:transition-none'], // Base appearance
-      ['after:opacity-50 after:contrast-125 dark:after:opacity-75 dark:after:contrast-175 after:-hue-rotate-60'], // After styling
-      ['border-r-[1px] bg-indigo-700 dark:bg-black text-white border-r-indigo-700 dark:border-r-indigo-950 shadow-navbar-light dark:shadow-navbar-dark'], // Colours
+      ['md:relative md:isolate w-16 py-6 grid gap-4 grid-rows-[1fr_auto] justify-center md:transition-colors'], // Base appearance
+      ['after:opacity-50 after:contrast-125 dark:after:opacity-75'], // After styling
+      ['border-r-[1px] border-r-border dark:border-r-border'], // Colours
       ['max-md:justify-stretch max-md:px-4 max-md:py-4 max-md:absolute max-md:left-0 max-md:inset-0 max-md:z-50 max-md:w-40 max-md:max-w-full max-md:transition-all'], // Responsive behaviours
       {
         'max-md:-translate-x-40': !isSidebarOpened,
-        'max-md:-translate-x-0 shadow-navbar-dark dark:bg-slate-950': isSidebarOpened
+        'max-md:-translate-x-0': isSidebarOpened
       }
     )"
   >
@@ -72,11 +72,11 @@ const breakpoints = useBreakpoints(
                 class="rounded-full max-md:hidden"
                 as-child
               >
-                <RouterLink to="/explore">
+                <NuxtLink to="/explore">
                   <PhCompass size="24" weight="fill" />
-                </RouterLink>
+                </NuxtLink>
               </UiButton>
-              <RouterLink
+              <NuxtLink
                 to="/explore"
                 class="md:hidden flex items-center gap-[.6ch] underline-offset-4 hover:underline"
               >
@@ -85,45 +85,11 @@ const breakpoints = useBreakpoints(
                 <span class="text-[.9em]">
                   {{ $t('pages.explore.menuLabel') }}
                 </span>
-              </RouterLink>
+              </NuxtLink>
             </UiTooltipTrigger>
             <UiTooltipContent :side="'right'" :side-offset="6">
               <p>
                 {{ $t('pages.explore.menuLabel') }}
-              </p>
-            </UiTooltipContent>
-          </UiTooltip>
-        </UiTooltipProvider>
-      </li>
-
-      <li class="max-md:self-start">
-        <UiTooltipProvider :delay-duration="50" :disabled="!breakpoints.md.value">
-          <UiTooltip>
-            <UiTooltipTrigger as-child>
-              <UiButton
-                variant="ghost"
-                size="icon"
-                class="rounded-full max-md:hidden"
-                as-child
-              >
-                <RouterLink to="/about">
-                  <PhInfo size="24" weight="fill" />
-                </RouterLink>
-              </UiButton>
-              <RouterLink
-                to="/about"
-                class="md:hidden flex items-center gap-[.6ch] underline-offset-4 hover:underline"
-              >
-                <PhInfo size="22" weight="fill" />
-
-                <span class="text-[.9em]">
-                  {{ $t('pages.about.menuLabel') }}
-                </span>
-              </RouterLink>
-            </UiTooltipTrigger>
-            <UiTooltipContent :side="'right'" :side-offset="6">
-              <p>
-                {{ $t('pages.about.menuLabel') }}
               </p>
             </UiTooltipContent>
           </UiTooltip>
@@ -142,9 +108,9 @@ const breakpoints = useBreakpoints(
                   class="rounded-full"
                   as-child
                 >
-                  <RouterLink :to="item.to">
+                  <NuxtLink :to="item.to">
                     <component :is="computeMenuItemIcon(item.phIcon)" size="24" :weight="item.phIconWeight || 'fill'" />
-                  </RouterLink>
+                  </NuxtLink>
                 </UiButton>
                 <UiButton
                   v-if="item.action"
@@ -168,23 +134,3 @@ const breakpoints = useBreakpoints(
     <UserCTA />
   </nav>
 </template>
-
-<style lang="scss" scoped>
-nav {
-  &::after {
-    display: block;
-    content: '';
-    position: absolute;
-    bottom: 0;
-    inset-inline: 0;
-    height: 25rem;
-    max-height: 100%;
-    background-image: url("/images/sidebar.png");
-    background-position: bottom;
-    background-size: cover;
-    background-repeat: no-repeat;
-    mask-image: linear-gradient(to top, black 25%, transparent 50%, transparent);
-    z-index: -1;
-  }
-}
-</style>

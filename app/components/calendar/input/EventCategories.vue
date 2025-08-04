@@ -37,7 +37,7 @@ const filteredCategories = computed(() =>
         role="combobox"
         :aria-expanded="isPopoverOpen"
         aria-controls="event-categories"
-        class="relative w-full max-w-full h-fit justify-between"
+        class="relative w-full max-w-full h-fit justify-between hover:bg-secondary hover:text-primary-foreground"
       >
         <template v-if="!model.length">
           {{ props.placeholder }}
@@ -57,7 +57,7 @@ const filteredCategories = computed(() =>
     </UiPopoverTrigger>
     <UiPopoverContent
       id="event-categories"
-      align="start"
+      :align="'start'"
       side="bottom"
       :collision-padding="50"
       class="w-fit h-[33vh] p-0"

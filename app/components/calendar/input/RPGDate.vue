@@ -4,6 +4,7 @@ import type { RPGDate } from "@@/models/Date";
 import {
   PhXCircle
 } from "@phosphor-icons/vue"
+import { cn } from "~/lib/utils";
 
 const model = defineModel<RPGDate | null>()
 
@@ -117,7 +118,6 @@ function handleValueReset() {
       v-if="model"
       align="start"
       side="bottom"
-      class="border-indigo-200 dark:bg-slate-950 dark:border-indigo-950"
     >
       <div class="grid grid-cols-2 items-center gap-x-2 gap-y-3">
         <UiSelect @update:model-value="handleMonthChange">
@@ -135,7 +135,7 @@ function handleValueReset() {
 
         <UiInput v-model="model.year" type="number" />
 
-        <hr class="col-span-2" >
+        <hr class="col-span-2" />
 
         <div class="col-span-2">
           <div v-if="monthData" class="grid grid-cols-7 gap-1">
@@ -143,10 +143,10 @@ function handleValueReset() {
               v-for="day in monthData.days"
               :key="`popover-day-grid-${id}-${day}`"
               class="aspect-square rounded-full text-[.8em] transition-colors"
-              :class="{
-                'hover:bg-indigo-200 dark:hover:bg-indigo-700': day !== model.day,
-                'bg-indigo-500 hover:bg-indigo-700 text-white': day === model.day
-              }"
+              :class="cn({
+                'hover:bg-accent hover:text-accent-foreground': day !== model.day,
+                'bg-primary text-primary-foreground hover:bg-accent hover:text-accent-foreground': day === model.day
+              })"
               @click="setModelDay(day)"
             >
               {{ day }}

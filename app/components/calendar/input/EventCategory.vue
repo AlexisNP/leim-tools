@@ -36,7 +36,7 @@ const filteredCategories = computed(() =>
         role="combobox"
         :aria-expanded="isPopoverOpen"
         aria-controls="event-category"
-        class="w-full max-w-full justify-between"
+        class="w-full max-w-full justify-between hover:bg-secondary hover:text-primary-foreground"
       >
         <template v-if="!model">
           {{ props.placeholder }}

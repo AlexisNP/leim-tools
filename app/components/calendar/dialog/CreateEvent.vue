@@ -59,7 +59,7 @@ watch(currentRPGDate, () => {
       :collision-padding="60"
       :disable-outside-pointer-events="true"
       :trap-focus="true"
-      class="pl-3 w-[30rem] max-w-full border-indigo-200 dark:bg-slate-950 dark:border-indigo-950"
+      class="pl-3 w-[30rem] max-w-full"
       @escape-key-down.prevent="handleClosing"
       @pointer-down-outside.prevent="handleClosing"
     >

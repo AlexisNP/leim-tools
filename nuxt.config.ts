@@ -12,8 +12,9 @@ export default defineNuxtConfig({
     "@nuxt/eslint",
     "shadcn-nuxt",
     "@nuxtjs/i18n",
-    "@nuxthub/core",
     "@nuxt/content",
+    "@nuxthub/core",
+    "@nuxt/image",
   ],
 
   css: ["@/assets/main.css"],
@@ -67,5 +68,5 @@ export default defineNuxtConfig({
   },
 
   eslint: {},
-  compatibilityDate: "2025-04-16",
+  compatibilityDate: "latest",
 })

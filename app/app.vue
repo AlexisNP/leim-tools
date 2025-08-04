@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ConfigProvider } from "radix-vue"
-import { cn } from "./lib/utils";
 
 useHead({
   titleTemplate: (titleChunk) => {
@@ -27,33 +26,17 @@ useHead({
 })
 
 const useIdFunction = () => useId()
-
-const { isSidebarOpened } = storeToRefs(useUiStore())
 </script>
 
 <template>
   <div class="h-screen">
     <NuxtLoadingIndicator />
 
-    <NuxtLayout>
-      <ConfigProvider :use-id="useIdFunction">
-        <div
-          class="h-full grid md:grid-cols-[auto_1fr] dark:bg-black shadow-body-light dark:shadow-body-dark transition-colors after:absolute after:transition-colors"
-          :class="cn({
-            'max-md:after:bg-transparent': isSidebarOpened,
-            'has-sidebar max-md:after:bg-black/20 md:after:opacity-0 md:after:pointer-events-none': isSidebarOpened
-          })"
-        >
-          <Sidebar />
-
-          <div
-            class="wrapper max-h-screen transition-all overflow-y-auto"
-          >
-            <NuxtPage />
-          </div>
-        </div>
-      </ConfigProvider>
-    </NuxtLayout>
+    <ConfigProvider :use-id="useIdFunction">
+      <NuxtLayout>
+        <NuxtPage />
+      </NuxtLayout>
+    </ConfigProvider>
 
     <ClientOnly>
       <UiToaster />

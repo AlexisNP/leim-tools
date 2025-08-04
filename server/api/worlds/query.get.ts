@@ -41,12 +41,7 @@ export default defineEventHandler(async (event) => {
     state,
     createdAt:created_at,
     updatedAt:updated_at,
-    calendars (
-      createdAt:created_at,
-      updatedAt:updated_at,
-      months:calendar_months(*),
-      eventNb:calendar_events(count)
-    )
+    gmId:gm_id
   `
 
   let output

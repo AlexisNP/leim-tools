@@ -16,10 +16,10 @@ const breakpoints = useBreakpoints(
 </script>
 
 <template>
-  <UiTooltipProvider :delay-duration="250">
-    <UiTooltip>
-      <UiTooltipTrigger as-child>
-        <ClientOnly>
+  <ClientOnly>
+    <UiTooltipProvider :delay-duration="250">
+      <UiTooltip>
+        <UiTooltipTrigger as-child>
           <UiButton
             :size="breakpoints.md.value ? 'default' : 'icon'"
             variant="secondary"
@@ -31,11 +31,11 @@ const breakpoints = useBreakpoints(
               {{ $t('entity.calendar.date.today') }}
             </span>
           </UiButton>
-        </ClientOnly>
-      </UiTooltipTrigger>
-      <UiTooltipContent>
-        <p>{{ defaultDateFormatted }}</p>
-      </UiTooltipContent>
-    </UiTooltip>
-  </UiTooltipProvider>
+        </UiTooltipTrigger>
+        <UiTooltipContent>
+          <p>{{ defaultDateFormatted }}</p>
+        </UiTooltipContent>
+      </UiTooltip>
+    </UiTooltipProvider>
+  </ClientOnly>
 </template>

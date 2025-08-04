@@ -206,6 +206,8 @@ export default defineI18nConfig(() => ({
             title: "Event title",
             isStart: "Start",
             isEnd: "End",
+            gotoStart: "Go to the start of this event",
+            gotoEnd: "Go to the end of this event",
             isHidden: "Hidden",
             isPublic: "Public",
             hiddenLabel: "Hide this event",
@@ -240,6 +242,9 @@ export default defineI18nConfig(() => ({
             deletedToast: {
               title: "The event \"{event}\" has been successfuly deleted.",
             },
+          },
+          error: {
+            cannotFindAny: "We couldn't fetch your calendars…"
           },
           actionDialog: {
             tabs: {
@@ -536,6 +541,8 @@ export default defineI18nConfig(() => ({
             title: "Titre de l'évènement",
             isStart: "Début",
             isEnd: "Fin",
+            gotoStart: "Aller au début de l'évènement",
+            gotoEnd: "Aller à la fin de l'évènement",
             isHidden: "Privé",
             isPublic: "Public",
             hiddenLabel: "Rendre l'évènement privé",
@@ -570,6 +577,9 @@ export default defineI18nConfig(() => ({
             deletedToast: {
               title: "L'évènement \"{event}\" a été supprimé avec succès.",
             },
+          },
+          error: {
+            cannotFindAny: "Nous n'avons pas pu récupérer vos calendriers…"
           },
           actionDialog: {
             tabs: {

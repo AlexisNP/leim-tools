@@ -187,19 +187,19 @@ function deployDeleteModal() {
     </menu>
 
     <nav v-if="event.startDate && event.endDate" class="mt-2 flex gap-2">
-      <UiBadge class="hover:bg-indigo-400 dark:hover:bg-slate-300" as-child>
+      <UiBadge as-child>
         <button
-          class="flex gap-1"
-          title="Naviguer au début"
+          class="flex gap-1 cursor-pointer"
+          :title="$t('entity.calendar.event.gotoStart')"
           @click="handleJumpToDate(event.startDate!)"
         >
           <PhHourglassHigh size="16" weight="fill" /> {{ $t('entity.calendar.event.isStart') }}
         </button>
       </UiBadge>
-      <UiBadge class="hover:bg-indigo-400 dark:hover:bg-slate-300" as-child title="Naviguer à la fin">
+      <UiBadge as-child>
         <button
-          class="flex gap-1"
-          title="Naviguer à la fin"
+          class="flex gap-1 cursor-pointer"
+          :title="$t('entity.calendar.event.gotoEnd')"
           @click="handleJumpToDate(event.endDate!)"
         >
           <PhHourglassLow size="16" weight="fill" /> {{ $t('entity.calendar.event.isEnd') }}
