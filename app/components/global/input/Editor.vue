@@ -6,7 +6,6 @@ import { PhArrowUDownRight, PhArrowUUpLeft, PhListBullets, PhListNumbers, PhQuot
 const props = defineProps<{
   disableInlines?: boolean
   disableBlocks?: boolean
-  disableControls?: boolean
 }>()
 
 const model = defineModel<any>()
@@ -58,19 +57,10 @@ function clearFormatting() {
           @click.prevent="editor.chain().focus().toggleStrike().run()"
           :disabled="!editor.can().chain().focus().toggleStrike().run()"
           :variant="editor.isActive('strike') ? 'default' : 'secondary'"
-          class="size-7 rounded-none"
-          size="icon"
-        >
-          <PhTextStrikethrough weight="bold" />
-        </UiButton>
-
-        <UiButton
-          @click.prevent="clearFormatting"
-          variant="secondary"
           class="size-7 rounded-s-none"
           size="icon"
         >
-          <PhTextTSlash weight="bold" />
+          <PhTextStrikethrough weight="bold" />
         </UiButton>
       </div>
 
@@ -104,12 +94,21 @@ function clearFormatting() {
         </UiButton>
       </div>
 
-      <div class="flex" v-if="!props.disableControls">
+      <div class="flex">
+        <UiButton
+          @click.prevent="clearFormatting"
+          variant="secondary"
+          class="size-7 rounded-e-none"
+          size="icon"
+        >
+          <PhTextTSlash weight="bold" />
+        </UiButton>
+
         <UiButton
           @click.prevent="editor.chain().focus().undo().run()"
           :disabled="!editor.can().chain().focus().undo().run()"
           variant="secondary"
-          class="size-7 rounded-e-none"
+          class="size-7 rounded-none"
           size="icon"
         >
           <PhArrowUUpLeft weight="bold" />
@@ -234,6 +233,9 @@ function clearFormatting() {
 /* Basic editor styles */
 .tiptap {
   padding-block: 0.75rem;
+  min-height: 7rem;
+  max-height: 12rem;
+  overflow-y: auto;
 
   :first-child {
     margin-top: 0;
