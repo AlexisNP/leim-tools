@@ -190,7 +190,7 @@ function hideEditModal() {
               </UiTooltipProvider>
             </div>
 
-            <p>{{ world.data.description }}</p>
+            <div class="content-editor" v-html="world.data.description" />
           </div>
         </Spacing>
       </header>
