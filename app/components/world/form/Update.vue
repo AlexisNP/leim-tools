@@ -85,15 +85,8 @@ function handleFormCancel() {
           @input="handleNameChange"
         >
 
-        <!-- <textarea
-          id="new-world-description"
-          v-model="worldSkeleton.description"
-          name="new-world-description"
-          :placeholder="$t('entity.addDescription')"
-          class="w-full -my-1 py-1 -mx-1 px-1 min-h-24 max-h-36 text-sm border-b-[1px] bg-transparent focus-visible:outline-hidden focus-visible:border-primary invalid:border-destructive"
-        /> -->
-
         <InputEditor
+          disable-blocks
           v-model="worldSkeleton.description"
         />
 

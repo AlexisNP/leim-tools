@@ -1,18 +1,20 @@
-<script setup>
-import { useEditor, EditorContent } from '@tiptap/vue-3'
-import { ListItem } from '@tiptap/extension-list'
+<script lang="ts" setup>
+import { useEditor, EditorContent, type Content } from '@tiptap/vue-3'
 import StarterKit from '@tiptap/starter-kit'
 import { PhArrowUDownRight, PhArrowUUpLeft, PhListBullets, PhListNumbers, PhQuotes, PhTextB, PhTextItalic, PhTextStrikethrough, PhTextTSlash } from '@phosphor-icons/vue'
 
-const model = defineModel()
+const props = defineProps<{
+  disableInlines?: boolean
+  disableBlocks?: boolean
+  disableControls?: boolean
+}>()
+
+const model = defineModel<any>()
 
 const editor = useEditor({
-  content: model.value,
+  content: model.value as Content,
   extensions: [
-    StarterKit,
-    ListItem.configure({
-
-    })
+    StarterKit
   ],
 
   onUpdate: ({ editor }) => {
@@ -21,8 +23,8 @@ const editor = useEditor({
 })
 
 function clearFormatting() {
-  editor.value.chain().focus().unsetAllMarks().run()
-  editor.value.chain().focus().clearNodes().run()
+  editor.value?.chain().focus().unsetAllMarks().run()
+  editor.value?.chain().focus().clearNodes().run()
 }
 </script>
 
@@ -31,7 +33,7 @@ function clearFormatting() {
     <!-- Toolbar -->
     <div class="flex gap-1.5">
       <!-- Inline styles -->
-      <div class="flex">
+      <div class="flex" v-if="!props.disableInlines">
         <UiButton
           @click.prevent="editor.chain().focus().toggleBold().run()"
           :disabled="!editor.can().chain().focus().toggleBold().run()"
@@ -73,11 +75,10 @@ function clearFormatting() {
       </div>
 
       <!-- Block styles -->
-      <div class="flex">
+      <div class="flex" v-if="!props.disableBlocks">
         <UiButton
           @click.prevent="editor.chain().focus().toggleBulletList().run()"
           :variant="editor.isActive('bulletList') ? 'default' : 'secondary'"
-          variant="secondary"
           class="size-7 rounded-e-none"
           size="icon"
         >
@@ -87,7 +88,6 @@ function clearFormatting() {
         <UiButton
           @click.prevent="editor.chain().focus().toggleOrderedList().run()"
           :variant="editor.isActive('orderedList') ? 'default' : 'secondary'"
-          variant="secondary"
           class="size-7 rounded-none"
           size="icon"
         >
@@ -97,7 +97,6 @@ function clearFormatting() {
         <UiButton
           @click.prevent="editor.chain().focus().toggleBlockquote().run()"
           :variant="editor.isActive('blockquote') ? 'default' : 'secondary'"
-          variant="secondary"
           class="size-7 rounded-s-none"
           size="icon"
         >
@@ -105,7 +104,7 @@ function clearFormatting() {
         </UiButton>
       </div>
 
-      <div class="flex">
+      <div class="flex" v-if="!props.disableControls">
         <UiButton
           @click.prevent="editor.chain().focus().undo().run()"
           :disabled="!editor.can().chain().focus().undo().run()"
