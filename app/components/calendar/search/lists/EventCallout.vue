@@ -113,9 +113,7 @@ const dateDuration = computed<string | null>(() => props.event.endDate ? getRela
 
     <div v-if="event.description" class="text-xs md:text-sm">
       <hr class="my-3 md:my-2 border-white opacity-50" >
-      <span class="opacity-75">
-        {{ event.description }}
-      </span>
+      <div class="content-editor opacity-75" v-html="event.description" />
     </div>
   </button>
 </template>

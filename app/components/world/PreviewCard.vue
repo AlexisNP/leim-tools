@@ -47,7 +47,7 @@ const updatedAt = computed<string>(() => props.world.updatedAt ? DateTime.fromIS
     </UiCardHeader>
 
     <UiCardContent class="grow">
-      <p class="italic">{{ world.description }}</p>
+      <div class="md:text-sm" v-html="world.description"></div>
 
       <div
         v-if="isCardHovered || isCardFocused"
