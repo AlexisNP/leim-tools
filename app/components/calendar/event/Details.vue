@@ -160,8 +160,8 @@ function deployDeleteModal() {
       <template v-if="event.description">
         <hr class="border-border mt-2" >
 
-        <div class="max-h-48 overflow-y-auto mt-2 text-sm text-slate-600 dark:text-slate-300">
-          {{ event.description }}
+        <div class="max-h-48 overflow-y-auto mt-2 text-sm opacity-80">
+          <div class="content-editor" v-html="event.description" />
         </div>
       </template>
     </div>

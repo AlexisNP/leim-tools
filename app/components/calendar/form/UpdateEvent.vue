@@ -92,14 +92,11 @@ function handleCancel() {
       </div>
 
       <div class="col-span-2 my-2 ml-8">
-        <textarea
-          id="new-event-description"
+        <InputEditor
+          disable-blocks
           v-model="eventSkeleton.description"
-          name="new-event-description"
-          :placeholder="$t('entity.addDescription')"
-          :maxlength="1200"
-          class="w-full -my-1 py-1 -mx-1 px-1 min-h-24 max-h-36 text-sm border-b-[1px] bg-transparent focus-visible:outline-hidden focus-visible:border-primary invalid:border-destructive"
         />
+
         <div class="mt-2 mb-1 text-xs opacity-50">
           {{ t('entity.calendar.event.patterns.description') }}
         </div>
