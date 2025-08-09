@@ -68,12 +68,14 @@ const numberOfEventsToFit: ComputedRef<number> = computed(() => {
 
   let offset = 0
 
-  if (isDraggingEvent.value && !tileNotHovered.value) {
+  if (isDraggingEvent.value && !tileNotHovered.value && !skeletonInsideCurrentDay.value) {
     offset = 1
   }
 
   return Math.trunc((tileHeight.value - (tileListTop.value - tileTop.value)) / 40) - offset
 })
+
+const skeletonInsideCurrentDay = computed(() => eventsForTheDay.value.find((e) => e.id === eventSkeleton.value.id))
 
 /**
  * Events that can fit in the tile's space
@@ -95,6 +97,7 @@ const isLoading = ref(false)
 
 async function handleTileDrop() {
   if (isLoading.value) return
+  if (skeletonInsideCurrentDay.value) return
 
   isLoading.value = true
 
@@ -118,14 +121,6 @@ async function handleTileDrop() {
     isLoading.value = false
     return
   }
-
-  console.log(eventSkeleton.value)
-
-  toast({
-    title: t("entity.calendar.event.updatedToast.title", { event: eventSkeleton.value.title }),
-    variant: "success",
-    duration: ToastLifetime.SHORT
-  })
 
   isLoading.value = false
   resetSkeleton()
@@ -170,7 +165,7 @@ async function handleTileDrop() {
         }"
       >
         <li
-          v-if="!tileNotHovered && isDraggingEvent && !(eventsForTheDay.find((e) => e.id === eventSkeleton.id))"
+          v-if="!tileNotHovered && isDraggingEvent && !skeletonInsideCurrentDay"
           :key="eventSkeleton.id"
           class="opacity-60"
         >
