@@ -169,7 +169,7 @@ export default defineI18nConfig(() => ({
           nameSingular: "Calendar",
           namePlural: "Calendars",
           namePublicSingular: "Public Calendar",
-          namePublicPlural: "Public Calendars",
+          namePublicPlural: "Calendars",
           addSingle: "Add a calendar",
           addSingleFirst: "Add your first calendar !",
           notFound: "Calendar not found",
