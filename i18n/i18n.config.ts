@@ -86,6 +86,17 @@ export default defineI18nConfig(() => ({
         createdAt: "Created {createdAt}",
         updatedAt: "Last updated {updatedAt}",
       },
+      editor: {
+        bold: "Bold",
+        italic: "Italic",
+        strike: "Strikethrough",
+        ulist: "Bullet list",
+        olist: "Numbered list",
+        quote: "Quote",
+        noFormat: "Remove formatting",
+        undo: "Undo",
+        redo: "Redo"
+      },
       entity: {
         category: {
           nameSingular: "Category",
@@ -420,6 +431,17 @@ export default defineI18nConfig(() => ({
         title: "Titre",
         createdAt: "Créé le {createdAt}",
         updatedAt: "Dernière modification le {updatedAt}",
+      },
+      editor: {
+        bold: "Gras",
+        italic: "Italique",
+        strike: "Barré",
+        ulist: "Liste à puces",
+        olist: "Liste numerotée",
+        quote: "Citation",
+        noFormat: "Effacer le formattage",
+        undo: "Annuler",
+        redo: "Rétablir"
       },
       entity: {
         category: {
