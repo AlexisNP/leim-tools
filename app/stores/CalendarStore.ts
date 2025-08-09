@@ -130,7 +130,7 @@ export const useCalendar = defineStore("calendar", () => {
     return Number(params.month)
   })
   const currentMonthData = computed<CalendarMonth>(() => {
-    return sortedMonths.value[currentMonth.value]
+    return sortedMonths.value[currentMonth.value]!
   })
   // Gets the label from currentMonth index
   const currentMonthName = computed<string>(() => getMonthName(currentMonth.value))
@@ -605,7 +605,7 @@ export const useCalendar = defineStore("calendar", () => {
     // Else, we need to accelerate and decelerate
     else {
       // First, get all the remaining days in the current month
-      const currentMonth = sortedMonths.value[datePivot.month]
+      const currentMonth = sortedMonths.value[datePivot.month]!
       dateAcc.day = currentMonth.days - datePivot.day
       if (direction === "future") {
         datePivot.month = getNextViewMonth(datePivot.month)
@@ -756,7 +756,7 @@ export const useCalendar = defineStore("calendar", () => {
 
     // Loop over all event once to convert the structure to a usable one
     for (let i = 0; i < allEvents.value.length; i++) {
-      const e: CalendarEvent = allEvents.value[i]
+      const e: CalendarEvent = allEvents.value[i]!
 
       // Estimate distance from pivot
       const startDateDays: number = convertDateToDays(e.startDate)
@@ -830,6 +830,7 @@ export const useCalendar = defineStore("calendar", () => {
   const isCreatingEvent = ref<boolean>(false)
   const isUpdatingEvent = ref<boolean>(false)
   const isDeletingEvent = ref<boolean>(false)
+  const isDraggingEvent = ref<boolean>(false)
   const operationInProgress = computed<boolean>(() => isCreatingEvent.value || isUpdatingEvent.value || isDeletingEvent.value)
   let abortController: AbortController | null = null
 
@@ -984,6 +985,7 @@ export const useCalendar = defineStore("calendar", () => {
     isCreatingEvent,
     isUpdatingEvent,
     isDeletingEvent,
+    isDraggingEvent,
     operationInProgress,
     eventSkeleton,
     resetSkeleton,

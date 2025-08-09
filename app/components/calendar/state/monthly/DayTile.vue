@@ -6,6 +6,9 @@ import { storeToRefs } from "pinia"
 import { computed, ref, type ComputedRef } from "vue"
 
 import CalendarEventButton from "../../event/Event.vue"
+import { useToast } from "@/components/ui/toast"
+import type { APIError } from "@@/models/Errors"
+import { ToastLifetime } from "@/components/ui/toast/use-toast"
 
 const props = defineProps<{
   date: RPGDate
@@ -16,11 +19,14 @@ const emit = defineEmits<{
   "on-open-create-dialog": [date: RPGDate]
 }>()
 
+const { toast } = useToast()
+const { t } = useI18n()
+
 const calendarTile = ref()
 const calendarEventsList = ref()
 
-const { defaultDate, selectDate, areDatesIdentical, getFormattedDateTitle } = useCalendar()
-const { selectedDate, currentEvents, isReadOnly } = storeToRefs(useCalendar())
+const { defaultDate, selectDate, areDatesIdentical, getFormattedDateTitle, updateEventFromSkeleton, resetSkeleton } = useCalendar()
+const { selectedDate, currentEvents, isReadOnly, eventSkeleton, isDraggingEvent } = storeToRefs(useCalendar())
 
 const breakpoints = useBreakpoints(
   breakpointsTailwind
@@ -60,7 +66,13 @@ const { top: tileListTop } = useElementBounding(calendarEventsList)
 const numberOfEventsToFit: ComputedRef<number> = computed(() => {
   if (!eventsForTheDay.value.length) return 0
 
-  return Math.trunc((tileHeight.value - (tileListTop.value - tileTop.value)) / 40)
+  let offset = 0
+
+  if (isDraggingEvent.value && !tileNotHovered.value) {
+    offset = 1
+  }
+
+  return Math.trunc((tileHeight.value - (tileListTop.value - tileTop.value)) / 40) - offset
 })
 
 /**
@@ -76,16 +88,61 @@ const eventsToDisplay: ComputedRef<CalendarEvent[]> = computed<CalendarEvent[]>(
  * Used if not all events can be seen in the tile's space
 */
 const eventsNotDisplayed: ComputedRef<number>  = computed<number>(() => eventsForTheDay.value.length - eventsToDisplay.value.length)
+
+// Handle drop events
+const { isOutside: tileNotHovered } = useMouseInElement(calendarTile)
+const isLoading = ref(false)
+
+async function handleTileDrop() {
+  if (isLoading.value) return
+
+  isLoading.value = true
+
+  eventSkeleton.value.startDate = props.date
+
+  const { error } = await tryCatch(updateEventFromSkeleton())
+
+  if (error) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const apiError = (error as any).data as APIError
+
+    apiError.data.errors.forEach((error) => {
+      toast({
+        title: t("entity.calendar.event.editErrors.toastTitle"),
+        variant: "destructive",
+        description: t(`entity.calendar.event.editErrors.${error.path[1]}_${error.code}`),
+        duration: ToastLifetime.MEDIUM,
+      })
+    })
+
+    isLoading.value = false
+    return
+  }
+
+  console.log(eventSkeleton.value)
+
+  toast({
+    title: t("entity.calendar.event.updatedToast.title", { event: eventSkeleton.value.title }),
+    variant: "success",
+    duration: ToastLifetime.SHORT
+  })
+
+  isLoading.value = false
+  resetSkeleton()
+}
 </script>
 
 <template>
   <div
     ref="calendarTile"
-    class="tile relative p-1 md:p-2 transition-all"
+    class="tile relative p-1 md:p-2 md:pt-1 transition-all"
     :class="{
       'text-slate-300 dark:text-slate-500': props.faded,
       'text-slate-500 dark:text-slate-300': !props.faded
     }"
+    @drop.prevent="handleTileDrop"
+    @dragenter.prevent
+    @dragover.prevent
   >
     <button
       class="relative z-10 group block w-full text-2xs md:text-xs text-center cursor-pointer"
@@ -107,13 +164,25 @@ const eventsNotDisplayed: ComputedRef<number>  = computed<number>(() => eventsFo
     <ClientOnly>
       <ul
         ref="calendarEventsList"
-        class="absolute top-9 md:top-12 bottom-1 md:bottom-2 inset-x-2 grid auto-rows-min gap-1 z-10 pointer-events-none transition-opacity"
+        class="absolute top-8 md:top-10 bottom-1 md:bottom-2 inset-x-2 grid auto-rows-min gap-1 z-10 pointer-events-none transition-opacity"
         :class="{
           'opacity-40': props.faded && !isSelectedDate
         }"
       >
-        <TransitionGroup name="event">
-          <li v-for="event in eventsToDisplay" :key="event.id" class="grid w-full pointer-events-auto">
+        <li
+          v-if="!tileNotHovered && isDraggingEvent && !(eventsForTheDay.find((e) => e.id === eventSkeleton.id))"
+          :key="eventSkeleton.id"
+          class="opacity-60"
+        >
+          <CalendarEventButton :event="eventSkeleton" :tile-date="date" />
+        </li>
+
+        <TransitionGroup :name="!isDraggingEvent ? 'event' : ''">
+          <li
+            v-for="(event, i) in eventsToDisplay"
+            :key="event.id"
+            class="grid w-full pointer-events-auto"
+          >
             <CalendarEventButton :event :tile-date="date" />
           </li>
         </TransitionGroup>
@@ -158,6 +227,7 @@ const eventsNotDisplayed: ComputedRef<number>  = computed<number>(() => eventsFo
 
     <ClientOnly>
       <LazyCalendarDialogCreateEvent v-if="!isReadOnly && breakpoints.lg.value" :date btn-class="absolute inset-0 w-full h-full cursor-default z-0" />
+
       <button
         v-else-if="!isReadOnly && !breakpoints.lg.value"
         class="absolute inset-0 w-full h-full cursor-default z-0"
