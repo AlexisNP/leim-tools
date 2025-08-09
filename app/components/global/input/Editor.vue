@@ -33,96 +33,195 @@ function clearFormatting() {
     <div class="flex gap-1.5">
       <!-- Inline styles -->
       <div class="flex" v-if="!props.disableInlines">
-        <UiButton
-          @click.prevent="editor.chain().focus().toggleBold().run()"
-          :disabled="!editor.can().chain().focus().toggleBold().run()"
-          :variant="editor.isActive('bold') ? 'default' : 'secondary'"
-          class="size-7 rounded-e-none"
-          size="icon"
-        >
-          <PhTextB weight="bold" />
-        </UiButton>
+        <UiTooltipProvider :delay-duration="250">
+          <UiTooltip>
+            <UiTooltipTrigger as-child>
+              <UiButton
+                @click.prevent="editor.chain().focus().toggleBold().run()"
+                :disabled="!editor.can().chain().focus().toggleBold().run()"
+                :variant="editor.isActive('bold') ? 'default' : 'secondary'"
+                class="size-7 rounded-e-none"
+                size="icon"
+              >
+                <PhTextB weight="bold" />
+              </UiButton>
+            </UiTooltipTrigger>
+            <UiTooltipContent>
+              <p>
+                {{ $t('editor.bold') }}
+              </p>
+            </UiTooltipContent>
+          </UiTooltip>
+        </UiTooltipProvider>
 
-        <UiButton
-          @click.prevent="editor.chain().focus().toggleItalic().run()"
-          :disabled="!editor.can().chain().focus().toggleItalic().run()"
-          :variant="editor.isActive('italic') ? 'default' : 'secondary'"
-          class="size-7 rounded-none"
-          size="icon"
-        >
-          <PhTextItalic weight="bold" />
-        </UiButton>
+        <UiTooltipProvider :delay-duration="250">
+          <UiTooltip>
+            <UiTooltipTrigger as-child>
+              <UiButton
+                @click.prevent="editor.chain().focus().toggleItalic().run()"
+                :disabled="!editor.can().chain().focus().toggleItalic().run()"
+                :variant="editor.isActive('italic') ? 'default' : 'secondary'"
+                class="size-7 rounded-none"
+                size="icon"
+              >
+                <PhTextItalic weight="bold" />
+              </UiButton>
+            </UiTooltipTrigger>
+            <UiTooltipContent>
+              <p>
+                {{ $t('editor.italic') }}
+              </p>
+            </UiTooltipContent>
+          </UiTooltip>
+        </UiTooltipProvider>
 
-        <UiButton
-          @click.prevent="editor.chain().focus().toggleStrike().run()"
-          :disabled="!editor.can().chain().focus().toggleStrike().run()"
-          :variant="editor.isActive('strike') ? 'default' : 'secondary'"
-          class="size-7 rounded-s-none"
-          size="icon"
-        >
-          <PhTextStrikethrough weight="bold" />
-        </UiButton>
+        <UiTooltipProvider :delay-duration="250">
+          <UiTooltip>
+            <UiTooltipTrigger as-child>
+              <UiButton
+                @click.prevent="editor.chain().focus().toggleStrike().run()"
+                :disabled="!editor.can().chain().focus().toggleStrike().run()"
+                :variant="editor.isActive('strike') ? 'default' : 'secondary'"
+                class="size-7 rounded-s-none"
+                size="icon"
+              >
+                <PhTextStrikethrough weight="bold" />
+              </UiButton>
+            </UiTooltipTrigger>
+            <UiTooltipContent>
+              <p>
+                {{ $t('editor.strike') }}
+              </p>
+            </UiTooltipContent>
+          </UiTooltip>
+        </UiTooltipProvider>
       </div>
 
       <!-- Block styles -->
       <div class="flex" v-if="!props.disableBlocks">
-        <UiButton
-          @click.prevent="editor.chain().focus().toggleBulletList().run()"
-          :variant="editor.isActive('bulletList') ? 'default' : 'secondary'"
-          class="size-7 rounded-e-none"
-          size="icon"
-        >
-          <PhListBullets weight="bold" />
-        </UiButton>
+        <UiTooltipProvider :delay-duration="250">
+          <UiTooltip>
+            <UiTooltipTrigger as-child>
+              <UiButton
+                @click.prevent="editor.chain().focus().toggleBulletList().run()"
+                :variant="editor.isActive('bulletList') ? 'default' : 'secondary'"
+                class="size-7 rounded-e-none"
+                size="icon"
+              >
+                <PhListBullets weight="bold" />
+              </UiButton>
+            </UiTooltipTrigger>
+            <UiTooltipContent>
+              <p>
+                {{ $t('editor.ulist') }}
+              </p>
+            </UiTooltipContent>
+          </UiTooltip>
+        </UiTooltipProvider>
 
-        <UiButton
-          @click.prevent="editor.chain().focus().toggleOrderedList().run()"
-          :variant="editor.isActive('orderedList') ? 'default' : 'secondary'"
-          class="size-7 rounded-none"
-          size="icon"
-        >
-          <PhListNumbers weight="bold" />
-        </UiButton>
+        <UiTooltipProvider :delay-duration="250">
+          <UiTooltip>
+            <UiTooltipTrigger as-child>
+              <UiButton
+                @click.prevent="editor.chain().focus().toggleOrderedList().run()"
+                :variant="editor.isActive('orderedList') ? 'default' : 'secondary'"
+                class="size-7 rounded-none"
+                size="icon"
+              >
+                <PhListNumbers weight="bold" />
+              </UiButton>
+            </UiTooltipTrigger>
+            <UiTooltipContent>
+              <p>
+                {{ $t('editor.olist') }}
+              </p>
+            </UiTooltipContent>
+          </UiTooltip>
+        </UiTooltipProvider>
 
-        <UiButton
-          @click.prevent="editor.chain().focus().toggleBlockquote().run()"
-          :variant="editor.isActive('blockquote') ? 'default' : 'secondary'"
-          class="size-7 rounded-s-none"
-          size="icon"
-        >
-          <PhQuotes weight="fill" />
-        </UiButton>
+        <UiTooltipProvider :delay-duration="250">
+          <UiTooltip>
+            <UiTooltipTrigger as-child>
+              <UiButton
+                @click.prevent="editor.chain().focus().toggleBlockquote().run()"
+                :variant="editor.isActive('blockquote') ? 'default' : 'secondary'"
+                class="size-7 rounded-s-none"
+                size="icon"
+              >
+                <PhQuotes weight="fill" />
+              </UiButton>
+            </UiTooltipTrigger>
+            <UiTooltipContent>
+              <p>
+                {{ $t('editor.quote') }}
+              </p>
+            </UiTooltipContent>
+          </UiTooltip>
+        </UiTooltipProvider>
       </div>
 
       <div class="flex">
-        <UiButton
-          @click.prevent="clearFormatting"
-          variant="secondary"
-          class="size-7 rounded-e-none"
-          size="icon"
-        >
-          <PhTextTSlash weight="bold" />
-        </UiButton>
+        <UiTooltipProvider :delay-duration="250">
+          <UiTooltip>
+            <UiTooltipTrigger as-child>
+              <UiButton
+                @click.prevent="clearFormatting"
+                variant="secondary"
+                class="size-7 rounded-e-none"
+                size="icon"
+              >
+                <PhTextTSlash weight="bold" />
+              </UiButton>
+            </UiTooltipTrigger>
+            <UiTooltipContent>
+              <p>
+                {{ $t('editor.noFormat') }}
+              </p>
+            </UiTooltipContent>
+          </UiTooltip>
+        </UiTooltipProvider>
 
-        <UiButton
-          @click.prevent="editor.chain().focus().undo().run()"
-          :disabled="!editor.can().chain().focus().undo().run()"
-          variant="secondary"
-          class="size-7 rounded-none"
-          size="icon"
-        >
-          <PhArrowUUpLeft weight="bold" />
-        </UiButton>
+        <UiTooltipProvider :delay-duration="250">
+          <UiTooltip>
+            <UiTooltipTrigger as-child>
+              <UiButton
+                @click.prevent="editor.chain().focus().undo().run()"
+                :disabled="!editor.can().chain().focus().undo().run()"
+                variant="secondary"
+                class="size-7 rounded-none"
+                size="icon"
+              >
+                <PhArrowUUpLeft weight="bold" />
+              </UiButton>
+            </UiTooltipTrigger>
+            <UiTooltipContent>
+              <p>
+                {{ $t('editor.undo') }}
+              </p>
+            </UiTooltipContent>
+          </UiTooltip>
+        </UiTooltipProvider>
 
-        <UiButton
-          @click.prevent="editor.chain().focus().redo().run()"
-          :disabled="!editor.can().chain().focus().redo().run()"
-          variant="secondary"
-          class="size-7 rounded-s-none"
-          size="icon"
-        >
-          <PhArrowUDownRight weight="bold" />
-        </UiButton>
+        <UiTooltipProvider :delay-duration="250">
+          <UiTooltip>
+            <UiTooltipTrigger as-child>
+              <UiButton
+                @click.prevent="editor.chain().focus().redo().run()"
+                :disabled="!editor.can().chain().focus().redo().run()"
+                variant="secondary"
+                class="size-7 rounded-s-none"
+                size="icon"
+              >
+                <PhArrowUDownRight weight="bold" />
+              </UiButton>
+            </UiTooltipTrigger>
+            <UiTooltipContent>
+              <p>
+                {{ $t('editor.redo') }}
+              </p>
+            </UiTooltipContent>
+          </UiTooltip>
+        </UiTooltipProvider>
       </div>
     </div>
 
