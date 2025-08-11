@@ -327,6 +327,10 @@ export default defineI18nConfig(() => ({
         }
       },
       pages: {
+        home: {
+          h1: "A home for your creativity",
+          tagline: "Visualize your fantasy or sci-fi worlds with our interactive calendars"
+        },
         explore: {
           menuLabel: "Explore",
           title: "Explore worlds",
@@ -677,6 +681,10 @@ export default defineI18nConfig(() => ({
         }
       },
       pages: {
+        home: {
+          h1: "Un espace pour votre créativité",
+          tagline: "Visualisez vos mondes fantasy ou de science-fiction grâce à nos calendriers interactifs"
+        },
         explore: {
           menuLabel: "Explorer",
           title: "Explorer les mondes",

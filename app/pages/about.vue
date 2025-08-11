@@ -34,6 +34,6 @@ watch(locale, () => refresh())
       <PhCircleNotch size="50" class="opacity-33 animate-spin"/>
     </div>
 
-    <LazyContentRenderer v-else-if="status === 'success' && page" :value="page" class="content max-w-5xl" />
+    <LazyContentRenderer v-else-if="status === 'success' && page" :value="page" class="content max-w-4xl" />
   </main>
 </template>

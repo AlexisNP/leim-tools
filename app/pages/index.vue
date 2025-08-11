@@ -6,27 +6,6 @@ useHead({
 definePageMeta({
   layout: "public"
 })
-
-const { auth } = useSupabaseClient()
-const user = useSupabaseUser()
-const profileUrl: string = `${useRequestURL().origin}/my/`
-
-async function handleGoogleLogin() {
-  const { error } = await auth.signInWithOAuth({
-    provider: "google",
-    options: {
-      queryParams: {
-        access_type: "offline",
-        prompt: "consent"
-      },
-      redirectTo: profileUrl
-    }
-  })
-
-  if (error) {
-    console.log(error.message)
-  }
-}
 </script>
 
 <template>
@@ -39,20 +18,15 @@ async function handleGoogleLogin() {
     </Head>
 
     <div class="py-8 md:py-24 px-4">
-      <div class="flow text-center max-w-2xl mx-auto">
-        <h1 class="text-3xl md:text-5xl font-bold md:font-semibold">A home for your creativity</h1>
-        <p class="text-sm">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsam eos rem accusantium voluptates? Inventore dolorum reprehenderit quibusdam consequatur, totam iusto velit neque dolor dicta possimus cum, deleniti, saepe expedita culpa!</p>
+      <div class="flow text-center max-w-4xl mx-auto">
+        <h1 class="text-3xl md:text-5xl font-bold md:font-semibold">
+          {{ $t('pages.home.h1') }}
+        </h1>
+        <p class="text-sm">
+          {{ $t('pages.home.tagline') }}
+        </p>
 
-        <TransitionGroup name="fade-group" appear>
-          <UiButton v-if="user" as-child>
-            <NuxtLink to="/my">
-              Dashboard
-            </NuxtLink>
-          </UiButton>
-          <UiButton v-else @click="handleGoogleLogin">
-            Log in
-          </UiButton>
-        </TransitionGroup>
+        <UserDashboardLink />
       </div>
     </div>
   </main>

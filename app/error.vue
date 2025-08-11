@@ -60,38 +60,32 @@ switch (statusCode) {
 
 <template>
   <div class="h-screen">
-    <div class="h-full grid grid-cols-[auto_1fr] transition-colors">
-      <Sidebar />
+    <div class="h-full w-full grid place-items-center transition-colors">
+      <Head>
+        <Title>{{ $t(titleKey) }}</Title>
+      </Head>
 
-      <div class="wrapper shadow-body-light dark:shadow-body-dark transition-all">
-        <div class="h-full w-full grid place-items-center">
-          <Head>
-            <Title>{{ $t(titleKey) }}</Title>
-          </Head>
+      <div class="grid text-center justify-items-center opacity-80">
+        <PhImageBroken v-if="statusCode === 404" size="100" class="opacity-60" />
+        <PhLinkBreak v-else-if="statusCode === 500" size="100" class="opacity-60" />
+        <PhBugBeetle v-else size="100" class="opacity-60" />
 
-          <div class="grid text-center justify-items-center opacity-80">
-            <PhImageBroken v-if="statusCode === 404" size="100" class="opacity-60" />
-            <PhLinkBreak v-else-if="statusCode === 500" size="100" class="opacity-60" />
-            <PhBugBeetle v-else size="100" class="opacity-60" />
+        <Heading level="h0">
+          {{ $t(titleKey) }}
+        </Heading>
 
-            <Heading level="h0">
-              {{ $t(titleKey) }}
-            </Heading>
-
-            <div class="mt-6 md:text-lg">
-              <p>{{ $t(descriptionKey) }}</p>
-              <p>{{ $t(subDescriptionKey) }}</p>
-            </div>
-
-            <UiButton variant="default" class="mt-6 gap-2" as-child>
-              <RouterLink to="/">
-                <PhArrowBendDoubleUpLeft size="24" />
-
-                {{ $t('ui.backToHome') }}
-              </RouterLink>
-            </UiButton>
-          </div>
+        <div class="mt-6 md:text-lg">
+          <p>{{ $t(descriptionKey) }}</p>
+          <p>{{ $t(subDescriptionKey) }}</p>
         </div>
+
+        <UiButton variant="default" class="mt-6 gap-2" as-child>
+          <RouterLink to="/">
+            <PhArrowBendDoubleUpLeft size="24" />
+
+            {{ $t('ui.backToHome') }}
+          </RouterLink>
+        </UiButton>
       </div>
     </div>
   </div>
