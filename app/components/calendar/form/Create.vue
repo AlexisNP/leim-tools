@@ -16,6 +16,9 @@ onMounted(() => {
 type FormTabs = "global" | "months" | "today"
 const activeTab = ref<FormTabs>("global")
 
+const newCalendarName = shallowRef<HTMLInputElement>()
+useFocus(newCalendarName, { initialValue: true })
+
 /**
  * === Current date ===
  */
@@ -103,6 +106,7 @@ function handleFormCancel() {
         </UiTabsList>
         <UiTabsContent value="global" class="grid gap-4">
           <input
+            ref="newCalendarName"
             id="new-calendar-name"
             v-model="calendarSkeleton.name"
             type="text"
