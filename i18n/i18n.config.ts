@@ -138,7 +138,7 @@ export default defineI18nConfig(() => ({
         world: {
           nameSingular: "World",
           namePlural: "Worlds",
-          backToMy: "Back to my universe",
+          backToMy: "Back to projects",
           backToSingle: "Back to {world}",
           addSingle: "Add a world",
           addSingleFirst: "Add your first world !",
@@ -336,8 +336,8 @@ export default defineI18nConfig(() => ({
           title: "Explore worlds",
         },
         profile: {
-          title: "{user} — My universe",
-          metaTitle: "My universe",
+          title: "{user} — Projects",
+          metaTitle: "Projects",
         },
         about: {
           title: "About this app",
@@ -348,7 +348,7 @@ export default defineI18nConfig(() => ({
       breadcrumbs: {
         home: "Home",
         explore: "Explore",
-        profile: "Universe",
+        profile: "Projects",
         world: "World",
         calendar: "Calendar"
       }
@@ -488,7 +488,7 @@ export default defineI18nConfig(() => ({
         world: {
           nameSingular: "Monde",
           namePlural: "Mondes",
-          backToMy: "Retourner à mon univers",
+          backToMy: "Retourner à Projets",
           backToSingle: "Retourner sur {world}",
           addSingle: "Ajouter un monde",
           addSingleFirst: "Ajouter votre premier monde !",
@@ -690,8 +690,8 @@ export default defineI18nConfig(() => ({
           title: "Explorer les mondes",
         },
         profile: {
-          title: "{user} — Mon univers",
-          metaTitle: "Mon univers",
+          title: "{user} — Projets",
+          metaTitle: "Projets",
         },
         about: {
           title: "À propos",
@@ -702,7 +702,7 @@ export default defineI18nConfig(() => ({
       breadcrumbs: {
         home: "Accueil",
         explore: "Explorer",
-        profile: "Univers",
+        profile: "Projets",
         world: "Monde",
         calendar: "Calendrier"
       }
