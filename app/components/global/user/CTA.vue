@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed } from "vue"
 
-import { PhCheckCircle, PhUser, PhLaptop, PhMoon, PhPalette, PhSignIn, PhSignOut, PhSun, PhTranslate, PhUserCircle } from "@phosphor-icons/vue"
+import { PhCheckCircle, PhUser, PhLaptop, PhMoon, PhPalette, PhSignIn, PhSignOut, PhSun, PhTranslate, PhUserCircle, PhInfo } from "@phosphor-icons/vue"
 import { cn } from "@/lib/utils";
 
 const router = useRouter()
@@ -45,7 +45,7 @@ async function handleLogout() {
   }
 }
 
-type AvailableRoutes = "/my" | "/my/settings"
+type AvailableRoutes = "/my" | "/my/settings" | "/about"
 
 function pushRoute(to: AvailableRoutes) {
   router.push({ path: to })
@@ -193,6 +193,13 @@ function pushRoute(to: AvailableRoutes) {
             </UiDropdownMenuSubContent>
           </UiDropdownMenuPortal>
         </UiDropdownMenuSub>
+
+        <UiDropdownMenuItem class="flex gap-[.5ch] items-center rounded-none" @click="pushRoute('/about')">
+          <PhInfo size="20" weight="fill" />
+          <span>
+            {{ $t('ui.sidebarMenu.about') }}
+          </span>
+        </UiDropdownMenuItem>
 
         <UiDropdownMenuSeparator />
 
