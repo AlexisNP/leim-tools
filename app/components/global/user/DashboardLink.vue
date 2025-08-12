@@ -32,14 +32,12 @@ async function handleGoogleLogin() {
 </script>
 
 <template>
-  <TransitionGroup name="fade-group" appear>
-    <UiButton v-if="user" :size>
-      <NuxtLink to="/my">
-        Dashboard
-      </NuxtLink>
-    </UiButton>
-    <UiButton v-else @click="handleGoogleLogin" :size>
-      Log in
-    </UiButton>
-  </TransitionGroup>
+  <UiButton v-if="user" :size as-child>
+    <NuxtLink to="/my">
+      Dashboard
+    </NuxtLink>
+  </UiButton>
+  <UiButton v-else @click="handleGoogleLogin" :size>
+    Log in
+  </UiButton>
 </template>
