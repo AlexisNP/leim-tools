@@ -33,7 +33,7 @@ async function handleGoogleLogin() {
 
 <template>
   <TransitionGroup name="fade-group" appear>
-    <UiButton v-if="user" as-child :size>
+    <UiButton v-if="user" :size>
       <NuxtLink to="/my">
         Dashboard
       </NuxtLink>
