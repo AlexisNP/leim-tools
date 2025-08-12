@@ -40,6 +40,10 @@
     }
   }
 
+  p, ul, ol {
+    font-size: var(--text-sm);
+  }
+
   /* Normal link */
   p a:not([class]) {
     color: var(--color-primary);
