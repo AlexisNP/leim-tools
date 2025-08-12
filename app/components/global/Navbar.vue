@@ -7,17 +7,17 @@
         <nav class="md:flex-1">
           <menu class="text-sm flex items-center justify-center gap-4">
             <li>
-              <NuxtLink to="/" class="block p-1 font-medium text-foreground/70 hover:text-foreground transition-colors" active-class="text-primary">
+              <NuxtLink to="/" class="block p-1 font-medium text-foreground/80 dark:text-foreground/70 underline-offset-4 focus-visible:underline hover:underline dark:hover:text-foreground hover:text-foreground transition-colors" active-class="text-primary dark:text-primary">
                 {{ $t('breadcrumbs.home') }}
               </NuxtLink>
             </li>
             <li>
-              <NuxtLink to="/explore" class="block p-1 font-medium text-foreground/70 hover:text-foreground transition-colors" active-class="text-primary">
+              <NuxtLink to="/explore" class="block p-1 font-medium text-foreground/80 dark:text-foreground/70 underline-offset-4 focus-visible:underline hover:underline dark:hover:text-foreground hover:text-foreground transition-colors" active-class="text-primary dark:text-primary">
                 {{ $t('pages.explore.menuLabel') }}
               </NuxtLink>
             </li>
             <li>
-              <NuxtLink to="/about" class="block p-1 font-medium text-foreground/70 hover:text-foreground transition-colors" active-class="text-primary">
+              <NuxtLink to="/about" class="block p-1 font-medium text-foreground/80 dark:text-foreground/70 underline-offset-4 focus-visible:underline hover:underline dark:hover:text-foreground hover:text-foreground transition-colors" active-class="text-primary dark:text-primary">
                 {{ $t('pages.about.menuLabel') }}
               </NuxtLink>
             </li>
