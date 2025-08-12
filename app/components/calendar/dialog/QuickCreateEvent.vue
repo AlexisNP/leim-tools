@@ -6,6 +6,13 @@ import { VisuallyHidden } from "radix-vue";
 const isDialogOpen = ref<boolean>(false);
 const { resetSkeleton } = useCalendar();
 
+// Watch the popover state
+watch(isDialogOpen, (hasOpened, _o) => {
+  if (hasOpened) {
+    resetSkeleton()
+  }
+})
+
 // Toggles the dialog
 function toggleDialog() {
   isDialogOpen.value = !isDialogOpen.value;
@@ -45,7 +52,7 @@ const breakpoints = useBreakpoints(
       class="max-md:translate-0 max-md:inset-0 max-md:w-full max-md:block"
       :trap-focus="true"
       @escape-key-down="handleClosing"
-      @pointer-down-outside.prevent="handleClosing"
+      @pointer-down-outside="handleClosing"
     >
       <UiDialogTitle class="max-md:mb-8">
         {{ $t("entity.calendar.event.addSingle") }}
