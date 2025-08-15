@@ -32,6 +32,7 @@ export default defineI18nConfig(() => ({
           save: "Save",
           delete: "Delete",
           edit: "Edit",
+          close: "Close"
         },
         colors: {
           label: "Color",
@@ -69,13 +70,14 @@ export default defineI18nConfig(() => ({
         backToHome: "Back to home",
         sidebarMenu: {
           profile: "Profile",
+          projects: "Projects",
           appearance: "Appearance",
           language: "Language",
           account: "Account",
           login: "Log in",
           logout: "Log out",
           avatarFallback: "Profile",
-          about: "About application",
+          about: "About",
         },
         dark: "Dark",
         light: "Light",
@@ -383,6 +385,7 @@ export default defineI18nConfig(() => ({
           save: "Sauvegarder",
           delete: "Supprimer",
           edit: "Modifier",
+          close: "Fermer"
         },
         colors: {
           label: "Couleur",
@@ -420,6 +423,7 @@ export default defineI18nConfig(() => ({
         backToHome: "Retourner à l'accueil",
         sidebarMenu: {
           profile: "Profil",
+          projects: "Projets",
           appearance: "Apparence",
           language: "Langue",
           account: "Compte",
