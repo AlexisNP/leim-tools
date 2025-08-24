@@ -40,22 +40,18 @@
     }
   }
 
+  p, ul, ol {
+    font-size: var(--text-sm);
+  }
+
   /* Normal link */
   p a:not([class]) {
-    color: var(--color-sky-600);
+    color: var(--color-primary);
     text-underline-offset: .25rem;
 
     &:hover {
-      color: var(--color-sky-500);
+      color: var(--color-accent);
       text-decoration: underline;
-    }
-
-    @variant dark {
-      color: var(--color-teal-500);
-
-      &:hover {
-        color: var(--color-teal-300);
-      }
     }
   }
 

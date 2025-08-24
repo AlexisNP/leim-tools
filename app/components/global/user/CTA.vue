@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed } from "vue"
 
-import { PhCheckCircle, PhUser, PhLaptop, PhMoon, PhPalette, PhSignIn, PhSignOut, PhSun, PhTranslate, PhUserCircle } from "@phosphor-icons/vue"
+import { PhCheckCircle, PhUser, PhLaptop, PhMoon, PhPalette, PhSignIn, PhSignOut, PhSun, PhTranslate, PhUserCircle, PhInfo } from "@phosphor-icons/vue"
 import { cn } from "@/lib/utils";
 
 const router = useRouter()
@@ -44,46 +44,43 @@ async function handleLogout() {
     console.log(error.message)
   }
 }
-
-type AvailableRoutes = "/my" | "/my/settings"
-
-function pushRoute(to: AvailableRoutes) {
-  router.push({ path: to })
-
-  closeMenu()
-}
 </script>
 
 <template>
   <ClientOnly>
     <UiDropdownMenu v-model:open="menuOpened">
-      <UiDropdownMenuTrigger class="aspect-square">
-        <TransitionGroup name="fade-group" appear>
-          <UiAvatar
-            v-if="user"
-            id="user-avatar"
-            class="ring-[.2rem] ring-primary hover:bg-accent hover:ring-accent transition-all cursor-pointer"
-            :class="cn({ 'ring-accent bg-accent dark:bg-accent': menuOpened })"
-          >
-            <UiAvatarImage
-              :src="userMeta?.avatar_url"
-              :alt="userMeta?.full_name"
-              referrerpolicy="no-referrer"
-            />
-            <UiAvatarFallback>
-              {{ $t('ui.sidebarMenu.avatarFallback') }}
-            </UiAvatarFallback>
-          </UiAvatar>
-          <UiButton
-            v-else
-            variant="outline"
-            size="icon"
-            class="ring-[.2rem] ring-primary hover:bg-accent hover:ring-accent border-none dark:bg-background rounded-full bg-primary transition-all cursor-pointer"
-            :class="cn({ 'ring-accent bg-accent dark:bg-accent': menuOpened })"
-          >
-            <PhUserCircle size="24" />
-          </UiButton>
-        </TransitionGroup>
+      <UiDropdownMenuTrigger as-child>
+        <UiButton
+          variant="ghost"
+          class="w-full justify-start p-2 h-fit hover:text-secondary-foreground hover:bg-secondary"
+          :class="cn({ 'bg-secondary': menuOpened })"
+        >
+          <TransitionGroup name="fade-group" appear>
+            <div
+              v-if="user"
+              class="flex gap-2 items-center"
+            >
+              <UiAvatar
+                id="user-avatar"
+                size="sm"
+                class="rounded-sm ring-[.2rem] ring-primary transition-all cursor-pointer"
+              >
+                <UiAvatarImage
+                  :src="userMeta?.avatar_url"
+                  :alt="userMeta?.full_name"
+                  referrerpolicy="no-referrer"
+                />
+                <UiAvatarFallback>
+                  {{ $t('ui.sidebarMenu.avatarFallback') }}
+                </UiAvatarFallback>
+              </UiAvatar>
+
+              <div class="text-xs">
+                {{ userMeta?.name }}
+              </div>
+            </div>
+          </TransitionGroup>
+        </UiButton>
       </UiDropdownMenuTrigger>
 
       <UiDropdownMenuContent class="w-72 p-0 pb-1" :align="'start'" :side="'top'" :side-offset="10" :align-offset="25" :collision-padding="40">
@@ -91,15 +88,6 @@ function pushRoute(to: AvailableRoutes) {
           <p class="p-2 text-[.7em] opacity-75">
             {{ $t('ui.greeting', { user: user?.email }) }}
           </p>
-
-          <UiDropdownMenuItem class="flex gap-[.5ch] items-center rounded-none" @click="pushRoute('/my')">
-            <PhUser size="20" weight="fill" />
-            <span>
-              {{ $t('ui.sidebarMenu.profile') }}
-            </span>
-          </UiDropdownMenuItem>
-
-          <UiDropdownMenuSeparator />
         </template>
 
         <template v-else>

@@ -32,6 +32,7 @@ export default defineI18nConfig(() => ({
           save: "Save",
           delete: "Delete",
           edit: "Edit",
+          close: "Close"
         },
         colors: {
           label: "Color",
@@ -69,12 +70,14 @@ export default defineI18nConfig(() => ({
         backToHome: "Back to home",
         sidebarMenu: {
           profile: "Profile",
+          projects: "Projects",
           appearance: "Appearance",
           language: "Language",
           account: "Account",
           login: "Log in",
           logout: "Log out",
           avatarFallback: "Profile",
+          about: "About",
         },
         dark: "Dark",
         light: "Light",
@@ -138,7 +141,7 @@ export default defineI18nConfig(() => ({
         world: {
           nameSingular: "World",
           namePlural: "Worlds",
-          backToMy: "Back to my universe",
+          backToMy: "Back to projects",
           backToSingle: "Back to {world}",
           addSingle: "Add a world",
           addSingleFirst: "Add your first world !",
@@ -169,7 +172,7 @@ export default defineI18nConfig(() => ({
           nameSingular: "Calendar",
           namePlural: "Calendars",
           namePublicSingular: "Public Calendar",
-          namePublicPlural: "Public Calendars",
+          namePublicPlural: "Calendars",
           addSingle: "Add a calendar",
           addSingleFirst: "Add your first calendar !",
           notFound: "Calendar not found",
@@ -224,6 +227,8 @@ export default defineI18nConfig(() => ({
             hiddenLabel: "Hide this event",
             hiddenTooltip: "This event is visible only to game masters.",
             addLocation: "Add a place",
+            oneOtherEvent: "1 other",
+            multipleOtherEvents: "{count} others",
             prevPage: "Previous page with events",
             nextPage: "Next page with events",
             outOfBoundsTitle: "No next or previous events were found",
@@ -327,13 +332,17 @@ export default defineI18nConfig(() => ({
         }
       },
       pages: {
+        home: {
+          h1: "A home for your creativity",
+          tagline: "Visualize your fantasy or sci-fi worlds with our interactive calendars"
+        },
         explore: {
           menuLabel: "Explore",
           title: "Explore worlds",
         },
         profile: {
-          title: "{user} — My universe",
-          metaTitle: "My universe",
+          title: "{user} — Projects",
+          metaTitle: "Projects",
         },
         about: {
           title: "About this app",
@@ -344,7 +353,7 @@ export default defineI18nConfig(() => ({
       breadcrumbs: {
         home: "Home",
         explore: "Explore",
-        profile: "Universe",
+        profile: "Projects",
         world: "World",
         calendar: "Calendar"
       }
@@ -378,6 +387,7 @@ export default defineI18nConfig(() => ({
           save: "Sauvegarder",
           delete: "Supprimer",
           edit: "Modifier",
+          close: "Fermer"
         },
         colors: {
           label: "Couleur",
@@ -415,12 +425,14 @@ export default defineI18nConfig(() => ({
         backToHome: "Retourner à l'accueil",
         sidebarMenu: {
           profile: "Profil",
+          projects: "Projets",
           appearance: "Apparence",
           language: "Langue",
           account: "Compte",
           login: "Connexion",
           logout: "Déconnexion",
           avatarFallback: "Profil",
+          about: "À propos",
         },
         dark: "Sombre",
         light: "Clair",
@@ -484,7 +496,7 @@ export default defineI18nConfig(() => ({
         world: {
           nameSingular: "Monde",
           namePlural: "Mondes",
-          backToMy: "Retourner à mon univers",
+          backToMy: "Retourner à Projets",
           backToSingle: "Retourner sur {world}",
           addSingle: "Ajouter un monde",
           addSingleFirst: "Ajouter votre premier monde !",
@@ -570,6 +582,8 @@ export default defineI18nConfig(() => ({
             hiddenLabel: "Rendre l'évènement privé",
             hiddenTooltip: "Cet évènement est uniquement visible pour les maîtres du jeu.",
             addLocation: "Ajouter un endroit",
+            oneOtherEvent: "1 autre",
+            multipleOtherEvents: "{count} autres",
             prevPage: "Précédente page à évènements",
             nextPage: "Prochaine page à évènements",
             outOfBoundsTitle: "Aucun évènement suivant ou précédent trouvé",
@@ -677,13 +691,17 @@ export default defineI18nConfig(() => ({
         }
       },
       pages: {
+        home: {
+          h1: "Un espace pour votre créativité",
+          tagline: "Visualisez vos mondes fantasy ou de science-fiction grâce à nos calendriers interactifs"
+        },
         explore: {
           menuLabel: "Explorer",
           title: "Explorer les mondes",
         },
         profile: {
-          title: "{user} — Mon univers",
-          metaTitle: "Mon univers",
+          title: "{user} — Projets",
+          metaTitle: "Projets",
         },
         about: {
           title: "À propos",
@@ -694,7 +712,7 @@ export default defineI18nConfig(() => ({
       breadcrumbs: {
         home: "Accueil",
         explore: "Explorer",
-        profile: "Univers",
+        profile: "Projets",
         world: "Monde",
         calendar: "Calendrier"
       }

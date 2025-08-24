@@ -195,10 +195,9 @@ function handleEntitySwitch() {
 
 // Key combos to deploy modal
 const keys = useMagicKeys()
+const controlPeriod = computed(() => keys.control_period?.value)
 
-whenever(keys.control_period, () => {
-  openUiDialog()
-})
+whenever(controlPeriod, openUiDialog)
 
 const searchResultsRef = ref<HTMLElement | null>(null)
 const { y: searchResultsY } = useScroll(searchResultsRef)

@@ -19,6 +19,9 @@ onMounted(() => {
   worldSkeleton.value = { ...props.world } as World
 })
 
+const newWorldName = shallowRef<HTMLInputElement>()
+useFocus(newWorldName, { initialValue: true })
+
 const isLoading = ref<boolean>(false)
 
 /**
@@ -75,6 +78,7 @@ function handleFormCancel() {
     <form class="h-full grid grid-rows-[1fr_auto]" @submit.prevent="handleSubmit">
       <div class="grid gap-4">
         <input
+          ref="newWorldName"
           id="new-world-name"
           v-model="worldSkeleton.name"
           type="text"

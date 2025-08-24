@@ -18,15 +18,9 @@ const { data: calendars, status } = useLazyAsyncData<{ data: Calendar[] }>("expl
     </Head>
 
     <Spacing size="lg">
-      <div class="flex items-center gap-3">
-        <div class="md:hidden">
-          <SidebarToggle />
-        </div>
-
-        <Heading level="h1">
-          {{ $t("pages.explore.title") }}
-        </Heading>
-      </div>
+      <Heading level="h1">
+        {{ $t("pages.explore.title") }}
+      </Heading>
 
       <Spacing size="lg">
         <Heading level="h2">

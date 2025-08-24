@@ -29,7 +29,7 @@ function handleClosing() {
       @escape-key-down="handleClosing"
       @focus-outside="handleClosing"
       @interact-outside="handleClosing"
-      @pointer-down-outside="(e) => e.preventDefault()"
+      @pointer-down-outside.prevent
     >
       <header class="pl-8 grid gap-y-2 max-md:mb-8">
         <UiDialogTitle>

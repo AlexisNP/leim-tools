@@ -188,7 +188,12 @@ async function handleTileDrop() {
               <button
                 class="text-2xs md:text-xs px-[5px] py-[5px] md:px-2 md:py-1 block w-full text-left font-bold rounded-sm whitespace-nowrap overflow-hidden text-ellipsis cursor-pointer transition-colors hover:text-foreground hover:bg-foreground/10"
               >
-                {{ eventsNotDisplayed }} autre{{ eventsNotDisplayed > 1 ? 's' : '' }}
+                <template v-if="eventsNotDisplayed === 1">
+                  {{ $t('entity.calendar.event.oneOtherEvent') }}
+                </template>
+                <template v-else>
+                  {{ $t('entity.calendar.event.multipleOtherEvents', { count: eventsNotDisplayed }) }}
+                </template>
               </button>
             </UiPopoverTrigger>
             <UiPopoverContent

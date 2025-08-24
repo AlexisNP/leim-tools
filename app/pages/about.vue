@@ -20,20 +20,14 @@ watch(locale, () => refresh())
   </Head>
 
   <main class="overflow-y-auto py-8 px-5 md:px-8 grid gap-4 grid-rows-[auto_1fr]">
-    <div class="flex items-center gap-3">
-      <div class="md:hidden">
-        <SidebarToggle />
-      </div>
-
-      <Heading level="h1">
-        {{ $t("pages.about.title") }}
-      </Heading>
-    </div>
+    <Heading level="h1">
+      {{ $t("pages.about.title") }}
+    </Heading>
 
     <div v-if="status === 'pending'" class="grid place-items-center">
       <PhCircleNotch size="50" class="opacity-33 animate-spin"/>
     </div>
 
-    <LazyContentRenderer v-else-if="status === 'success' && page" :value="page" class="content max-w-5xl" />
+    <LazyContentRenderer v-else-if="status === 'success' && page" :value="page" class="content max-w-4xl" />
   </main>
 </template>
