@@ -138,14 +138,14 @@ function toFutureFar(): void {
 </script>
 
 <template>
-  <div class="flex gap-2">
-    <div class="grid items-center w-40 px-3 md:px-4 py-2 bg-background border-border border-x-[1px] border-t-[1px] rounded-t-sm text-sm max-md:text-xs transition-colors">
+  <div class="flex gap-1">
+    <div class="grid items-center w-40 px-1.5 md:px-3 py-1 bg-background border-border border-x-[1px] border-t-[1px] rounded-t-sm">
       <ClientOnly>
-        <span>{{ currentDate.currentDateTitle }}</span>
+        <span class="text-xs font-medium">{{ currentDate.currentDateTitle }}</span>
 
         <template #fallback>
           <span class="inline-block">
-            <UiSkeleton class="h-[19px] w-full rounded-sm" />
+            <UiSkeleton class="h-[18px] w-full rounded-sm" />
           </span>
         </template>
       </ClientOnly>
@@ -157,10 +157,10 @@ function toFutureFar(): void {
             <UiButton
               variant="outline"
               size="icon"
-              class="rounded-t-sm rounded-b-none border-b-0"
+              class="size-8 rounded-t-sm rounded-b-none border-b-0"
               @click="toPastFar()"
             >
-              <PhCaretDoubleLeft size="18" />
+              <PhCaretDoubleLeft size="14" />
             </UiButton>
           </UiTooltipTrigger>
           <UiTooltipContent>
@@ -176,10 +176,10 @@ function toFutureFar(): void {
             <UiButton
               variant="outline"
               size="icon"
-              class="rounded-t-sm rounded-b-none border-b-0"
+              class="size-8 rounded-t-sm rounded-b-none border-b-0"
               @click="toPastNear()"
             >
-              <PhCaretLeft size="18" />
+              <PhCaretLeft size="14" />
             </UiButton>
           </UiTooltipTrigger>
           <UiTooltipContent>
@@ -195,10 +195,10 @@ function toFutureFar(): void {
             <UiButton
               variant="outline"
               size="icon"
-              class="rounded-t-sm rounded-b-none border-b-0"
+              class="size-8 rounded-t-sm rounded-b-none border-b-0"
               @click="toFutureNear()"
             >
-              <PhCaretRight size="18" />
+              <PhCaretRight size="14" />
             </UiButton>
           </UiTooltipTrigger>
           <UiTooltipContent>
@@ -214,10 +214,10 @@ function toFutureFar(): void {
             <UiButton
               variant="outline"
               size="icon"
-              class="rounded-t-sm rounded-b-none border-b-0"
+              class="size-8 rounded-t-sm rounded-b-none border-b-0"
               @click="toFutureFar()"
             >
-              <PhCaretDoubleRight size="18" />
+              <PhCaretDoubleRight size="14" />
             </UiButton>
           </UiTooltipTrigger>
           <UiTooltipContent>
