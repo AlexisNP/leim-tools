@@ -8,8 +8,8 @@ import CenturyLayout from "./state/centennially/Layout.vue"
 import DecadeLayout from "./state/decennially/Layout.vue"
 import YearLayout from "./state/yearly/Layout.vue"
 
-const { currentConfig, jumpToDate, selectedDate } = useCalendar()
-const { isReadOnly } = storeToRefs(useCalendar())
+const { currentConfig, jumpToDate, selectedDate, toPastFar, toPastNear, toFutureNear, toFutureFar } = useCalendar()
+const { isReadOnly, calendarState } = storeToRefs(useCalendar())
 
 const currentViewComponent: ComputedRef<Component> = computed<Component>(() => {
   switch (currentConfig.viewType) {
@@ -30,6 +30,34 @@ const currentViewComponent: ComputedRef<Component> = computed<Component>(() => {
 
 onMounted(() => {
   jumpToDate(selectedDate)
+})
+
+// Key combos to navigate
+const { arrowUp, arrowLeft, pageUp } = useMagicKeys()
+const { arrowDown, arrowRight, pageDown } = useMagicKeys()
+
+watch([arrowUp, arrowLeft], (k) => {
+  if (calendarState.value === 'active' && k[0] || k[1]) {
+    toPastNear()
+  }
+})
+
+watch([arrowDown, arrowRight], (k) => {
+  if (calendarState.value === 'active' && k[0] || k[1]) {
+    toFutureNear()
+  }
+})
+
+watch(pageUp!, (k) => {
+  if (calendarState.value === 'active' && k) {
+    toPastFar()
+  }
+})
+
+watch(pageDown!, (k) => {
+  if (calendarState.value === 'active' && k) {
+    toFutureFar()
+  }
 })
 </script>
 

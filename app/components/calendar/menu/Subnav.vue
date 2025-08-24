@@ -12,7 +12,7 @@ interface DirectionLabels {
   futureFar: string
 }
 
-const { currentConfig, decrementViewMonth, incrementViewMonth, decrementViewYear, incrementViewYear } =
+const { currentConfig, toPastFar, toPastNear, toFutureNear, toFutureFar } =
   useCalendar()
 
 const activeDirectionLabels: ComputedRef<DirectionLabels> = computed(() => {
@@ -51,90 +51,6 @@ const activeDirectionLabels: ComputedRef<DirectionLabels> = computed(() => {
       }
   }
 })
-
-function toPastFar(): void {
-  switch (currentConfig.viewType) {
-    case "month":
-      decrementViewYear()
-      break
-
-    case "year":
-      decrementViewYear(10)
-      break
-
-    case "decade":
-      decrementViewYear(100)
-      break
-
-    case "century":
-    default:
-      decrementViewYear(1000)
-      break
-  }
-}
-
-function toPastNear(): void {
-  switch (currentConfig.viewType) {
-    case "month":
-      decrementViewMonth()
-      break
-
-    case "year":
-      decrementViewYear()
-      break
-
-    case "decade":
-      decrementViewYear(10)
-      break
-
-    case "century":
-    default:
-      decrementViewYear(100)
-      break
-  }
-}
-
-function toFutureNear(): void {
-  switch (currentConfig.viewType) {
-    case "month":
-      incrementViewMonth()
-      break
-
-    case "year":
-      incrementViewYear()
-      break
-
-    case "decade":
-      incrementViewYear(10)
-      break
-
-    case "century":
-    default:
-      incrementViewYear(100)
-      break
-  }
-}
-
-function toFutureFar(): void {
-  switch (currentConfig.viewType) {
-    case "month":
-      incrementViewYear()
-      break
-
-    case "year":
-      incrementViewYear(10)
-      break
-
-    case "decade":
-      incrementViewYear(100)
-      break
-
-    case "century":
-    default:
-      incrementViewYear(1000)
-      break
-  }
-}
 </script>
 
 <template>

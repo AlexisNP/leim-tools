@@ -10,6 +10,8 @@ import type { CalendarEvent } from "@@/models/CalendarEvent"
 import type { CalendarMonth } from "@@/models/CalendarMonth"
 import type { Category } from "@@/models/Category"
 
+type CalendarState = "active" | "idle"
+
 type CalendarViewType = "month" | "year" | "decade" | "century"
 
 type CalendarCurrentConfig = {
@@ -668,6 +670,90 @@ export const useCalendar = defineStore("calendar", () => {
     currentEvents.value = computeCurrentEvents()
   }, { deep: true, immediate: true })
 
+  function toPastFar(): void {
+    switch (currentConfig.value.viewType) {
+      case "month":
+        decrementViewYear()
+        break
+
+      case "year":
+        decrementViewYear(10)
+        break
+
+      case "decade":
+        decrementViewYear(100)
+        break
+
+      case "century":
+      default:
+        decrementViewYear(1000)
+        break
+    }
+  }
+
+  function toPastNear(): void {
+    switch (currentConfig.value.viewType) {
+      case "month":
+        decrementViewMonth()
+        break
+
+      case "year":
+        decrementViewYear()
+        break
+
+      case "decade":
+        decrementViewYear(10)
+        break
+
+      case "century":
+      default:
+        decrementViewYear(100)
+        break
+    }
+  }
+
+  function toFutureNear(): void {
+    switch (currentConfig.value.viewType) {
+      case "month":
+        incrementViewMonth()
+        break
+
+      case "year":
+        incrementViewYear()
+        break
+
+      case "decade":
+        incrementViewYear(10)
+        break
+
+      case "century":
+      default:
+        incrementViewYear(100)
+        break
+    }
+  }
+
+  function toFutureFar(): void {
+    switch (currentConfig.value.viewType) {
+      case "month":
+        incrementViewYear()
+        break
+
+      case "year":
+        incrementViewYear(10)
+        break
+
+      case "decade":
+        incrementViewYear(100)
+        break
+
+      case "century":
+      default:
+        incrementViewYear(1000)
+        break
+    }
+  }
+
   /**
    * Determines if the event can appear in the front end
    *
@@ -806,6 +892,22 @@ export const useCalendar = defineStore("calendar", () => {
   }
 
   /**
+   * State for event modal creation
+   */
+  const isCreatingEventModalOpen = ref<boolean>(false)
+
+  // Watch the popover state
+  watch(isCreatingEventModalOpen, (hasOpened, _o) => {
+    if (hasOpened) {
+      resetSkeleton()
+    }
+  })
+
+  function toggleCreatingEventModal() {
+    isCreatingEventModalOpen.value = !isCreatingEventModalOpen.value
+  }
+
+  /**
    * State for event modal edition
    */
   const isEditEventModalOpen = ref<boolean>(false)
@@ -936,6 +1038,19 @@ export const useCalendar = defineStore("calendar", () => {
     isCategoriesModalOpen.value = state
   }
 
+  /**
+   * Handle the state of the active calendar for UI interactions
+   */
+  const calendarState = ref<CalendarState>("active")
+
+  watch([isCategoriesModalOpen, isCreatingEventModalOpen, isDeleteEventModalOpen, isEditEventModalOpen, isAdvancedSearchOpen, isDraggingEvent], (values) => {
+    if (values.every(v => !v)) {
+      calendarState.value = 'active'
+    } else {
+      calendarState.value = 'idle'
+    }
+  })
+
   return {
     isReadOnly,
     setReadStatus,
@@ -975,10 +1090,15 @@ export const useCalendar = defineStore("calendar", () => {
     areDatesIdentical,
     compareDates,
     getRelativeString,
+    toPastFar,
+    toPastNear,
+    toFutureNear,
+    toFutureFar,
     baseEvents,
     allEvents,
     categories,
     currentEvents,
+    calendarState,
     getRelativeEventFromDate,
     getRelativeEventFromEvent,
     cancelLatestRequest,
@@ -993,6 +1113,8 @@ export const useCalendar = defineStore("calendar", () => {
     lastActiveEvent,
     updateEventFromSkeleton,
     deleteEventFromSkeleton,
+    isCreatingEventModalOpen,
+    toggleCreatingEventModal,
     isEditEventModalOpen,
     revealEditEventModal,
     isDeleteEventModalOpen,

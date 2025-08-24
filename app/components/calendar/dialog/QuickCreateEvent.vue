@@ -3,20 +3,8 @@ import { breakpointsTailwind, useBreakpoints } from "@vueuse/core"
 import { PhPlus } from "@phosphor-icons/vue";
 import { VisuallyHidden } from "radix-vue";
 
-const isDialogOpen = ref<boolean>(false);
-const { resetSkeleton } = useCalendar();
-
-// Watch the popover state
-watch(isDialogOpen, (hasOpened, _o) => {
-  if (hasOpened) {
-    resetSkeleton()
-  }
-})
-
-// Toggles the dialog
-function toggleDialog() {
-  isDialogOpen.value = !isDialogOpen.value;
-};
+const { isCreatingEventModalOpen } = storeToRefs(useCalendar());
+const { resetSkeleton, toggleCreatingEventModal } = useCalendar();
 
 /**
  * Prevents the modal from closing if's still loading
@@ -36,7 +24,7 @@ const breakpoints = useBreakpoints(
       <UiButton
         class="max-md:fixed max-md:bottom-8 max-md:right-8 max-md:z-50 max-md:size-14 max-md:rounded-xl"
         :size="breakpoints.md.value ? 'default' : 'icon'"
-        @click="toggleDialog"
+        @click="toggleCreatingEventModal"
       >
         <PhPlus :size="breakpoints.md.value ? 18 : 24" weight="bold" />
 
@@ -47,7 +35,7 @@ const breakpoints = useBreakpoints(
     </Transition>
   </ClientOnly>
 
-  <UiDialog v-model:open="isDialogOpen">
+  <UiDialog v-model:open="isCreatingEventModalOpen">
     <UiDialogContent
       class="max-md:translate-0 max-md:inset-0 max-md:w-full max-md:block"
       :trap-focus="true"
@@ -64,7 +52,7 @@ const breakpoints = useBreakpoints(
         </UiDialogDescription>
       </VisuallyHidden>
 
-      <CalendarFormCreateEvent @event-created="toggleDialog" />
+      <CalendarFormCreateEvent @event-created="toggleCreatingEventModal" />
     </UiDialogContent>
   </UiDialog>
 </template>
