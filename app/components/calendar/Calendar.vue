@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { useCalendar } from "@/stores/CalendarStore"
-import { computed, type Component, type ComputedRef } from "vue"
 
 // import { PhMagnifyingGlass } from '@phosphor-icons/vue'
 import MonthlyLayout from "./state/monthly/Layout.vue"
@@ -8,7 +7,9 @@ import CenturyLayout from "./state/centennially/Layout.vue"
 import DecadeLayout from "./state/decennially/Layout.vue"
 import YearLayout from "./state/yearly/Layout.vue"
 
-const { currentConfig, jumpToDate, selectedDate, toPastFar, toPastNear, toFutureNear, toFutureFar } = useCalendar()
+import { onKeyDown } from "@vueuse/core"
+
+const { currentConfig, jumpToDate, selectedDate, toPastFar, toPastNear, toFutureNear, toFutureFar, toggleCreatingEventModal } = useCalendar()
 const { isReadOnly, calendarState } = storeToRefs(useCalendar())
 
 const currentViewComponent: ComputedRef<Component> = computed<Component>(() => {
@@ -32,31 +33,42 @@ onMounted(() => {
   jumpToDate(selectedDate)
 })
 
+/**
+ * Keyboard quick controls
+ */
 // Key combos to navigate
-const { arrowUp, arrowLeft, pageUp } = useMagicKeys()
-const { arrowDown, arrowRight, pageDown } = useMagicKeys()
+const {
+  arrowUp, arrowLeft, pageUp,
+  arrowDown, arrowRight, pageDown,
+} = useMagicKeys()
 
 watch([arrowUp, arrowLeft], (k) => {
-  if (calendarState.value === 'active' && k[0] || k[1]) {
+  if (calendarState.value === 'active' && (k[0] || k[1])) {
     toPastNear()
   }
 })
-
-watch([arrowDown, arrowRight], (k) => {
-  if (calendarState.value === 'active' && k[0] || k[1]) {
-    toFutureNear()
-  }
-})
-
 watch(pageUp!, (k) => {
   if (calendarState.value === 'active' && k) {
     toPastFar()
   }
 })
 
+watch([arrowDown, arrowRight], (k) => {
+  if (calendarState.value === 'active' && (k[0] || k[1])) {
+    toFutureNear()
+  }
+})
 watch(pageDown!, (k) => {
   if (calendarState.value === 'active' && k) {
     toFutureFar()
+  }
+})
+
+// Key combo to create an event
+onKeyDown("+", (e) => {
+  if (calendarState.value === 'active') {
+    e.preventDefault()
+    toggleCreatingEventModal()
   }
 })
 </script>
