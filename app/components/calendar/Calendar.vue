@@ -38,27 +38,27 @@ onMounted(() => {
  */
 // Key combos to navigate
 const {
-  arrowUp, arrowLeft, pageUp,
-  arrowDown, arrowRight, pageDown,
+  home, pageUp,
+  end, pageDown,
 } = useMagicKeys()
 
-watch([arrowUp, arrowLeft], (k) => {
-  if (calendarState.value === 'active' && (k[0] || k[1])) {
-    toPastNear()
-  }
-})
-watch(pageUp!, (k) => {
+watch(home!, (k) => {
   if (calendarState.value === 'active' && k) {
     toPastFar()
   }
 })
+watch(pageUp!, (k) => {
+  if (calendarState.value === 'active' && k) {
+    toPastNear()
+  }
+})
 
-watch([arrowDown, arrowRight], (k) => {
-  if (calendarState.value === 'active' && (k[0] || k[1])) {
+watch(pageDown!, (k) => {
+  if (calendarState.value === 'active' && k) {
     toFutureNear()
   }
 })
-watch(pageDown!, (k) => {
+watch(end!, (k) => {
   if (calendarState.value === 'active' && k) {
     toFutureFar()
   }
